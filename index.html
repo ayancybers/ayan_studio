@@ -161,10 +161,12 @@
             height: 100%;
             background: var(--bg);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 99999;
             transition: opacity 0.4s ease, visibility 0.4s ease;
+            gap: 15px;
         }
 
         .loader-content {
@@ -196,6 +198,27 @@
             object-fit: cover;
             border-radius: 50%;
             clip-path: circle(49% at center);
+        }
+
+        .loader-info {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .loader-percentage {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .loader-message {
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-width: 280px;
+            font-weight: 500;
         }
 
         @keyframes spin {
@@ -936,6 +959,10 @@
             <div class="loader-circle"></div>
             <img src="https://f.top4top.io/p_3899us4ep9.png" alt="Ayan Studio" class="loader-logo">
         </div>
+        <div class="loader-info">
+            <div class="loader-percentage" id="loaderPercentage">0%</div>
+            <div class="loader-message" id="loaderMessage" data-key="load-msg-1">جاري تهيئة الاستوديو وتحميل عناصر الصفحة...</div>
+        </div>
     </div>
 
     <nav>
@@ -1310,7 +1337,10 @@
                 "cta-wa": "احجز الآن عبر الواتساب",
                 "insta-title": "تابعونا على إنستغرام",
                 "insta-sub": "أحدث الجلسات والفيديوهات الطولية السينمائية",
-                "footer-location": "المنطقة الشرقية، المملكة العربية السعودية"
+                "footer-location": "المنطقة الشرقية، المملكة العربية السعودية",
+                "load-msg-1": "جاري تهيئة الاستوديو وتحميل عناصر الصفحة...",
+                "load-msg-2": "جاري تجهيز مقاطع الفيديو والسينمائيات...",
+                "load-msg-3": "كل شيء جاهز تقريباً، استعد للانطلاق! 🚀"
             },
             en: {
                 "top-announcement": "🇸🇦 National Day 96 Offers: Special discount on the Royal Package for only 196 SAR! Happy National Day 💚",
@@ -1399,7 +1429,10 @@
                 "cta-wa": "Book via WhatsApp Now",
                 "insta-title": "Follow Us On Instagram",
                 "insta-sub": "Latest cinematic reels and photoshoots",
-                "footer-location": "Eastern Province, Saudi Arabia"
+                "footer-location": "Eastern Province, Saudi Arabia",
+                "load-msg-1": "Initializing the studio and loading page elements...",
+                "load-msg-2": "Preparing videos and cinematic shots...",
+                "load-msg-3": "Almost ready, get set to go! 🚀"
             }
         };
 
@@ -1496,11 +1529,33 @@
                 }
             }
 
+            let percent = 0;
+            const percentEl = document.getElementById('loaderPercentage');
+            const msgEl = document.getElementById('loaderMessage');
             const loader = document.getElementById('loader-wrapper');
-            setTimeout(() => {
-                loader.classList.add('loader-hidden');
-                startCounters();
-            }, 500);
+
+            const interval = setInterval(() => {
+                percent += Math.floor(Math.random() * 12) + 8;
+                if (percent >= 100) {
+                    percent = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.classList.add('loader-hidden');
+                        startCounters();
+                    }, 300);
+                }
+
+                if (percentEl) percentEl.textContent = percent + '%';
+
+                const lang = document.documentElement.lang || 'ar';
+                if (msgEl) {
+                    if (percent > 65) {
+                        msgEl.textContent = translations[lang]['load-msg-3'] || (lang === 'ar' ? 'كل شيء جاهز تقريباً، استعد للانطلاق! 🚀' : 'Almost ready, get set to go! 🚀');
+                    } else if (percent > 35) {
+                        msgEl.textContent = translations[lang]['load-msg-2'] || (lang === 'ar' ? 'جاري تجهيز مقاطع الفيديو والسينمائيات...' : 'Preparing videos and cinematic shots...');
+                    }
+                }
+            }, 70);
         });
 
         let currentSessions = parseInt(localStorage.getItem('sessionsCount')) || 25;
