@@ -1026,9 +1026,13 @@
         </div>
 
         <div class="packages-grid">
+            <!-- الباقة الأساسية -->
             <div class="package-card">
                 <h3 class="package-title" data-key="pkg1-title">الباقة الأساسية</h3>
-                <div class="package-price" data-key="pkg1-price">150 ريال</div>
+                <div class="package-price">
+                    <span style="text-decoration: line-through; color: var(--text-secondary); font-size: 16px; margin-left: 6px;" data-key="pkg1-old-price">180 ريال</span>
+                    <span data-key="pkg1-price">150 ريال</span>
+                </div>
                 <ul class="package-features">
                     <li data-key="pkg1-f1">تصوير وتصميم فيديو ريلز احترافي</li>
                     <li data-key="pkg1-f2">تصوير زوايا متعددة (جلسة مدتها ~15 دقيقة)</li>
@@ -1038,7 +1042,8 @@
                 <a href="#booking" onclick="selectPackageFromCard('الباقة الأساسية - 150 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
-<div class="package-card popular">
+            <!-- الباقة الملكية (عرض اليوم الوطني) -->
+            <div class="package-card popular">
                 <div class="popular-badge" data-key="popular-tag">العرض الوطني 🇸🇦</div>
                 <h3 class="package-title" data-key="pkgRoyal-title">الباقة الملكية (عرض اليوم الوطني)</h3>
                 <div class="package-price">
@@ -1056,9 +1061,13 @@
                 <a href="#booking" onclick="selectPackageFromCard('الباقة الملكية - 196 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
+            <!-- الباقة المتقدمة -->
             <div class="package-card">
                 <h3 class="package-title" data-key="pkg2-title">الباقة المتقدمة</h3>
-                <div class="package-price" data-key="pkg2-price">200 ريال</div>
+                <div class="package-price">
+                    <span style="text-decoration: line-through; color: var(--text-secondary); font-size: 16px; margin-left: 6px;" data-key="pkg2-old-price">240 ريال</span>
+                    <span data-key="pkg2-price">200 ريال</span>
+                </div>
                 <ul class="package-features">
                     <li data-key="pkg2-f1">تصوير وتصميم فيديو ريلز احترافي</li>
                     <li data-key="pkg2-f2">تصوير زوايا متعددة (جلسة مدتها ~30 دقيقة)</li>
@@ -1239,12 +1248,14 @@
                 "packages-header": "الخدمات وباقات الأسعار",
                 "packages-sub": "اختر الباقة المناسبة لاحتياجك وتفاصيل سيارتك",
                 "pkg1-title": "الباقة الأساسية",
+                "pkg1-old-price": "180 ريال",
                 "pkg1-price": "150 ريال",
                 "pkg1-f1": "تصوير وتصميم فيديو ريلز احترافي",
                 "pkg1-f2": "تصوير زوايا متعددة (جلسة مدتها ~15 دقيقة)",
                 "pkg1-f3": "تعديل ألوان واحترافي",
                 "pkg1-f4": "تسليم خلال 24 ساعة",
                 "pkg2-title": "الباقة المتقدمة",
+                "pkg2-old-price": "240 ريال",
                 "pkg2-price": "200 ريال",
                 "pkg2-f1": "تصوير وتصميم فيديو ريلز احترافي",
                 "pkg2-f2": "تصوير زوايا متعددة (جلسة مدتها ~30 دقيقة)",
@@ -1253,6 +1264,7 @@
                 "pkg2-f5": "تسليم خلال 12 ساعة",
                 "popular-tag": "العرض الوطني 🇸🇦",
                 "pkgRoyal-title": "الباقة الملكية (عرض اليوم الوطني)",
+                "pkgRoyal-old-price": "250 ريال",
                 "pkgRoyal-price": "196 ريال",
                 "pkgRoyal-f1": "تصوير لقطات متكاملة + تصميم فيديو ريلز",
                 "pkgRoyal-f2": "اختيار الوضعيات المناسبة للسيارة",
@@ -1325,12 +1337,14 @@
                 "packages-header": "Services & Packages",
                 "packages-sub": "Choose the best package for your car requirements",
                 "pkg1-title": "Basic Package",
+                "pkg1-old-price": "180 SAR",
                 "pkg1-price": "150 SAR",
                 "pkg1-f1": "Professional Shooting & Reels Design",
                 "pkg1-f2": "Multi-angle shooting (~15 mins duration)",
                 "pkg1-f3": "Professional Color Grading",
                 "pkg1-f4": "Delivery within 24 Hours",
                 "pkg2-title": "Advanced Package",
+                "pkg2-old-price": "240 SAR",
                 "pkg2-price": "200 SAR",
                 "pkg2-f1": "Professional Shooting & Reels Design",
                 "pkg2-f2": "Multi-angle shooting (~30 mins duration)",
@@ -1339,6 +1353,7 @@
                 "pkg2-f5": "Delivery within 12 Hours",
                 "popular-tag": "National Offer 🇸🇦",
                 "pkgRoyal-title": "Royal Package (National Day Offer)",
+                "pkgRoyal-old-price": "250 SAR",
                 "pkgRoyal-price": "196 SAR",
                 "pkgRoyal-f1": "Full shots coverage + Reels video design",
                 "pkgRoyal-f2": "Custom car angles and posing setup",
