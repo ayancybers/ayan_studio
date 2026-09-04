@@ -31,6 +31,8 @@
             --hero-overlay: rgba(7, 18, 10, 0.85);
             --hero-title-color: #ffffff;
             --hero-desc-color: #9ab0a1;
+            --banner-bg: #006C35;
+            --banner-end: #228B22;
         }
 
         [data-theme="na96"] {
@@ -48,6 +50,8 @@
             --hero-overlay: rgba(6, 17, 9, 0.85);
             --hero-title-color: #ffffff;
             --hero-desc-color: #87a893;
+            --banner-bg: #006C35;
+            --banner-end: #228B22;
         }
 
         [data-theme="dark"] {
@@ -65,6 +69,8 @@
             --hero-overlay: rgba(11, 11, 20, 0.85);
             --hero-title-color: #ffffff;
             --hero-desc-color: #9a9ab0;
+            --banner-bg: #b71c1c;
+            --banner-end: #ff5252;
         }
 
         [data-theme="relax"] {
@@ -82,6 +88,8 @@
             --hero-overlay: rgba(26, 26, 46, 0.85);
             --hero-title-color: #e9ecef;
             --hero-desc-color: #a2a8d3;
+            --banner-bg: #1d4ed8;
+            --banner-end: #3b82f6;
         }
 
         [data-theme="light"] {
@@ -99,6 +107,8 @@
             --hero-overlay: rgba(248, 250, 252, 0.88);
             --hero-title-color: #0f172a;
             --hero-desc-color: #334155;
+            --banner-bg: #334155;
+            --banner-end: #1e293b;
         }
 
         body {
@@ -110,8 +120,7 @@
         }
 
         .national-day-banner {
-            background: linear-gradient(90deg, #006C35, #228B22, #006C35);
-            background-size: 200% auto;
+            background: linear-gradient(90deg, var(--banner-bg), var(--banner-end));
             color: #ffffff;
             text-align: center;
             padding: 10px 15px;
@@ -119,18 +128,12 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             box-shadow: inset 0 -2px 5px rgba(0,0,0,0.2);
-            animation: shimmerGradient 6s linear infinite;
             position: relative;
             z-index: 101;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
-        }
-
-        @keyframes shimmerGradient {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
         }
 
         input, textarea, select {
@@ -928,7 +931,7 @@
         });
     </script>
 
-    <!-- شريط الإعلان العلوي لليوم الوطني -->
+    <!-- شريط الإعلان العلوي الذي يتغير لونه تلقائياً مع الثيم -->
     <div class="national-day-banner" data-key="top-announcement">
         🇸🇦 عروض اليوم الوطني 96: خصم خاص على الباقة الملكية لتصبح بـ 196 ريال فقط! كل عام ووطنا بخير 💚
     </div>
