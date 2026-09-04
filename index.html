@@ -931,7 +931,7 @@
         });
     </script>
 
-    <!-- شريط الإعلان العلوي الذي يتغير لونه تلقائياً مع الثيم -->
+    <!-- شريط الإعلان العلوي -->
     <div class="national-day-banner" data-key="top-announcement">
         🇸🇦 عروض اليوم الوطني 96: خصم خاص على الباقة الملكية لتصبح بـ 196 ريال فقط! كل عام ووطنا بخير 💚
     </div>
@@ -994,7 +994,7 @@
 
     <header class="hero">
         <div class="hero-video-bg">
-            <video autoplay loop muted playsinline>
+            <video autoplay loop muted playsinline preload="metadata">
                 <source src="video1.mp4" type="video/mp4">
                 متصفحك لا يدعم عرض الفيديو
             </video>
@@ -1029,7 +1029,6 @@
         </div>
 
         <div class="packages-grid">
-            <!-- الباقة الأساسية -->
             <div class="package-card">
                 <h3 class="package-title" data-key="pkg1-title">الباقة الأساسية</h3>
                 <div class="package-price">
@@ -1045,7 +1044,6 @@
                 <a href="#booking" onclick="selectPackageFromCard('الباقة الأساسية - 150 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
-            <!-- الباقة الملكية (عرض اليوم الوطني) -->
             <div class="package-card popular">
                 <div class="popular-badge" data-key="popular-tag">العرض الوطني 🇸🇦</div>
                 <h3 class="package-title" data-key="pkgRoyal-title">الباقة الملكية (عرض اليوم الوطني)</h3>
@@ -1064,7 +1062,6 @@
                 <a href="#booking" onclick="selectPackageFromCard('الباقة الملكية - 196 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
-            <!-- الباقة المتقدمة -->
             <div class="package-card">
                 <h3 class="package-title" data-key="pkg2-title">الباقة المتقدمة</h3>
                 <div class="package-price">
@@ -1181,20 +1178,21 @@
         </div>
     </section>
 
+    <!-- المعرض (تم تعديل الخصائص لتظهر الفيديوهات وتعمل تلقائياً بشكل خفيف) -->
     <section id="instagram" class="section">
         <div class="section-title">
             <h2 data-key="insta-title">تابعونا على إنستغرام</h2>
             <p data-key="insta-sub">أحدث الجلسات والفيديوهات الطولية السينمائية</p>
         </div>
         <div class="instagram-feed">
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video1.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video2.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video3.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video4.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video5.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video6.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video7.mp4" type="video/mp4"></video></div></div>
-            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video8.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video1.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video2.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video3.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video4.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video5.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video6.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video7.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline preload="metadata"><source src="video8.mp4" type="video/mp4"></video></div></div>
         </div>
     </section>
 
@@ -1513,10 +1511,10 @@
         let currentSessions = parseInt(localStorage.getItem('sessionsCount')) || 25;
 
         function animateValue(element, start, end, duration, isDecimal = false, suffix = '') {
-            let startTimestamp = null;
+            let startstartTimestamp = null;
             const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                if (!startstartTimestamp) startstartTimestamp = timestamp;
+                const progress = Math.min((timestamp - startstartTimestamp) / duration, 1);
                 let value = progress * (end - start) + start;
                 
                 if (isDecimal) {
