@@ -109,6 +109,31 @@
             overflow-x: hidden;
         }
 
+        /* شريط الإعلان العلوي لليوم الوطني */
+        .national-day-banner {
+            background: linear-gradient(90deg, #006C35, #228B22, #006C35);
+            background-size: 200% auto;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,0.2);
+            animation: shimmerGradient 6s linear infinite;
+            position: relative;
+            z-index: 101;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes shimmerGradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
         input, textarea, select {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -875,6 +900,7 @@
             .stat-number { font-size: 18px; }
             .instagram-feed { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .booking-card { padding: 18px; }
+            .national-day-banner { font-size: 11px; padding: 8px 10px; }
         }
     </style>
 </head>
@@ -898,10 +924,15 @@
         document.addEventListener('keydown', function(e) {
             if (e.keyCode === 123) { e.preventDefault(); return false; }
             if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
             if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
         });
     </script>
+
+    <!-- شريط الإعلان العلوي لليوم الوطني -->
+    <div class="national-day-banner" data-key="top-announcement">
+        🇸🇦 عروض اليوم الوطني 96: خصم خاص على الباقة الملكية لتصبح بـ 196 ريال فقط! كل عام ووطنا بخير 💚
+    </div>
 
     <div id="loader-wrapper">
         <div class="loader-content">
@@ -997,7 +1028,7 @@
 
         <div class="packages-grid">
             <div class="package-card">
-                <h3 class="package-title" data-key="pkg1-title">الباقة الأولى</h3>
+                <h3 class="package-title" data-key="pkg1-title">الباقة الأساسية</h3>
                 <div class="package-price" data-key="pkg1-price">150 ريال</div>
                 <ul class="package-features">
                     <li data-key="pkg1-f1">تصوير وتصميم فيديو ريلز احترافي</li>
@@ -1005,26 +1036,26 @@
                     <li data-key="pkg1-f3">تعديل ألوان واحترافي</li>
                     <li data-key="pkg1-f4">تسليم خلال 24 ساعة</li>
                 </ul>
-                <a href="#booking" onclick="selectPackageFromCard('الباقة الأولى - 150 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
+                <a href="#booking" onclick="selectPackageFromCard('الباقة الأساسية - 150 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
             <div class="package-card popular">
-                <div class="popular-badge" data-key="popular-tag">الأكثر طلباً</div>
-                <h3 class="package-title" data-key="pkg3-title">الباقة الثالثة</h3>
-                <div class="package-price" data-key="pkg3-price">250 ريال</div>
+                <div class="popular-badge" data-key="popular-tag">العرض الوطني 🇸🇦</div>
+                <h3 class="package-title" data-key="pkgRoyal-title">الباقة الملكية (عرض اليوم الوطني)</h3>
+                <div class="package-price" data-key="pkgRoyal-price">196 ريال</div>
                 <ul class="package-features">
-                    <li data-key="pkg3-f1">تصوير لقطات متكاملة + تصميم فيديو ريلز</li>
-                    <li data-key="pkg3-f2">اختيار الوضعيات المناسبة للسيارة</li>
-                    <li data-key="pkg3-f3">تعديل ألوان واحترافي كامل</li>
-                    <li data-key="pkg3-f4">تظبيط وتنسيق جلسة كاملة بالمختصر</li>
-                    <li data-key="pkg3-f5">إرسال جميع اللقطات بنفس الوقت</li>
-                    <li data-key="pkg3-f6">تسليم خلال أقرب وقت ممكن (الحد الأقصى 8 ساعات)</li>
+                    <li data-key="pkgRoyal-f1">تصوير لقطات متكاملة + تصميم فيديو ريلز</li>
+                    <li data-key="pkgRoyal-f2">اختيار الوضعيات المناسبة للسيارة</li>
+                    <li data-key="pkgRoyal-f3">تعديل ألوان واحترافي كامل</li>
+                    <li data-key="pkgRoyal-f4">تظبيط وتنسيق جلسة كاملة بالمختصر</li>
+                    <li data-key="pkgRoyal-f5">إرسال جميع اللقطات بنفس الوقت</li>
+                    <li data-key="pkgRoyal-f6">تسليم خلال أقرب وقت ممكن (الحد الأقصى 8 ساعات)</li>
                 </ul>
-                <a href="#booking" onclick="selectPackageFromCard('الباقة الثالثة - 250 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
+                <a href="#booking" onclick="selectPackageFromCard('الباقة الملكية - 196 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
             <div class="package-card">
-                <h3 class="package-title" data-key="pkg2-title">الباقة الثانية</h3>
+                <h3 class="package-title" data-key="pkg2-title">الباقة المتقدمة</h3>
                 <div class="package-price" data-key="pkg2-price">200 ريال</div>
                 <ul class="package-features">
                     <li data-key="pkg2-f1">تصوير وتصميم فيديو ريلز احترافي</li>
@@ -1033,7 +1064,7 @@
                     <li data-key="pkg2-f4">إرسال جميع اللقطات بنفس الوقت</li>
                     <li data-key="pkg2-f5">تسليم خلال 12 ساعة</li>
                 </ul>
-                <a href="#booking" onclick="selectPackageFromCard('الباقة الثانية - 200 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
+                <a href="#booking" onclick="selectPackageFromCard('الباقة المتقدمة - 200 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
         </div>
     </section>
@@ -1088,9 +1119,9 @@
                     <label data-key="label-package">اختر الباقة</label>
                     <select id="packageType" required>
                         <option value="" data-key="opt-select-pkg">اختر الباقة المطلوبة</option>
-                        <option value="الباقة الأولى - 150 ريال" data-key="opt-pkg1">الباقة الأولى (150 ريال)</option>
-                        <option value="الباقة الثانية - 200 ريال" data-key="opt-pkg2">الباقة الثانية (200 ريال)</option>
-                        <option value="الباقة الثالثة - 250 ريال" data-key="opt-pkg3">الباقة الثالثة (250 ريال)</option>
+                        <option value="الباقة الأساسية - 150 ريال" data-key="opt-pkg1">الباقة الأساسية (150 ريال)</option>
+                        <option value="الباقة الملكية - 196 ريال" data-key="opt-pkgRoyal">الباقة الملكية - عرض اليوم الوطني (196 ريال)</option>
+                        <option value="الباقة المتقدمة - 200 ريال" data-key="opt-pkg2">الباقة المتقدمة (200 ريال)</option>
                     </select>
                 </div>
 
@@ -1186,6 +1217,7 @@
     <script>
         const translations = {
             ar: {
+                "top-announcement": "🇸🇦 عروض اليوم الوطني 96: خصم خاص على الباقة الملكية لتصبح بـ 196 ريال فقط! كل عام ووطنا بخير 💚",
                 "nav-services": "الخدمات والأسعار",
                 "nav-features": "المميزات",
                 "nav-booking": "الحجز",
@@ -1204,28 +1236,28 @@
                 "stat-rating": "التقييم العام",
                 "packages-header": "الخدمات وباقات الأسعار",
                 "packages-sub": "اختر الباقة المناسبة لاحتياجك وتفاصيل سيارتك",
-                "pkg1-title": "الباقة الأولى",
+                "pkg1-title": "الباقة الأساسية",
                 "pkg1-price": "150 ريال",
                 "pkg1-f1": "تصوير وتصميم فيديو ريلز احترافي",
                 "pkg1-f2": "تصوير زوايا متعددة (جلسة مدتها ~15 دقيقة)",
                 "pkg1-f3": "تعديل ألوان واحترافي",
                 "pkg1-f4": "تسليم خلال 24 ساعة",
-                "pkg2-title": "الباقة الثانية",
+                "pkg2-title": "الباقة المتقدمة",
                 "pkg2-price": "200 ريال",
                 "pkg2-f1": "تصوير وتصميم فيديو ريلز احترافي",
                 "pkg2-f2": "تصوير زوايا متعددة (جلسة مدتها ~30 دقيقة)",
                 "pkg2-f3": "تعديل ألوان واحترافي",
                 "pkg2-f4": "إرسال جميع اللقطات بنفس الوقت",
                 "pkg2-f5": "تسليم خلال 12 ساعة",
-                "popular-tag": "الأكثر طلباً",
-                "pkg3-title": "الباقة الثالثة",
-                "pkg3-price": "250 ريال",
-                "pkg3-f1": "تصوير لقطات متكاملة + تصميم فيديو ريلز",
-                "pkg3-f2": "اختيار الوضعيات المناسبة للسيارة",
-                "pkg3-f3": "تعديل ألوان واحترافي كامل",
-                "pkg3-f4": "تظبيط وتنسيق جلسة كاملة بالمختصر",
-                "pkg3-f5": "إرسال جميع اللقطات بنفس الوقت",
-                "pkg3-f6": "تسليم خلال أقرب وقت ممكن (الحد الأقصى 8 ساعات)",
+                "popular-tag": "العرض الوطني 🇸🇦",
+                "pkgRoyal-title": "الباقة الملكية (عرض اليوم الوطني)",
+                "pkgRoyal-price": "196 ريال",
+                "pkgRoyal-f1": "تصوير لقطات متكاملة + تصميم فيديو ريلز",
+                "pkgRoyal-f2": "اختيار الوضعيات المناسبة للسيارة",
+                "pkgRoyal-f3": "تعديل ألوان واحترافي كامل",
+                "pkgRoyal-f4": "تظبيط وتنسيق جلسة كاملة بالمختصر",
+                "pkgRoyal-f5": "إرسال جميع اللقطات بنفس الوقت",
+                "pkgRoyal-f6": "تسليم خلال أقرب وقت ممكن (الحد الأقصى 8 ساعات)",
                 "btn-select-pkg": "اختر الباقة",
                 "booking-title": "احجز جلستك الآن",
                 "booking-sub": "املأ البيانات وسيتم تحويلك مباشرة للواتساب للتنسيق مع المصور",
@@ -1235,9 +1267,9 @@
                 "name-placeholder": "اسمك بالكامل",
                 "label-package": "اختر الباقة",
                 "opt-select-pkg": "اختر الباقة المطلوبة",
-                "opt-pkg1": "الباقة الأولى (150 ريال)",
-                "opt-pkg2": "الباقة الثانية (200 ريال)",
-                "opt-pkg3": "الباقة الثالثة (250 ريال)",
+                "opt-pkg1": "الباقة الأساسية (150 ريال)",
+                "opt-pkgRoyal": "الباقة الملكية - عرض اليوم الوطني (196 ريال)",
+                "opt-pkg2": "الباقة المتقدمة (200 ريال)",
                 "label-car": "نوع السيارة",
                 "opt-select-car": "اختر نوع السيارة",
                 "car-sedan": "سيدان",
@@ -1271,6 +1303,7 @@
                 "footer-location": "المنطقة الشرقية، المملكة العربية السعودية"
             },
             en: {
+                "top-announcement": "🇸🇦 National Day 96 Offers: Special discount on the Royal Package for only 196 SAR! Happy National Day 💚",
                 "nav-services": "Services & Rates",
                 "nav-features": "Features",
                 "nav-booking": "Booking",
@@ -1289,28 +1322,28 @@
                 "stat-rating": "Overall Rating",
                 "packages-header": "Services & Packages",
                 "packages-sub": "Choose the best package for your car requirements",
-                "pkg1-title": "Package 1",
+                "pkg1-title": "Basic Package",
                 "pkg1-price": "150 SAR",
                 "pkg1-f1": "Professional Shooting & Reels Design",
                 "pkg1-f2": "Multi-angle shooting (~15 mins duration)",
                 "pkg1-f3": "Professional Color Grading",
                 "pkg1-f4": "Delivery within 24 Hours",
-                "pkg2-title": "Package 2",
+                "pkg2-title": "Advanced Package",
                 "pkg2-price": "200 SAR",
                 "pkg2-f1": "Professional Shooting & Reels Design",
                 "pkg2-f2": "Multi-angle shooting (~30 mins duration)",
                 "pkg2-f3": "Professional Color Grading",
                 "pkg2-f4": "Send all footage at once",
                 "pkg2-f5": "Delivery within 12 Hours",
-                "popular-tag": "Most Popular",
-                "pkg3-title": "Package 3",
-                "pkg3-price": "250 SAR",
-                "pkg3-f1": "Full shots coverage + Reels video design",
-                "pkg3-f2": "Custom car angles and posing setup",
-                "pkg3-f3": "Full Professional Color Correction",
-                "pkg3-f4": "Complete session setup and coordination",
-                "pkg3-f5": "Send all footage at once",
-                "pkg3-f6": "Express delivery as soon as possible (Max 8 hours)",
+                "popular-tag": "National Offer 🇸🇦",
+                "pkgRoyal-title": "Royal Package (National Day Offer)",
+                "pkgRoyal-price": "196 SAR",
+                "pkgRoyal-f1": "Full shots coverage + Reels video design",
+                "pkgRoyal-f2": "Custom car angles and posing setup",
+                "pkgRoyal-f3": "Full Professional Color Correction",
+                "pkgRoyal-f4": "Complete session setup and coordination",
+                "pkgRoyal-f5": "Send all footage at once",
+                "pkgRoyal-f6": "Express delivery as soon as possible (Max 8 hours)",
                 "btn-select-pkg": "Select Package",
                 "booking-title": "Book Your Session Now",
                 "booking-sub": "Fill in your details to be redirected to WhatsApp for scheduling",
@@ -1320,9 +1353,9 @@
                 "name-placeholder": "Your full name",
                 "label-package": "Select Package",
                 "opt-select-pkg": "Select Preferred Package",
-                "opt-pkg1": "Package 1 (150 SAR)",
-                "opt-pkg2": "Package 2 (200 SAR)",
-                "opt-pkg3": "Package 3 (250 SAR)",
+                "opt-pkg1": "Basic Package (150 SAR)",
+                "opt-pkgRoyal": "Royal Package - National Day Offer (196 SAR)",
+                "opt-pkg2": "Advanced Package (200 SAR)",
                 "label-car": "Car Model / Type",
                 "opt-select-car": "Select Car Type",
                 "car-sedan": "Sedan",
