@@ -109,7 +109,6 @@
             overflow-x: hidden;
         }
 
-        /* شريط الإعلان العلوي لليوم الوطني */
         .national-day-banner {
             background: linear-gradient(90deg, #006C35, #228B22, #006C35);
             background-size: 200% auto;
@@ -1039,10 +1038,13 @@
                 <a href="#booking" onclick="selectPackageFromCard('الباقة الأساسية - 150 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
             </div>
 
-            <div class="package-card popular">
+<div class="package-card popular">
                 <div class="popular-badge" data-key="popular-tag">العرض الوطني 🇸🇦</div>
                 <h3 class="package-title" data-key="pkgRoyal-title">الباقة الملكية (عرض اليوم الوطني)</h3>
-                <div class="package-price" data-key="pkgRoyal-price">196 ريال</div>
+                <div class="package-price">
+                    <span style="text-decoration: line-through; color: var(--text-secondary); font-size: 18px; margin-left: 8px;" data-key="pkgRoyal-old-price">250 ريال</span>
+                    <span data-key="pkgRoyal-price">196 ريال</span>
+                </div>
                 <ul class="package-features">
                     <li data-key="pkgRoyal-f1">تصوير لقطات متكاملة + تصميم فيديو ريلز</li>
                     <li data-key="pkgRoyal-f2">اختيار الوضعيات المناسبة للسيارة</li>
