@@ -19,7 +19,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -164,7 +164,7 @@
             justify-content: center;
             align-items: center;
             z-index: 99999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
         .loader-content {
@@ -187,7 +187,7 @@
             border-top: 3px solid var(--primary);
             border-right: 3px solid var(--secondary);
             border-radius: 50%;
-            animation: spin 1.2s linear infinite;
+            animation: spin 1s linear infinite;
         }
 
         .loader-logo {
@@ -270,7 +270,7 @@
             color: var(--text-secondary);
             font-size: 13px;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color 0.2s;
             white-space: nowrap;
         }
 
@@ -295,7 +295,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
@@ -305,7 +305,7 @@
 
         .dropdown-arrow {
             font-size: 7px;
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
         .custom-dropdown.open .dropdown-arrow {
@@ -325,7 +325,6 @@
             flex-direction: column;
             overflow: hidden;
             z-index: 1000;
-            animation: fadeIn 0.2s ease;
         }
 
         [dir="ltr"] .dropdown-menu {
@@ -345,17 +344,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: background 0.2s;
+            transition: background 0.15s;
         }
 
         .dropdown-item:hover {
             background: var(--dropdown-hover);
             color: var(--primary);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .nav-buttons {
@@ -377,7 +371,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
@@ -513,8 +507,9 @@
             border-radius: 16px;
             padding: 25px;
             text-align: center;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease;
             position: relative;
+            will-change: transform;
         }
 
         .package-card:hover {
@@ -529,19 +524,9 @@
         }
 
         @keyframes pulseGlow {
-            0% {
-                transform: translateY(0) scale(1);
-                box-shadow: 0 5px 15px color-mix(in srgb, var(--primary) 15%, transparent);
-            }
-            50% {
-                transform: translateY(-8px) scale(1.02);
-                box-shadow: 0 12px 30px color-mix(in srgb, var(--primary) 35%, transparent);
-                border-color: var(--secondary);
-            }
-            100% {
-                transform: translateY(0) scale(1);
-                box-shadow: 0 5px 15px color-mix(in srgb, var(--primary) 15%, transparent);
-            }
+            0% { transform: translateY(0) scale(1); box-shadow: 0 5px 15px color-mix(in srgb, var(--primary) 15%, transparent); }
+            50% { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 30px color-mix(in srgb, var(--primary) 35%, transparent); border-color: var(--secondary); }
+            100% { transform: translateY(0) scale(1); box-shadow: 0 5px 15px color-mix(in srgb, var(--primary) 15%, transparent); }
         }
 
         .popular-badge {
@@ -712,7 +697,7 @@
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: opacity 0.2s;
         }
 
         .submit-btn:hover {
@@ -735,7 +720,6 @@
             margin-bottom: 15px;
             text-align: center;
             font-size: 13px;
-            animation: fadeIn 0.3s ease;
         }
 
         .instagram-feed {
@@ -750,7 +734,8 @@
             border-radius: 16px;
             padding: 4px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            will-change: transform;
         }
 
         .instagram-post:hover {
@@ -1515,16 +1500,16 @@
             setTimeout(() => {
                 loader.classList.add('loader-hidden');
                 startCounters();
-            }, 800);
+            }, 500);
         });
 
         let currentSessions = parseInt(localStorage.getItem('sessionsCount')) || 25;
 
         function animateValue(element, start, end, duration, isDecimal = false, suffix = '') {
-            let startstartTimestamp = null;
+            let startTimestamp = null;
             const step = (timestamp) => {
-                if (!startstartTimestamp) startstartTimestamp = timestamp;
-                const progress = Math.min((timestamp - startstartTimestamp) / duration, 1);
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 let value = progress * (end - start) + start;
                 
                 if (isDecimal) {
@@ -1545,9 +1530,9 @@
             const supportElem = document.getElementById('supportHours');
             const ratingElem = document.getElementById('ratingScore');
 
-            if (sessionsElem) animateValue(sessionsElem, 0, currentSessions, 1200, false, '+');
-            if (supportElem) animateValue(supportElem, 0, 24, 1200, false, 'h');
-            if (ratingElem) animateValue(ratingElem, 0, 4.9, 1200, true, ' / 5.0');
+            if (sessionsElem) animateValue(sessionsElem, 0, currentSessions, 900, false, '+');
+            if (supportElem) animateValue(supportElem, 0, 24, 900, false, 'h');
+            if (ratingElem) animateValue(ratingElem, 0, 4.9, 900, true, ' / 5.0');
         }
 
         document.getElementById('bookingForm').addEventListener('submit', async function(e) {
@@ -1580,14 +1565,12 @@
             alertBox.style.display = 'block';
 
             try {
-                await fetch('/api/book', {
+                fetch('/api/book', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, packageType, carType, shootRegion, phone, notes })
-                });
-            } catch (err) {
-                console.error('Error sending webhook');
-            }
+                }).catch(() => {});
+            } catch (err) {}
 
             currentSessions += 1;
             localStorage.setItem('sessionsCount', currentSessions);
@@ -1604,7 +1587,9 @@
                             (notes ? `- ملاحظات: ${notes}%0A` : '') +
                             `%0Aيرجى الانتظار لين ما يتواصل معك المصور ويتم التنسيق لتحديد الموعد. شكراً لاختيارك !`;
 
-            window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+            }, 600);
         });
     </script>
 </body>
