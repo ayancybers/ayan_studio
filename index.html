@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayan Studio - استوديو تصوير السيارات</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --primary: #006C35;
+            --secondary: #20c997;
+            --bg: #07120a;
+            --card-bg: #0e1d13;
+            --card-border: #183522;
+            --text-primary: #ffffff;
+            --text-secondary: #9ab0a1;
+            --nav-bg: rgba(7, 18, 10, 0.95);
+            --input-bg: #050d07;
+            --dropdown-bg: #0e1d13;
+            --dropdown-hover: #183522;
+            --hero-overlay: rgba(7, 18, 10, 0.85);
+            --hero-title-color: #ffffff;
+            --hero-desc-color: #9ab0a1;
+        }
+
+        [data-theme="na96"] {
+            --primary: #006C35;
+            --secondary: #228B22;
+            --bg: #061109;
+            --card-bg: #0d1a11;
+            --card-border: #1b3824;
+            --text-primary: #f0fdf4;
+            --text-secondary: #87a893;
+            --nav-bg: rgba(6, 17, 9, 0.95);
+            --input-bg: #040a06;
+            --dropdown-bg: #0d1a11;
+            --dropdown-hover: #1b3824;
+            --hero-overlay: rgba(6, 17, 9, 0.85);
+            --hero-title-color: #ffffff;
+            --hero-desc-color: #87a893;
+        }
+
+        [data-theme="dark"] {
+            --primary: #ff5252;
+            --secondary: #ff7979;
+            --bg: #0b0b14;
+            --card-bg: #141423;
+            --card-border: #232338;
+            --text-primary: #ffffff;
+            --text-secondary: #9a9ab0;
+            --nav-bg: rgba(11, 11, 20, 0.95);
+            --input-bg: #090910;
+            --dropdown-bg: #121225;
+            --dropdown-hover: #1c1c35;
+            --hero-overlay: rgba(11, 11, 20, 0.85);
+            --hero-title-color: #ffffff;
+            --hero-desc-color: #9a9ab0;
+        }
+
+        [data-theme="relax"] {
+            --primary: #3b82f6;
+            --secondary: #60a5fa;
+            --bg: #1a1a2e;
+            --card-bg: #16213e;
+            --card-border: #0f3460;
+            --text-primary: #e9ecef;
+            --text-secondary: #a2a8d3;
+            --nav-bg: rgba(26, 26, 46, 0.95);
+            --input-bg: #0f172a;
+            --dropdown-bg: #16213e;
+            --dropdown-hover: #0f3460;
+            --hero-overlay: rgba(26, 26, 46, 0.85);
+            --hero-title-color: #e9ecef;
+            --hero-desc-color: #a2a8d3;
+        }
+
+        [data-theme="light"] {
+            --primary: #1e293b;
+            --secondary: #334155;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --input-bg: #f1f5f9;
+            --dropdown-bg: #ffffff;
+            --dropdown-hover: #f1f5f9;
+            --hero-overlay: rgba(248, 250, 252, 0.88);
+            --hero-title-color: #0f172a;
+            --hero-desc-color: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            direction: rtl;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        input, textarea, select {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loader-content {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid color-mix(in srgb, var(--primary) 15%, transparent);
+            border-top: 3px solid var(--primary);
+            border-right: 3px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        .loader-logo {
+            width: 112px;
+            height: 112px;
+            object-fit: cover;
+            border-radius: 50%;
+            clip-path: circle(49% at center);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        nav {
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-img {
+            width: 38px;
+            height: 38px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background-color: #000;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .nav-center-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links-inline {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links-inline a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-links-inline a:hover {
+            color: var(--primary);
+        }
+
+        .custom-dropdown {
+            position: relative;
+            user-select: none;
+        }
+
+        .dropdown-trigger {
+            background: var(--dropdown-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-trigger:hover {
+            border-color: var(--primary);
+        }
+
+        .dropdown-arrow {
+            font-size: 7px;
+            transition: transform 0.3s ease;
+        }
+
+        .custom-dropdown.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--dropdown-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 175px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        [dir="ltr"] .dropdown-menu {
+            right: auto;
+            left: 0;
+        }
+
+        .custom-dropdown.open .dropdown-menu {
+            display: flex;
+        }
+
+        .dropdown-item {
+            padding: 9px 14px;
+            font-size: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--dropdown-hover);
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .btn-social-icon {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-social-icon:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            border-bottom: 1px solid var(--card-border);
+            padding: 50px 20px 40px;
+            text-align: center;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--hero-overlay);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--hero-title-color);
+        }
+
+        .hero p {
+            font-size: 14px;
+            color: var(--hero-desc-color);
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            min-width: 110px;
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .package-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .package-card.popular {
+            border-color: var(--primary);
+            box-shadow: 0 5px 20px color-mix(in srgb, var(--primary) 25%, transparent);
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                transform: translateY(0) scale(1);
+                box-shadow: 0 5px 15px color-mix(in srgb, var(--primary) 15%, transparent);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 12px 30px color-mix(in srgb, var(--primary) 35%, transparent);
+                border-color: var(--secondary);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                box-shadow: 0 5px 15px color-mix(in srgb, var(--primary) 15%, transparent);
+            }
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 50%;
+            transform: translateX(50%);
+            background: var(--primary);
+            color: white;
+            padding: 2px 14px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            animation: badgeBounce 2s infinite ease-in-out;
+        }
+
+        @keyframes badgeBounce {
+            0%, 100% { transform: translateX(50%) translateY(0); }
+            50% { transform: translateX(50%) translateY(-3px); }
+        }
+
+        .package-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .package-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        [dir="ltr"] .package-features {
+            text-align: left;
+        }
+
+        .package-features li {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        [dir="ltr"] .package-features li {
+            padding-right: 0;
+            padding-left: 20px;
+        }
+
+        .package-features li::before {
+            content: "✓";
+            color: var(--primary);
+            position: absolute;
+            right: 0;
+            font-weight: bold;
+        }
+
+        [dir="ltr"] .package-features li::before {
+            right: auto;
+            left: 0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-card {
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            margin: 0 auto 12px;
+            border-radius: 10px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .booking-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 650px;
+            margin: 0 auto;
+            border: 1px solid var(--card-border);
+        }
+
+        .booking-card h2 {
+            color: var(--primary);
+            margin-bottom: 18px;
+            font-size: 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-size: 13px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 11px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .submit-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .success-alert {
+            display: none;
+            background: color-mix(in srgb, var(--primary) 15%, transparent);
+            border: 1px solid var(--primary);
+            color: var(--text-primary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 13px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .instagram-feed {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .instagram-post {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 4px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .instagram-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px color-mix(in srgb, var(--primary) 15%, transparent);
+        }
+
+        .video-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .instagram-post video {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+        }
+
+        footer.site-footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--card-border);
+            padding: 40px 20px 25px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .footer-cta-container {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .footer-cta-container h2 {
+            font-size: 19px;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .footer-cta-container p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .footer-rights {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            direction: ltr;
+        }
+
+        .footer-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+            }
+            .footer-rights {
+                direction: rtl;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-center-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                flex-direction: column;
+                padding: 15px 20px;
+                border-bottom: 1px solid var(--card-border);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                gap: 12px;
+                align-items: stretch;
+            }
+            .nav-center-menu.active {
+                display: flex;
+            }
+            .nav-links-inline {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                width: 100%;
+            }
+            .nav-links-inline a {
+                font-size: 14px;
+                padding: 4px 0;
+            }
+            .custom-dropdown {
+                width: 100%;
+            }
+            .dropdown-trigger {
+                width: 100%;
+                justify-content: space-between;
+                padding: 8px 12px;
+            }
+            .dropdown-menu {
+                width: 100%;
+                position: static;
+                box-shadow: none;
+                margin-top: 5px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .instagram-feed { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 12px; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 22px; }
+            .hero p { font-size: 13px; }
+            .stat-item { min-width: 95px; padding: 8px 12px; }
+            .stat-number { font-size: 18px; }
+            .instagram-feed { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .booking-card { padding: 18px; }
+        }
+    </style>
+</head>
+
+<body data-theme="na96">
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('ayan_theme');
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+            }
+            const savedLang = localStorage.getItem('ayan_lang');
+            if (savedLang) {
+                document.documentElement.lang = savedLang;
+                document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
+            }
+        })();
+
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 123) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
+        });
+    </script>
+
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <img src="ayan.png" alt="Ayan Studio" class="loader-logo">
+        </div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="ayan.png" alt="Ayan Studio Logo" class="logo-img">
+                <span class="brand-name">Ayan Studio</span>
+            </a>
+
+            <div class="nav-center-menu" id="navMenu">
+                <div class="nav-links-inline">
+                    <a href="#services" data-key="nav-services">الخدمات والأسعار</a>
+                    <a href="#features" data-key="nav-features">المميزات</a>
+                    <a href="#booking" data-key="nav-booking">الحجز</a>
+                    <a href="#instagram" data-key="nav-gallery">المعرض</a>
+                </div>
+
+                <div class="custom-dropdown" id="themeDropdown">
+                    <div class="dropdown-trigger" onclick="toggleDropdown('themeDropdown')">
+                        <span id="currentThemeLabel">اليوم الوطني السعودي 💚</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item" onclick="selectTheme('na96', 'na96')" data-key="theme-na96">اليوم الوطني السعودي 💚</div>
+                        <div class="dropdown-item" onclick="selectTheme('dark', 'dark')" data-key="theme-dark">داكن 🌙</div>
+                        <div class="dropdown-item" onclick="selectTheme('relax', 'relax')" data-key="theme-relax">مريح 🍃</div>
+                        <div class="dropdown-item" onclick="selectTheme('light', 'light')" data-key="theme-light">فاتح ☀️</div>
+                    </div>
+                </div>
+
+                <div class="custom-dropdown" id="langDropdown">
+                    <div class="dropdown-trigger" onclick="toggleDropdown('langDropdown')">
+                        <span id="currentLangLabel">العربية SA</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item" onclick="selectLanguage('ar', 'العربية SA')">العربية SA</div>
+                        <div class="dropdown-item" onclick="selectLanguage('en', 'English US')">English US</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="https://wa.me/966565117739" class="btn-social-icon" target="_blank">
+                    💬 <span data-key="btn-quick-book">الحجز السريع</span>
+                </a>
+                <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Menu">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-video-bg">
+            <video autoplay loop muted playsinline>
+                <source src="video1.mp4" type="video/mp4">
+                متصفحك لا يدعم عرض الفيديو
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 data-key="hero-title">حجز جلسات تصوير سيارات احترافية</h1>
+            <p data-key="hero-desc">احجز جلستك الآن واستمتع بأجمل التغطيات والسينمائيات لسيارتك</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="sessionsCount">0</div>
+                    <div class="stat-label" data-key="stat-sessions">جلسات تم تنفيذها</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="supportHours">0</div>
+                    <div class="stat-label" data-key="stat-support">ساعات الدعم الفني</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="ratingScore">0</div>
+                    <div class="stat-label" data-key="stat-rating">التقييم العام</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="services" class="section">
+        <div class="section-title">
+            <h2 data-key="packages-header">الخدمات وباقات الأسعار</h2>
+            <p data-key="packages-sub">اختر الباقة المناسبة لاحتياجك وتفاصيل سيارتك</p>
+        </div>
+
+        <div class="packages-grid">
+            <div class="package-card">
+                <h3 class="package-title" data-key="pkg1-title">الباقة الأولى</h3>
+                <div class="package-price" data-key="pkg1-price">150 ريال</div>
+                <ul class="package-features">
+                    <li data-key="pkg1-f1">تصوير وتصميم فيديو ريلز احترافي</li>
+                    <li data-key="pkg1-f2">تصوير زوايا متعددة (جلسة مدتها ~15 دقيقة)</li>
+                    <li data-key="pkg1-f3">تعديل ألوان واحترافي</li>
+                    <li data-key="pkg1-f4">تسليم خلال 24 ساعة</li>
+                </ul>
+                <a href="#booking" onclick="selectPackageFromCard('الباقة الأولى - 150 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
+            </div>
+
+            <div class="package-card popular">
+                <div class="popular-badge" data-key="popular-tag">الأكثر طلباً</div>
+                <h3 class="package-title" data-key="pkg3-title">الباقة الثالثة</h3>
+                <div class="package-price" data-key="pkg3-price">250 ريال</div>
+                <ul class="package-features">
+                    <li data-key="pkg3-f1">تصوير لقطات متكاملة + تصميم فيديو ريلز</li>
+                    <li data-key="pkg3-f2">اختيار الوضعيات المناسبة للسيارة</li>
+                    <li data-key="pkg3-f3">تعديل ألوان واحترافي كامل</li>
+                    <li data-key="pkg3-f4">تظبيط وتنسيق جلسة كاملة بالمختصر</li>
+                    <li data-key="pkg3-f5">إرسال جميع اللقطات بنفس الوقت</li>
+                    <li data-key="pkg3-f6">تسليم خلال أقرب وقت ممكن (الحد الأقصى 8 ساعات)</li>
+                </ul>
+                <a href="#booking" onclick="selectPackageFromCard('الباقة الثالثة - 250 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
+            </div>
+
+            <div class="package-card">
+                <h3 class="package-title" data-key="pkg2-title">الباقة الثانية</h3>
+                <div class="package-price" data-key="pkg2-price">200 ريال</div>
+                <ul class="package-features">
+                    <li data-key="pkg2-f1">تصوير وتصميم فيديو ريلز احترافي</li>
+                    <li data-key="pkg2-f2">تصوير زوايا متعددة (جلسة مدتها ~30 دقيقة)</li>
+                    <li data-key="pkg2-f3">تعديل ألوان واحترافي</li>
+                    <li data-key="pkg2-f4">إرسال جميع اللقطات بنفس الوقت</li>
+                    <li data-key="pkg2-f5">تسليم خلال 12 ساعة</li>
+                </ul>
+                <a href="#booking" onclick="selectPackageFromCard('الباقة الثانية - 200 ريال')" class="btn-social-icon" style="display: block; text-align: center;" data-key="btn-select-pkg">اختر الباقة</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="section-title">
+            <h2 data-key="feat-title">لماذا تختارنا</h2>
+            <p data-key="feat-sub">مميزات تضمن لك أفضل نتيجة لتصوير سيارتك</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📷</div>
+                <h3 data-key="f1-title">جلسات احترافية</h3>
+                <p data-key="f1-desc">معدات وعدسات مخصصة لإبراز تفاصيل وجماليات السيارة</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 data-key="f2-title">سرعة التسليم</h3>
+                <p data-key="f2-desc">معالجة وتجميع الفيديوهات والصور بأعلى جودة بوقت قياسي</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3 data-key="f3-title">تواصل مباشر</h3>
+                <p data-key="f3-desc">حجز ومتابعة سهلة ومرنة ومباشرة عبر الواتساب</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="section">
+        <div class="section-title">
+            <h2 data-key="booking-title">احجز جلستك الآن</h2>
+            <p data-key="booking-sub">املأ البيانات وسيتم تحويلك مباشرة للواتساب للتنسيق مع المصور</p>
+        </div>
+
+        <div class="booking-card">
+            <h2 data-key="form-header">استمارة الحجز الفوري</h2>
+
+            <div id="successAlert" class="success-alert" data-key="success-msg">
+                ✨ تم استقبال طلبك بنجاح! جاري تحويلك للواتساب الآن...
+            </div>
+
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label data-key="label-name">اسمك الكامل</label>
+                    <input type="text" id="fullName" required data-placeholder-key="name-placeholder" placeholder="اسمك بالكامل">
+                </div>
+
+                <div class="form-group">
+                    <label data-key="label-package">اختر الباقة</label>
+                    <select id="packageType" required>
+                        <option value="" data-key="opt-select-pkg">اختر الباقة المطلوبة</option>
+                        <option value="الباقة الأولى - 150 ريال" data-key="opt-pkg1">الباقة الأولى (150 ريال)</option>
+                        <option value="الباقة الثانية - 200 ريال" data-key="opt-pkg2">الباقة الثانية (200 ريال)</option>
+                        <option value="الباقة الثالثة - 250 ريال" data-key="opt-pkg3">الباقة الثالثة (250 ريال)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-key="label-car">نوع السيارة</label>
+                        <select id="carType" required>
+                            <option value="" data-key="opt-select-car">اختر نوع السيارة</option>
+                            <option value="سيدان" data-key="car-sedan">سيدان</option>
+                            <option value="SUV" data-key="car-suv">SUV</option>
+                            <option value="كوبيه" data-key="car-coupe">كوبيه</option>
+                            <option value="فاخر / رياضي" data-key="car-luxury">فاخر / رياضي</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-key="label-region">منطقة التصوير</label>
+                        <select id="shootRegion" required>
+                            <option value="" data-key="opt-select-region">اختر المنطقة</option>
+                            <option value="القطيف" data-key="reg-qatif">القطيف</option>
+                            <option value="سيهات" data-key="reg-saihat">سيهات</option>
+                            <option value="الدمام" data-key="reg-dammam">الدمام</option>
+                            <option value="الخبر" data-key="reg-khobar">الخبر</option>
+                            <option value="حفر الباطن" data-key="reg-hafr">حفر الباطن</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-key="label-phone">رقم الواتساب</label>
+                    <input type="tel" id="phone" required placeholder="05xxxxxxxx" pattern="[0-9]{9,12}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+
+                <div class="form-group">
+                    <label data-key="label-notes">ملاحظات إضافية (اختياري)</label>
+                    <textarea id="notes" rows="3" data-placeholder-key="notes-placeholder" placeholder="هل لديك زوايا معينة أو طلبات خاصة؟"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="submit-btn" data-key="btn-submit">
+                    إرسال طلب الحجز وتأكيد الواتساب
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section id="instagram" class="section">
+        <div class="section-title">
+            <h2 data-key="insta-title">تابعونا على إنستغرام</h2>
+            <p data-key="insta-sub">أحدث الجلسات والفيديوهات الطولية السينمائية</p>
+        </div>
+        <div class="instagram-feed">
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video1.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video2.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video3.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video4.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video5.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video6.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video7.mp4" type="video/mp4"></video></div></div>
+            <div class="instagram-post"><div class="video-container"><video autoplay loop muted playsinline><source src="video8.mp4" type="video/mp4"></video></div></div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-cta-container">
+            <h2 data-key="cta-title">جاهز لتوثيق جمال سيارتك؟</h2>
+            <p data-key="cta-desc">تواصل معنا وحجز موعدك اليوم لتغطية سينمائية كاملة</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/966565117739?text=أود_حجز_جلسة_تصوير" class="btn-social-icon" target="_blank">
+                    💬 <span data-key="cta-wa">احجز الآن عبر الواتساب</span>
+                </a>
+                <a href="https://instagram.com/13345" class="btn-social-icon" target="_blank">
+                    📸 <span data-key="btn-insta">إنستغرام</span>
+                </a>
+                <a href="https://snapchat.com/t/X5MMpU6W" class="btn-social-icon" target="_blank">
+                    👻 <span data-key="btn-snap">سناب شات</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-rights">
+                <span>AYAN</span>
+                <span>2024</span>
+                <span>©</span>
+            </div>
+            <div class="footer-location">
+                <span data-key="footer-location">المنطقة الشرقية، المملكة العربية السعودية</span>
+                <span class="footer-dot"></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            ar: {
+                "nav-services": "الخدمات والأسعار",
+                "nav-features": "المميزات",
+                "nav-booking": "الحجز",
+                "nav-gallery": "المعرض",
+                "btn-quick-book": "الحجز السريع",
+                "btn-insta": "إنستغرام",
+                "btn-snap": "سناب شات",
+                "theme-na96": "اليوم الوطني السعودي 💚",
+                "theme-dark": "داكن 🌙",
+                "theme-relax": "مريح 🍃",
+                "theme-light": "فاتح ☀️",
+                "hero-title": "حجز جلسات تصوير سيارات احترافية",
+                "hero-desc": "احجز جلستك الآن واستمتع بأجمل التغطيات والسينمائيات لسيارتك",
+                "stat-sessions": "جلسات تم تنفيذها",
+                "stat-support": "ساعات الدعم الفني",
+                "stat-rating": "التقييم العام",
+                "packages-header": "الخدمات وباقات الأسعار",
+                "packages-sub": "اختر الباقة المناسبة لاحتياجك وتفاصيل سيارتك",
+                "pkg1-title": "الباقة الأولى",
+                "pkg1-price": "150 ريال",
+                "pkg1-f1": "تصوير وتصميم فيديو ريلز احترافي",
+                "pkg1-f2": "تصوير زوايا متعددة (جلسة مدتها ~15 دقيقة)",
+                "pkg1-f3": "تعديل ألوان واحترافي",
+                "pkg1-f4": "تسليم خلال 24 ساعة",
+                "pkg2-title": "الباقة الثانية",
+                "pkg2-price": "200 ريال",
+                "pkg2-f1": "تصوير وتصميم فيديو ريلز احترافي",
+                "pkg2-f2": "تصوير زوايا متعددة (جلسة مدتها ~30 دقيقة)",
+                "pkg2-f3": "تعديل ألوان واحترافي",
+                "pkg2-f4": "إرسال جميع اللقطات بنفس الوقت",
+                "pkg2-f5": "تسليم خلال 12 ساعة",
+                "popular-tag": "الأكثر طلباً",
+                "pkg3-title": "الباقة الثالثة",
+                "pkg3-price": "250 ريال",
+                "pkg3-f1": "تصوير لقطات متكاملة + تصميم فيديو ريلز",
+                "pkg3-f2": "اختيار الوضعيات المناسبة للسيارة",
+                "pkg3-f3": "تعديل ألوان واحترافي كامل",
+                "pkg3-f4": "تظبيط وتنسيق جلسة كاملة بالمختصر",
+                "pkg3-f5": "إرسال جميع اللقطات بنفس الوقت",
+                "pkg3-f6": "تسليم خلال أقرب وقت ممكن (الحد الأقصى 8 ساعات)",
+                "btn-select-pkg": "اختر الباقة",
+                "booking-title": "احجز جلستك الآن",
+                "booking-sub": "املأ البيانات وسيتم تحويلك مباشرة للواتساب للتنسيق مع المصور",
+                "form-header": "استمارة الحجز الفوري",
+                "success-msg": "✨ تم استقبال طلبك بنجاح! جاري تحويلك للواتساب الآن...",
+                "label-name": "اسمك الكامل",
+                "name-placeholder": "اسمك بالكامل",
+                "label-package": "اختر الباقة",
+                "opt-select-pkg": "اختر الباقة المطلوبة",
+                "opt-pkg1": "الباقة الأولى (150 ريال)",
+                "opt-pkg2": "الباقة الثانية (200 ريال)",
+                "opt-pkg3": "الباقة الثالثة (250 ريال)",
+                "label-car": "نوع السيارة",
+                "opt-select-car": "اختر نوع السيارة",
+                "car-sedan": "سيدان",
+                "car-suv": "SUV",
+                "car-coupe": "كوبيه",
+                "car-luxury": "فاخر / رياضي",
+                "label-region": "منطقة التصوير",
+                "opt-select-region": "اختر المنطقة",
+                "reg-qatif": "القطيف",
+                "reg-saihat": "سيهات",
+                "reg-dammam": "الدمام",
+                "reg-khobar": "الخبر",
+                "reg-hafr": "حفر الباطن",
+                "label-phone": "رقم الواتساب",
+                "label-notes": "ملاحظات إضافية (اختياري)",
+                "notes-placeholder": "هل لديك زوايا معينة أو طلبات خاصة؟",
+                "btn-submit": "إرسال طلب الحجز وتأكيد الواتساب",
+                "feat-title": "لماذا تختارنا",
+                "feat-sub": "مميزات تضمن لك أفضل نتيجة لتصوير سيارتك",
+                "f1-title": "جلسات احترافية",
+                "f1-desc": "معدات وعدسات مخصصة لإبراز تفاصيل وجماليات السيارة",
+                "f2-title": "سرعة التسليم",
+                "f2-desc": "معالجة وتجميع الفيديوهات والصور بأعلى جودة بوقت قياسي",
+                "f3-title": "تواصل مباشر",
+                "f3-desc": "حجز ومتابعة سهلة ومرنة ومباشرة عبر الواتساب",
+                "cta-title": "جاهز لتوثيق جمال سيارتك؟",
+                "cta-desc": "تواصل معنا وحجز موعدك اليوم لتغطية سينمائية كاملة",
+                "cta-wa": "احجز الآن عبر الواتساب",
+                "insta-title": "تابعونا على إنستغرام",
+                "insta-sub": "أحدث الجلسات والفيديوهات الطولية السينمائية",
+                "footer-location": "المنطقة الشرقية، المملكة العربية السعودية"
+            },
+            en: {
+                "nav-services": "Services & Rates",
+                "nav-features": "Features",
+                "nav-booking": "Booking",
+                "nav-gallery": "Gallery",
+                "btn-quick-book": "Quick Booking",
+                "btn-insta": "Instagram",
+                "btn-snap": "Snapchat",
+                "theme-na96": "Saudi National Day 96 💚",
+                "theme-dark": "Dark 🌙",
+                "theme-relax": "Relax 🍃",
+                "theme-light": "Light ☀️",
+                "hero-title": "Book Professional Car Shoot Sessions",
+                "hero-desc": "Book your session now and enjoy cinematic automotive coverage",
+                "stat-sessions": "Completed Sessions",
+                "stat-support": "Support Hours",
+                "stat-rating": "Overall Rating",
+                "packages-header": "Services & Packages",
+                "packages-sub": "Choose the best package for your car requirements",
+                "pkg1-title": "Package 1",
+                "pkg1-price": "150 SAR",
+                "pkg1-f1": "Professional Shooting & Reels Design",
+                "pkg1-f2": "Multi-angle shooting (~15 mins duration)",
+                "pkg1-f3": "Professional Color Grading",
+                "pkg1-f4": "Delivery within 24 Hours",
+                "pkg2-title": "Package 2",
+                "pkg2-price": "200 SAR",
+                "pkg2-f1": "Professional Shooting & Reels Design",
+                "pkg2-f2": "Multi-angle shooting (~30 mins duration)",
+                "pkg2-f3": "Professional Color Grading",
+                "pkg2-f4": "Send all footage at once",
+                "pkg2-f5": "Delivery within 12 Hours",
+                "popular-tag": "Most Popular",
+                "pkg3-title": "Package 3",
+                "pkg3-price": "250 SAR",
+                "pkg3-f1": "Full shots coverage + Reels video design",
+                "pkg3-f2": "Custom car angles and posing setup",
+                "pkg3-f3": "Full Professional Color Correction",
+                "pkg3-f4": "Complete session setup and coordination",
+                "pkg3-f5": "Send all footage at once",
+                "pkg3-f6": "Express delivery as soon as possible (Max 8 hours)",
+                "btn-select-pkg": "Select Package",
+                "booking-title": "Book Your Session Now",
+                "booking-sub": "Fill in your details to be redirected to WhatsApp for scheduling",
+                "form-header": "Instant Booking Form",
+                "success-msg": "✨ Request received successfully! Redirecting to WhatsApp...",
+                "label-name": "Full Name",
+                "name-placeholder": "Your full name",
+                "label-package": "Select Package",
+                "opt-select-pkg": "Select Preferred Package",
+                "opt-pkg1": "Package 1 (150 SAR)",
+                "opt-pkg2": "Package 2 (200 SAR)",
+                "opt-pkg3": "Package 3 (250 SAR)",
+                "label-car": "Car Model / Type",
+                "opt-select-car": "Select Car Type",
+                "car-sedan": "Sedan",
+                "car-suv": "SUV",
+                "car-coupe": "Coupe",
+                "car-luxury": "Luxury / Sport",
+                "label-region": "Shoot Region",
+                "opt-select-region": "Select Region",
+                "reg-qatif": "Qatif",
+                "reg-saihat": "Saihat",
+                "reg-dammam": "Dammam",
+                "reg-khobar": "Khobar",
+                "reg-hafr": "Hafr Al Batin",
+                "label-phone": "WhatsApp Number",
+                "label-notes": "Additional Notes (Optional)",
+                "notes-placeholder": "Do you have specific angles or special requests?",
+                "btn-submit": "Submit Booking & Confirm WhatsApp",
+                "feat-title": "Why Choose Us",
+                "feat-sub": "Features that guarantee the best results for your vehicle",
+                "f1-title": "Professional Shoots",
+                "f1-desc": "Dedicated cameras and lenses to showcase car details",
+                "f2-title": "Fast Delivery",
+                "f2-desc": "Editing and rendering delivered in record time",
+                "f3-title": "Direct Contact",
+                "f3-desc": "Flexible booking and follow-up via WhatsApp",
+                "cta-title": "Ready to Capture Your Car?",
+                "cta-desc": "Get in touch today to schedule your cinematic session",
+                "cta-wa": "Book via WhatsApp Now",
+                "insta-title": "Follow Us On Instagram",
+                "insta-sub": "Latest cinematic reels and photoshoots",
+                "footer-location": "Eastern Province, Saudi Arabia"
+            }
+        };
+
+        function toggleDropdown(id) {
+            const el = document.getElementById(id);
+            const isOpen = el.classList.contains('open');
+            closeAllDropdowns();
+            if (!isOpen) el.classList.add('open');
+        }
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('open'));
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-dropdown') && !e.target.closest('.menu-toggle')) {
+                closeAllDropdowns();
+            }
+        });
+
+        function selectLanguage(lang, label) {
+            document.getElementById('currentLangLabel').textContent = label;
+            closeAllDropdowns();
+            
+            localStorage.setItem('ayan_lang', lang);
+            localStorage.setItem('ayan_lang_label', label);
+
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-key]').forEach(elem => {
+                const key = elem.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-placeholder-key]').forEach(elem => {
+                const key = elem.getAttribute('data-placeholder-key');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.placeholder = translations[lang][key];
+                }
+            });
+
+            const currentTheme = document.body.getAttribute('data-theme');
+            const themeKeyMap = {
+                'na96': 'theme-na96',
+                'dark': 'theme-dark',
+                'relax': 'theme-relax',
+                'light': 'theme-light'
+            };
+            if (themeKeyMap[currentTheme] && translations[lang][themeKeyMap[currentTheme]]) {
+                document.getElementById('currentThemeLabel').textContent = translations[lang][themeKeyMap[currentTheme]];
+            }
+        }
+
+        function selectTheme(theme, themeKey) {
+            const lang = document.documentElement.lang || 'ar';
+            const translatedLabel = translations[lang]['theme-' + themeKey] || themeKey;
+            
+            document.getElementById('currentThemeLabel').textContent = translatedLabel;
+            closeAllDropdowns();
+            document.body.setAttribute('data-theme', theme);
+
+            localStorage.setItem('ayan_theme', theme);
+            localStorage.setItem('ayan_theme_key', themeKey);
+        }
+
+        function selectPackageFromCard(pkgName) {
+            const pkgSelect = document.getElementById('packageType');
+            if (pkgSelect) {
+                pkgSelect.value = pkgName;
+            }
+        }
+
+        window.addEventListener('load', function() {
+            const savedLang = localStorage.getItem('ayan_lang');
+            const savedLangLabel = localStorage.getItem('ayan_lang_label');
+            if (savedLang && savedLangLabel) {
+                selectLanguage(savedLang, savedLangLabel);
+            }
+
+            const savedThemeKey = localStorage.getItem('ayan_theme_key');
+            if (savedThemeKey) {
+                const lang = document.documentElement.lang || 'ar';
+                const translatedLabel = translations[lang]['theme-' + savedThemeKey];
+                if (translatedLabel) {
+                    document.getElementById('currentThemeLabel').textContent = translatedLabel;
+                }
+            }
+
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.classList.add('loader-hidden');
+                startCounters();
+            }, 800);
+        });
+
+        let currentSessions = parseInt(localStorage.getItem('sessionsCount')) || 25;
+
+        function animateValue(element, start, end, duration, isDecimal = false, suffix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                let value = progress * (end - start) + start;
+                
+                if (isDecimal) {
+                    element.innerHTML = value.toFixed(1) + suffix;
+                } else {
+                    element.innerHTML = Math.floor(value) + suffix;
+                }
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function startCounters() {
+            const sessionsElem = document.getElementById('sessionsCount');
+            const supportElem = document.getElementById('supportHours');
+            const ratingElem = document.getElementById('ratingScore');
+
+            if (sessionsElem) animateValue(sessionsElem, 0, currentSessions, 1200, false, '+');
+            if (supportElem) animateValue(supportElem, 0, 24, 1200, false, 'h');
+            if (ratingElem) animateValue(ratingElem, 0, 4.9, 1200, true, ' / 5.0');
+        }
+
+        document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const lastSubmitTime = localStorage.getItem('last_submit_time');
+            const now = Date.now();
+            if (lastSubmitTime && (now - lastSubmitTime < 15000)) {
+                alert('⚠️ يرجى الانتظار قليلاً قبل إرسال طلب آخر لمنع الضغط والـ Spam.');
+                return;
+            }
+
+            const name = document.getElementById('fullName').value.trim();
+            const packageType = document.getElementById('packageType').value;
+            const carType = document.getElementById('carType').value;
+            const shootRegion = document.getElementById('shootRegion').value;
+            const phone = document.getElementById('phone').value.trim();
+            const notes = document.getElementById('notes').value.trim();
+
+            if (!name || !packageType || !carType || !shootRegion || !phone) {
+                alert('يرجى تعبئة الحقول الإجبارية!');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            localStorage.setItem('last_submit_time', now);
+
+            const alertBox = document.getElementById('successAlert');
+            alertBox.style.display = 'block';
+
+            try {
+                await fetch('/api/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, packageType, carType, shootRegion, phone, notes })
+                });
+            } catch (err) {
+                console.error('Error sending webhook');
+            }
+
+            currentSessions += 1;
+            localStorage.setItem('sessionsCount', currentSessions);
+            const sessionsElem = document.getElementById('sessionsCount');
+            if (sessionsElem) sessionsElem.innerHTML = currentSessions + '+';
+
+            const whatsappNumber = "966565117739";
+            const message = `مرحباً، تم استقبال طلب حجز جلسة تصوير:%0A` +
+                            `- الاسم: ${name}%0A` +
+                            `- الباقة: ${packageType}%0A` +
+                            `- نوع السيارة: ${carType}%0A` +
+                            `- منطقة التصوير: ${shootRegion}%0A` +
+                            `- رقم التواصل: ${phone}%0A` +
+                            (notes ? `- ملاحظات: ${notes}%0A` : '') +
+                            `%0Aيرجى الانتظار لين ما يتواصل معك المصور ويتم التنسيق لتحديد الموعد. شكراً لاختيارك !`;
+
+            window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
+        });
+    </script>
+</body>
+</html>
