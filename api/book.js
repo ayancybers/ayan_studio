@@ -3,15 +3,32 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+
+
     const { name, packageType, carType, shootRegion, phone, notes } = req.body;
 
     const webhookUrl = process.env.webhook;
+
+    const translations = {
+                ar: {
+                    "pkgRoyal-old-price": "250 ريال",
+                    "pkgRoyal-price": "196 ريال",
+                },
+                en: {
+                    "pkgRoyal-old-price": "250 SAR",
+                    "pkgRoyal-price": "196 SAR",
+                }
+            };
+
+
 
     if (!webhookUrl) {
         console.error('Webhook URL is missing in environment variables');
         return res.status(500).json({ error: 'Server configuration error' });
     }
 
+
+    
     const discordPayload = {
         embeds: [
             {
