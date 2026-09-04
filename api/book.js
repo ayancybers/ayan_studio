@@ -16,13 +16,13 @@ export default async function handler(req, res) {
         embeds: [
             {
                 title: '📸 طلب حجز جلسة تصوير جديد',
-                color: 0x00ff00, 
+                color: 27827,
                 fields: [
                     { name: '👤 الاسم', value: name || 'غير محدد', inline: true },
                     { name: '📱 رقم التواصل', value: phone || 'غير محدد', inline: true },
                     { name: '📦 الباقة', value: packageType || 'غير محدد', inline: true },
                     { name: '🚗 نوع السيارة', value: carType || 'غير محدد', inline: true },
-                    { name: '📍 منطقة التصوير', value: shootRegion || 'غير محدد', inline: true },
+                    { name: "📱 رقم التواصل (واتساب)", value: `[${phone}](https://wa.me/966${phone.replace(/^0/, '')})`, inline: false },
                     { name: '💬 ملاحظات', value: notes || 'لا توجد ملاحظات', inline: false }
                 ],
                 timestamp: new Date().toISOString()
