@@ -5,15 +5,19 @@ export default async function handler(req, res) {
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
 
+    if (req.method !== 'POST' && req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
+
     try {
         const totalVisits = await kv.incr('site_visits');
 
         const userAgent = req.body?.userAgent || req.headers['user-agent'] || 'Unknown';
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
 
-        const country = req.headers['x-vercel-ip-country'] || 'غير حدد';
-        const region = req.headers['x-vercel-ip-country-region'] || 'غير حدد';
-        const city = req.headers['x-vercel-ip-city'] || 'غير حدد';
+        const country = req.headers['x-vercel-ip-country'] || 'غير محدد';
+        const region = req.headers['x-vercel-ip-country-region'] || 'غير محدد';
+        const city = req.headers['x-vercel-ip-city'] || 'غير محدد';
 
         const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
         if (discordWebhookUrl) {
@@ -22,14 +26,14 @@ export default async function handler(req, res) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     embeds: [{
-                        title: "👀 زيارة جديدة للموقع!",
+                        title: "👀 زيارة جديدة إلى Ayan Studio",
                         color: 3066993,
                         fields: [
-                            { name: "إجمالي الزيارات", value: `**${totalVisits}**`, inline: true },
+                            { name: "📊 إجمالي الزيارات", value: `**${totalVisits}**`, inline: true },
                             { name: "🌍 الدولة", value: country, inline: true },
                             { name: "🏙️ المدينة / المنطقة", value: `${city}, ${region}`, inline: true },
-                            { name: "عنوان الـ IP", value: ip, inline: true },
-                            { name: "نوع المتصفح والجهاز", value: userAgent }
+                            { name: "🌐 عنوان الـ IP", value: ip, inline: false },
+                            { name: "💻 المتصفح والجهاز", value: userAgent, inline: false }
                         ],
                         timestamp: new Date().toISOString()
                     }]
