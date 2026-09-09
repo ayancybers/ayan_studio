@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Ayan Studio | موقع تصوير سيارات في الدمام والخبر وحفر الباطن</title>
 
-    <meta name="description" content="استوديو Ayan Studio لتصوير وتوثيق السيارات سينمائياً وتصميم فيديوهات الريلز. احجز جلستك الآن في الدمام، الخبر، وحفر الباطن.">
-    <meta name="keywords" content="موقع تصوير سيارات, تصوير سيارات الدمام, استوديو تصوير سيارات الخبر, مصور سيارات حفر الباطن, Ayan Studio">
+    <title>Ayan Studio | موقع تصوير سيارات | استوديو تصوير السيارات الاحترافي</title>
+
+    <meta name="description" content="موقع تصوير سيارات Ayan Studio. أفضل موقع تصوير واستديو تصوير سيارات وتوثيق سينمائي وفيديوهات ريلز. احجز جلستك الآن في الدمام، الخبر، والقطيف، وحفر الباطن.">
+    <meta name="keywords" content="موقع تصوير سيارات, موقع تصوير, موقع ايان, تصوير سيارات, استديو تصوير سيارات, استوديو تصوير السيارات, ستديو تصوير, مصور سيارات حفر الباطن, تصوير سيارات الدمام, استوديو تصوير سيارات الخبر, ريلز سيارات, Ayan Studio">
     <meta name="author" content="Ayan Studio">
 
-
+    <link rel="icon" type="image/png" href="ayan.png">
+    <link rel="apple-touch-icon" href="ayan.png">
     
+    <meta property="og:title" content="Ayan Studio - موقع تصوير سيارات واستوديو احترافي">
+    <meta property="og:description" content="احجز جلستك الآن في موقع تصوير سيارات Ayan Studio واستمتع بأجمل التغطيات والسينمائيات لسيارتك بأفضل الأسعار.">
+    <meta property="og:image" content="ayan.png">
+    
+   
     <link rel="icon" type="image/png" href="https://f.top4top.io/p_3899us4ep9.png">
     <link rel="apple-touch-icon" href="https://f.top4top.io/p_3899us4ep9.png">
 
@@ -932,6 +938,19 @@
     </style>
 </head>
 
+<script>
+    window.addEventListener('load', function() {
+        if (!sessionStorage.getItem('visit_logged')) {
+            sessionStorage.setItem('visit_logged', 'true');
+            fetch('/api/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userAgent: navigator.userAgent })
+            }).catch(() => {});
+        }
+    });
+</script>
+    
 <body data-theme="na96">
 
     <script>
@@ -1440,6 +1459,9 @@
                 "load-msg-3": "Almost ready, get set to go! 🚀"
             }
         };
+
+
+
 
         function toggleDropdown(id) {
             const el = document.getElementById(id);
