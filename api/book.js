@@ -10,6 +10,8 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
+        const cleanPhone = phone.startsWith('0') ? '966' + phone.slice(1) : phone;
+
         const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
         if (discordWebhookUrl) {
             await fetch(discordWebhookUrl, {
@@ -24,16 +26,19 @@ export default async function handler(req, res) {
                             { name: "📦 الباقة المختارة", value: packageType, inline: true },
                             { name: "🚙 نوع السيارة", value: carType, inline: true },
                             { name: "📍 منطقة التصوير", value: shootRegion, inline: true },
-                            { name: "📱 رقم الواتساب", value: phone, inline: true },
-                            { name: "📝 ملاحظات إضافية", value: notes || "لا توجد ملاحظات" }
+                            { name: "📱 رقم الواتساب", value: `[${phone}](https://wa.me/${cleanPhone})`, inline: true },
+                            { name: "📝 ملاحظات إضافية", value: notes || "لا توجد ملاحظات", inline: false }
                         ],
+                        footer: {
+                            text: "Ayan Studio Booking System"
+                        },
                         timestamp: new Date().toISOString()
                     }]
                 })
             }).catch(() => {});
         }
 
-        return res.status(200).json({ success: true, message: 'Booking received successfully' });
+        return res.status(200).json({ success: type = true, message: 'Booking received successfully' });
     } catch (error) {
         console.error('Booking error:', error);
         return res.status(500).json({ error: 'Internal server error' });
