@@ -2,48 +2,45 @@ import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
 
     if (req.method !== 'POST' && req.method !== 'GET') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const totalVisits = await kv.incr('site_visits');
+        const totalVisits = await kv.incr('site_visits') || 1421;
 
         const userAgent = req.body?.userAgent || req.headers['user-agent'] || 'Unknown';
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
 
-        const country = req.headers['x-vercel-ip-country'] || 'غير محدد';
-        const region = req.headers['x-vercel-ip-country-region'] || 'غير محدد';
-        const city = req.headers['x-vercel-ip-city'] || 'غير محدد';
+        const webhookUrl = process.env.webhook || process.env.DISCORD_WEBHOOK_URL;
 
-        const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
-        if (discordWebhookUrl) {
-            await fetch(discordWebhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    embeds: [{
-                        title: "👀 زيارة جديدة إلى Ayan Studio",
-                        color: 3066993,
+        if (webhookUrl) {
+            const discordPayload = {
+                embeds: [
+                    {
+                        title: '🚨 زائر جديد دخل إلى الموقع',
+                        color: 15158332,
                         fields: [
-                            { name: "📊 إجمالي الزيارات", value: `**${totalVisits}**`, inline: true },
-                            { name: "🌍 الدولة", value: country, inline: true },
-                            { name: "🏙️ المدينة / المنطقة", value: `${city}, ${region}`, inline: true },
-                            { name: "🌐 عنوان الـ IP", value: ip, inline: false },
-                            { name: "💻 المتصفح والجهاز", value: userAgent, inline: false }
+                            { name: '🌐 عنوان الـ IP', value: `\`${ip}\``, inline: false },
+                            { name: '💻 معلومات الجهاز والمتصفح', value: `\`${userAgent}\``, inline: false },
+                            { name: '📊 إجمالي الزيارات الحالي', value: `\`${totalVisits}\``, inline: false }
                         ],
                         timestamp: new Date().toISOString()
-                    }]
-                })
+                    }
+                ]
+            };
+
+            await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(discordPayload)
             }).catch(() => {});
         }
 
-        return res.status(200).json({ success: true, visits: totalVisits, location: { country, region, city } });
+        return res.status(200).json({ success: true, visits: totalVisits });
     } catch (error) {
         console.error('Log error:', error);
-        return res.status(200).json({ success: true, visits: 1421, error: error.message });
+        return res.status(200).json({ success: true, visits: 1421 });
     }
 }
