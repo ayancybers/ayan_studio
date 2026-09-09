@@ -3,44 +3,49 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    const { name, packageType, carType, shootRegion, phone, notes } = req.body;
+    const webhookUrl = process.env.webhook || process.env.DISCORD_WEBHOOK_URL;
+
+    if (!webhookUrl) {
+        console.error('Webhook URL is missing in environment variables');
+        return res.status(500).json({ error: 'Server configuration error' });
+    }
+
+    const discordPayload = {
+        embeds: [
+            {
+                title: '📸 طلب حجز جلسة تصوير جديد',
+                color: 27827,
+                fields: [
+                    { name: '👤 الاسم', value: name || 'غير محدد', inline: true },
+                    { name: '📱 رقم التواصل', value: phone || 'غير محدد', inline: true },
+                    { name: '📦 الباقة', value: packageType || 'غير محدد', inline: true },
+                    { name: '🚗 نوع السيارة', value: carType || 'غير محدد', inline: true },
+                    { name: '📍 منطقة التصوير', value: shootRegion || 'غير محدد', inline: true },
+                    { name: '💬 ملاحظات', value: notes || 'لا توجد ملاحظات', inline: false },
+                    { name: '📱 رابط الواتساب المباشر', value: `[مراسلة العميل](https://wa.me/966${phone.replace(/^0/, '')})`, inline: false }
+                ],
+                timestamp: new Date().toISOString()
+            }
+        ]
+    };
+
     try {
-        const { name, packageType, carType, shootRegion, phone, notes } = req.body;
+        const response = await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(discordPayload)
+        });
 
-        if (!name || !packageType || !carType || !shootRegion || !phone) {
-            return res.status(400).json({ error: 'Missing required fields' });
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Discord API error:', errorText);
+            return res.status(500).json({ error: 'Failed to send to Discord' });
         }
 
-        const cleanPhone = phone.startsWith('0') ? '966' + phone.slice(1) : phone;
-
-        const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
-        if (discordWebhookUrl) {
-            await fetch(discordWebhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    embeds: [{
-                        title: "🚗 طلب حجز جلسة تصوير جديد!",
-                        color: 15844367,
-                        fields: [
-                            { name: "👤 اسم العميل", value: name, inline: true },
-                            { name: "📦 الباقة المختارة", value: packageType, inline: true },
-                            { name: "🚙 نوع السيارة", value: carType, inline: true },
-                            { name: "📍 منطقة التصوير", value: shootRegion, inline: true },
-                            { name: "📱 رقم الواتساب", value: `[${phone}](https://wa.me/${cleanPhone})`, inline: true },
-                            { name: "📝 ملاحظات إضافية", value: notes || "لا توجد ملاحظات", inline: false }
-                        ],
-                        footer: {
-                            text: "Ayan Studio Booking System"
-                        },
-                        timestamp: new Date().toISOString()
-                    }]
-                })
-            }).catch(() => {});
-        }
-
-        return res.status(200).json({ success: type = true, message: 'Booking received successfully' });
+        return res.status(200).json({ success: true, message: 'Webhook sent successfully' });
     } catch (error) {
-        console.error('Booking error:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        console.error('Error executing webhook:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
