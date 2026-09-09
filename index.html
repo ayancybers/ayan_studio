@@ -1059,6 +1059,10 @@
             
             <div class="stats">
                 <div class="stat-item">
+                    <div class="stat-number" id="visitsCount">0</div>
+                    <div class="stat-label" data-key="stat-visits">إجمالي الزيارات</div>
+                </div>
+                <div class="stat-item">
                     <div class="stat-number" id="sessionsCount">0</div>
                     <div class="stat-label" data-key="stat-sessions">جلسات تم تنفيذها</div>
                 </div>
@@ -1294,6 +1298,7 @@
                 "theme-light": "فاتح ☀️",
                 "hero-title": "حجز جلسات تصوير سيارات احترافية",
                 "hero-desc": "احجز جلستك الآن واستمتع بأجمل التغطيات والسينمائيات لسيارتك",
+                "stat-visits": "إجمالي الزيارات",
                 "stat-sessions": "جلسات تم تنفيذها",
                 "stat-support": "ساعات الدعم الفني",
                 "stat-rating": "التقييم العام",
@@ -1386,6 +1391,7 @@
                 "theme-light": "Light ☀️",
                 "hero-title": "Book Professional Car Shoot Sessions",
                 "hero-desc": "Book your session now and enjoy cinematic automotive coverage",
+                "stat-visits": "Total Visits",
                 "stat-sessions": "Completed Sessions",
                 "stat-support": "Support Hours",
                 "stat-rating": "Overall Rating",
@@ -1465,9 +1471,6 @@
             }
         };
 
-
-
-
         function toggleDropdown(id) {
             const el = document.getElementById(id);
             const isOpen = el.classList.contains('open');
@@ -1545,7 +1548,6 @@
             }
         }
 
-        // محاكي تحميل تفاعلي ونسب مئوية سلسة
         window.addEventListener('load', function() {
             const savedLang = localStorage.getItem('ayan_lang');
             const savedLangLabel = localStorage.getItem('ayan_lang_label');
@@ -1583,9 +1585,9 @@
                 const lang = document.documentElement.lang || 'ar';
                 if (msgEl) {
                     if (percent > 65) {
-                        msgEl.textContent = translations[lang]['load-msg-3'] || (lang === 'ar' ? 'كل شيء جاهز تقريباً، استعد للانطلاق! 🚀' : 'Almost ready, get set to go! 🚀');
+                        msgEl.textContent = translations[lang]['load-msg-3'] || 'كل شيء جاهز تقريباً، استعد للانطلاق! 🚀';
                     } else if (percent > 35) {
-                        msgEl.textContent = translations[lang]['load-msg-2'] || (lang === 'ar' ? 'جاري تجهيز مقاطع الفيديو والسينمائيات...' : 'Preparing videos and cinematic shots...');
+                        msgEl.textContent = translations[lang]['load-msg-2'] || 'جاري تجهيز مقاطع الفيديو والسينمائيات...';
                     }
                 }
             }, 70);
@@ -1614,10 +1616,12 @@
         }
 
         function startCounters() {
+            const visitsElem = document.getElementById('visitsCount');
             const sessionsElem = document.getElementById('sessionsCount');
             const supportElem = document.getElementById('supportHours');
             const ratingElem = document.getElementById('ratingScore');
 
+            if (visitsElem) animateValue(visitsElem, 0, 1420, 900, false, '+');
             if (sessionsElem) animateValue(sessionsElem, 0, currentSessions, 900, false, '+');
             if (supportElem) animateValue(supportElem, 0, 24, 900, false, 'h');
             if (ratingElem) animateValue(ratingElem, 0, 4.9, 900, true, ' / 5.0');
