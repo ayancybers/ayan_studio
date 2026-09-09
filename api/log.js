@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv';
+let currentVisits = 1421; 
 
 export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const totalVisits = await kv.incr('site_visits') || 1421;
+        currentVisits += 1;
 
         const userAgent = req.body?.userAgent || req.headers['user-agent'] || 'Unknown';
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
                         fields: [
                             { name: '🌐 عنوان الـ IP', value: `\`${ip}\``, inline: false },
                             { name: '💻 معلومات الجهاز والمتصفح', value: `\`${userAgent}\``, inline: false },
-                            { name: '📊 إجمالي الزيارات الحالي', value: `\`${totalVisits}\``, inline: false }
+                            { name: '📊 إجمالي الزيارات الحالي', value: `\`${currentVisits}\``, inline: false }
                         ],
                         timestamp: new Date().toISOString()
                     }
@@ -38,9 +38,9 @@ export default async function handler(req, res) {
             }).catch(() => {});
         }
 
-        return res.status(200).json({ success: true, visits: totalVisits });
+        return res.status(200).json({ success: true, visits: currentVisits });
     } catch (error) {
         console.error('Log error:', error);
-        return res.status(200).json({ success: true, visits: 1421 });
+        return res.status(200).json({ success: true, visits: currentVisits });
     }
 }
