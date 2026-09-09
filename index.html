@@ -18,11 +18,6 @@
     <link rel="icon" type="image/png" href="ayan.png">
     <link rel="apple-touch-icon" href="ayan.png">
     
-    <meta property="og:title" content="Ayan Studio - موقع تصوير سيارات واستوديو احترافي">
-    <meta property="og:description" content="احجز جلستك الآن في موقع تصوير سيارات Ayan Studio واستمتع بأجمل التغطيات والسينمائيات لسيارتك بأفضل الأسعار.">
-    <meta property="og:image" content="ayan.png">
-    
-   
     <link rel="icon" type="image/png" href="https://f.top4top.io/p_3899us4ep9.png">
     <link rel="apple-touch-icon" href="https://f.top4top.io/p_3899us4ep9.png">
 
@@ -942,19 +937,6 @@
         }
     </style>
 </head>
-
-<script>
-    window.addEventListener('load', function() {
-        if (!sessionStorage.getItem('visit_logged')) {
-            sessionStorage.setItem('visit_logged', 'true');
-            fetch('/api/log', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userAgent: navigator.userAgent })
-            }).catch(() => {});
-        }
-    });
-</script>
     
 <body data-theme="na96">
 
@@ -1615,13 +1597,30 @@
             window.requestAnimationFrame(step);
         }
 
-        function startCounters() {
+        // دالة جلب عدد الزيارات المحدث من ملف log.js وعرضه ديناميكياً
+        async function startCounters() {
             const visitsElem = document.getElementById('visitsCount');
             const sessionsElem = document.getElementById('sessionsCount');
             const supportElem = document.getElementById('supportHours');
             const ratingElem = document.getElementById('ratingScore');
 
-            if (visitsElem) animateValue(visitsElem, 0, 1420, 900, false, '+');
+            let visitsCount = 1420; // القيمة الاحتياطية إذا حدث خطأ بالاتصال
+
+            try {
+                const response = await fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userAgent: navigator.userAgent })
+                });
+                const data = await response.json();
+                if (data.visits) {
+                    visitsCount = data.visits;
+                }
+            } catch (error) {
+                console.error('Error fetching visits count:', error);
+            }
+
+            if (visitsElem) animateValue(visitsElem, 0, visitsCount, 900, false, '+');
             if (sessionsElem) animateValue(sessionsElem, 0, currentSessions, 900, false, '+');
             if (supportElem) animateValue(supportElem, 0, 24, 900, false, 'h');
             if (ratingElem) animateValue(ratingElem, 0, 4.9, 900, true, ' / 5.0');
