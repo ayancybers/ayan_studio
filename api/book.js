@@ -7,9 +7,10 @@ export default async function handler(req, res) {
     const webhookUrl = process.env.webhook;
 
     if (!webhookUrl) {
+        console.error('Webhook URL is missing in environment variables');
         return res.status(500).json({ error: 'Server configuration error' });
     }
-
+    
     const discordPayload = {
         embeds: [
             {
@@ -21,6 +22,7 @@ export default async function handler(req, res) {
                     { name: '📦 الباقة', value: packageType || 'غير محدد', inline: true },
                     { name: '🚗 نوع السيارة', value: carType || 'غير محدد', inline: true },
                     { name: '📍 منطقة التصوير', value: shootRegion || 'غير محدد', inline: true },
+                    { name: '📱 رابط الواتساب المباشر', value: `[مراسلة العميل](https://wa.me/966${phone.replace(/^0/, '')})`, inline: false },
                     { name: '💬 ملاحظات', value: notes || 'لا توجد ملاحظات', inline: false }
                 ],
                 timestamp: new Date().toISOString()
@@ -36,11 +38,14 @@ export default async function handler(req, res) {
         });
 
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Discord API error:', errorText);
             return res.status(500).json({ error: 'Failed to send to Discord' });
         }
 
         return res.status(200).json({ success: true, message: 'Webhook sent successfully' });
     } catch (error) {
+        console.error('Error executing webhook:', error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
