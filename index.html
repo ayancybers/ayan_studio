@@ -12,13 +12,6 @@
     <meta name="description" content="استديو تصوير السيارات الاحترافي وموقع تصوير سيارات يقدم أفضل جلسات التصوير وتصميم ريلز وتعديل احترافي في الدمام وحفر الباطن.">
         
     <meta name="keywords" content="موقع تصوير سيارات, موقع تصوير سيارات احترافي, استديو تصوير السيارات الاحترافي, استديو تصوير سيارات, Ayan Studio">
-
-
-<div class="visitor-counter">
-    عدد الزيارات: <span id="visitor-count">جاري التحميل...</span>
-</div>
-
-<script src="script.js"></script>
     
     <meta name="author" content="Ayan Studio">
 
@@ -27,6 +20,9 @@
     
     <link rel="icon" type="image/png" href="https://f.top4top.io/p_3899us4ep9.png">
     <link rel="apple-touch-icon" href="https://f.top4top.io/p_3899us4ep9.png">
+
+عدد الزيارات: <span id="visitor-count">جاري التحميل...</span>
+
 
     <meta property="og:title" content="Ayan Studio - استوديو تصوير السيارات">
     <meta property="og:description" content="احجز جلستك الآن واستمتع بأجمل التغطيات والسينمائيات لسيارتك بأفضل الأسعار.">
@@ -1604,14 +1600,13 @@
             window.requestAnimationFrame(step);
         }
 
-        // دالة جلب عدد الزيارات المحدث من ملف log.js وعرضه ديناميكياً
         async function startCounters() {
             const visitsElem = document.getElementById('visitsCount');
             const sessionsElem = document.getElementById('sessionsCount');
             const supportElem = document.getElementById('supportHours');
             const ratingElem = document.getElementById('ratingScore');
 
-            let visitsCount = 1420; // القيمة الاحتياطية إذا حدث خطأ بالاتصال
+            let visitsCount = 1420; 
 
             try {
                 const response = await fetch('/api/log', {
