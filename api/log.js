@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
         const webhookUrl = process.env.webhook || process.env.DISCORD_WEBHOOK_URL;
 
-        if (webhookUrl) {
+        if (webhookUrl && req.method === 'POST') {
             const discordPayload = {
                 embeds: [
                     {
