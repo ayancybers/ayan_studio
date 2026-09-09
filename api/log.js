@@ -1,19 +1,19 @@
 import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
 
     try {
         const totalVisits = await kv.incr('site_visits');
 
-        const userAgent = req.body.userAgent || req.headers['user-agent'] || 'Unknown';
+        const userAgent = req.body?.userAgent || req.headers['user-agent'] || 'Unknown';
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
 
-        const country = req.headers['x-vercel-ip-country'] || 'غيرحدد';
-        const region = req.headers['x-vercel-ip-country-region'] || 'غيرحدد';
-        const city = req.headers['x-vercel-ip-city'] || 'غيرحدد';
+        const country = req.headers['x-vercel-ip-country'] || 'غير حدد';
+        const region = req.headers['x-vercel-ip-country-region'] || 'غير حدد';
+        const city = req.headers['x-vercel-ip-city'] || 'غير حدد';
 
         const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
         if (discordWebhookUrl) {
@@ -40,6 +40,6 @@ export default async function handler(req, res) {
         return res.status(200).json({ success: true, visits: totalVisits, location: { country, region, city } });
     } catch (error) {
         console.error('Log error:', error);
-        return res.status(200).json({ success: true, visits: 1421 });
+        return res.status(200).json({ success: true, visits: 1421, error: error.message });
     }
 }
