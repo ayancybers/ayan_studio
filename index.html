@@ -962,8 +962,6 @@
         });
     </script>
 
-    <!-- تم حذف المربع القديم اللي كان يظهر في الزاوية هنا نهائياً -->
-
     <div class="national-day-banner" data-key="top-announcement">
         🇸🇦 عروض اليوم الوطني 96: خصم خاص على الباقة الملكية لتصبح بـ 196 ريال فقط! كل عام ووطنا بخير 💚
     </div>
@@ -1042,11 +1040,6 @@
             <p data-key="hero-desc">احجز جلستك الآن واستمتع بأجمل التغطيات والسينمائيات لسيارتك</p>
             
             <div class="stats">
-                <!-- عداد الزيارات الصحيح اللي يزيد تلقائياً -->
-                <div class="stat-item">
-                    <div class="stat-number" id="visitsCount">0</div>
-                    <div class="stat-label" data-key="stat-visits">إجمالي الزيارات</div>
-                </div>
                 <div class="stat-item">
                     <div class="stat-number" id="sessionsCount">0</div>
                     <div class="stat-label" data-key="stat-sessions">جلسات تم تنفيذها</div>
@@ -1283,7 +1276,6 @@
                 "theme-light": "فاتح ☀️",
                 "hero-title": "حجز جلسات تصوير سيارات احترافية",
                 "hero-desc": "احجز جلستك الآن واستمتع بأجمل التغطيات والسينمائيات لسيارتك",
-                "stat-visits": "إجمالي الزيارات",
                 "stat-sessions": "جلسات تم تنفيذها",
                 "stat-support": "ساعات الدعم الفني",
                 "stat-rating": "التقييم العام",
@@ -1376,7 +1368,6 @@
                 "theme-light": "Light ☀️",
                 "hero-title": "Book Professional Car Shoot Sessions",
                 "hero-desc": "Book your session now and enjoy cinematic automotive coverage",
-                "stat-visits": "Total Visits",
                 "stat-sessions": "Completed Sessions",
                 "stat-support": "Support Hours",
                 "stat-rating": "Overall Rating",
@@ -1600,29 +1591,11 @@
             window.requestAnimationFrame(step);
         }
 
-        async function startCounters() {
-            const visitsElem = document.getElementById('visitsCount');
+        function startCounters() {
             const sessionsElem = document.getElementById('sessionsCount');
             const supportElem = document.getElementById('supportHours');
             const ratingElem = document.getElementById('ratingScore');
 
-            let visitsCount = 1420; 
-
-            try {
-                const response = await fetch('/api/log', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userAgent: navigator.userAgent })
-                });
-                const data = await response.json();
-                if (data.visits) {
-                    visitsCount = data.visits;
-                }
-            } catch (error) {
-                console.error('Error fetching visits count:', error);
-            }
-
-            if (visitsElem) animateValue(visitsElem, 0, visitsCount, 900, false, '+');
             if (sessionsElem) animateValue(sessionsElem, 0, currentSessions, 900, false, '+');
             if (supportElem) animateValue(supportElem, 0, 24, 900, false, 'h');
             if (ratingElem) animateValue(ratingElem, 0, 4.9, 900, true, ' / 5.0');
