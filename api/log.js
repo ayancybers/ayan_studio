@@ -1,5 +1,3 @@
-let currentVisits = 1421; 
-
 export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
 
@@ -8,8 +6,6 @@ export default async function handler(req, res) {
     }
 
     try {
-        currentVisits += 1;
-
         const userAgent = req.body?.userAgent || req.headers['user-agent'] || 'Unknown';
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Unknown';
 
@@ -23,8 +19,7 @@ export default async function handler(req, res) {
                         color: 15158332,
                         fields: [
                             { name: '🌐 عنوان الـ IP', value: `\`${ip}\``, inline: false },
-                            { name: '💻 معلومات الجهاز والمتصفح', value: `\`${userAgent}\``, inline: false },
-                            { name: '📊 إجمالي الزيارات الحالي', value: `\`${currentVisits}\``, inline: false }
+                            { name: '💻 معلومات الجهاز والمتصفح', value: `\`${userAgent}\``, inline: false }
                         ],
                         timestamp: new Date().toISOString()
                     }
@@ -38,9 +33,9 @@ export default async function handler(req, res) {
             }).catch(() => {});
         }
 
-        return res.status(200).json({ success: true, visits: currentVisits });
+        return res.status(200).json({ success: true });
     } catch (error) {
         console.error('Log error:', error);
-        return res.status(200).json({ success: true, visits: currentVisits });
+        return res.status(200).json({ success: true });
     }
 }
