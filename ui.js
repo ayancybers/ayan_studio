@@ -1,8 +1,14 @@
 (() => {
   'use strict';
 
-  if (window.__ayanGlobalUIV31) return;
-  window.__ayanGlobalUIV31 = true;
+  // Ayan Photography — Global UI V32
+  // This file owns ONLY the global header controls:
+  // theme, language, and mobile navigation.
+  // It deliberately does not use a glass/blur overlay and does not create
+  // a clickable backdrop, so nothing can sit above the menu and steal taps.
+
+  if (window.__ayanGlobalUIV32) return;
+  window.__ayanGlobalUIV32 = true;
 
   const LANG_KEY = 'ayan_lang';
   const THEME_KEY = 'ayan_theme';
@@ -39,9 +45,9 @@
     if (document.getElementById('ayan-global-ui-v31')) return;
 
     const style = document.createElement('style');
-    style.id = 'ayan-global-ui-v31';
+    style.id = 'ayan-global-ui-v32';
     style.textContent = `
-      /* V31: never allow an old backdrop/overlay to steal menu taps */
+      /* V32: never allow an old backdrop/overlay to steal menu taps */
       .mobile-menu-backdrop,
       .mobile-menu-backdrop-v28,
       .global-mobile-backdrop {
@@ -74,23 +80,34 @@
 
         .site-header .nav-links {
           position: fixed !important;
-          width: min(310px, calc(100vw - 24px)) !important;
-          max-height: calc(100dvh - 90px) !important;
+          top: calc(var(--header-height) + 8px) !important;
+          right: 12px !important;
+          left: auto !important;
+          inset-inline-end: 12px !important;
+          inset-inline-start: auto !important;
+          width: min(285px, calc(100vw - 24px)) !important;
+          max-height: calc(100dvh - var(--header-height) - 24px) !important;
+          height: auto !important;
+          min-height: 0 !important;
           overflow-y: auto !important;
           display: grid !important;
-          gap: 5px !important;
-          padding: 10px !important;
+          grid-template-rows: repeat(4, auto) !important;
+          align-content: start !important;
+          gap: 4px !important;
+          padding: 8px !important;
+          margin: 0 !important;
           background: #08182a !important;
           border: 1px solid #294766 !important;
           border-radius: 18px !important;
-          box-shadow: 0 24px 70px rgba(0,0,0,.62) !important;
+          box-shadow: 0 22px 55px rgba(0,0,0,.58) !important;
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
           z-index: 2147483640 !important;
           pointer-events: none !important;
           opacity: 0 !important;
           visibility: hidden !important;
-          transform: translateY(-8px) !important;
+          transform: translateY(-8px) scale(.98) !important;
+          transform-origin: top right !important;
           transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
         }
 
@@ -102,18 +119,40 @@
         }
 
         .site-header .nav-links a {
-          min-height: 54px !important;
+          box-sizing: border-box !important;
+          width: 100% !important;
+          min-height: 50px !important;
+          height: 50px !important;
           display: flex !important;
           align-items: center !important;
-          padding: 12px 16px !important;
+          justify-content: flex-start !important;
+          padding: 10px 15px !important;
+          margin: 0 !important;
           color: #edf5ff !important;
           background: transparent !important;
+          border: 0 !important;
           border-radius: 12px !important;
           pointer-events: auto !important;
           touch-action: manipulation !important;
           -webkit-tap-highlight-color: transparent !important;
           font-size: 15px !important;
+          line-height: 1.2 !important;
           font-weight: 700 !important;
+          text-align: start !important;
+        }
+
+        html[dir="rtl"] .site-header .nav-links a {
+          justify-content: flex-end !important;
+          text-align: right !important;
+        }
+
+        html[dir="ltr"] .site-header .nav-links a {
+          justify-content: flex-start !important;
+          text-align: left !important;
+        }
+
+        .site-header .nav-links a::after {
+          bottom: 7px !important;
         }
 
         .site-header .nav-links a:active,
@@ -122,6 +161,28 @@
         .site-header .nav-links a.active {
           background: #173657 !important;
           color: #fff !important;
+          outline: none !important;
+        }
+
+        [data-theme="dark"] .site-header .nav-links {
+          background: #070f1a !important;
+          border-color: #223b57 !important;
+        }
+
+        [data-theme="light"] .site-header .nav-links {
+          background: #ffffff !important;
+          border-color: rgba(20,57,94,.16) !important;
+        }
+
+        [data-theme="light"] .site-header .nav-links a {
+          color: #22354c !important;
+        }
+
+        [data-theme="light"] .site-header .nav-links a:hover,
+        [data-theme="light"] .site-header .nav-links a:focus-visible,
+        [data-theme="light"] .site-header .nav-links a.active {
+          background: #eef5ff !important;
+          color: #102038 !important;
         }
       }
 
@@ -229,6 +290,7 @@
     const panel = qs('[data-pref-panel]', menu);
     if (!trigger || !panel) return;
 
+    // Fixed positioning escapes page sections and any transformed parent.
     const rect = trigger.getBoundingClientRect();
     const width = Math.min(180, window.innerWidth - 20);
     const gap = 8;
@@ -275,6 +337,7 @@
 
     if (document.body) document.body.dataset.theme = theme;
 
+    // app.js owns the actual page translations/theme state.
     try { window.AyanPhotography?.setTheme?.(theme); } catch (_) {}
 
     syncShell();
@@ -304,11 +367,13 @@
 
     closePreferences();
 
+    // No backdrop is created. This is intentional: it cannot steal touch events.
     nav.classList.add('open');
     button.classList.add('is-open');
     button.setAttribute('aria-expanded', 'true');
     document.body.classList.add('mobile-menu-open');
 
+    // Force the menu into the topmost layer in case an old stylesheet remains cached.
     nav.style.setProperty('z-index', '2147483640', 'important');
     nav.style.setProperty('pointer-events', 'auto', 'important');
 
@@ -316,15 +381,13 @@
     const headerHeight = header?.getBoundingClientRect().height || 72;
     nav.style.setProperty('top', `${Math.round(headerHeight + 8)}px`, 'important');
 
-    if (document.documentElement.dir === 'rtl') {
-      nav.style.setProperty('right', '12px', 'important');
-      nav.style.setProperty('left', 'auto', 'important');
-      nav.style.setProperty('transform-origin', 'top right', 'important');
-    } else {
-      nav.style.setProperty('left', '12px', 'important');
-      nav.style.setProperty('right', 'auto', 'important');
-      nav.style.setProperty('transform-origin', 'top left', 'important');
-    }
+    // Keep the drawer anchored to the right in both languages.
+    // Only the text direction/alignment changes with the selected language.
+    nav.style.setProperty('right', '12px', 'important');
+    nav.style.setProperty('left', 'auto', 'important');
+    nav.style.setProperty('inset-inline-end', '12px', 'important');
+    nav.style.setProperty('inset-inline-start', 'auto', 'important');
+    nav.style.setProperty('transform-origin', 'top right', 'important');
   }
 
   function toggleMobileMenu() {
@@ -338,13 +401,14 @@
     addHardUIStyles();
     syncShell();
 
+    // Remove any legacy dynamically-created overlays from previous versions.
     qsa('.mobile-menu-backdrop, .mobile-menu-backdrop-v28, .global-mobile-backdrop').forEach(el => el.remove());
 
     qsa('[data-pref-menu]').forEach(menu => {
       const trigger = qs('[data-pref-trigger]', menu);
-      if (!trigger || trigger.dataset.ayanUiV31Bound === '1') return;
+      if (!trigger || trigger.dataset.ayanUiV32Bound === '1') return;
 
-      trigger.dataset.ayanUiV31Bound = '1';
+      trigger.dataset.ayanUiV32Bound = '1';
 
       trigger.addEventListener('click', event => {
         event.preventDefault();
@@ -367,6 +431,8 @@
       });
     });
 
+    // One delegated handler for all theme/language choices.
+    // Capture phase makes it reliable even if another page script listens later.
     if (!document.documentElement.dataset.ayanUiChoicesBound) {
       document.documentElement.dataset.ayanUiChoicesBound = '1';
 
@@ -423,8 +489,8 @@
     }
 
     const mobileButton = qs('[data-menu]');
-    if (mobileButton && mobileButton.dataset.ayanUiV31Bound !== '1') {
-      mobileButton.dataset.ayanUiV31Bound = '1';
+    if (mobileButton && mobileButton.dataset.ayanUiV32Bound !== '1') {
+      mobileButton.dataset.ayanUiV32Bound = '1';
 
       mobileButton.addEventListener('click', event => {
         event.preventDefault();
@@ -439,9 +505,10 @@
       }, { passive: false });
     }
 
+    // Mobile navigation uses direct navigation on touch/click.
     qsa('[data-nav-links] a').forEach(link => {
-      if (link.dataset.ayanUiV31Bound === '1') return;
-      link.dataset.ayanUiV31Bound = '1';
+      if (link.dataset.ayanUiV32Bound === '1') return;
+      link.dataset.ayanUiV32Bound = '1';
 
       link.addEventListener('click', event => {
         const href = link.getAttribute('href');
