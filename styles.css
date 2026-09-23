@@ -1231,7 +1231,6 @@ textarea.form-control { min-height: 130px; padding: 14px; resize: vertical; }
 .booking-price-note strong{font-size:1rem;color:var(--accent-strong);letter-spacing:.04em;}
 
 
-/* Premium booking experience */
 .booking-page .page-hero { padding: 92px 0 54px; }
 .booking-hero-grid { display:flex; align-items:flex-end; justify-content:space-between; gap:34px; }
 .booking-hero-grid > div:first-child { max-width:820px; }
@@ -1373,7 +1372,6 @@ textarea.form-control { min-height: 130px; padding: 14px; resize: vertical; }
   .booking-progress i { min-width:22px; }
 }
 
-/* Final booking polish */
 .booking-main-card,
 .booking-side,
 .booking-package-choice,
@@ -1519,7 +1517,6 @@ textarea.form-control { min-height: 130px; padding: 14px; resize: vertical; }
   .booking-selected-card.is-changing { animation:none !important; }
 }
 
-/* Front-end protection UI */
 .hp-field {
   position: absolute !important;
   left: -10000px !important;
@@ -1579,7 +1576,6 @@ html.devtools-detected body > *:not(#security-notice) {
 .gallery-card.video-card.video-paused .media-wrap::after{content:"";position:absolute;inset:0;border:1px solid rgba(83,164,255,.28);border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(83,164,255,.06);pointer-events:none}.gallery-card.video-card.is-recovering .media-wrap::after{animation:videoRecover .38s ease both}@keyframes videoRecover{0%{opacity:.15;box-shadow:inset 0 0 0 0 rgba(83,164,255,0),0 0 0 rgba(83,164,255,0)}40%{opacity:1;box-shadow:inset 0 0 0 1px rgba(83,164,255,.35),0 0 28px rgba(83,164,255,.18)}100%{opacity:.25;box-shadow:inset 0 0 0 1px rgba(83,164,255,.08),0 0 0 rgba(83,164,255,0)}}
 
 
-/* Floating social contact dock */
 .social-float {
   position: fixed;
   inset-inline-end: 24px;
@@ -1734,7 +1730,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .social-float-ping { animation: none; }
 }
 
-/* Booking cinematic background video */
 .booking-main-card { position: relative; overflow: hidden; isolation: isolate; }
 .packingbackground {
   position: absolute;
@@ -1788,7 +1783,6 @@ html.devtools-detected body > *:not(#security-notice) {
 }
 
 
-/* V22 preference + loader fixes */
 @media (max-width: 900px) {
   .nav-actions .pill { display: inline-flex; min-height: 36px; padding-inline: 10px; font-size: 10px; }
   .nav-actions .btn-primary { display: none; }
@@ -1801,14 +1795,12 @@ html.devtools-detected body > *:not(#security-notice) {
 }
 
 
-/* V21 loader responsive */
 @media (max-width: 680px) {
   .home-loader-mark { width: 176px; height: 176px; }
   .home-loader-mark img { width: 166px; height: 166px; }
   .home-loader-line { width: 170px; }
 }
 
-/* V24 — reliable global header controls + polished mobile navigation */
 .site-header { overflow: visible; }
 .navbar { position: relative; z-index: 1200; transform: none; }
 .nav-actions { position: relative; z-index: 1300; }
@@ -1876,7 +1868,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .nav-links { inset-inline: 2px; }
 }
 
-/* V24 — larger, full logo on the home loading screen */
 .home-loader-mark { width: 258px; height: 258px; }
 .home-loader-ring { inset: 0; }
 .home-loader-mark img { width: 246px; height: 246px; }
@@ -1887,7 +1878,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .home-loader-line { width: 182px; }
 }
 
-/* V25 — global navigation reliability */
 .pref-panel {
   position: fixed !important;
   z-index: 10050 !important;
@@ -1953,7 +1943,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .pref-panel { z-index: 10070 !important; }
 }
 
-/* Keep the full logo visible inside the home loader. */
 .home-loader-mark { width: 270px !important; height: 270px !important; }
 .home-loader-mark img {
   width: 256px !important;
@@ -1966,7 +1955,6 @@ html.devtools-detected body > *:not(#security-notice) {
 }
 .home-loader-ring { inset: 0 !important; pointer-events: none !important; }
 
-/* Booking CTA stays readable and stacked on narrow screens. */
 @media (max-width: 680px) {
   .booking-submit-row {
     display: flex !important;
@@ -1988,7 +1976,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .global-mobile-backdrop, .nav-links, .pref-panel { transition: none !important; }
 }
 
-/* V26 — single, reliable header interaction layer */
 .site-header,
 .navbar,
 .nav-actions,
@@ -2129,14 +2116,12 @@ html.devtools-detected body > *:not(#security-notice) {
   .pref-panel { min-width: 140px !important; }
 }
 
-/* DevTools protection must never lock the responsive/mobile UI. */
 @media (max-width: 900px) {
   html.devtools-detected body > *:not(#security-notice) { filter: none !important; }
   #security-notice { display: none !important; }
 }
 
 
-/* V27 — final, page-independent header controls */
 .site-header { position: sticky !important; top: 0 !important; z-index: 10000 !important; overflow: visible !important; }
 .navbar, .nav-actions, .pref-menu { position: relative !important; overflow: visible !important; }
 .navbar { z-index: 10001 !important; }
@@ -2195,7 +2180,6 @@ html.devtools-detected body > *:not(#security-notice) {
 }
 
 
-/* V28 — FINAL header/mobile interaction layer */
 .site-header { position: sticky !important; top: 0 !important; z-index: 2147482000 !important; overflow: visible !important; isolation: isolate !important; }
 .site-header .navbar, .site-header .nav-actions, .site-header .pref-menu { position: relative !important; overflow: visible !important; }
 .site-header .navbar { z-index: 2147482001 !important; }
@@ -2203,7 +2187,6 @@ html.devtools-detected body > *:not(#security-notice) {
 .site-header .pref-menu { z-index: 2147482010 !important; }
 .site-header .pref-trigger, .site-header .mobile-toggle { position: relative !important; z-index: 2147482015 !important; pointer-events: auto !important; touch-action: manipulation !important; }
 
-/* Portaled preference menus live above every page section. */
 .pref-panel[data-portalized="1"] {
   position: fixed !important;
   z-index: 2147483000 !important;
@@ -2229,7 +2212,6 @@ html.devtools-detected body > *:not(#security-notice) {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Clean, compact mobile drawer. */
 .mobile-menu-backdrop-v28 {
   position: fixed !important;
   inset: var(--header-height) 0 0 !important;
@@ -2300,7 +2282,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .site-header .nav-actions .pill { max-width: 105px !important; }
 }
 
-/* V28 — loader logo uses the full supplied logo without clipping. */
 .home-loader-mark { width: 300px !important; height: 300px !important; }
 .home-loader-mark img {
   width: 292px !important;
@@ -2322,7 +2303,6 @@ html.devtools-detected body > *:not(#security-notice) {
   .home-loader-mark img { width: 228px !important; height: 228px !important; }
 }
 
-/* V28 — booking form readability */
 .form-control {
   color: #f6f9ff !important;
   background: rgba(9, 22, 38, .88) !important;
@@ -2342,7 +2322,6 @@ html.devtools-detected body > *:not(#security-notice) {
 select.form-control option { background:#0c1b2d !important; color:#f6f9ff !important; }
 [data-theme="light"] select.form-control option { background:#fff !important; color:#162335 !important; }
 
-/* Keep booking visual present but subordinate to form text. */
 .packingbackground { opacity: .30 !important; }
 .packingbackground-overlay { background: linear-gradient(180deg, rgba(7,17,31,.25), rgba(7,17,31,.78)) !important; }
 .booking-main-card { min-width: 0; }
@@ -2357,7 +2336,6 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   .form-submit { min-height: 58px !important; }
 }
 
-/* V29 — clean, deterministic header controls: no portals, no glass menus, touch-first. */
 .site-header {
   position: sticky !important;
   top: 0 !important;
@@ -2379,7 +2357,6 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Preference menus stay attached to their trigger so clicks remain predictable. */
 .site-header .pref-panel {
   position: absolute !important;
   top: calc(100% + 8px) !important;
@@ -2445,7 +2422,6 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
 [data-theme="light"] .site-header .pref-panel button:focus-visible,
 [data-theme="light"] .site-header .pref-panel button.is-selected { background: #eef5ff !important; color: #122338 !important; }
 
-/* Mobile navigation: solid, simple and always above the page. */
 .mobile-menu-backdrop-v29 {
   position: fixed !important;
   inset: var(--header-height) 0 0 !important;
@@ -2546,7 +2522,6 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   .site-header .pref-panel { min-width: 148px !important; }
 }
 
-/* V29 — loading ring is locked to the exact logo box, not an offset outer circle. */
 .home-loader-mark {
   width: 286px !important;
   height: 286px !important;
@@ -2595,13 +2570,11 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   .home-loader-line { width: 176px !important; }
 }
 
-/* Never let the legacy security layer blur/take input focus on touch devices. */
 @media (max-width: 900px) {
   html.devtools-detected body > *:not(#security-notice) { filter: none !important; }
   #security-notice { display: none !important; }
 }
 
-/* V30 — the supplied logo already contains its own circle. Do not draw another ring around it. */
 .home-loader-mark::before,
 .home-loader-mark::after { display: none !important; content: none !important; }
 .home-loader-mark img {
