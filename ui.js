@@ -1,12 +1,6 @@
 (() => {
   'use strict';
 
-  // Ayan Photography — Global UI V31
-  // This file owns ONLY the global header controls:
-  // theme, language, and mobile navigation.
-  // It deliberately does not use a glass/blur overlay and does not create
-  // a clickable backdrop, so nothing can sit above the menu and steal taps.
-
   if (window.__ayanGlobalUIV31) return;
   window.__ayanGlobalUIV31 = true;
 
@@ -235,7 +229,6 @@
     const panel = qs('[data-pref-panel]', menu);
     if (!trigger || !panel) return;
 
-    // Fixed positioning escapes page sections and any transformed parent.
     const rect = trigger.getBoundingClientRect();
     const width = Math.min(180, window.innerWidth - 20);
     const gap = 8;
@@ -282,7 +275,6 @@
 
     if (document.body) document.body.dataset.theme = theme;
 
-    // app.js owns the actual page translations/theme state.
     try { window.AyanPhotography?.setTheme?.(theme); } catch (_) {}
 
     syncShell();
@@ -312,13 +304,11 @@
 
     closePreferences();
 
-    // No backdrop is created. This is intentional: it cannot steal touch events.
     nav.classList.add('open');
     button.classList.add('is-open');
     button.setAttribute('aria-expanded', 'true');
     document.body.classList.add('mobile-menu-open');
 
-    // Force the menu into the topmost layer in case an old stylesheet remains cached.
     nav.style.setProperty('z-index', '2147483640', 'important');
     nav.style.setProperty('pointer-events', 'auto', 'important');
 
@@ -348,7 +338,6 @@
     addHardUIStyles();
     syncShell();
 
-    // Remove any legacy dynamically-created overlays from previous versions.
     qsa('.mobile-menu-backdrop, .mobile-menu-backdrop-v28, .global-mobile-backdrop').forEach(el => el.remove());
 
     qsa('[data-pref-menu]').forEach(menu => {
@@ -378,8 +367,6 @@
       });
     });
 
-    // One delegated handler for all theme/language choices.
-    // Capture phase makes it reliable even if another page script listens later.
     if (!document.documentElement.dataset.ayanUiChoicesBound) {
       document.documentElement.dataset.ayanUiChoicesBound = '1';
 
@@ -452,7 +439,6 @@
       }, { passive: false });
     }
 
-    // Mobile navigation uses direct navigation on touch/click.
     qsa('[data-nav-links] a').forEach(link => {
       if (link.dataset.ayanUiV31Bound === '1') return;
       link.dataset.ayanUiV31Bound = '1';
