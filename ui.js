@@ -1,20 +1,35 @@
 (() => {
   'use strict';
-  if (window.__ayanGlobalUI) return;
-  window.__ayanGlobalUI = true;
+
+  // Ayan Photography — Global UI V31
+  // This file owns ONLY the global header controls:
+  // theme, language, and mobile navigation.
+  // It deliberately does not use a glass/blur overlay and does not create
+  // a clickable backdrop, so nothing can sit above the menu and steal taps.
+
+  if (window.__ayanGlobalUIV31) return;
+  window.__ayanGlobalUIV31 = true;
 
   const LANG_KEY = 'ayan_lang';
   const THEME_KEY = 'ayan_theme';
   const LANGS = ['ar', 'en'];
   const THEMES = ['relax', 'dark', 'light'];
+
   const read = (key, fallback) => {
-    try { return localStorage.getItem(key) || fallback; } catch { return fallback; }
+    try {
+      const value = localStorage.getItem(key);
+      return value || fallback;
+    } catch (_) {
+      return fallback;
+    }
   };
+
   const write = (key, value) => {
-    try { localStorage.setItem(key, value); } catch {}
+    try { localStorage.setItem(key, value); } catch (_) {}
   };
-  const qs = (s, root = document) => root.querySelector(s);
-  const qsa = (s, root = document) => Array.from(root.querySelectorAll(s));
+
+  const qs = (selector, root = document) => root.querySelector(selector);
+  const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
   const state = {
     lang: LANGS.includes(read(LANG_KEY, 'ar')) ? read(LANG_KEY, 'ar') : 'ar',
@@ -26,32 +41,156 @@
     en: { relax: 'Relax 💙', dark: 'Dark 🌙', light: 'Light ☀️' }
   };
 
-  function closePreferences(except = null) {
-    qsa('[data-pref-menu]').forEach(menu => {
-      if (menu === except) return;
-      menu.classList.remove('open');
-      qs('[data-pref-trigger]', menu)?.setAttribute('aria-expanded', 'false');
-    });
-  }
+  function addHardUIStyles() {
+    if (document.getElementById('ayan-global-ui-v31')) return;
 
-  function closeMobileMenu() {
-    const nav = qs('[data-nav-links]');
-    const button = qs('[data-menu]');
-    nav?.classList.remove('open');
-    button?.classList.remove('is-open');
-    button?.setAttribute('aria-expanded', 'false');
-    const backdrop = qs('[data-mobile-menu-backdrop]');
-    backdrop?.classList.remove('is-visible');
-    document.body.classList.remove('mobile-menu-open');
+    const style = document.createElement('style');
+    style.id = 'ayan-global-ui-v31';
+    style.textContent = `
+      /* V31: never allow an old backdrop/overlay to steal menu taps */
+      .mobile-menu-backdrop,
+      .mobile-menu-backdrop-v28,
+      .global-mobile-backdrop {
+        display: none !important;
+        pointer-events: none !important;
+      }
+
+      /* Solid mobile menu — no glass */
+      @media (max-width: 900px) {
+        .site-header {
+          position: sticky !important;
+          top: 0 !important;
+          z-index: 2147483000 !important;
+          overflow: visible !important;
+          isolation: isolate !important;
+        }
+
+        .site-header .navbar,
+        .site-header .nav-actions,
+        .site-header .pref-menu {
+          overflow: visible !important;
+        }
+
+        .site-header .nav-actions,
+        .site-header .pref-menu,
+        .site-header .pref-trigger,
+        .site-header .mobile-toggle {
+          pointer-events: auto !important;
+        }
+
+        .site-header .nav-links {
+          position: fixed !important;
+          width: min(310px, calc(100vw - 24px)) !important;
+          max-height: calc(100dvh - 90px) !important;
+          overflow-y: auto !important;
+          display: grid !important;
+          gap: 5px !important;
+          padding: 10px !important;
+          background: #08182a !important;
+          border: 1px solid #294766 !important;
+          border-radius: 18px !important;
+          box-shadow: 0 24px 70px rgba(0,0,0,.62) !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          z-index: 2147483640 !important;
+          pointer-events: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          transform: translateY(-8px) !important;
+          transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
+        }
+
+        .site-header .nav-links.open {
+          pointer-events: auto !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          transform: none !important;
+        }
+
+        .site-header .nav-links a {
+          min-height: 54px !important;
+          display: flex !important;
+          align-items: center !important;
+          padding: 12px 16px !important;
+          color: #edf5ff !important;
+          background: transparent !important;
+          border-radius: 12px !important;
+          pointer-events: auto !important;
+          touch-action: manipulation !important;
+          -webkit-tap-highlight-color: transparent !important;
+          font-size: 15px !important;
+          font-weight: 700 !important;
+        }
+
+        .site-header .nav-links a:active,
+        .site-header .nav-links a:hover,
+        .site-header .nav-links a:focus-visible,
+        .site-header .nav-links a.active {
+          background: #173657 !important;
+          color: #fff !important;
+        }
+      }
+
+      /* Preference panels: solid and above every page layer */
+      .site-header .pref-panel {
+        background: #08182a !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        z-index: 2147483646 !important;
+        pointer-events: none !important;
+      }
+
+      .site-header .pref-menu.open > .pref-panel {
+        pointer-events: auto !important;
+      }
+
+      .site-header .pref-panel button {
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+        cursor: pointer !important;
+      }
+
+      [data-theme="dark"] .site-header .pref-panel {
+        background: #070f1a !important;
+      }
+
+      [data-theme="light"] .site-header .pref-panel {
+        background: #fff !important;
+      }
+
+      /* The supplied logo already contains its own circular artwork. */
+      .home-loader-mark::before,
+      .home-loader-mark::after {
+        display: none !important;
+        content: none !important;
+      }
+
+      .home-loader-mark img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        border-radius: 50% !important;
+        border: 0 !important;
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   function syncShell() {
     document.documentElement.lang = state.lang;
     document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+
     if (document.body) document.body.dataset.theme = state.theme;
 
-    qsa('[data-theme-label]').forEach(el => el.textContent = labels[state.lang][state.theme]);
-    qsa('[data-lang-label]').forEach(el => el.textContent = state.lang === 'ar' ? 'العربية' : 'English');
+    qsa('[data-theme-label]').forEach(el => {
+      el.textContent = labels[state.lang][state.theme];
+    });
+
+    qsa('[data-lang-label]').forEach(el => {
+      el.textContent = state.lang === 'ar' ? 'العربية' : 'English';
+    });
 
     qsa('[data-set-theme]').forEach(button => {
       const active = button.dataset.setTheme === state.theme;
@@ -59,6 +198,7 @@
       button.setAttribute('aria-checked', String(active));
       button.setAttribute('aria-pressed', String(active));
     });
+
     qsa('[data-set-lang]').forEach(button => {
       const active = button.dataset.setLang === state.lang;
       button.classList.toggle('is-selected', active);
@@ -67,13 +207,84 @@
     });
   }
 
+  function closePreferences() {
+    qsa('[data-pref-menu]').forEach(menu => {
+      menu.classList.remove('open');
+      qs('[data-pref-trigger]', menu)?.setAttribute('aria-expanded', 'false');
+      const panel = qs('[data-pref-panel]', menu);
+      if (panel) {
+        panel.style.removeProperty('top');
+        panel.style.removeProperty('left');
+        panel.style.removeProperty('right');
+      }
+    });
+  }
+
+  function closeMobileMenu() {
+    const nav = qs('[data-nav-links]');
+    const button = qs('[data-menu]');
+
+    nav?.classList.remove('open');
+    button?.classList.remove('is-open');
+    button?.setAttribute('aria-expanded', 'false');
+    document.body?.classList.remove('mobile-menu-open');
+  }
+
+  function positionPanel(menu) {
+    const trigger = qs('[data-pref-trigger]', menu);
+    const panel = qs('[data-pref-panel]', menu);
+    if (!trigger || !panel) return;
+
+    // Fixed positioning escapes page sections and any transformed parent.
+    const rect = trigger.getBoundingClientRect();
+    const width = Math.min(180, window.innerWidth - 20);
+    const gap = 8;
+    const top = Math.round(rect.bottom + gap);
+
+    panel.style.position = 'fixed';
+    panel.style.width = `${width}px`;
+    panel.style.minWidth = `${width}px`;
+    panel.style.maxWidth = `${width}px`;
+    panel.style.top = `${Math.max(8, top)}px`;
+
+    if (document.documentElement.dir === 'rtl') {
+      const right = Math.max(8, window.innerWidth - rect.right);
+      panel.style.right = `${right}px`;
+      panel.style.left = 'auto';
+    } else {
+      const left = Math.max(8, rect.left);
+      panel.style.left = `${Math.min(left, window.innerWidth - width - 8)}px`;
+      panel.style.right = 'auto';
+    }
+  }
+
+  function openPreference(menu) {
+    closeMobileMenu();
+    closePreferences();
+    menu.classList.add('open');
+    qs('[data-pref-trigger]', menu)?.setAttribute('aria-expanded', 'true');
+    positionPanel(menu);
+  }
+
+  function togglePreference(menu) {
+    if (!menu) return;
+    if (menu.classList.contains('open')) {
+      closePreferences();
+    } else {
+      openPreference(menu);
+    }
+  }
+
   function applyTheme(theme) {
     if (!THEMES.includes(theme)) return;
     state.theme = theme;
     write(THEME_KEY, theme);
+
     if (document.body) document.body.dataset.theme = theme;
-    // Let the content layer update translations/form state when present.
+
+    // app.js owns the actual page translations/theme state.
     try { window.AyanPhotography?.setTheme?.(theme); } catch (_) {}
+
     syncShell();
     closePreferences();
     window.dispatchEvent(new CustomEvent('ayan:theme-change', { detail: { theme } }));
@@ -83,71 +294,81 @@
     if (!LANGS.includes(lang)) return;
     state.lang = lang;
     write(LANG_KEY, lang);
+
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
     try { window.AyanPhotography?.setLang?.(lang); } catch (_) {}
+
     syncShell();
     closePreferences();
     window.dispatchEvent(new CustomEvent('ayan:lang-change', { detail: { lang } }));
   }
 
-  function togglePreference(menu) {
-    if (!menu) return;
-    const wasOpen = menu.classList.contains('open');
-    closeMobileMenu();
-    closePreferences(menu);
-    menu.classList.toggle('open', !wasOpen);
-    qs('[data-pref-trigger]', menu)?.setAttribute('aria-expanded', String(!wasOpen));
-  }
+  function openMobileMenu() {
+    const nav = qs('[data-nav-links]');
+    const button = qs('[data-menu]');
+    if (!nav || !button) return;
 
-  function createMobileBackdrop() {
-    let backdrop = qs('[data-mobile-menu-backdrop]');
-    if (backdrop) return backdrop;
-    backdrop = document.createElement('button');
-    backdrop.type = 'button';
-    backdrop.className = 'mobile-menu-backdrop-v29';
-    backdrop.dataset.mobileMenuBackdrop = '1';
-    backdrop.setAttribute('aria-label', 'Close menu');
-    document.body.appendChild(backdrop);
-    backdrop.addEventListener('click', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      closeMobileMenu();
-    });
-    return backdrop;
+    closePreferences();
+
+    // No backdrop is created. This is intentional: it cannot steal touch events.
+    nav.classList.add('open');
+    button.classList.add('is-open');
+    button.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('mobile-menu-open');
+
+    // Force the menu into the topmost layer in case an old stylesheet remains cached.
+    nav.style.setProperty('z-index', '2147483640', 'important');
+    nav.style.setProperty('pointer-events', 'auto', 'important');
+
+    const header = qs('.site-header');
+    const headerHeight = header?.getBoundingClientRect().height || 72;
+    nav.style.setProperty('top', `${Math.round(headerHeight + 8)}px`, 'important');
+
+    if (document.documentElement.dir === 'rtl') {
+      nav.style.setProperty('right', '12px', 'important');
+      nav.style.setProperty('left', 'auto', 'important');
+      nav.style.setProperty('transform-origin', 'top right', 'important');
+    } else {
+      nav.style.setProperty('left', '12px', 'important');
+      nav.style.setProperty('right', 'auto', 'important');
+      nav.style.setProperty('transform-origin', 'top left', 'important');
+    }
   }
 
   function toggleMobileMenu() {
     const nav = qs('[data-nav-links]');
-    const button = qs('[data-menu]');
-    if (!nav || !button) return;
-    const shouldOpen = !nav.classList.contains('open');
-    closePreferences();
-    if (shouldOpen) {
-      const backdrop = createMobileBackdrop();
-      nav.classList.add('open');
-      button.classList.add('is-open');
-      button.setAttribute('aria-expanded', 'true');
-      backdrop.classList.add('is-visible');
-      document.body.classList.add('mobile-menu-open');
-    } else {
-      closeMobileMenu();
-    }
+    if (!nav) return;
+    if (nav.classList.contains('open')) closeMobileMenu();
+    else openMobileMenu();
   }
 
   function bindHeader() {
+    addHardUIStyles();
     syncShell();
-    createMobileBackdrop();
+
+    // Remove any legacy dynamically-created overlays from previous versions.
+    qsa('.mobile-menu-backdrop, .mobile-menu-backdrop-v28, .global-mobile-backdrop').forEach(el => el.remove());
 
     qsa('[data-pref-menu]').forEach(menu => {
       const trigger = qs('[data-pref-trigger]', menu);
-      if (!trigger || trigger.dataset.boundV29 === '1') return;
-      trigger.dataset.boundV29 = '1';
+      if (!trigger || trigger.dataset.ayanUiV31Bound === '1') return;
+
+      trigger.dataset.ayanUiV31Bound = '1';
+
       trigger.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();
         togglePreference(menu);
-      });
+      }, false);
+
+      trigger.addEventListener('touchend', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        togglePreference(menu);
+      }, { passive: false });
+
       trigger.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -157,50 +378,122 @@
       });
     });
 
-    qsa('[data-set-theme], [data-set-lang]').forEach(button => {
-      if (button.dataset.boundV29 === '1') return;
-      button.dataset.boundV29 = '1';
-      button.addEventListener('click', event => {
-        event.preventDefault();
-        event.stopPropagation();
-        if (button.dataset.setTheme) applyTheme(button.dataset.setTheme);
-        else if (button.dataset.setLang) applyLang(button.dataset.setLang);
-      });
-    });
+    // One delegated handler for all theme/language choices.
+    // Capture phase makes it reliable even if another page script listens later.
+    if (!document.documentElement.dataset.ayanUiChoicesBound) {
+      document.documentElement.dataset.ayanUiChoicesBound = '1';
+
+      document.addEventListener('click', event => {
+        const target = event.target instanceof Element ? event.target : null;
+        if (!target) return;
+
+        const themeButton = target.closest('[data-set-theme]');
+        if (themeButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          applyTheme(themeButton.dataset.setTheme);
+          return;
+        }
+
+        const langButton = target.closest('[data-set-lang]');
+        if (langButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          applyLang(langButton.dataset.setLang);
+          return;
+        }
+
+        if (!target.closest('[data-pref-menu]')) closePreferences();
+      }, true);
+
+      document.addEventListener('touchend', event => {
+        const target = event.target instanceof Element ? event.target : null;
+        if (!target) return;
+
+        const themeButton = target.closest('[data-set-theme]');
+        if (themeButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          applyTheme(themeButton.dataset.setTheme);
+          return;
+        }
+
+        const langButton = target.closest('[data-set-lang]');
+        if (langButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          applyLang(langButton.dataset.setLang);
+          return;
+        }
+      }, { capture: true, passive: false });
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closePreferences();
+          closeMobileMenu();
+        }
+      }, true);
+    }
 
     const mobileButton = qs('[data-menu]');
-    if (mobileButton && mobileButton.dataset.boundV29 !== '1') {
-      mobileButton.dataset.boundV29 = '1';
+    if (mobileButton && mobileButton.dataset.ayanUiV31Bound !== '1') {
+      mobileButton.dataset.ayanUiV31Bound = '1';
+
       mobileButton.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();
         toggleMobileMenu();
-      });
+      }, false);
+
+      mobileButton.addEventListener('touchend', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleMobileMenu();
+      }, { passive: false });
     }
 
+    // Mobile navigation uses direct navigation on touch/click.
     qsa('[data-nav-links] a').forEach(link => {
-      if (link.dataset.boundV29 === '1') return;
-      link.dataset.boundV29 = '1';
-      link.addEventListener('click', () => closeMobileMenu());
+      if (link.dataset.ayanUiV31Bound === '1') return;
+      link.dataset.ayanUiV31Bound = '1';
+
+      link.addEventListener('click', event => {
+        const href = link.getAttribute('href');
+        if (!href) return;
+        event.preventDefault();
+        event.stopPropagation();
+        closeMobileMenu();
+        window.location.assign(href);
+      }, false);
+
+      link.addEventListener('touchend', event => {
+        const href = link.getAttribute('href');
+        if (!href) return;
+        event.preventDefault();
+        event.stopPropagation();
+        closeMobileMenu();
+        window.location.assign(href);
+      }, { passive: false });
     });
+
+    const reposition = () => {
+      qsa('[data-pref-menu].open').forEach(positionPanel);
+      const nav = qs('[data-nav-links].open');
+      if (nav && window.innerWidth <= 900) {
+        const header = qs('.site-header');
+        const height = header?.getBoundingClientRect().height || 72;
+        nav.style.setProperty('top', `${Math.round(height + 8)}px`, 'important');
+      }
+    };
+
+    window.addEventListener('resize', reposition, { passive: true });
+    window.addEventListener('scroll', reposition, { passive: true });
 
     document.addEventListener('click', event => {
       const target = event.target instanceof Element ? event.target : null;
       if (!target) return;
       if (!target.closest('[data-pref-menu]')) closePreferences();
-      if (target.matches('[data-mobile-menu-backdrop]')) closeMobileMenu();
     });
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') {
-        closePreferences();
-        closeMobileMenu();
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) closeMobileMenu();
-    }, { passive: true });
 
     window.addEventListener('storage', event => {
       if (event.key === LANG_KEY && LANGS.includes(event.newValue)) state.lang = event.newValue;
@@ -215,5 +508,12 @@
     bindHeader();
   }
 
-  window.AyanUI = { applyTheme, applyLang, toggleMobileMenu, closePreferences, closeMobileMenu, syncShell };
+  window.AyanUI = {
+    applyTheme,
+    applyLang,
+    toggleMobileMenu,
+    closePreferences,
+    closeMobileMenu,
+    syncShell
+  };
 })();
