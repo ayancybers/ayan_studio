@@ -282,7 +282,6 @@ function setupPreferenceMenus() {
   }, { passive: false });
 
   document.addEventListener('click', (event) => {
-    // Desktop browsers may only emit click for some keyboard activations.
     if (event.target?.closest?.('[data-set-theme], [data-set-lang], [data-pref-trigger]')) return;
     if (!event.target?.closest?.('[data-pref-menu]')) closeAll();
   }, true);
@@ -450,7 +449,6 @@ function setupHeroBackgroundVideo() {
   window.addEventListener('focus', ensurePlaying);
   window.addEventListener('online', () => { video.load(); play('online'); });
 
-  // Some browsers delay autoplay until the media element has loaded.
   video.load();
   window.setTimeout(() => play('startup'), 80);
 }
@@ -798,8 +796,6 @@ function keepGalleryVideosPlaying() {
       if (video.paused && !document.hidden) start(video);
     });
 
-    // If the browser pauses a video by itself, leave it paused.
-    // Touching/hovering/focusing that card will resume it immediately.
     video.addEventListener('pause', () => {
       if (document.hidden) return;
       card?.classList.add('video-paused');
@@ -818,7 +814,6 @@ function keepGalleryVideosPlaying() {
     start(video);
   });
 
-  // If the visitor switches away from the tab and comes back, restore playback.
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
     videos.forEach((video) => {
@@ -873,7 +868,6 @@ function setupGalleryLightbox() {
 
   document.querySelectorAll('.gallery-card').forEach((card) => {
     card.addEventListener('click', (event) => {
-      // Videos are intentionally non-interactive in the gallery: they autoplay, loop, and stay muted.
       if (card.dataset.galleryType === 'video') return;
       const type = card.dataset.galleryType;
       const src = card.dataset.gallerySrc;
@@ -905,7 +899,6 @@ function setupSocialFloat() {
     toggle.setAttribute('aria-expanded', String(open));
   };
 
-  // Desktop: hovering keeps the menu open. Touch/keyboard: the button toggles it.
   toggle.addEventListener('mouseenter', () => setOpen(true));
   widget.addEventListener('mouseleave', () => setOpen(false));
   toggle.addEventListener('focus', () => setOpen(true));
@@ -918,7 +911,6 @@ function setupSocialFloat() {
     setOpen(!open);
   });
 
-  // Close when the user clicks somewhere else, but never swallow a social-link click.
   document.addEventListener('click', (event) => {
     if (!widget.contains(event.target)) setOpen(false);
   });
