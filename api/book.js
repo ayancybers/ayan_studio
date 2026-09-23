@@ -79,7 +79,7 @@ export default async function handler(req, res) {
     : 'relax';
   const screen = limit(String(body.screen || 'unknown'), 50);
   const userAgent = limit(String(req.headers['user-agent'] || 'unknown'), 300);
-  const webhookUrl = process.env.webhook || process.env.DISCORD_WEBHOOK_URL;
+  const webhookUrl = process.env.webhookbooking || process.env.DISCORD_WEBHOOK_Booking;
 
   if (website) {
     await sendSecurityLog(req, {
