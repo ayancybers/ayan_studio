@@ -9,7 +9,129 @@
   <link rel="icon" type="image/png" href="https://c.top4top.io/p_3918gds6e2.png">
   <link rel="apple-touch-icon" href="https://c.top4top.io/p_3918gds6e2.png">
   <title>Booking | Ayan Photography</title>
-  <link rel="stylesheet" href="styles.css?v=30">
+  <link rel="stylesheet" href="styles.css?v=31">
+
+<style>
+/* V31 — cinematic booking signature panel */
+.booking-signature {
+  position: relative;
+  min-height: 100%;
+  padding: 34px 30px;
+  border: 1px solid rgba(120,170,230,.28);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(84,153,255,.13), transparent 34%),
+    linear-gradient(145deg, rgba(15,29,48,.98), rgba(5,14,26,.98));
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 22px 70px rgba(0,0,0,.18);
+}
+.booking-signature::before {
+  content: '';
+  position: absolute;
+  width: 260px; height: 260px;
+  border: 1px solid rgba(105,166,255,.13);
+  border-radius: 50%;
+  left: -145px; bottom: -145px;
+  box-shadow: 0 0 0 22px rgba(105,166,255,.025), 0 0 0 44px rgba(105,166,255,.018);
+  pointer-events: none;
+}
+.booking-signature::after {
+  content: '';
+  position: absolute;
+  width: 180px; height: 180px;
+  border: 1px solid rgba(105,166,255,.10);
+  border-radius: 50%;
+  right: -105px; top: -105px;
+  pointer-events: none;
+}
+.booking-signature-logo {
+  width: 92px; height: 92px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 20px;
+  filter: drop-shadow(0 10px 28px rgba(43,145,255,.20));
+  position: relative; z-index: 1;
+}
+.booking-signature-kicker {
+  text-align: center;
+  color: #75b2ff;
+  font-size: 11px;
+  letter-spacing: .22em;
+  font-weight: 800;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.booking-signature-title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(26px, 2.4vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -.04em;
+  position: relative; z-index: 1;
+}
+.booking-signature-sub {
+  max-width: 330px;
+  margin: 12px auto 28px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.8;
+  position: relative; z-index: 1;
+}
+.booking-signature-rule {
+  width: 76px; height: 2px;
+  margin: 0 auto 30px;
+  background: linear-gradient(90deg, transparent, #69a9ff, transparent);
+  position: relative; z-index: 1;
+}
+.booking-signature-steps {
+  display: grid;
+  gap: 10px;
+  position: relative; z-index: 1;
+}
+.booking-signature-step {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid rgba(132,178,232,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.025);
+}
+.booking-signature-step-num {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  border: 1px solid rgba(111,169,246,.24);
+  background: rgba(75,137,214,.10);
+  color: #79b5ff;
+  font-weight: 800; font-size: 12px;
+}
+.booking-signature-step strong {
+  display: block; font-size: 13px; margin-bottom: 2px;
+}
+.booking-signature-step small {
+  display: block; color: var(--text-secondary); font-size: 11px;
+}
+.booking-signature-note {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(132,178,232,.12);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 11px;
+  position: relative; z-index: 1;
+}
+@media (max-width: 860px) {
+  .booking-signature { padding: 25px 20px; border-radius: 22px; }
+  .booking-signature-logo { width: 76px; height: 76px; margin-bottom: 14px; }
+  .booking-signature-title { font-size: 27px; }
+  .booking-signature-sub { margin-bottom: 20px; }
+}
+</style>
+
 </head>
 <body class="booking-page" data-theme="relax">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -75,29 +197,29 @@
 
     <section class="section-sm booking-section">
       <div class="container booking-layout">
-        <aside class="booking-side reveal" data-delay="1">
-          <div class="booking-side-orbit" aria-hidden="true"><span></span><span></span></div>
-          <div class="booking-package-visual">
-            <img src="https://b.top4top.io/p_3918mczhv1.png" alt="Ayan Photography" loading="eager" decoding="async">
-            <span class="booking-package-visual-shade" aria-hidden="true"></span>
-            <span class="booking-package-visual-label">AYAN PHOTOGRAPHY</span>
+                <aside class="booking-signature reveal" data-delay="1" aria-label="Ayan Photography session flow">
+          <img class="booking-signature-logo" src="https://c.top4top.io/p_3918gds6e2.png" alt="Ayan Photography" loading="eager" decoding="async">
+          <div class="booking-signature-kicker">AYAN PHOTOGRAPHY</div>
+          <h2 class="booking-signature-title">FRAME · MOTION · STORY</h2>
+          <p class="booking-signature-sub">جلسة مصممة حول سيارتك، من اختيار الباقة إلى التنسيق النهائي.</p>
+          <div class="booking-signature-rule" aria-hidden="true"></div>
+
+          <div class="booking-signature-steps">
+            <div class="booking-signature-step">
+              <span class="booking-signature-step-num">01</span>
+              <div><strong data-i18n="bookingStep1">الباقة</strong><small>Choose your package</small></div>
+            </div>
+            <div class="booking-signature-step">
+              <span class="booking-signature-step-num">02</span>
+              <div><strong data-i18n="bookingStep2">البيانات</strong><small>Add your session details</small></div>
+            </div>
+            <div class="booking-signature-step">
+              <span class="booking-signature-step-num">03</span>
+              <div><strong data-i18n="bookingStep3">التنسيق</strong><small>Continue on WhatsApp</small></div>
+            </div>
           </div>
-          <div class="kicker">Ayan Photography</div>
-          <div class="booking-side-head">
-            <span class="booking-side-number">01</span>
-            <div><h2 data-i18n="bookingSideTitle">ابدأ بالباقة المناسبة.</h2><p data-i18n="bookingSideText">اختر مستوى التصوير أولًا، وبعدها نكمل معك باقي التفاصيل.</p></div>
-          </div>
-          <div class="booking-selected-card" data-booking-summary aria-live="polite">
-            <div class="booking-selected-top"><span data-i18n="selectedLabel">الباقة المختارة</span><span class="booking-selected-dot"></span></div>
-            <strong data-booking-summary-name data-i18n="selectedEmpty">اختر باقة للبدء</strong>
-            <span data-booking-summary-desc>—</span>
-            <div class="booking-selected-price"><strong data-booking-summary-price>—</strong><span>SAR</span></div>
-          </div>
-          <div class="booking-side-foot">
-            <span><i></i><b data-i18n="sideFoot1">تنسيق مباشر</b></span>
-            <span><i></i><b data-i18n="sideFoot2">أسعار واضحة</b></span>
-            <span><i></i><b data-i18n="sideFoot3">تحويل للواتساب</b></span>
-          </div>
+
+          <div class="booking-signature-note">A clean booking path for cinematic car content.</div>
         </aside>
 
         <div class="card form-card booking-main-card reveal">
