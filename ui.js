@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  // Ayan Photography — Global UI V32
+  // Ayan Photography — Global UI V33
   // This file owns ONLY the global header controls:
   // theme, language, and mobile navigation.
   // It deliberately does not use a glass/blur overlay and does not create
@@ -45,9 +45,9 @@
     if (document.getElementById('ayan-global-ui-v31')) return;
 
     const style = document.createElement('style');
-    style.id = 'ayan-global-ui-v32';
+    style.id = 'ayan-global-ui-v33';
     style.textContent = `
-      /* V32: never allow an old backdrop/overlay to steal menu taps */
+      /* V33: never allow an old backdrop/overlay to steal menu taps */
       .mobile-menu-backdrop,
       .mobile-menu-backdrop-v28,
       .global-mobile-backdrop {
@@ -229,8 +229,236 @@
         border-radius: 50% !important;
         border: 0 !important;
       }
+
+      /* V33: compact booking package selector + package banner */
+      .booking-page .booking-main-card {
+        overflow: hidden !important;
+      }
+
+      .booking-page .booking-main-content {
+        position: relative !important;
+        z-index: 3 !important;
+      }
+
+      .booking-page .ayan-package-banner {
+        display: block !important;
+        width: min(100%, 760px) !important;
+        margin: 0 auto 22px !important;
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        border: 1px solid rgba(118, 178, 255, .28) !important;
+        background: #0a1626 !important;
+        box-shadow: 0 14px 34px rgba(0,0,0,.28) !important;
+        pointer-events: none !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+      }
+
+      .booking-page .ayan-package-banner img {
+        display: block !important;
+        width: 100% !important;
+        height: clamp(105px, 18vw, 190px) !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        pointer-events: none !important;
+        user-select: none !important;
+        -webkit-user-drag: none !important;
+        -webkit-user-select: none !important;
+      }
+
+      .booking-page .booking-package-wrap {
+        width: 100% !important;
+        max-width: 820px !important;
+        margin-inline: auto !important;
+      }
+
+      .booking-page .booking-package-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        width: 100% !important;
+      }
+
+      .booking-page .booking-package-choice {
+        position: relative !important;
+        box-sizing: border-box !important;
+        min-width: 0 !important;
+        min-height: 82px !important;
+        height: 82px !important;
+        padding: 10px 12px !important;
+        display: grid !important;
+        grid-template-columns: 44px minmax(0,1fr) auto !important;
+        align-items: center !important;
+        gap: 10px !important;
+        border-radius: 16px !important;
+        transform: none !important;
+        transition: border-color .18s ease, background .18s ease, box-shadow .18s ease !important;
+        touch-action: manipulation !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+      }
+
+      .booking-page .booking-package-choice:hover,
+      .booking-page .booking-package-choice:focus-visible {
+        transform: none !important;
+      }
+
+      .booking-page .booking-package-icon {
+        width: 42px !important;
+        height: 42px !important;
+        display: grid !important;
+        place-items: center !important;
+        font-size: 22px !important;
+      }
+
+      .booking-page .booking-package-copy {
+        min-width: 0 !important;
+        overflow: hidden !important;
+      }
+
+      .booking-page .booking-package-copy strong,
+      .booking-page .booking-package-copy small {
+        display: block !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+
+      .booking-page .booking-package-copy strong {
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+      }
+
+      .booking-page .booking-package-copy small {
+        margin-top: 4px !important;
+        font-size: 11px !important;
+        line-height: 1.2 !important;
+      }
+
+      .booking-page .booking-package-price {
+        min-width: 48px !important;
+        text-align: end !important;
+      }
+
+      .booking-page .booking-package-price b {
+        display: block !important;
+        font-size: 24px !important;
+        line-height: 1 !important;
+      }
+
+      .booking-page .booking-package-price small {
+        display: block !important;
+        margin-top: 3px !important;
+        font-size: 9px !important;
+      }
+
+      .booking-page .booking-choice-tag {
+        top: 5px !important;
+        right: 8px !important;
+        left: auto !important;
+        padding: 3px 7px !important;
+        font-size: 8px !important;
+        line-height: 1.1 !important;
+      }
+
+      html[dir="rtl"] .booking-page .booking-choice-tag {
+        right: 8px !important;
+        left: auto !important;
+      }
+
+      @media (max-width: 700px) {
+        .booking-page .ayan-package-banner {
+          width: 100% !important;
+          margin-bottom: 16px !important;
+          border-radius: 16px !important;
+        }
+
+        .booking-page .ayan-package-banner img {
+          height: 112px !important;
+        }
+
+        .booking-page .booking-package-grid {
+          grid-template-columns: 1fr !important;
+          gap: 8px !important;
+        }
+
+        .booking-page .booking-package-choice {
+          height: 70px !important;
+          min-height: 70px !important;
+          grid-template-columns: 40px minmax(0,1fr) auto !important;
+          padding: 8px 10px !important;
+          border-radius: 14px !important;
+        }
+
+        .booking-page .booking-package-icon {
+          width: 38px !important;
+          height: 38px !important;
+          font-size: 20px !important;
+        }
+
+        .booking-page .booking-package-copy strong {
+          font-size: 13px !important;
+        }
+
+        .booking-page .booking-package-copy small {
+          font-size: 10px !important;
+          margin-top: 3px !important;
+        }
+
+        .booking-page .booking-package-price b {
+          font-size: 22px !important;
+        }
+
+        .booking-page .booking-package-price small {
+          font-size: 8px !important;
+        }
+      }
+
+      /* Keep the package selector from being visually enlarged by old hover/scale rules. */
+      .booking-page .booking-package-choice,
+      .booking-page .booking-package-choice * {
+        transform-origin: center !important;
+      }
+
+      /* Prevent image dragging/long-press saving on the supplied banner. */
+      .booking-page .ayan-package-banner,
+      .booking-page .ayan-package-banner * {
+        -webkit-touch-callout: none !important;
+      }
     `;
     document.head.appendChild(style);
+  }
+
+  function ensureBookingPackageBanner() {
+    if (!document.body?.classList.contains('booking-page')) return;
+    const content = qs('.booking-page .booking-main-content');
+    if (!content || content.querySelector('.ayan-package-banner')) return;
+
+    const banner = document.createElement('div');
+    banner.className = 'ayan-package-banner';
+    banner.setAttribute('aria-hidden', 'true');
+
+    const img = document.createElement('img');
+    img.src = 'https://b.top4top.io/p_3918mczhv1.png';
+    img.alt = '';
+    img.draggable = false;
+    img.decoding = 'async';
+    img.loading = 'eager';
+
+    banner.appendChild(img);
+
+    const formHeader = qs('.form-header', content);
+    if (formHeader) content.insertBefore(banner, formHeader);
+    else content.prepend(banner);
+  }
+
+  function lockMobileZoom() {
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) return;
+    const content = viewport.getAttribute('content') || '';
+    if (!/maximum-scale/i.test(content)) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+    }
   }
 
   function syncShell() {
@@ -399,6 +627,8 @@
 
   function bindHeader() {
     addHardUIStyles();
+    ensureBookingPackageBanner();
+    lockMobileZoom();
     syncShell();
 
     // Remove any legacy dynamically-created overlays from previous versions.
