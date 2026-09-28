@@ -739,7 +739,11 @@ function setupBookingForm() {
     } catch (error) {
       console.error('Payment initialization failed', error);
       sessionStorage.removeItem('ayan_last_submit');
-      showToast(tr('paymentError'));
+      const message = String(error?.message || 'payment_init_failed');
+      const debugMessage = getLang() === 'ar'
+        ? `${tr('paymentError')}\n${message}`
+        : `${tr('paymentError')}\n${message}`;
+      showToast(debugMessage);
       if (button) {
         button.disabled = false;
         button.textContent = originalLabel;
