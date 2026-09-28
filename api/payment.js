@@ -164,8 +164,10 @@ export default async function handler(req, res) {
         code: result?.response?.code,
         message: result?.response?.message
       });
+      const tapCode = result?.response?.code || result?.code || result?.errors?.[0]?.code || '';
+      const tapMessage = result?.response?.message || result?.message || result?.errors?.[0]?.description || 'Unable to create payment';
       return res.status(502).json({
-        error: result?.response?.message || 'Unable to create payment',
+        error: tapCode ? `${tapMessage} [Tap ${tapCode}]` : tapMessage,
         requestId
       });
     }
