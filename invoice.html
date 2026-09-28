@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>Invoice | Ayan Photography</title>
+  <link rel="icon" type="image/png" href="https://c.top4top.io/p_3918gds6e2.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172235;background:#f2f6fb}*{box-sizing:border-box}body{margin:0;padding:24px}.wrap{width:min(820px,100%);margin:0 auto}.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}.toolbar div{color:#66758b;font-size:12px}button,a{font:inherit;text-decoration:none;border:0;border-radius:12px;padding:11px 15px;cursor:pointer}.download{background:#2f7ef7;color:#fff}.back{background:#fff;color:#24334a;border:1px solid #dbe4ef}.invoice{background:#fff;border:1px solid #dbe4ef;border-radius:24px;box-shadow:0 18px 55px rgba(30,60,100,.10);overflow:hidden}.invoice-head{padding:34px 34px 26px;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid #e8eef5}.brand{display:flex;align-items:center;gap:12px}.logo{width:58px;height:58px;object-fit:contain}.brand strong{display:block;font-size:22px}.brand span{display:block;color:#76849a;font-size:11px;margin-top:3px}.invoice-meta{text-align:end}.invoice-meta strong{display:block;font-size:18px}.invoice-meta span{display:block;color:#76849a;font-size:11px;margin-top:4px}.body{padding:30px 34px}.notice{padding:13px 15px;border-radius:14px;background:#f1f7ff;border:1px solid #dbeafe;color:#46617f;font-size:11px;line-height:1.7;margin-bottom:24px}.notice.test{background:#fff8e7;border-color:#f4d98a;color:#765a1e}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;margin-bottom:26px}.cell{padding:13px 14px;border:1px solid #e7edf4;border-radius:14px;background:#fbfcfe}.cell small{display:block;color:#7a8799;font-size:9px;margin-bottom:5px}.cell strong{display:block;font-size:12px;overflow-wrap:anywhere}.lines{border-top:1px solid #e8eef5}.line{display:flex;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px solid #e8eef5;font-size:12px}.line span{color:#65738a}.line.grand{font-size:16px;border-bottom:0;padding-top:20px}.line.grand strong{color:#1f66d3;font-size:22px}.foot{padding:20px 34px 28px;background:#f8fafc;border-top:1px solid #e8eef5;color:#738198;font-size:10px;line-height:1.8}.state{min-height:260px;display:grid;place-items:center;text-align:center;color:#708098}.hidden{display:none}@media(max-width:620px){body{padding:12px}.invoice-head,.body,.foot{padding-left:20px;padding-right:20px}.invoice-head{flex-direction:column}.invoice-meta{text-align:start}.grid{grid-template-columns:1fr}.toolbar{align-items:stretch}.toolbar a,.toolbar button{width:100%;text-align:center}}@media print{body{padding:0;background:#fff}.toolbar{display:none}.invoice{border:0;box-shadow:none;border-radius:0}.notice{background:#fff;border-color:#ddd}.foot{background:#fff}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="toolbar">
+    <div id="toolbarText">فاتورة حجز إلكترونية</div>
+    <div>
+      <button class="download" id="downloadBtn">تحميل PDF</button>
+      <a class="back" href="booking.html" id="backBtn">العودة للحجز</a>
+    </div>
+  </div>
+  <div class="invoice" id="invoice"><div class="state" id="state">جاري تحميل الفاتورة…</div></div>
+</div>
+<script>
+const lang = localStorage.getItem('ayan_lang') === 'en' ? 'en' : 'ar';
+document.documentElement.lang=lang; document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+const t=lang==='ar'
+?{toolbar:'فاتورة حجز إلكترونية',download:'تحميل PDF',back:'العودة للحجز',invoice:'فاتورة حجز',brand:'Ayan Photography',tag:'تصوير سيارات احترافي',number:'رقم الفاتورة',date:'تاريخ العملية',customer:'العميل',phone:'رقم الواتساب',package:'الباقة',car:'نوع السيارة',area:'منطقة التصوير',notes:'ملاحظات',subtotal:'سعر الباقة',serviceFee:'رسوم الخدمة',tax:'ضريبة القيمة المضافة',total:'الإجمالي',paid:'مدفوعة',test:'فاتورة تجريبية — 1.00 SAR',note:'تفاصيل الضريبة تظهر على الفاتورة عند تفعيلها في إعدادات المشروع. لا تُعد هذه الفاتورة فاتورة ضريبية رسمية إلا عند انطباق متطلبات التسجيل والفوترة الضريبية.',unknown:'تعذر تحميل الفاتورة.'}
+:{toolbar:'Electronic booking invoice',download:'Download PDF',back:'Back to booking',invoice:'Booking Invoice',brand:'Ayan Photography',tag:'Professional car photography',number:'Invoice No.',date:'Payment date',customer:'Customer',phone:'WhatsApp',package:'Package',car:'Car type',area:'Shoot area',notes:'Notes',subtotal:'Package price',serviceFee:'Service fee',tax:'VAT',total:'Total',paid:'PAID',test:'Demo invoice — 1.00 SAR',note:'Tax details appear on the invoice when enabled in the project settings. This document is not a formal tax invoice unless the applicable registration and invoicing requirements are met.',unknown:'Unable to load invoice.'};
+const toolbarText=document.getElementById('toolbarText'); const downloadBtn=document.getElementById('downloadBtn'); const backBtn=document.getElementById('backBtn');
+toolbarText.textContent=t.toolbar; downloadBtn.textContent=t.download; backBtn.textContent=t.back;
+const root=document.getElementById('invoice');
+const tapId=new URLSearchParams(location.search).get('tap_id');
+const demo=new URLSearchParams(location.search).get('demo')==='1';
+const DEMO_INVOICE_AMOUNT=1;
+function money(n){return Number(n||0).toFixed(2)+' SAR'}
+function formatDate(v){if(!v)return'—';const d=new Date(Number(v));if(Number.isNaN(d.getTime()))return'—';return new Intl.DateTimeFormat(lang==='ar'?'ar-SA':'en-US',{dateStyle:'medium',timeStyle:'short'}).format(d)}
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderInvoice(d,{demoMode=false}={}){
+  const invoiceNo=demoMode?'AYAN-DEMO-1SAR':'AYAN-'+String(d.tapId||tapId).replace(/[^A-Za-z0-9]/g,'').slice(-12).toUpperCase();
+  const noticeClass=demoMode?'notice test':'notice';
+  const noticeText=demoMode?t.test:t.note;
+  const taxLabel=d.vatEnabled&&Number(d.taxRate||0)>0?`${t.tax} ${Number(d.taxRate).toString()}%`:t.tax;
+  root.innerHTML=`<div class="invoice-head"><div class="brand"><img class="logo" src="https://c.top4top.io/p_3918gds6e2.png" alt="Ayan Photography"><div><strong>${escapeHtml(t.brand)}</strong><span>${escapeHtml(t.tag)}</span></div></div><div class="invoice-meta"><strong>${escapeHtml(t.invoice)}</strong><span>${escapeHtml(t.number)}: ${escapeHtml(invoiceNo)}</span><span>${escapeHtml(demoMode?'DEMO':t.paid)}</span></div></div><div class="body"><div class="${noticeClass}">${escapeHtml(noticeText)}</div><div class="grid"><div class="cell"><small>${escapeHtml(t.customer)}</small><strong>${escapeHtml(d.customerName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.phone)}</small><strong>${escapeHtml(d.phone||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.package)}</small><strong>${escapeHtml(d.packageName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.car)}</small><strong>${escapeHtml(d.carType||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.area)}</small><strong>${escapeHtml(d.shootRegion||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.date)}</small><strong>${escapeHtml(formatDate(d.created))}</strong></div><div class="cell" style="grid-column:1/-1"><small>${escapeHtml(t.notes)}</small><strong>${escapeHtml(d.notes||'—')}</strong></div></div><div class="lines"><div class="line"><span>${escapeHtml(t.subtotal)}</span><strong>${money(d.subtotal)}</strong></div><div class="line"><span>${escapeHtml(t.serviceFee)}</span><strong>${money(d.serviceFee)}</strong></div><div class="line"><span>${escapeHtml(taxLabel)}</span><strong>${money(d.tax)}</strong></div><div class="line grand"><span>${escapeHtml(t.total)}</span><strong>${money(d.total)}</strong></div></div></div><div class="foot">${escapeHtml(t.note)}<br>${demoMode?'Demo invoice — no Tap payment was made.':'Tap Charge: '+escapeHtml(d.tapId||tapId)}</div>`;
+  downloadBtn.onclick=()=>downloadPdf(invoiceNo);
+}
+async function load(){
+  if(demo){renderInvoice({tapId:'demo',customerName:lang==='ar'?'عميل تجريبي':'Demo customer',phone:'05xxxxxxxx',packageName:lang==='ar'?'فاتورة تجريبية':'Demo invoice',carType:'—',shootRegion:'—',notes:'فاتورة تجريبية بقيمة ريال واحد',subtotal:DEMO_INVOICE_AMOUNT,serviceFee:0,tax:0,total:DEMO_INVOICE_AMOUNT,vatEnabled:false,taxRate:0,created:Date.now()},{demoMode:true});return}
+  if(!tapId){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';return}
+  try{const r=await fetch('/api/payment?tap_id='+encodeURIComponent(tapId),{cache:'no-store'});const d=await r.json();if(!r.ok||!d.success||d.status!=='CAPTURED'){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';return}renderInvoice(d)}catch(e){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>'}
+}
+async function downloadPdf(invoiceNo){const button=downloadBtn;button.disabled=true;button.textContent=lang==='ar'?'جاري تجهيز PDF…':'Preparing PDF…';try{const options={margin:0.35,filename:invoiceNo+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,backgroundColor:'#fff'},jsPDF:{unit:'in',format:'a4',orientation:'portrait'}};await html2pdf().set(options).from(document.getElementById('invoice')).save()}catch(e){window.print()}button.disabled=false;button.textContent=t.download}
+load();
+</script>
+</body>
+</html>
