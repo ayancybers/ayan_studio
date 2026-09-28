@@ -309,3 +309,4 @@ function setSecurityHeaders(res) {
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=(), payment=*');
 }
+
