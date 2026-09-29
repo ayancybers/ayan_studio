@@ -722,45 +722,9 @@ function setupBookingForm() {
     }
 
     sessionStorage.setItem('ayan_last_submit', String(Date.now()));
-    let redirectUrl = '';
-    let apiSuccess = false;
-    try {
-      const response = await fetch('/api/payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const result = await response.json().catch(() => ({}));
-      apiSuccess = response.ok;
-      redirectUrl = result.redirectUrl || '';
-      if (!response.ok) {
-        throw new Error(result.error || 'payment_init_failed');
-      }
-    } catch (error) {
-      console.error('Payment initialization failed', error);
-      sessionStorage.removeItem('ayan_last_submit');
-      const message = String(error?.message || 'payment_init_failed');
-      const debugMessage = getLang() === 'ar'
-        ? `${tr('paymentError')}\n${message}`
-        : `${tr('paymentError')}\n${message}`;
-      showToast(debugMessage);
-      if (button) {
-        button.disabled = false;
-        button.textContent = originalLabel;
-      }
-      return;
-    }
-
-    await sendLog('booking_payment_init', { success: apiSuccess, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
-    if (redirectUrl) {
-      window.location.assign(redirectUrl);
-      return;
-    }
-
-    if (button) {
-      button.disabled = false;
-      button.textContent = originalLabel;
-    }
+    sessionStorage.setItem('ayan_checkout_data', JSON.stringify(data));
+    await sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
+    window.location.assign('checkout.html');
   });
 }
 

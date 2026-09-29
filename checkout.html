@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07111f">
+  <title>Checkout | Ayan Photography</title>
+  <link rel="stylesheet" href="styles.css?v=31">
+  <style>
+    .checkout-wrap{max-width:760px;margin:0 auto;padding:70px 16px 110px}.checkout-card{padding:28px;border:1px solid rgba(120,170,230,.22);border-radius:28px;background:linear-gradient(145deg,rgba(15,29,48,.98),rgba(5,14,26,.98));box-shadow:0 24px 80px rgba(0,0,0,.18)}
+    .checkout-logo{width:74px;height:74px;display:block;object-fit:contain;margin:0 auto 18px}.checkout-kicker{text-align:center;color:#75b2ff;font-size:11px;font-weight:800;letter-spacing:.16em}.checkout-title{text-align:center;margin:8px 0;font-size:clamp(28px,6vw,42px)}.checkout-sub{text-align:center;color:var(--text-secondary);line-height:1.8;margin:0 auto 26px;max-width:560px}.checkout-demo{display:none;margin:0 0 18px;padding:13px 15px;border-radius:15px;background:rgba(255,190,50,.10);border:1px solid rgba(255,190,50,.22);color:#ffd77a;font-size:12px;line-height:1.7}.checkout-demo.show{display:block}.checkout-summary{display:grid;gap:10px;padding:20px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(132,178,232,.13)}.checkout-row{display:flex;justify-content:space-between;gap:20px;font-size:13px}.checkout-row span{color:var(--text-secondary)}.checkout-row.total{padding-top:13px;margin-top:4px;border-top:1px dashed rgba(132,178,232,.18);font-size:17px}.checkout-row.total strong{color:var(--brand);font-size:24px}.checkout-customer{display:grid;gap:8px;margin:18px 0;padding:17px;border-radius:18px;background:rgba(255,255,255,.025)}.checkout-customer div{display:flex;justify-content:space-between;gap:18px;font-size:12px}.checkout-customer span{color:var(--text-secondary)}.checkout-actions{display:grid;gap:10px;margin-top:20px}.checkout-actions button{width:100%;min-height:54px}.checkout-back{text-align:center;margin-top:13px}.checkout-back a{color:var(--text-secondary);text-decoration:none}.checkout-error{display:none;margin-top:14px;padding:13px 15px;border-radius:14px;background:rgba(255,75,75,.10);border:1px solid rgba(255,75,75,.2);color:#ffb5b5;font-size:12px;line-height:1.7;white-space:pre-wrap}.checkout-error.show{display:block}.checkout-secure{text-align:center;color:var(--muted);font-size:10px;margin-top:18px}.checkout-status{display:none;text-align:center;padding:16px;color:var(--text-secondary)}
+  </style>
+</head>
+<body class="booking-page" data-theme="relax">
+  <div class="ambient" aria-hidden="true"><span></span><span></span></div>
+  <div class="page-shell">
+    <header class="site-header"><div class="container navbar">
+      <a class="brand" href="index.html"><img class="brand-mark" src="https://c.top4top.io/p_3918gds6e2.png" alt="Ayan Photography"><div class="brand-copy"><strong>Ayan Photography</strong><span>Car Photography Studio</span></div></a>
+      <div class="nav-actions"><a class="btn btn-primary" href="booking.html">تعديل الطلب</a></div>
+    </div></header>
+    <main class="checkout-wrap">
+      <section class="checkout-card">
+        <img class="checkout-logo" src="https://c.top4top.io/p_3918gds6e2.png" alt="Ayan Photography">
+        <div class="checkout-kicker">SECURE CHECKOUT</div>
+        <h1 class="checkout-title">مراجعة الطلب والدفع</h1>
+        <p class="checkout-sub">راجع بياناتك والمبلغ النهائي قبل الانتقال إلى صفحة الدفع الآمنة.</p>
+        <div id="demoNotice" class="checkout-demo">وضع الدفع التجريبي مفعّل حاليًا. لن يتم تحصيل سعر الباقة الحقيقي أثناء الاختبار؛ سيتم استخدام مفتاح Tap التجريبي المخصص للموقع.</div>
+        <div id="summary" class="checkout-summary"></div>
+        <div id="customer" class="checkout-customer"></div>
+        <div class="checkout-actions">
+          <button id="payBtn" class="btn btn-primary" type="button">متابعة إلى الدفع الآمن</button>
+        </div>
+        <div id="error" class="checkout-error" role="alert"></div>
+        <div id="status" class="checkout-status">جاري تجهيز عملية الدفع…</div>
+        <div class="checkout-back"><a href="booking.html">← العودة وتعديل البيانات</a></div>
+        <div class="checkout-secure">سيتم تحويلك إلى صفحة الدفع المستضافة من مزود الدفع. لا يتم تخزين بيانات البطاقة في موقع Ayan Photography.</div>
+      </section>
+    </main>
+  </div>
+  <script src="ui.js?v=46"></script>
+  <script src="app.js?v=48"></script>
+  <script>
+    (() => {
+      const key='ayan_checkout_data';
+      let order=null;
+      try { order=JSON.parse(sessionStorage.getItem(key)||'null'); } catch(_) {}
+      const ar=(localStorage.getItem('ayan_lang')||'ar')==='ar';
+      const summary=document.getElementById('summary'), customer=document.getElementById('customer'), error=document.getElementById('error'), btn=document.getElementById('payBtn'), status=document.getElementById('status'), demo=document.getElementById('demoNotice');
+      const money=n=>`${Number(n||0).toFixed(2)} SAR`;
+      const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+      if(!order){ error.textContent=ar?'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.':'No booking was found. Return to booking and try again.'; error.classList.add('show'); btn.disabled=true; return; }
+      const names={silver:ar?'🥈 الباقة الفضية':'🥈 Silver Package',basic:ar?'🥉 الباقة الأساسية':'🥉 Basic Package',advanced:ar?'🏆 الباقة المتقدمة':'🏆 Advanced Package',royal:ar?'👑 الباقة الملكية':'👑 Royal Package'};
+      const prices={silver:70,basic:100,advanced:150,royal:200};
+      const base=Number(prices[order.packageKey]||0), tax=Math.round(base*.15*100)/100, total=Math.round((base+tax)*100)/100;
+      summary.innerHTML=`<div class="checkout-row"><span>الباقة</span><strong>${escapeHtml(names[order.packageKey]||order.packageType)}</strong></div><div class="checkout-row"><span>سعر الباقة</span><strong>${money(base)}</strong></div><div class="checkout-row"><span>ضريبة القيمة المضافة</span><strong>${money(tax)}</strong></div><div class="checkout-row total"><span>الإجمالي</span><strong>${money(total)}</strong></div>`;
+      customer.innerHTML=`<div><span>الاسم</span><strong>${escapeHtml(order.name)}</strong></div><div><span>الجوال</span><strong>${escapeHtml(order.phone)}</strong></div><div><span>السيارة</span><strong>${escapeHtml(order.carType)}</strong></div><div><span>منطقة التصوير</span><strong>${escapeHtml(order.shootRegion)}</strong></div>`;
+      fetch('/api/payment-config',{cache:'no-store'}).then(r=>r.json()).then(c=>{ if(c?.testMode) demo.classList.add('show'); }).catch(()=>{});
+      btn.addEventListener('click',async()=>{
+        error.classList.remove('show'); btn.disabled=true; status.style.display='block';
+        try{
+          const response=await fetch('/api/payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});
+          const result=await response.json().catch(()=>({}));
+          if(!response.ok) throw new Error(result.error||'تعذر تجهيز عملية الدفع');
+          if(!result.redirectUrl) throw new Error('لم يتم استلام رابط الدفع.');
+          window.location.assign(result.redirectUrl);
+        }catch(e){ error.textContent=e?.message||'تعذر تجهيز عملية الدفع.'; error.classList.add('show'); btn.disabled=false; status.style.display='none'; }
+      });
+    })();
+  </script>
+</body>
+</html>
