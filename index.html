@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="assets/ayan-logo.png">
   <title>Ayan Photography | تصوير سيارات احترافي</title>
   <link rel="preload" as="image" href="assets/ayan-logo.png" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=36">
+  <link rel="stylesheet" href="styles.css?v=37">
 </head>
 <body data-theme="relax">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -56,9 +56,13 @@
 </header>
   <div class="loader" data-home-loader aria-hidden="true">
     <div class="loader-inner">
-      <div class="home-loader-mark"><img src="assets/ayan-logo.png" alt="Ayan Photography logo"></div>
-      <div class="home-loader-name">Ayan Photography</div>
-      <div class="home-loader-line"><span></span></div>
+      <div class="home-loader-mark" aria-label="Ayan Photography">
+        <span class="home-loader-halo" aria-hidden="true"></span>
+        <span class="home-loader-ring" aria-hidden="true"></span>
+        <img src="assets/ayan-logo.png" alt="Ayan Photography logo">
+      </div>
+      <div class="home-loader-name">AYAN PHOTOGRAPHY</div>
+      <div class="home-loader-line" aria-hidden="true"><span></span></div>
     </div>
   </div>
   <div class="toast" role="status" aria-live="polite"></div>
@@ -105,24 +109,36 @@
       <a class="packages-book-link" href="booking.html" data-i18n="packagesLink">تخصيص وحجز ←</a>
     </div>
 
-    <div class="packages-grid packages-grid-cinematic">
-      <article class="card package package-cinematic reveal" data-delay="1">
+    <div class="packages-grid packages-grid-cinematic" aria-label="Ayan Photography packages">
+      <article class="card package package-cinematic package-silver reveal" data-delay="1">
         <div class="package-visual cinematic-visual">
           <img src="assets/packages/silver.webp" alt="Toyota Camry 2023 - Ayan Photography" loading="eager" fetchpriority="high">
           <div class="package-visual-shade"></div>
-          <span class="package-en-label">SILVER</span>
+          <div class="package-visual-copy">
+            <span class="package-en-label">SILVER</span>
+            <span class="package-visual-model" data-i18n="silverCar">تويوتا كامري 2023</span>
+          </div>
+          <span class="package-rank-icon">🥈</span>
         </div>
         <div class="package-content">
-          <h3 data-i18n="silver">الباقة الفضية</h3>
-          <div class="package-model" data-i18n="silverCar">تويوتا كامري 2023</div>
-          <div class="descriptor" data-i18n="silverDesc">رولينق بدون مونتاج</div>
-          <div class="price"><strong data-i18n="silverPrice">70</strong><span>SAR</span></div>
+          <div class="package-heading">
+            <h3 data-i18n="silver">الباقة الفضية</h3>
+            <div class="descriptor" data-i18n="silverDesc">رولينق بدون مونتاج</div>
+          </div>
+          <div class="package-highlights" aria-hidden="true">
+            <span><b>RAW</b><small data-i18n="silverH1">مقاطع أصلية</small></span>
+            <span><b>↗</b><small data-i18n="silverH2">زوايا متعددة</small></span>
+            <span><b>Ø</b><small data-i18n="silverH3">بدون مونتاج</small></span>
+          </div>
           <ul>
             <li data-i18n="silverF1">تصوير رولينق للسيارة.</li>
             <li data-i18n="silverF2">تصوير أثناء الحركة من زوايا متنوعة.</li>
             <li data-i18n="silverF3">تسليم جميع المقاطع الأصلية بدون مونتاج.</li>
           </ul>
-          <a class="btn btn-secondary package-cta" href="booking.html" data-package="🥈 الباقة الفضية - 70 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          <div class="package-bottom">
+            <div class="price"><strong data-i18n="silverPrice">70</strong><span>SAR</span></div>
+            <a class="btn btn-secondary package-cta" href="booking.html" data-package="🥈 الباقة الفضية - 70 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          </div>
         </div>
       </article>
 
@@ -130,14 +146,25 @@
         <div class="package-visual cinematic-visual">
           <img src="assets/packages/basic.webp" alt="BMW M5 - Ayan Photography" loading="lazy">
           <div class="package-visual-shade"></div>
-          <span class="package-en-label">BASIC</span>
+          <div class="package-visual-copy">
+            <span class="package-en-label">BASIC</span>
+            <span class="package-visual-model" data-i18n="basicCar">BMW M5</span>
+          </div>
+          <span class="package-rank-icon">🥉</span>
         </div>
         <div class="package-content">
-          <div class="package-badge popular" data-i18n="popularBadge">الأكثر طلبًا</div>
-          <h3 data-i18n="basic">الباقة الأساسية</h3>
-          <div class="package-model" data-i18n="basicCar">BMW M5</div>
-          <div class="descriptor" data-i18n="basicDesc">رولينق + أكثر من 5 مقاطع متنوعة + مونتاج</div>
-          <div class="price"><strong data-i18n="basicPrice">100</strong><span>SAR</span></div>
+          <div class="package-heading package-heading-with-badge">
+            <div>
+              <h3 data-i18n="basic">الباقة الأساسية</h3>
+              <div class="descriptor" data-i18n="basicDesc">رولينق + أكثر من 5 مقاطع متنوعة + مونتاج</div>
+            </div>
+            <span class="package-badge popular" data-i18n="popularBadge">الأكثر طلبًا</span>
+          </div>
+          <div class="package-highlights" aria-hidden="true">
+            <span><b>5+</b><small data-i18n="basicH1">مقاطع</small></span>
+            <span><b>✂</b><small data-i18n="basicH2">مونتاج كامل</small></span>
+            <span><b>♫</b><small data-i18n="basicH3">اختيار أغنية</small></span>
+          </div>
           <ul>
             <li data-i18n="basicF1">تصوير رولينق للسيارة.</li>
             <li data-i18n="basicF2">أكثر من 5 مقاطع متنوعة.</li>
@@ -145,7 +172,10 @@
             <li data-i18n="basicF4">اختيار أغنية على ذوقك.</li>
             <li data-i18n="basicF5">إمكانية تنفيذ فكرة خاصة حسب طلبك.</li>
           </ul>
-          <a class="btn btn-primary package-cta" href="booking.html" data-package="🥉 الباقة الأساسية - 100 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          <div class="package-bottom">
+            <div class="price"><strong data-i18n="basicPrice">100</strong><span>SAR</span></div>
+            <a class="btn btn-primary package-cta" href="booking.html" data-package="🥉 الباقة الأساسية - 100 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          </div>
         </div>
       </article>
 
@@ -153,14 +183,22 @@
         <div class="package-visual cinematic-visual">
           <img src="assets/packages/advanced.webp" alt="Audi - Ayan Photography" loading="lazy">
           <div class="package-visual-shade"></div>
-          <span class="package-en-label">ADVANCED</span>
+          <div class="package-visual-copy">
+            <span class="package-en-label">ADVANCED</span>
+            <span class="package-visual-model" data-i18n="advancedCar">أودي</span>
+          </div>
+          <span class="package-rank-icon">🏆</span>
         </div>
         <div class="package-content">
-          <div class="package-badge popular" data-i18n="popularBadge">الأكثر طلبًا</div>
-          <h3 data-i18n="advanced">الباقة المتقدمة</h3>
-          <div class="package-model" data-i18n="advancedCar">أودي</div>
-          <div class="descriptor" data-i18n="advancedDesc">رولينق + تصوير ثابت + أكثر من 10 مقاطع + مونتاج</div>
-          <div class="price"><strong data-i18n="advancedPrice">150</strong><span>SAR</span></div>
+          <div class="package-heading">
+            <h3 data-i18n="advanced">الباقة المتقدمة</h3>
+            <div class="descriptor" data-i18n="advancedDesc">رولينق + تصوير ثابت + أكثر من 10 مقاطع + مونتاج</div>
+          </div>
+          <div class="package-highlights" aria-hidden="true">
+            <span><b>10+</b><small data-i18n="advancedH1">مقاطع</small></span>
+            <span><b>▣</b><small data-i18n="advancedH2">تصوير ثابت</small></span>
+            <span><b>✂</b><small data-i18n="advancedH3">مونتاج متكامل</small></span>
+          </div>
           <ul>
             <li data-i18n="advancedF1">تصوير رولينق للسيارة.</li>
             <li data-i18n="advancedF2">تصوير ثابت من عدة زوايا.</li>
@@ -169,7 +207,10 @@
             <li data-i18n="advancedF5">تنويع في الزوايا والحركات.</li>
             <li data-i18n="advancedF6">تسليم الفيديوهات في نفس اليوم بإذن الله.</li>
           </ul>
-          <a class="btn btn-primary package-cta" href="booking.html" data-package="🏆 الباقة المتقدمة - 150 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          <div class="package-bottom">
+            <div class="price"><strong data-i18n="advancedPrice">150</strong><span>SAR</span></div>
+            <a class="btn btn-primary package-cta" href="booking.html" data-package="🏆 الباقة المتقدمة - 150 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          </div>
         </div>
       </article>
 
@@ -177,14 +218,25 @@
         <div class="package-visual cinematic-visual">
           <img src="assets/packages/royal.webp" alt="Toyota Supra MK5 - Ayan Photography" loading="lazy">
           <div class="package-visual-shade"></div>
-          <span class="package-en-label">OWNERSHIP</span>
+          <div class="package-visual-copy">
+            <span class="package-en-label">OWNERSHIP</span>
+            <span class="package-visual-model" data-i18n="royalCar">تويوتا سوبرا MK5</span>
+          </div>
+          <span class="package-rank-icon">👑</span>
         </div>
         <div class="package-content">
-          <div class="package-badge signature" data-i18n="royalBadge">Signature</div>
-          <h3 data-i18n="royal">الباقة الملكية</h3>
-          <div class="package-model" data-i18n="royalCar">تويوتا سوبرا MK5</div>
-          <div class="descriptor" data-i18n="royalDesc">التصوير السينمائي + 20+ مقطع متنوع</div>
-          <div class="price"><strong data-i18n="royalPrice">200</strong><span>SAR</span></div>
+          <div class="package-heading package-heading-with-badge">
+            <div>
+              <h3 data-i18n="royal">الباقة الملكية</h3>
+              <div class="descriptor" data-i18n="royalDesc">التصوير السينمائي + 20+ مقطع متنوع</div>
+            </div>
+            <span class="package-badge signature" data-i18n="royalBadge">Signature</span>
+          </div>
+          <div class="package-highlights" aria-hidden="true">
+            <span><b>20+</b><small data-i18n="royalH1">مقاطع</small></span>
+            <span><b>◆</b><small data-i18n="royalH2">سينمائي</small></span>
+            <span><b>★</b><small data-i18n="royalH3">فكرة خاصة</small></span>
+          </div>
           <ul>
             <li data-i18n="royalF1">تصوير سينمائي متكامل للسيارة.</li>
             <li data-i18n="royalF2">رولينق وتصوير ثابت بزوايا وحركات متنوعة.</li>
@@ -193,7 +245,10 @@
             <li data-i18n="royalF5">تنفيذ فكرة خاصة حسب طلبك.</li>
             <li data-i18n="royalF6">إخراج يناسب سيارتك.</li>
           </ul>
-          <a class="btn btn-primary package-cta" href="booking.html" data-package="👑 الباقة الملكية - 200 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          <div class="package-bottom">
+            <div class="price"><strong data-i18n="royalPrice">200</strong><span>SAR</span></div>
+            <a class="btn btn-primary package-cta" href="booking.html" data-package="👑 الباقة الملكية - 200 ريال" data-i18n="selectPackage">اختر الباقة</a>
+          </div>
         </div>
       </article>
     </div>
@@ -283,8 +338,8 @@
 </footer>
 
   </div>
-  <script src="ui.js?v=48"></script>
-  <script src="app.js?v=50"></script>
+  <script src="ui.js?v=49"></script>
+  <script src="app.js?v=51"></script>
   <script src="security.js?v=31"></script>
 </body>
 </html>
