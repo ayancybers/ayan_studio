@@ -10,9 +10,9 @@
   <link rel="apple-touch-icon" href="assets/ayan-logo.png">
   <title>Ayan Photography | تصوير سيارات احترافي</title>
   <link rel="preload" as="image" href="assets/ayan-logo.png" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=58">
+  <link rel="stylesheet" href="styles.css?v=37">
 </head>
-<body data-theme="relax" class="reference-home">
+<body data-theme="relax">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
   <div id="pointer-glow" aria-hidden="true"></div>
   <div class="page-shell">
@@ -40,9 +40,14 @@
           <button type="button" data-set-theme="light" role="menuitemradio" aria-checked="false"><span data-i18n="light">فاتح ☀️</span></button>
         </div>
       </div>
-      <div class="lang-segmented" data-pref-menu="lang" aria-label="Language">
-        <button type="button" data-set-lang="ar" role="menuitemradio" aria-checked="true">العربية</button>
-        <button type="button" data-set-lang="en" role="menuitemradio" aria-checked="false">English</button>
+      <div class="pref-menu" data-pref-menu="lang">
+        <button type="button" class="pill pref-trigger" data-pref-trigger="lang" aria-haspopup="menu" aria-expanded="false">
+          <span data-lang-label>العربية</span>
+        </button>
+        <div class="pref-panel" data-pref-panel="lang" role="menu">
+          <button type="button" data-set-lang="ar" role="menuitemradio" aria-checked="true">العربية</button>
+          <button type="button" data-set-lang="en" role="menuitemradio" aria-checked="false">English</button>
+        </div>
       </div>
       <a class="btn btn-primary" href="booking.html"><span data-i18n="quick">حجز سريع</span></a>
       <button class="icon-btn mobile-toggle" type="button" data-menu aria-label="Menu" aria-expanded="false"><span class="hamburger-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
@@ -128,8 +133,7 @@
           <ul>
             <li data-i18n="silverF1">تصوير رولينق للسيارة.</li>
             <li data-i18n="silverF2">تصوير أثناء الحركة من زوايا متنوعة.</li>
-            <li data-i18n="silverF3">تسليم جميع المقاطع الأصلية.</li>
-            <li data-i18n="silverF4">بدون مونتاج.</li>
+            <li data-i18n="silverF3">تسليم جميع المقاطع الأصلية بدون مونتاج.</li>
           </ul>
           <div class="package-bottom">
             <div class="price"><strong data-i18n="silverPrice">70</strong><span>SAR</span></div>
