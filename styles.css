@@ -769,6 +769,12 @@ html[dir="ltr"] .text-link:hover { transform: translateX(4px); }
   box-shadow: 0 18px 55px var(--glow);
 }
 
+.package-badge.popular {
+  background: linear-gradient(135deg, #4aa8ff, #7bc8ff);
+  box-shadow: 0 8px 24px rgba(74,168,255,.24);
+  color: #06111f;
+}
+
 .package-badge {
   align-self: flex-start;
   margin-bottom: 18px;
@@ -1334,6 +1340,7 @@ textarea.form-control { min-height: 130px; padding: 14px; resize: vertical; }
 .booking-package-price small { color:var(--muted); font-size:8px; letter-spacing:.06em; }
 .booking-choice-tag { position:absolute; top:8px; inset-inline-start:10px; padding:4px 7px; border-radius:999px; color:var(--brand-contrast); background:var(--brand); font-size:7px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
 .booking-choice-tag.signature { background:linear-gradient(135deg,#dfe9ff,#8bbdff); }
+.booking-choice-tag.popular { background:linear-gradient(135deg,#4aa8ff,#7bc8ff); color:#06111f; box-shadow:0 8px 22px rgba(74,168,255,.22); }
 .booking-package-choice.featured .booking-package-icon { margin-top:6px; }
 .visually-hidden-field { position:absolute !important; width:1px !important; height:1px !important; padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important; }
 .booking-divider { display:flex; align-items:center; gap:12px; margin:26px 0 16px; color:var(--muted); font-size:9px; font-weight:800; }
@@ -2611,3 +2618,113 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
 .package-visual img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 52%;filter:saturate(1.05) contrast(1.03)}
 .package-catalog-card>img{object-position:center 52%}
 @media (max-width:620px){.package-visual{aspect-ratio:16/9}.package-catalog-card>img{height:220px}}
+
+.package-catalog-popular{display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px;padding:5px 9px;border-radius:999px;background:linear-gradient(135deg,#4aa8ff,#7bc8ff);color:#06111f;font-size:9px;font-weight:900;box-shadow:0 8px 22px rgba(74,168,255,.18);}
+
+
+/* V31 — premium, perfectly aligned Ayan loader */
+.loader .loader-inner { gap: 16px; }
+.home-loader-mark {
+  width: 286px !important;
+  height: 286px !important;
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  isolation: isolate;
+  filter: drop-shadow(0 18px 42px rgba(28,111,214,.20));
+}
+.home-loader-mark img {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  animation: ayanLogoPulse 2.4s cubic-bezier(.4,0,.2,1) infinite;
+}
+/* Rotating light sweep — exactly the same diameter as the logo. */
+.home-loader-mark::before {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  inset: 0 !important;
+  border-radius: 50%;
+  padding: 2px;
+  background: conic-gradient(from 0deg,
+    rgba(118,183,255,.04) 0deg,
+    rgba(118,183,255,.04) 250deg,
+    rgba(118,183,255,.28) 286deg,
+    #7ec2ff 310deg,
+    #ffffff 324deg,
+    rgba(118,183,255,.04) 342deg,
+    rgba(118,183,255,.04) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ayanLoaderOrbit 1.65s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(80,165,255,.75));
+  pointer-events: none;
+}
+/* Subtle halo behind the logo. */
+.home-loader-mark::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 2.5% !important;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(55,137,255,.10) 0 45%, rgba(55,137,255,.035) 60%, transparent 73%);
+  box-shadow: 0 0 46px rgba(55,137,255,.16), inset 0 0 24px rgba(55,137,255,.06);
+  animation: ayanHalo 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+.home-loader-name {
+  margin-top: 2px;
+  color: #eaf4ff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(86,164,255,.22);
+}
+.home-loader-line {
+  width: 210px;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 0 14px rgba(74,153,255,.08);
+}
+.home-loader-line span {
+  display: block;
+  width: 34%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, #78b8ff 45%, #fff 50%, #78b8ff 55%, transparent);
+  animation: ayanLoaderSweep 1.35s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes ayanLoaderOrbit { to { transform: rotate(360deg); } }
+@keyframes ayanLoaderSweep { 0% { transform: translateX(-320%); } 100% { transform: translateX(520%); } }
+@keyframes ayanLogoPulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.012); }
+}
+@keyframes ayanHalo {
+  0%,100% { opacity:.72; transform:scale(.985); }
+  50% { opacity:1; transform:scale(1.015); }
+}
+@media (max-width: 680px) {
+  .home-loader-mark { width: 238px !important; height: 238px !important; }
+  .home-loader-line { width: 178px !important; }
+  .home-loader-name { font-size: 10px; letter-spacing: .20em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-loader-mark::before,
+  .home-loader-mark::after,
+  .home-loader-mark img,
+  .home-loader-line span { animation: none !important; }
+}
