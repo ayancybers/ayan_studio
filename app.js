@@ -515,23 +515,70 @@ function setupHomeLoader() {
   const loader = document.querySelector('[data-home-loader]');
   if (!loader) return;
 
+  const percentEl = loader.querySelector('[data-loader-percent]');
+  const barEl = loader.querySelector('[data-loader-progress]');
   const startedAt = performance.now();
+  const minimumVisibleMs = 1050;
+  const maxWaitMs = 3200;
+  let current = 1;
+  let target = 1;
   let finishing = false;
+  let rafId = 0;
+
+  const render = (value) => {
+    const v = Math.max(1, Math.min(100, Math.round(value)));
+    if (percentEl) percentEl.textContent = `${String(v).padStart(2, '0')}%`;
+    if (barEl) barEl.style.width = `${v}%`;
+  };
+
+  const tick = () => {
+    if (current < target) {
+      current += Math.max(.35, (target - current) * .22);
+      render(current);
+    }
+    rafId = window.requestAnimationFrame(tick);
+  };
+
+  // Start with the small milestone values requested: 01% → 04% → 06% → 08%,
+  // then continue smoothly toward the real load state.
+  const milestones = [1, 4, 6, 8, 14, 28, 46, 68, 82, 92];
+  let milestoneIndex = 0;
+  const milestoneTimer = window.setInterval(() => {
+    if (finishing) return;
+    milestoneIndex = Math.min(milestoneIndex + 1, milestones.length - 1);
+    target = milestones[milestoneIndex];
+    if (milestoneIndex === milestones.length - 1) window.clearInterval(milestoneTimer);
+  }, 125);
 
   const finish = () => {
     if (finishing) return;
     finishing = true;
-    const minimumVisibleMs = 950;
+    window.clearInterval(milestoneTimer);
+    target = 100;
     const elapsed = performance.now() - startedAt;
     const wait = Math.max(0, minimumVisibleMs - elapsed);
-    window.setTimeout(() => loader.classList.add('hide'), wait + 220);
+    window.setTimeout(() => {
+      const doneAt = performance.now();
+      const complete = () => {
+        if (performance.now() - doneAt < 420) {
+          requestAnimationFrame(complete);
+          return;
+        }
+        loader.classList.add('hide');
+      };
+      complete();
+    }, wait + 120);
   };
+
+  render(1);
+  rafId = window.requestAnimationFrame(tick);
 
   if (document.readyState === 'complete') finish();
   else window.addEventListener('load', finish, { once: true });
 
-  // Never leave the screen blocked if a remote resource is slow.
-  window.setTimeout(finish, 2600);
+  // Never block the site forever because of a slow remote asset.
+  window.setTimeout(finish, maxWaitMs);
+  window.setTimeout(() => window.cancelAnimationFrame(rafId), maxWaitMs + 1800);
 }
 
 
