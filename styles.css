@@ -4561,3 +4561,38 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 @media (prefers-reduced-motion:reduce){
   .home-loader-ring,.home-loader-line span,.home-loader-halo{animation:none !important}
 }
+
+/* V17.3 — mobile package labels: same visual size, no clipping */
+@media (max-width:680px){
+  .no-package-image .package-en-label{
+    font-size:22px !important;
+    line-height:1 !important;
+    letter-spacing:.035em !important;
+    white-space:nowrap !important;
+    max-width:100% !important;
+    text-align:center !important;
+  }
+  .package-cinematic .cinematic-visual.no-package-image .package-visual-copy{
+    padding:36px 8px 18px !important;
+    overflow:hidden !important;
+  }
+  .package-rank-icon{
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+    border-radius:12px !important;
+    padding:4px !important;
+  }
+  .package-rank-icon svg{width:30px !important;height:30px !important}
+  .package-rank-icon .rank-lens,
+  .package-rank-icon .rank-film,
+  .package-rank-icon .rank-camera,
+  .package-rank-icon .rank-star{fill:none;stroke:currentColor;stroke-width:2.3;stroke-linejoin:round;stroke-linecap:round}
+  .package-rank-icon .rank-lens-inner{fill:none;stroke:currentColor;stroke-width:2}
+  .package-rank-icon .rank-spark{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+  .package-rank-icon .rank-film-line{fill:none;stroke:currentColor;stroke-width:1.7}
+  .package-rank-icon .rank-camera-top{fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+  .package-rank-icon .rank-camera-lens{fill:none;stroke:currentColor;stroke-width:2.3}
+  .package-rank-icon .rank-camera-dot{fill:currentColor}
+}
