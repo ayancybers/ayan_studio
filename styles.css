@@ -4596,3 +4596,151 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   .package-rank-icon .rank-camera-lens{fill:none;stroke:currentColor;stroke-width:2.3}
   .package-rank-icon .rank-camera-dot{fill:currentColor}
 }
+
+
+/* =========================================================
+   V17.4 — click-only social menu + theme-aware package icons/colors
+   ========================================================= */
+:root{
+  --pkg-silver:#cfe4f7;
+  --pkg-basic:#f3ad74;
+  --pkg-advanced:#67b8ff;
+  --pkg-cinematic:#f3c95d;
+  --pkg-silver-bg:rgba(11,27,46,.78);
+  --pkg-basic-bg:rgba(46,25,20,.66);
+  --pkg-advanced-bg:rgba(11,31,50,.82);
+  --pkg-cinematic-bg:rgba(49,33,15,.60);
+  --pkg-border-silver:rgba(128,185,239,.28);
+  --pkg-border-basic:rgba(238,164,101,.54);
+  --pkg-border-advanced:rgba(45,158,255,.66);
+  --pkg-border-cinematic:rgba(226,179,70,.54);
+  --pkg-icon-bg:rgba(4,13,25,.46);
+  --pkg-icon-border:rgba(255,255,255,.10);
+  --pkg-body:#dbe7f2;
+  --pkg-muted:#9eb8d3;
+  --loader-accent:var(--brand);
+}
+
+[data-theme="dark"]{
+  --pkg-silver:#d6e7f7;
+  --pkg-basic:#f1ad72;
+  --pkg-advanced:#78beff;
+  --pkg-cinematic:#f0c55d;
+  --pkg-silver-bg:rgba(10,22,36,.92);
+  --pkg-basic-bg:rgba(39,23,21,.82);
+  --pkg-advanced-bg:rgba(11,26,44,.92);
+  --pkg-cinematic-bg:rgba(44,30,14,.82);
+  --pkg-border-silver:rgba(156,200,240,.34);
+  --pkg-border-basic:rgba(238,164,101,.60);
+  --pkg-border-advanced:rgba(76,164,255,.72);
+  --pkg-border-cinematic:rgba(237,195,91,.60);
+  --pkg-icon-bg:rgba(3,10,19,.62);
+  --pkg-body:#e8f0f8;
+  --pkg-muted:#afc2d6;
+  --loader-accent:#7dbbff;
+}
+
+[data-theme="light"]{
+  --pkg-silver:#35658d;
+  --pkg-basic:#a95f26;
+  --pkg-advanced:#176bb6;
+  --pkg-cinematic:#9a7110;
+  --pkg-silver-bg:rgba(236,245,255,.86);
+  --pkg-basic-bg:rgba(255,242,234,.92);
+  --pkg-advanced-bg:rgba(235,245,255,.90);
+  --pkg-cinematic-bg:rgba(255,248,223,.94);
+  --pkg-border-silver:rgba(53,101,141,.34);
+  --pkg-border-basic:rgba(169,95,38,.34);
+  --pkg-border-advanced:rgba(23,107,182,.36);
+  --pkg-border-cinematic:rgba(154,113,16,.40);
+  --pkg-icon-bg:rgba(255,255,255,.72);
+  --pkg-icon-border:rgba(18,48,82,.12);
+  --pkg-body:#26384b;
+  --pkg-muted:#5f7590;
+  --loader-accent:#2f78d8;
+}
+
+/* Package identity colors follow the active site theme. */
+.package-silver{border-color:var(--pkg-border-silver) !important;background:linear-gradient(180deg,var(--pkg-silver-bg),rgba(255,255,255,.02)) !important;}
+.package-basic{border-color:var(--pkg-border-basic) !important;background:linear-gradient(180deg,var(--pkg-basic-bg),rgba(255,255,255,.02)) !important;}
+.package-advanced{border-color:var(--pkg-border-advanced) !important;background:linear-gradient(180deg,var(--pkg-advanced-bg),rgba(255,255,255,.02)) !important;}
+.package-royal{border-color:var(--pkg-border-cinematic) !important;background:linear-gradient(180deg,var(--pkg-cinematic-bg),rgba(255,255,255,.02)) !important;}
+
+.package-basic .package-en-label{color:var(--pkg-basic) !important;}
+.package-advanced .package-en-label{color:var(--pkg-advanced) !important;}
+.package-royal .package-en-label{color:var(--pkg-cinematic) !important;}
+.package-silver .package-en-label{color:var(--pkg-silver) !important;}
+.package-basic .package-highlights b{color:var(--pkg-basic) !important;}
+.package-advanced .package-highlights b{color:var(--pkg-advanced) !important;}
+.package-royal .package-highlights b{color:var(--pkg-cinematic) !important;}
+.package-silver .package-highlights b{color:var(--pkg-silver) !important;}
+.package-content .descriptor{color:var(--pkg-muted) !important;}
+.package-content li{color:var(--pkg-body) !important;}
+.package-content .price span{color:var(--pkg-muted) !important;}
+.package-basic .package-content li::before{background:var(--pkg-basic) !important;box-shadow:0 0 12px color-mix(in srgb,var(--pkg-basic) 50%, transparent) !important;}
+.package-advanced .package-content li::before{background:var(--pkg-advanced) !important;box-shadow:0 0 12px color-mix(in srgb,var(--pkg-advanced) 50%, transparent) !important;}
+.package-royal .package-content li::before{background:var(--pkg-cinematic) !important;box-shadow:0 0 12px color-mix(in srgb,var(--pkg-cinematic) 50%, transparent) !important;}
+.package-silver .package-content li::before{background:var(--pkg-silver) !important;box-shadow:0 0 12px color-mix(in srgb,var(--pkg-silver) 50%, transparent) !important;}
+.package-royal .package-cta{background:linear-gradient(90deg,var(--pkg-cinematic),color-mix(in srgb,var(--pkg-cinematic) 72%, #fff)) !important;color:#11151b !important;}
+.package-silver .package-cta{background:var(--surface) !important;border-color:var(--pkg-border-silver) !important;color:var(--text) !important;}
+
+/* Package rank marks: use the same clean line-art treatment on laptop, tablet, and mobile. */
+.package-rank-icon{
+  color:var(--pkg-silver) !important;
+  background:var(--pkg-icon-bg) !important;
+  border-color:var(--pkg-icon-border) !important;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.24)) !important;
+}
+.package-rank-icon.rank-silver{color:var(--pkg-silver) !important;}
+.package-rank-icon.rank-bronze{color:var(--pkg-basic) !important;}
+.package-rank-icon.rank-advanced{color:var(--pkg-advanced) !important;}
+.package-rank-icon.rank-cinematic{color:var(--pkg-cinematic) !important;}
+.package-rank-icon svg{width:34px !important;height:34px !important;}
+.package-rank-icon .rank-lens,
+.package-rank-icon .rank-film,
+.package-rank-icon .rank-camera,
+.package-rank-icon .rank-star{
+  fill:none !important;
+  stroke:currentColor !important;
+  stroke-width:2.35 !important;
+  stroke-linejoin:round !important;
+  stroke-linecap:round !important;
+}
+.package-rank-icon .rank-lens-inner{fill:none !important;stroke:currentColor !important;stroke-width:2 !important;}
+.package-rank-icon .rank-spark{fill:none !important;stroke:currentColor !important;stroke-width:2 !important;stroke-linecap:round !important;}
+.package-rank-icon .rank-film-line{fill:none !important;stroke:currentColor !important;stroke-width:1.75 !important;}
+.package-rank-icon .rank-camera-top{fill:none !important;stroke:currentColor !important;stroke-width:2.35 !important;stroke-linecap:round !important;stroke-linejoin:round !important;}
+.package-rank-icon .rank-camera-lens{fill:none !important;stroke:currentColor !important;stroke-width:2.35 !important;}
+.package-rank-icon .rank-camera-dot{fill:currentColor !important;stroke:none !important;}
+
+/* The social panel opens only after pressing the green button, never just by hovering. */
+.social-float.is-open .social-float-menu{opacity:1 !important;transform:translateY(0) scale(1) !important;pointer-events:auto !important;}
+.social-float:hover .social-float-menu{opacity:0 !important;transform:translateY(12px) scale(.96) !important;pointer-events:none !important;}
+.social-float.is-open:hover .social-float-menu{opacity:1 !important;transform:translateY(0) scale(1) !important;pointer-events:auto !important;}
+
+/* Loader: the progress ring hugs the real logo without resizing or replacing it. */
+.loader-inner{--loader-glow:var(--glow) !important;}
+.home-loader-mark{filter:drop-shadow(0 18px 44px var(--loader-glow)) !important;}
+.home-loader-ring{
+  inset:-5px !important;
+  background:conic-gradient(from -55deg,
+    color-mix(in srgb,var(--loader-accent) 10%,transparent) 0deg,
+    color-mix(in srgb,var(--loader-accent) 10%,transparent) 230deg,
+    color-mix(in srgb,var(--loader-accent) 78%,#fff) 294deg,
+    #fff 312deg,
+    var(--loader-accent) 328deg,
+    color-mix(in srgb,var(--loader-accent) 10%,transparent) 350deg,
+    color-mix(in srgb,var(--loader-accent) 10%,transparent) 360deg) !important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px)) !important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px)) !important;
+}
+.home-loader-ring::after{
+  background:#fff !important;
+  box-shadow:0 0 12px var(--loader-accent),0 0 26px color-mix(in srgb,var(--loader-accent) 68%,transparent) !important;
+}
+.home-loader-line{background:color-mix(in srgb,var(--loader-accent) 16%,transparent) !important;}
+.home-loader-line span{background:linear-gradient(90deg,transparent,var(--loader-accent) 38%,#fff 50%,var(--loader-accent) 62%,transparent) !important;}
+@media(max-width:680px){
+  .package-rank-icon svg{width:30px !important;height:30px !important;}
+  .home-loader-ring{inset:-5px !important;}
+}

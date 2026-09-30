@@ -962,8 +962,6 @@ function setupSocialFloat() {
     toggle.setAttribute('aria-expanded', String(open));
   };
 
-  toggle.addEventListener('mouseenter', () => setOpen(true));
-  widget.addEventListener('mouseleave', () => setOpen(false));
   toggle.addEventListener('focus', () => setOpen(true));
   widget.addEventListener('focusout', (event) => {
     if (!widget.contains(event.relatedTarget)) setOpen(false);
