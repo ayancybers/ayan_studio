@@ -2728,3 +2728,268 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   .home-loader-mark img,
   .home-loader-line span { animation: none !important; }
 }
+
+
+/* =========================================================
+   Ayan V10 — Cinematic homepage packages showcase
+   Package images intentionally remain the existing assets.
+   ========================================================= */
+.packages-showcase{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:76px 0 54px;
+  min-height:calc(100vh - var(--header-height));
+  background:
+    radial-gradient(ellipse at 18% 48%, rgba(32,125,232,.16), transparent 34%),
+    radial-gradient(ellipse at 82% 42%, rgba(14,78,145,.18), transparent 36%),
+    linear-gradient(180deg,#06101d 0%,#081525 52%,#06101c 100%);
+}
+.packages-showcase::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(2,8,16,.78),rgba(3,12,23,.22) 45%,rgba(2,8,16,.78)),
+    linear-gradient(180deg,rgba(2,9,18,.18),rgba(2,9,18,.82));
+  pointer-events:none;
+}
+.packages-showcase::after{
+  content:"";
+  position:absolute;
+  left:-10%;
+  right:-10%;
+  bottom:0;
+  height:32%;
+  z-index:-1;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.42));
+  pointer-events:none;
+}
+.packages-backdrop{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.packages-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(40px);
+  opacity:.42;
+}
+.packages-orb-a{width:420px;height:420px;left:-180px;top:25%;background:rgba(30,116,220,.22)}
+.packages-orb-b{width:500px;height:500px;right:-220px;top:12%;background:rgba(31,87,150,.2)}
+.packages-streak{
+  position:absolute;
+  width:55vw;
+  height:2px;
+  opacity:.26;
+  transform:rotate(-9deg);
+  background:linear-gradient(90deg,transparent,rgba(105,184,255,.8),transparent);
+  filter:blur(.3px);
+}
+.packages-streak-a{left:-5%;top:29%}
+.packages-streak-b{right:-8%;top:63%;transform:rotate(8deg)}
+.packages-showcase-inner{position:relative;z-index:1}
+.packages-showcase-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:28px;
+}
+.packages-showcase-title{text-align:right;max-width:900px}
+.packages-showcase-title .kicker{
+  color:#56b5ff;
+  letter-spacing:.28em;
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:10px;
+}
+.packages-showcase-title h2{
+  font-size:clamp(32px,4vw,58px);
+  line-height:1.12;
+  margin-bottom:10px;
+  text-wrap:balance;
+}
+.packages-showcase-title p{
+  color:#b4c5d9;
+  font-size:15px;
+  line-height:1.8;
+}
+.packages-book-link{
+  flex:0 0 auto;
+  color:#72bbff;
+  font-weight:800;
+  white-space:nowrap;
+  text-decoration:none;
+}
+.packages-grid-cinematic{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+  align-items:stretch;
+}
+.package-cinematic{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  overflow:hidden;
+  border-radius:24px;
+  padding:0;
+  background:linear-gradient(180deg,rgba(11,27,46,.78),rgba(5,16,29,.94));
+  border:1px solid rgba(128,185,239,.2);
+  box-shadow:0 22px 65px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.04);
+  transition:transform .35s var(--ease),border-color .35s var(--ease),box-shadow .35s var(--ease);
+}
+.package-cinematic:hover{
+  transform:translateY(-7px);
+  border-color:rgba(105,184,255,.48);
+  box-shadow:0 28px 80px rgba(0,0,0,.42),0 0 38px rgba(49,142,240,.11);
+}
+.package-basic{border-color:rgba(238,164,101,.5);background:linear-gradient(180deg,rgba(46,25,20,.66),rgba(8,17,28,.96))}
+.package-advanced{border-color:rgba(45,158,255,.62);box-shadow:0 22px 65px rgba(0,0,0,.28),0 0 28px rgba(40,146,255,.1)}
+.package-royal{border-color:rgba(226,179,70,.48);background:linear-gradient(180deg,rgba(49,33,15,.6),rgba(10,17,25,.96))}
+.cinematic-visual{
+  position:relative;
+  height:236px;
+  margin:0;
+  border-radius:0;
+  overflow:hidden;
+  border:0;
+}
+.cinematic-visual img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .65s var(--ease),filter .65s var(--ease);
+}
+.package-cinematic:hover .cinematic-visual img{transform:scale(1.045)}
+.package-visual-shade{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.08) 28%,rgba(0,7,15,.78) 100%);
+  pointer-events:none;
+}
+.package-en-label{
+  position:absolute;
+  top:18px;
+  left:18px;
+  color:#f7fbff;
+  font-weight:900;
+  font-size:clamp(24px,2vw,34px);
+  letter-spacing:.06em;
+  text-shadow:0 4px 20px rgba(0,0,0,.7);
+}
+.package-basic .package-en-label{color:#ffc69c}
+.package-advanced .package-en-label{color:#76c8ff}
+.package-royal .package-en-label{color:#ffd66e}
+.package-content{
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  padding:18px 22px 20px;
+  position:relative;
+}
+.package-content h3{font-size:24px;line-height:1.3;margin:0 0 5px}
+.package-content .descriptor{font-size:14px;color:#a9c4e2;min-height:24px}
+.package-content .price{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  margin:12px 0 12px;
+}
+.package-content .price strong{font-size:44px;line-height:1;font-weight:900}
+.package-content .price span{font-size:14px;color:#9eb0c6;font-weight:700}
+.package-content ul{
+  display:grid;
+  gap:8px;
+  margin:0 0 20px;
+  padding:0;
+  list-style:none;
+}
+.package-content li{
+  position:relative;
+  padding-inline-start:28px;
+  color:#d6e1ee;
+  font-size:14px;
+  line-height:1.65;
+}
+.package-content li::before{
+  content:"";
+  position:absolute;
+  inset-inline-start:3px;
+  top:.68em;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#63b4ff;
+  box-shadow:0 0 12px rgba(99,180,255,.7);
+}
+.package-royal .package-content li::before{background:#e5b64c;box-shadow:0 0 12px rgba(229,182,76,.55)}
+.package-content .package-cta{width:100%;margin-top:auto;min-height:56px}
+.package-badge{
+  z-index:3;
+  position:absolute;
+  top:18px;
+  right:18px;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  background:rgba(41,150,240,.92);
+  color:#04101d;
+  box-shadow:0 8px 25px rgba(0,0,0,.3);
+}
+.package-badge.signature{
+  background:rgba(12,18,27,.76);
+  border:1px solid rgba(230,190,77,.6);
+  color:#f4cf67;
+}
+.package-benefits-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  margin-top:18px;
+  border:1px solid rgba(115,177,231,.18);
+  border-radius:20px;
+  background:rgba(7,18,31,.7);
+  backdrop-filter:blur(14px);
+  overflow:hidden;
+}
+.package-benefits-strip>div{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  border-inline-end:1px solid rgba(115,177,231,.16);
+}
+.package-benefits-strip>div:last-child{border-inline-end:0}
+.benefit-icon{font-size:27px;color:#4eaeff;font-weight:900}
+.package-benefits-strip strong{font-size:14px}
+.package-benefits-strip small{display:block;color:#91a8c1;margin-top:2px;font-size:12px}
+@media(max-width:1100px){
+  .packages-grid-cinematic{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .packages-showcase{padding-top:56px}
+}
+@media(max-width:700px){
+  .packages-showcase{padding:48px 0 32px}
+  .packages-showcase-head{display:block}
+  .packages-showcase-title{text-align:center}
+  .packages-showcase-title h2{font-size:32px}
+  .packages-showcase-title p{font-size:13px}
+  .packages-book-link{display:block;text-align:center;margin-top:14px}
+  .packages-grid-cinematic{grid-template-columns:1fr;gap:14px}
+  .cinematic-visual{height:220px}
+  .package-content{padding:17px 18px 18px}
+  .package-content h3{font-size:22px}
+  .package-content .price strong{font-size:40px}
+  .package-benefits-strip{grid-template-columns:repeat(2,1fr)}
+  .package-benefits-strip>div{border-bottom:1px solid rgba(115,177,231,.16)}
+  .package-benefits-strip>div:nth-child(2){border-inline-end:0}
+  .package-benefits-strip>div:nth-child(3),.package-benefits-strip>div:nth-child(4){border-bottom:0}
+}
+@media(max-width:430px){
+  .cinematic-visual{height:205px}
+  .package-en-label{font-size:25px}
+  .package-content li{font-size:13px}
+}
