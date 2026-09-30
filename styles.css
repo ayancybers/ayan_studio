@@ -3629,7 +3629,7 @@ html[dir="ltr"] .packages-grid-cinematic{
   inset: -6%;
   z-index: -3;
   background:
-    linear-gradient(180deg, rgba(2,8,16,.76), rgba(3,11,21,.93)),
+    linear-gradient(180deg, rgba(2,8,16,.76), rgba(3,11,21,.93));
   filter: blur(16px) saturate(.8) brightness(.55);
   transform: scale(1.08);
   opacity: .42;
@@ -4743,4 +4743,300 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 @media(max-width:680px){
   .package-rank-icon svg{width:30px !important;height:30px !important;}
   .home-loader-ring{inset:-5px !important;}
+}
+
+
+/* =========================================================
+   V17.5 — real theme-aware package surfaces + exact logo loader
+   ========================================================= */
+:root{
+  --pkg-heading:#f6f9ff;
+  --pkg-body:#dbe7f2;
+  --pkg-muted:#9eb8d3;
+  --pkg-visual-bg:#081828;
+  --pkg-content-bg:rgba(3,12,23,.20);
+  --pkg-rule:rgba(143,191,232,.16);
+}
+
+[data-theme="relax"]{
+  --pkg-heading:#f7fbff;
+  --pkg-body:#dce8f3;
+  --pkg-muted:#9fb8d1;
+  --pkg-visual-bg:#08192b;
+  --pkg-content-bg:rgba(4,14,26,.18);
+  --pkg-rule:rgba(126,179,228,.15);
+}
+
+[data-theme="dark"]{
+  --pkg-heading:#f4f8ff;
+  --pkg-body:#d6e1ec;
+  --pkg-muted:#96a9bd;
+  --pkg-visual-bg:#050b13;
+  --pkg-content-bg:rgba(2,7,13,.42);
+  --pkg-rule:rgba(171,201,229,.12);
+}
+
+[data-theme="light"]{
+  --pkg-heading:#16273a;
+  --pkg-body:#30445a;
+  --pkg-muted:#60758b;
+  --pkg-visual-bg:#edf4fb;
+  --pkg-content-bg:rgba(255,255,255,.86);
+  --pkg-rule:rgba(27,66,106,.13);
+}
+
+/* Packages section must actually follow the selected theme. */
+.packages-showcase{
+  background:
+    radial-gradient(circle at 50% 12%, color-mix(in srgb,var(--brand) 12%,transparent), transparent 34%),
+    linear-gradient(180deg,var(--pkg-section-top,#050d19) 0%,var(--pkg-section-mid,#061321) 52%,var(--pkg-section-bottom,#040b15) 100%) !important;
+}
+[data-theme="relax"] .packages-showcase{
+  --pkg-section-top:#050d19; --pkg-section-mid:#061321; --pkg-section-bottom:#040b15;
+}
+[data-theme="dark"] .packages-showcase{
+  --pkg-section-top:#040810; --pkg-section-mid:#070f19; --pkg-section-bottom:#03070d;
+}
+[data-theme="light"] .packages-showcase{
+  --pkg-section-top:#eef5fd; --pkg-section-mid:#e8f0f8; --pkg-section-bottom:#e1eaf4;
+}
+
+.cinematic-visual.no-package-image{
+  background:
+    radial-gradient(circle at 68% 30%, color-mix(in srgb,var(--brand) 13%,transparent), transparent 34%),
+    linear-gradient(135deg,color-mix(in srgb,var(--pkg-visual-bg) 92%,transparent),color-mix(in srgb,var(--pkg-visual-bg) 76%,#0b1c30)) !important;
+  border-color:var(--pkg-rule) !important;
+}
+[data-theme="dark"] .cinematic-visual.no-package-image{
+  background:
+    radial-gradient(circle at 68% 30%,rgba(76,132,230,.09),transparent 34%),
+    linear-gradient(135deg,#050b13,#0a1420) !important;
+}
+[data-theme="light"] .cinematic-visual.no-package-image{
+  background:
+    radial-gradient(circle at 68% 30%,rgba(47,120,216,.13),transparent 34%),
+    linear-gradient(135deg,#f5f9fd,#e7f0f8) !important;
+}
+
+.package-cinematic{
+  color:var(--pkg-heading) !important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--pkg-content-bg) 100%,transparent),color-mix(in srgb,var(--pkg-content-bg) 62%,transparent)) !important;
+}
+[data-theme="light"] .package-cinematic{
+  box-shadow:0 18px 48px rgba(30,74,117,.10),inset 0 1px 0 rgba(255,255,255,.80) !important;
+}
+.package-content h3{color:var(--pkg-heading) !important;}
+.package-content .descriptor{color:var(--pkg-muted) !important;}
+.package-content li{color:var(--pkg-body) !important;}
+.package-content .price strong{color:var(--pkg-heading) !important;}
+.package-content .price span{color:var(--pkg-muted) !important;}
+.package-highlights{border-top-color:var(--pkg-rule) !important;border-bottom-color:var(--pkg-rule) !important;}
+.package-highlights span + span{border-inline-start-color:var(--pkg-rule) !important;}
+.package-highlights small{color:var(--pkg-muted) !important;}
+.package-rank-icon{
+  background:color-mix(in srgb,var(--pkg-visual-bg) 66%,transparent) !important;
+  border-color:var(--pkg-rule) !important;
+}
+[data-theme="light"] .package-rank-icon{box-shadow:0 8px 22px rgba(29,73,116,.12),inset 0 1px 0 rgba(255,255,255,.75) !important;}
+.package-royal .package-content .price strong,
+.package-advanced .package-content .price strong,
+.package-basic .package-content .price strong,
+.package-silver .package-content .price strong{color:var(--pkg-heading) !important;}
+[data-theme="light"] .package-silver .package-cta{
+  background:#ffffff !important;
+  color:#16314b !important;
+}
+[data-theme="light"] .package-basic .package-cta,
+[data-theme="light"] .package-advanced .package-cta{
+  color:#fff !important;
+}
+[data-theme="light"] .package-badge.popular{
+  color:#09223b !important;
+  box-shadow:0 7px 20px rgba(38,129,225,.20) !important;
+}
+[data-theme="light"] .package-badge.signature{
+  background:rgba(255,255,255,.72) !important;
+}
+
+/* Exact loader: one logo, one ring. The ring is the same diameter as the logo. */
+.loader{
+  background:var(--bg) !important;
+}
+.loader-inner{
+  display:grid !important;
+  place-items:center !important;
+  width:auto !important;
+  max-width:none !important;
+  gap:0 !important;
+  transform:none !important;
+}
+.home-loader-mark{
+  position:relative !important;
+  width:clamp(220px,34vw,340px) !important;
+  height:clamp(220px,34vw,340px) !important;
+  aspect-ratio:1/1 !important;
+  display:grid !important;
+  place-items:center !important;
+  overflow:visible !important;
+  filter:drop-shadow(0 20px 46px var(--glow)) !important;
+}
+.home-loader-mark img{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  z-index:1 !important;
+}
+.home-loader-ring{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:2 !important;
+  display:block !important;
+  border-radius:50% !important;
+  background:conic-gradient(from -90deg,transparent 0deg,transparent 210deg,var(--loader-accent) 280deg,#ffffff 300deg,var(--loader-accent) 320deg,transparent 360deg) !important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px)) !important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px)) !important;
+  animation:loaderRingSpin 1.15s linear infinite !important;
+  filter:drop-shadow(0 0 10px color-mix(in srgb,var(--loader-accent) 70%,transparent)) !important;
+  pointer-events:none !important;
+}
+.home-loader-ring::after{display:none !important;content:none !important;}
+.home-loader-name,.home-loader-line{display:none !important;}
+@keyframes loaderRingSpin{to{transform:rotate(360deg)}}
+@media(max-width:680px){
+  .home-loader-mark{width:min(74vw,290px) !important;height:min(74vw,290px) !important;}
+}
+@media(max-width:390px){
+  .home-loader-mark{width:min(72vw,260px) !important;height:min(72vw,260px) !important;}
+}
+@media(prefers-reduced-motion:reduce){.home-loader-ring{animation:none !important;}}
+
+
+/* V17.6 — premium logo-centered loader: one ring, one logo, zero extra UI. */
+.ayan-premium-loader {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  display: grid !important;
+  place-items: center !important;
+  min-height: 100svh !important;
+  height: 100dvh !important;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)) 16px !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 98%, #02060d), var(--bg)) !important;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity .55s cubic-bezier(.22,.75,.25,1), visibility .55s linear !important;
+}
+.ayan-premium-loader.hide {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+.ayan-premium-loader .loader-inner {
+  width: min(88vw, 390px) !important;
+  max-width: 390px !important;
+  display: grid !important;
+  place-items: center !important;
+  gap: 0 !important;
+}
+.ayan-premium-loader .home-loader-mark {
+  --loader-size: clamp(220px, 31vw, 320px);
+  width: var(--loader-size) !important;
+  height: var(--loader-size) !important;
+  min-width: var(--loader-size) !important;
+  min-height: var(--loader-size) !important;
+  position: relative !important;
+  display: block !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+.ayan-premium-loader .home-loader-mark img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  display: block !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: 0 0 48px color-mix(in srgb, var(--brand) 18%, transparent) !important;
+  transform: none !important;
+  z-index: 2 !important;
+}
+/* A quiet track hugs the exact edge of the supplied circular logo. */
+.ayan-premium-loader .home-loader-track {
+  position: absolute !important;
+  inset: -2px !important;
+  border: 1px solid color-mix(in srgb, var(--brand) 28%, transparent) !important;
+  border-radius: 50% !important;
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--brand) 16%, transparent),
+    inset 0 0 16px color-mix(in srgb, var(--brand) 9%, transparent) !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+}
+/* The moving loading arc sits directly on the logo circumference. */
+.ayan-premium-loader .home-loader-orbit {
+  position: absolute !important;
+  inset: -4px !important;
+  border-radius: 50% !important;
+  display: block !important;
+  pointer-events: none !important;
+  z-index: 4 !important;
+  background:
+    conic-gradient(
+      from -18deg,
+      transparent 0deg 248deg,
+      color-mix(in srgb, var(--brand) 30%, transparent) 267deg,
+      var(--brand) 285deg,
+      #ffffff 300deg,
+      var(--brand) 311deg,
+      transparent 331deg 360deg
+    ) !important;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)) !important;
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)) !important;
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--brand) 62%, transparent)) !important;
+  animation: ayanPremiumLoaderSpin 1.55s linear infinite !important;
+  will-change: transform !important;
+}
+.ayan-premium-loader .home-loader-spark {
+  position: absolute !important;
+  top: -3px !important;
+  left: 50% !important;
+  width: 7px !important;
+  height: 7px !important;
+  margin-left: -3.5px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 0 5px #ffffff,
+    0 0 12px var(--brand),
+    0 0 22px color-mix(in srgb, var(--brand) 86%, transparent) !important;
+}
+@keyframes ayanPremiumLoaderSpin {
+  to { transform: rotate(360deg); }
+}
+@media (max-width: 680px) {
+  .ayan-premium-loader .home-loader-mark {
+    --loader-size: min(70vw, 265px);
+  }
+  .ayan-premium-loader .home-loader-orbit { inset: -3px !important; }
+}
+@media (max-width: 430px) {
+  .ayan-premium-loader .home-loader-mark {
+    --loader-size: min(68vw, 245px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ayan-premium-loader .home-loader-orbit { animation: none !important; }
 }

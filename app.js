@@ -514,10 +514,24 @@ function setupBookingBackgroundVideo() {
 function setupHomeLoader() {
   const loader = document.querySelector('[data-home-loader]');
   if (!loader) return;
-  const finish = () => window.setTimeout(() => loader.classList.add('hide'), 520);
+
+  const startedAt = performance.now();
+  let finishing = false;
+
+  const finish = () => {
+    if (finishing) return;
+    finishing = true;
+    const minimumVisibleMs = 950;
+    const elapsed = performance.now() - startedAt;
+    const wait = Math.max(0, minimumVisibleMs - elapsed);
+    window.setTimeout(() => loader.classList.add('hide'), wait + 220);
+  };
+
   if (document.readyState === 'complete') finish();
   else window.addEventListener('load', finish, { once: true });
-  window.setTimeout(finish, 2200);
+
+  // Never leave the screen blocked if a remote resource is slow.
+  window.setTimeout(finish, 2600);
 }
 
 
