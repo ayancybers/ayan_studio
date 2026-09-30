@@ -69,7 +69,7 @@
       const money=n=>`${Number(n||0).toFixed(2)} SAR`;
       const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
       if(!order){ error.textContent=ar?'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.':'No booking was found. Return to booking and try again.'; error.classList.add('show'); btn.disabled=true; return; }
-      const names={silver:ar?'🥈 الباقة الفضية':'🥈 Silver Package',basic:ar?'🥉 الباقة الأساسية':'🥉 Basic Package',advanced:ar?'🏆 الباقة المتقدمة':'🏆 Advanced Package',royal:ar?'👑 الباقة الملكية':'👑 Royal Package'};
+      const names={silver:ar?'الباقة الفضية':'Silver Package',basic:ar?'الباقة الأساسية':'Basic Package',advanced:ar?'الباقة المتقدمة':'Advanced Package',royal:ar?'الباقة السينمائية':'Cinematic Package'};
       const prices={silver:70,basic:100,advanced:150,royal:200};
       const base=Number(prices[order.packageKey]||0), tax=Math.round(base*.15*100)/100, total=Math.round((base+tax)*100)/100;
       summary.innerHTML=`<div class="checkout-row"><span>الباقة</span><strong>${escapeHtml(names[order.packageKey]||order.packageType)}</strong></div><div class="checkout-row"><span>سعر الباقة</span><strong>${money(base)}</strong></div><div class="checkout-row"><span>ضريبة القيمة المضافة</span><strong>${money(tax)}</strong></div><div class="checkout-row total"><span>الإجمالي</span><strong>${money(total)}</strong></div>`;
