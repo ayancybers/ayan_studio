@@ -1,8 +1,8 @@
 (() => {
       'use strict';
 
-      if (window.__ayanGlobalUIV34) return;
-      window.__ayanGlobalUIV32 = true;
+      if (window.__ayanGlobalUIV35) return;
+      window.__ayanGlobalUIV35 = true;
 
       const LANG_KEY = 'ayan_lang';
       const THEME_KEY = 'ayan_theme';
@@ -36,10 +36,10 @@
       };
 
       function addHardUIStyles() {
-        if (document.getElementById('ayan-global-ui-v31')) return;
+        if (document.getElementById('ayan-global-ui-v35')) return;
 
         const style = document.createElement('style');
-        style.id = 'ayan-global-ui-v33';
+        style.id = 'ayan-global-ui-v35';
         style.textContent = `
           /* V33: never allow an old backdrop/overlay to steal menu taps */
           .mobile-menu-backdrop,
@@ -206,22 +206,6 @@
 
           [data-theme="light"] .site-header .pref-panel {
             background: #fff !important;
-          }
-
-          /* The supplied logo already contains its own circular artwork. */
-          .home-loader-mark::before,
-          .home-loader-mark::after {
-            display: none !important;
-            content: none !important;
-          }
-
-          .home-loader-mark img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain !important;
-            object-position: center !important;
-            border-radius: 50% !important;
-            border: 0 !important;
           }
 
           /* V33: compact booking package selector + package banner */
