@@ -15,7 +15,7 @@
     .payment-methods-list{display:flex;justify-content:center;align-items:stretch;gap:8px;flex-wrap:wrap}
     .payment-method{min-width:88px;min-height:42px;padding:7px 11px;border-radius:12px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);display:flex;align-items:center;justify-content:center;gap:6px;color:#eef5ff;font-size:11px;font-weight:800}
     .payment-method b{display:inline-flex;align-items:center;justify-content:center;font-weight:900;line-height:1}
-    .pm-apple{font-size:19px}.pm-visa{font-size:13px;letter-spacing:.04em;font-style:italic}.pm-mada{font-size:12px}.pm-tabby{font-size:13px;letter-spacing:-.03em;color:#20e9a1}
+    .pm-apple{font-size:19px}.pm-visa{font-size:13px;letter-spacing:.04em;font-style:italic}.pm-mada{font-size:12px}.pm-tabby{font-size:13px;letter-spacing:-.03em;color:#20e9a1}.pm-tamara{font-size:13px;letter-spacing:-.03em;color:#f2f2f2}
     .payment-method.pending{border-color:rgba(32,233,161,.25);background:rgba(32,233,161,.045);flex-direction:column;gap:2px;min-width:112px}.payment-method.pending small{font-size:8px;color:#aab8ca;font-weight:700}
     .payment-methods-note{text-align:center;color:var(--muted);font-size:9px;margin-top:9px;line-height:1.6}
 </style>
@@ -46,6 +46,7 @@
             <span class="payment-method active" aria-label="Visa"><b class="pm-visa">VISA</b></span>
             <span class="payment-method active" aria-label="مدى"><b class="pm-mada">مدى</b></span>
             <span class="payment-method pending" aria-label="تابي"><b class="pm-tabby">tabby</b><small>جاري التفعيل</small></span>
+                <span class="payment-method pending" aria-label="تمارا"><b class="pm-tamara">Tamara</b><small>جاري التفعيل</small></span>
           </div>
           <div class="payment-methods-note">وسائل الدفع تظهر حسب المتاح في صفحة الدفع الآمنة.</div>
         </div>
