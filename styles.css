@@ -2605,3 +2605,9 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
 .catalog-note strong{color:var(--text)}
 @media (max-width:1100px){.package-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.package-catalog-grid{grid-template-columns:1fr}.package-catalog-card>img{height:210px}}
+
+/* Package visuals */
+.package-visual{margin:-2px -2px 14px;border-radius:18px;overflow:hidden;border:1px solid rgba(120,170,230,.16);background:rgba(0,0,0,.18);aspect-ratio:16/8;box-shadow:inset 0 0 30px rgba(0,0,0,.2)}
+.package-visual img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 52%;filter:saturate(1.05) contrast(1.03)}
+.package-catalog-card>img{object-position:center 52%}
+@media (max-width:620px){.package-visual{aspect-ratio:16/9}.package-catalog-card>img{height:220px}}
