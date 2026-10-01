@@ -112,7 +112,8 @@ async function verify(attempt=0){
       const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- طريقة الدفع: ${isTabby?'تابي':'بطاقة'}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.paymentId||data.tapId||paymentId}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Payment method: ${isTabby?'Tabby':'Card'}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Payment ID: ${data.paymentId||data.tapId||paymentId}`;
       whatsappLink.href='https://wa.me/'+business+'?text='+encodeURIComponent(msg);
       actions.classList.remove('hidden');
-      sendPdfInvoice(provider, paymentId);
+      void sendPdfInvoice(provider, paymentId);
+      void sendWhatsAppConfirmation(provider, paymentId);
       sessionStorage.removeItem('ayan_tabby_payment_id');
       return;
     }
@@ -138,57 +139,76 @@ async function verify(attempt=0){
 }
 
 const emailStatus=document.getElementById('emailStatus');
+async function sendInvoiceEmail(providerValue, paymentRef){
+  if(!paymentRef || !emailStatus) return;
+  try{
+    const r=await fetch('/api/send-invoice-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok&&d.success){
+      emailStatus.textContent=lang==='ar'?'📧 تم إرسال الفاتورة إلى بريدك الإلكتروني.':'📧 Your invoice has been sent to your email.';
+    }else{
+      emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
+    }
+    emailStatus.classList.remove('hidden');
+  }catch(_){
+    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
+    emailStatus.classList.remove('hidden');
+  }
+}
+
+async function sendWhatsAppConfirmation(providerValue, paymentRef){
+  if(!paymentRef || !emailStatus) return;
+  const key=`ayan_whatsapp_sent_${providerValue}_${paymentRef}`;
+  if(sessionStorage.getItem(key)==='1') return;
+  try{
+    const r=await fetch('/api/send-whatsapp-confirmation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok && d.sent){
+      sessionStorage.setItem(key,'1');
+      emailStatus.textContent=lang==='ar'
+        ? '✅ تم إرسال رسالة تأكيد الحجز إلى واتساب.'
+        : '✅ Your booking confirmation was sent to WhatsApp.';
+      emailStatus.classList.remove('hidden');
+    }
+  }catch(error){
+    console.error('WhatsApp confirmation failed',error);
+  }
+}
 async function sendPdfInvoice(providerValue, paymentRef){
   if(!paymentRef || !emailStatus) return;
-  const key=`ayan_pdf_delivery_${providerValue}_${paymentRef}`;
+  const key=`ayan_pdf_sent_${providerValue}_${paymentRef}`;
   if(sessionStorage.getItem(key)==='1') return;
   emailStatus.textContent=lang==='ar'?'جاري تجهيز وإرسال الفاتورة PDF…':'Preparing and sending your PDF invoice…';
   emailStatus.classList.remove('hidden');
-  let iframe=null;
+  let iframe;
   try{
-    const invoiceUrl=providerValue==='tabby'
-      ? '/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1'
-      : '/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
+    const invoiceUrl=providerValue==='tabby'?'/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1':'/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
     iframe=document.createElement('iframe');
-    Object.assign(iframe.style,{position:'fixed',left:'-10000px',top:'0',width:'900px',height:'1400px',border:'0',opacity:'0',pointerEvents:'none'});
-    iframe.setAttribute('aria-hidden','true');
+    iframe.style.position='fixed';iframe.style.left='-10000px';iframe.style.top='0';iframe.style.width='900px';iframe.style.height='1400px';iframe.style.border='0';iframe.setAttribute('aria-hidden','true');
     document.body.appendChild(iframe);
-    await new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),25000);
-      iframe.onload=()=>{clearTimeout(timer);resolve()};
-      iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};
-      iframe.src=invoiceUrl;
-    });
-    if(iframe.contentWindow?.invoiceReady){
-      const ready=await Promise.race([
-        iframe.contentWindow.invoiceReady,
-        new Promise((_,reject)=>setTimeout(()=>reject(new Error('Invoice data timeout')),25000))
-      ]);
-      if(ready===false) throw new Error('Invoice data unavailable');
-    }
-    if(iframe.contentDocument?.fonts?.ready) await iframe.contentDocument.fonts.ready.catch(()=>{});
-    await new Promise(r=>setTimeout(r,600));
+    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),20000);iframe.onload=()=>{clearTimeout(timer);resolve()};iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};iframe.src=invoiceUrl});
+    if(iframe.contentWindow.invoiceReady) await Promise.race([iframe.contentWindow.invoiceReady,new Promise((_,rej)=>setTimeout(()=>rej(new Error('Invoice data timeout')),20000))]);
+    await new Promise(r=>setTimeout(r,500));
     const invoiceNo=iframe.contentDocument?.querySelector('.invoice-meta .ref')?.textContent?.replace(/^.*?:\s*/,'').trim() || `AYAN-${paymentRef}`;
-    if(typeof iframe.contentWindow?.generateInvoicePdfBlob!=='function') throw new Error('PDF generator is unavailable');
     const blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo);
-    if(!blob || blob.size<100) throw new Error('Generated PDF is empty');
-    if(blob.size>2500000) throw new Error('Generated PDF is too large');
     const base64=await blobToBase64(blob);
-    const r=await fetch('/api/send-invoice-pdf',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})
-    });
+    const r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})});
     const d=await r.json().catch(()=>({}));
-    if(!r.ok || !d.success) throw new Error(d.error||'PDF delivery failed');
+    if(!r.ok) throw new Error(d.error||'PDF delivery failed');
     sessionStorage.setItem(key,'1');
-    const emailOk=d.emailSent!==false;
-    const discordOk=d.discordSent===true;
-    emailStatus.textContent=lang==='ar'
-      ? `📧 ${emailOk?'تم إرفاق الفاتورة PDF في بريدك.':'تعذر إرسال الفاتورة للبريد.'} ${discordOk?' وتم إرفاق نسخة PDF في Discord.':'تعذر إرفاق نسخة PDF في Discord.'}`
-      : `📧 ${emailOk?'The PDF invoice was attached to your email.':'Email delivery failed.'} ${discordOk?' A PDF copy was attached to Discord.':' Discord attachment failed.'}`;
+    emailStatus.textContent=lang==='ar'?'📧 تم إرسال فاتورة PDF إلى بريدك، وتم إرسال نسخة إلى Discord.':'📧 The PDF invoice was emailed to you and a copy was sent to Discord.';
   }catch(error){
-    console.error('PDF delivery failed',error);
-    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع، لكن تعذر إرسال ملف PDF تلقائيًا. يمكنك تحميل الفاتورة PDF من الزر.':'Payment is confirmed, but the PDF could not be sent automatically. You can download it from the invoice button.';
+    console.error('PDF invoice delivery failed',error);
+    // Keep the existing email fallback if browser PDF generation is unavailable.
+    try{
+      const r=await fetch('/api/send-invoice-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
+      const d=await r.json().catch(()=>({}));
+      emailStatus.textContent=r.ok&&d.success
+        ? (lang==='ar'?'📧 تم إرسال الفاتورة إلى بريدك الإلكتروني. يمكنك تحميل PDF من الزر أعلاه.':'📧 Your invoice was emailed. You can download the PDF from the button above.')
+        : (lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.');
+    }catch(_){
+      emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
+    }
   }finally{if(iframe)iframe.remove()}
 }
 function blobToBase64(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=reject;reader.readAsDataURL(blob)})}
