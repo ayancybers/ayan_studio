@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "headers": [
     {
       "source": "/(.*)",
@@ -30,7 +31,7 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|css|webp|png|jpg|jpeg|svg|woff2))",
+      "source": "/(.*)\\.(js|css|webp|png|jpg|jpeg|svg|woff2)$",
       "headers": [
         {
           "key": "Cache-Control",
