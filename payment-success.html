@@ -201,14 +201,22 @@ async function sendPdfInvoice(providerValue, paymentRef, bookingData = {}){
     emailStatus.textContent=lang==='ar'
       ? (d.emailSent && d.discordSent && d.whatsappPdfSent
           ? '📧 تم إرسال فاتورة PDF إلى بريدك وDiscord وواتساب.'
-          : (d.emailSent && d.discordSent
-              ? '📧 تم إرسال فاتورة PDF إلى بريدك وDiscord.'
-              : 'تم تأكيد الدفع وتجهيز الفاتورة.'))
+          : (d.emailSent && d.discordSent && !d.whatsappPdfSent
+              ? '📧 تم إرسال الفاتورة إلى البريد وDiscord، وتعذر إرسالها إلى واتساب.'
+              : (d.emailSent && d.whatsappPdfSent
+                  ? '📧 تم إرسال الفاتورة إلى البريد وواتساب.'
+                  : (d.whatsappPdfSent
+                      ? '📎 تم إرسال فاتورة PDF إلى واتساب.'
+                      : 'تم تأكيد الدفع وتجهيز الفاتورة.'))))
       : (d.emailSent && d.discordSent && d.whatsappPdfSent
           ? '📧 The PDF invoice was emailed and sent to Discord and WhatsApp.'
-          : (d.emailSent && d.discordSent
-              ? '📧 The PDF invoice was emailed and sent to Discord.'
-              : 'Payment confirmed and the invoice is ready.'));
+          : (d.emailSent && d.discordSent && !d.whatsappPdfSent
+              ? '📧 The invoice was emailed and sent to Discord, but WhatsApp PDF delivery failed.'
+              : (d.emailSent && d.whatsappPdfSent
+                  ? '📧 The invoice was emailed and sent to WhatsApp.'
+                  : (d.whatsappPdfSent
+                      ? '📎 The PDF invoice was sent to WhatsApp.'
+                      : 'Payment confirmed and the invoice is ready.'))));
   }catch(error){
     console.error('PDF invoice delivery failed',error);
     // Keep the existing email fallback if browser PDF generation is unavailable.

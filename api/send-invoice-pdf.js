@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+import { put, issueSignedToken, presignUrl } from '@vercel/blob';
 import crypto from 'node:crypto';
 import { sendInvoiceEmail } from './lib/invoice-email.js';
 
@@ -97,15 +97,29 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes, req }) {
   const blob = await put(`invoices/${invoiceNo}.pdf`, pdfBytes, {
     access: 'private',
     addRandomSuffix: true,
-    contentType: 'application/pdf'
+    contentType: 'application/pdf',
+    cacheControlMaxAge: 60
   });
 
-  // WhatsLoop needs a URL it can fetch without our Blob credentials. Use a short-lived
-  // signed relay endpoint on the same Vercel project; the PDF remains in Private Blob.
-  const expiresAt = Date.now() + 30 * 60 * 1000;
-  const signature = signRelayToken(blob.pathname, expiresAt, token);
-  const origin = getBaseUrl(req);
-  const mediaUrl = `${origin}/api/whatsapp-invoice-file?path=${encodeURIComponent(blob.pathname)}&exp=${expiresAt}&sig=${encodeURIComponent(signature)}`;
+  // Give WhatsLoop a short-lived, scoped URL that can be fetched without Blob credentials.
+  // Vercel Signed URLs are specifically designed for this and keep the invoice private.
+  let mediaUrl = '';
+  try {
+    const signingToken = await issueSignedToken({ operations: ['get'] });
+    const signed = await presignUrl(signingToken, {
+      pathname: blob.pathname,
+      operation: 'get',
+      validUntil: Date.now() + 15 * 60 * 1000
+    });
+    mediaUrl = signed.presignedUrl;
+  } catch (signedUrlError) {
+    // Fallback to the project relay for environments where Signed URLs are not available yet.
+    console.error('WhatsLoop signed URL generation failed; using relay fallback', signedUrlError?.message || String(signedUrlError));
+    const expiresAt = Date.now() + 15 * 60 * 1000;
+    const signature = signRelayToken(blob.pathname, expiresAt, token);
+    const origin = getBaseUrl(req);
+    mediaUrl = `${origin}/api/whatsapp-invoice-file?path=${encodeURIComponent(blob.pathname)}&exp=${expiresAt}&sig=${encodeURIComponent(signature)}&filename=${encodeURIComponent(`${invoiceNo}.pdf`)}`;
+  }
 
   const caption = data.lang === 'en'
     ? `Ayan Photography • Invoice ${invoiceNo}`

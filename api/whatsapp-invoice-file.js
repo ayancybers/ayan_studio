@@ -4,28 +4,33 @@ import crypto from 'node:crypto';
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+  if (!['GET', 'HEAD'].includes(req.method)) return res.status(405).json({ error: 'Method not allowed' });
 
   const path = String(req.query?.path || '').trim();
   const exp = Number(req.query?.exp || 0);
   const sig = String(req.query?.sig || '').trim();
+  const requestedFilename = String(req.query?.filename || '').trim();
   const secret = String(process.env.WHATSLOOP_TOKEN || '').trim();
 
   if (!secret || !/^wl_/.test(secret)) return res.status(503).json({ error: 'WhatsLoop configuration is incomplete' });
-  if (!path.startsWith('invoices/') || !path.endsWith('.pdf')) return res.status(400).json({ error: 'Invalid file path' });
+  const cleanPath = path.replace(/^\/+/, '');
+  if (!cleanPath.startsWith('invoices/') || !cleanPath.endsWith('.pdf')) return res.status(400).json({ error: 'Invalid file path' });
   if (!Number.isFinite(exp) || exp < Date.now() || exp > Date.now() + 60 * 60 * 1000) return res.status(410).json({ error: 'Link expired' });
 
-  const expected = crypto.createHmac('sha256', secret).update(`${path}|${exp}`).digest('hex');
+  const expected = crypto.createHmac('sha256', secret).update(`${cleanPath}|${exp}`).digest('hex');
   if (!safeEqual(sig, expected)) return res.status(403).json({ error: 'Invalid signature' });
 
   try {
-    const result = await get(path, { access: 'private', useCache: false });
+    const result = await get(cleanPath, { access: 'private', useCache: false });
     if (!result) return res.status(404).json({ error: 'File not found' });
 
     res.setHeader('Content-Type', result.blob?.contentType || 'application/pdf');
-    res.setHeader('Content-Length', String(result.blob?.size || ''));
-    const filename = path.split('/').pop() || 'invoice.pdf';
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    if (Number.isFinite(Number(result.blob?.size))) res.setHeader('Content-Length', String(result.blob.size));
+    const filename = requestedFilename || cleanPath.split('/').pop() || 'invoice.pdf';
+    res.setHeader('Content-Disposition', `inline; filename="${filename.replace(/[^A-Za-z0-9._-]/g, '_')}"`);
+    res.setHeader('Accept-Ranges', 'bytes');
+
+    if (req.method === 'HEAD') return res.status(200).end();
 
     const reader = result.stream.getReader();
     try {
