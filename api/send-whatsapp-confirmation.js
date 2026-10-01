@@ -1,3 +1,4 @@
+import { retrieveTamaraOrder, mapTamaraOrder, isTamaraPaidStatus } from './lib/tamara.js';
 export default async function handler(req, res) {
   setSecurityHeaders(res);
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -8,7 +9,7 @@ export default async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const provider = body.provider === 'tabby' ? 'tabby' : 'tap';
+  const provider = body.provider === 'tabby' ? 'tabby' : body.provider === 'tamara' ? 'tamara' : 'tap';
   const details = body.details && typeof body.details === 'object' ? body.details : {};
   const paymentId = String(body.paymentId || body.tapId || '').trim();
   if (!paymentId) return res.status(400).json({ error: 'Missing payment reference' });
@@ -23,9 +24,11 @@ export default async function handler(req, res) {
   try {
     let data = provider === 'tabby'
       ? await retrieveTabby(paymentId)
-      : await retrieveTap(paymentId);
+      : provider === 'tamara'
+        ? mapTamaraOrder(await retrieveTamaraOrder(paymentId), { paymentId })
+        : await retrieveTap(paymentId);
 
-    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : data.status === 'CAPTURED';
+    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : provider === 'tamara' ? isTamaraPaidStatus(data.status) : data.status === 'CAPTURED';
     if (!confirmed) {
       return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
     }

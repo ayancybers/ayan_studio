@@ -1,4 +1,5 @@
 import { sendInvoiceEmail } from './lib/invoice-email.js';
+import { retrieveTamaraOrder, mapTamaraOrder } from './lib/tamara.js';
 
 export default async function handler(req, res) {
   setSecurityHeaders(res);
@@ -6,7 +7,7 @@ export default async function handler(req, res) {
   if (!sameOrigin(req)) return res.status(403).json({ error: 'Forbidden origin' });
 
   const body = req.body || {};
-  const provider = body.provider === 'tabby' ? 'tabby' : 'tap';
+  const provider = body.provider === 'tabby' ? 'tabby' : body.provider === 'tamara' ? 'tamara' : 'tap';
   const paymentId = String(body.paymentId || body.tapId || '').trim();
   const pdfBase64 = String(body.pdfBase64 || '').trim();
   const details = body.details && typeof body.details === 'object' ? body.details : {};
@@ -14,8 +15,8 @@ export default async function handler(req, res) {
   if (!pdfBase64) return res.status(400).json({ error: 'Missing PDF' });
 
   try {
-    let data = provider === 'tabby' ? await retrieveTabby(paymentId) : await retrieveTap(paymentId);
-    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : data.status === 'CAPTURED';
+    let data = provider === 'tabby' ? await retrieveTabby(paymentId) : provider === 'tamara' ? mapTamaraOrder(await retrieveTamaraOrder(paymentId), { paymentId }) : await retrieveTap(paymentId);
+    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : provider === 'tamara' ? ['APPROVED','AUTHORISED','FULLY_CAPTURED','PARTIALLY_CAPTURED'].includes(String(data.status||'').toUpperCase().replace(/\s+/g,'_')) : data.status === 'CAPTURED';
     if (!confirmed) return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
 
     data = mergeBookingDetails(data, sanitizeBookingDetails(details));
@@ -112,7 +113,7 @@ async function sendDiscordPdf({ provider, paymentId, data, pdfBytes, fileName })
   if (!webhookUrl) return false;
 
   const form = new FormData();
-  const title = provider === 'tabby' ? '📄 AYAN PHOTOGRAPHY • TABBY PDF INVOICE' : '📄 AYAN PHOTOGRAPHY • TAP PDF INVOICE';
+  const title = provider === 'tabby' ? '📄 AYAN PHOTOGRAPHY • TABBY PDF INVOICE' : provider === 'tamara' ? '📄 AYAN PHOTOGRAPHY • TAMARA PDF INVOICE' : '📄 AYAN PHOTOGRAPHY • TAP PDF INVOICE';
   const fields = [
     { name: '🆔 Payment ID', value: limit(paymentId, 100), inline: true },
     { name: '👤 Customer', value: limit(data.customerName || '—', 100), inline: true },

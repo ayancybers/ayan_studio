@@ -11,11 +11,13 @@ export async function sendInvoiceEmail({ provider, paymentId, data, req, pdfBase
   const ref = String(data?.paymentId || data?.tapId || paymentId || '').trim();
   const invoiceUrl = provider === 'tabby'
     ? `${baseUrl}/invoice.html?provider=tabby&payment_id=${encodeURIComponent(ref)}`
-    : `${baseUrl}/invoice.html?tap_id=${encodeURIComponent(ref)}`;
+    : provider === 'tamara'
+      ? `${baseUrl}/invoice.html?provider=tamara&order_id=${encodeURIComponent(ref)}`
+      : `${baseUrl}/invoice.html?tap_id=${encodeURIComponent(ref)}`;
 
   const isArabic = data?.lang !== 'en';
   const money = n => `${Number(n || 0).toFixed(2)} SAR`;
-  const method = provider === 'tabby' ? 'Tabby' : 'البطاقات / Tap';
+  const method = provider === 'tabby' ? 'Tabby' : provider === 'tamara' ? 'Tamara' : 'البطاقات / Tap';
   const packageName = data?.packageName || data?.packageNameAr || data?.packageNameEn || '—';
   const total = money(data?.total ?? data?.amount);
   const subtotal = money(data?.subtotal);
