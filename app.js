@@ -757,12 +757,19 @@ function updateBookingFlowSummary() {
   const packageNode = document.querySelector('[data-flow-value="package"]');
   const detailsNode = document.querySelector('[data-flow-value="details"]');
   const paymentNode = document.querySelector('[data-flow-value="payment"]');
+  const detailsName = document.querySelector('[data-flow-name]');
+  const detailsPhone = document.querySelector('[data-flow-phone]');
+  const detailsRegion = document.querySelector('[data-flow-region]');
 
   document.querySelectorAll('.booking-signature-step').forEach((el) => el.classList.remove('is-active', 'is-done'));
 
   if (packageNode) packageNode.textContent = packageValue ? `${tr('flowSelected')}: ${packageValue}` : tr('flowStep1');
-  const readableDetails = [name, car, region].filter(Boolean).join(' • ');
-  if (detailsNode) detailsNode.textContent = readableDetails ? readableDetails : tr('flowStep2');
+  if (detailsNode) {
+    detailsNode.setAttribute('aria-label', [name, phone, region].filter(Boolean).join('، ') || tr('flowStep2'));
+  }
+  if (detailsName) detailsName.textContent = name || tr('flowStep2');
+  if (detailsPhone) detailsPhone.textContent = phone || '—';
+  if (detailsRegion) detailsRegion.textContent = region || '—';
   const detailsComplete = !!name && /^05\d{8}$/.test(phone) && !!car && !!region;
   if (paymentNode) paymentNode.textContent = terms && detailsComplete ? tr('flowReady') : tr('flowStep3');
 
