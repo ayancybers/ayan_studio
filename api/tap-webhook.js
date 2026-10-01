@@ -1,4 +1,4 @@
-import { sendInvoiceEmail } from './lib/invoice-email.js';
+import { sendInvoiceEmail } from '../lib/server/invoice-email.js';
 import crypto from 'node:crypto';
 
 const notifiedCharges = globalThis.__ayanNotifiedCharges || new Set();

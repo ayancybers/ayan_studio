@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { PACKAGES, calculatePricing, getPricingConfig, roundMoney } from '../lib/pricing.js';
-import { getTamaraBaseUrl, isTamaraPaidStatus, mapTamaraOrder, normalizeSaudiPhone, retrieveTamaraOrder } from './lib/tamara.js';
+import { getTamaraBaseUrl, isTamaraPaidStatus, mapTamaraOrder, normalizeSaudiPhone, retrieveTamaraOrder } from '../lib/server/tamara.js';
 
 const ALLOWED_CARS = new Set(['سيدان','SUV','كوبيه','فاخر / رياضي','Sedan','Coupe','Luxury / Sport','Luxury / Sports']);
 const ALLOWED_REGIONS = new Set(['القطيف','سيهات','الدمام','الخبر','حفر الباطن','Qatif','Saihat','Dammam','Khobar','Hafar Al Batin']);
