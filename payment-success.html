@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
   <title>Payment | Ayan Photography</title>
-  <link rel="icon" type="image/png" href="assets/ayan-site-icon.png">
+  <link rel="icon" type="image/png" href="assets/ayan-logo-v2.png">
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eef5ff;background:#07111f;}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 50% 10%,rgba(72,146,255,.14),transparent 38%),linear-gradient(145deg,#0a1828,#050c15);padding:24px}main{width:min(720px,100%);padding:38px;border:1px solid rgba(124,179,241,.2);border-radius:28px;background:rgba(11,25,42,.92);box-shadow:0 26px 80px rgba(0,0,0,.35);text-align:center}.logo{width:78px;height:78px;object-fit:contain;margin-bottom:16px}.eyebrow{color:#75b2ff;font-size:11px;letter-spacing:.16em;font-weight:800}.icon{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;margin:18px auto;font-size:35px;background:rgba(56,190,119,.12);border:1px solid rgba(82,212,144,.28)}h1{font-size:32px;margin:0 0 12px}p{color:#9eacc0;line-height:1.8;margin:0 auto;max-width:540px}.status{margin-top:18px;min-height:54px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.035);color:#dce8f7;font-size:13px;padding:14px}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}a,button{font:inherit;text-decoration:none;border:0;border-radius:14px;padding:13px 18px;cursor:pointer}.primary{background:#4d96ff;color:#fff}.ghost{color:#dce8f7;background:rgba(255,255,255,.06);border:1px solid rgba(124,179,241,.14)}.hidden{display:none}.error{color:#ffb3b3;background:rgba(255,65,65,.08);border-color:rgba(255,65,65,.2)}
@@ -13,7 +13,7 @@
 </head>
 <body>
 <main>
-  <img class="logo" src="assets/ayan-logo-v2.webp" alt="Ayan Photography">
+  <img class="logo" src="assets/ayan-logo-v2.png" alt="Ayan Photography">
   <div class="eyebrow">AYAN PHOTOGRAPHY</div>
   <div class="icon" id="icon">⌛</div>
   <h1 id="title">جاري التحقق من الدفع</h1>
@@ -21,7 +21,7 @@
   <div class="status" id="status">جاري التحقق…</div><div class="status hidden" id="breakdown"></div>
   <div class="actions hidden" id="actions">
     <a class="primary" id="invoiceLink" href="#">تحميل الفاتورة PDF</a>
-    <a class="ghost" id="whatsappLink" target="_blank" rel="noopener noreferrer">التنسيق عبر واتساب</a>
+    <a class="ghost" id="whatsappLink" target="_blank" rel="noopener">التنسيق عبر واتساب</a>
     <a class="ghost" href="booking.html">العودة للحجز</a>
   </div>
 </main>
@@ -29,15 +29,46 @@
 const lang = localStorage.getItem('ayan_lang') === 'en' ? 'en' : 'ar';
 document.documentElement.lang = lang;
 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+const qs = new URLSearchParams(location.search);
+const provider = qs.get('provider') === 'tabby' ? 'tabby' : 'tap';
+const isTabby = provider === 'tabby';
 const t = lang === 'ar'
-  ? {checking:'جاري التحقق من الدفع',checkText:'لحظات ونراجع العملية مباشرة مع Tap.',checkingStatus:'جاري التحقق…',success:'تم الدفع بنجاح 🎉',successText:'تم تأكيد دفعتك بنجاح. تقدر تحمل الفاتورة وتكمل التنسيق معنا.',paid:'تم تأكيد العملية.',failed:'لم يتم تأكيد الدفع بعد.',failedText:'ارجع للحجز وحاول مرة ثانية إذا لم تكتمل العملية.',invoice:'تحميل الفاتورة PDF',wa:'التنسيق عبر واتساب',back:'العودة للحجز',error:'تعذر التحقق من عملية الدفع.'}
-  : {checking:'Verifying payment',checkText:'One moment while we verify the transaction with Tap.',checkingStatus:'Verifying…',success:'Payment confirmed 🎉',successText:'Your payment has been confirmed. You can download the invoice and continue coordination.',paid:'Payment captured successfully.',failed:'Payment is not confirmed yet.',failedText:'Return to booking and try again if the payment did not complete.',invoice:'Download PDF invoice',wa:'Continue on WhatsApp',back:'Back to booking',error:'We could not verify the payment.'};
+  ? {
+      checking:'جاري التحقق من الدفع',
+      checkText:isTabby?'لحظات ونراجع العملية مباشرة مع تابي.':'لحظات ونراجع العملية مباشرة مع Tap.',
+      checkingStatus:'جاري التحقق…',
+      success:'تم الدفع بنجاح 🎉',
+      successText:'تم تأكيد دفعتك بنجاح. تقدر تحمل الفاتورة وتكمل التنسيق معنا.',
+      paid:'تم تأكيد العملية.',
+      failed:'لم يتم تأكيد الدفع بعد.',
+      failedText:'ارجع للحجز وحاول مرة ثانية إذا لم تكتمل العملية.',
+      invoice:'تحميل الفاتورة PDF',
+      wa:'التنسيق عبر واتساب',
+      back:'العودة للحجز',
+      error:'تعذر التحقق من عملية الدفع.'
+    }
+  : {
+      checking:'Verifying payment',
+      checkText:isTabby?'One moment while we verify the payment with Tabby.':'One moment while we verify the transaction with Tap.',
+      checkingStatus:'Verifying…',
+      success:'Payment confirmed 🎉',
+      successText:'Your payment has been confirmed. You can download the invoice and continue coordination.',
+      paid:'Payment captured successfully.',
+      failed:'Payment is not confirmed yet.',
+      failedText:'Return to booking and try again if the payment did not complete.',
+      invoice:'Download PDF invoice',
+      wa:'Continue on WhatsApp',
+      back:'Back to booking',
+      error:'We could not verify the payment.'
+    };
 document.getElementById('title').textContent=t.checking;
 document.getElementById('text').textContent=t.checkText;
 document.getElementById('status').textContent=t.checkingStatus;
 document.getElementById('invoiceLink').textContent=t.invoice;
 document.getElementById('whatsappLink').textContent=t.wa;
-const tapId = new URLSearchParams(location.search).get('tap_id');
+const paymentId = isTabby
+  ? (qs.get('payment_id') || sessionStorage.getItem('ayan_tabby_payment_id') || '')
+  : (qs.get('tap_id') || '');
 const statusNode=document.getElementById('status');
 const icon=document.getElementById('icon');
 const actions=document.getElementById('actions');
@@ -45,32 +76,48 @@ const invoiceLink=document.getElementById('invoiceLink');
 const whatsappLink=document.getElementById('whatsappLink');
 const breakdown=document.getElementById('breakdown');
 async function verify(attempt=0){
-  if(!tapId){
+  if(qs.get('result') === 'cancel' || qs.get('result') === 'failure'){
+    icon.textContent='!';
+    document.getElementById('title').textContent=t.failed;
+    document.getElementById('text').textContent=t.failedText;
+    statusNode.textContent=qs.get('result')==='cancel'?'تم إلغاء عملية الدفع.':'تعذرت عملية الدفع.';
+    statusNode.classList.add('error');
+    actions.classList.remove('hidden');
+    invoiceLink.classList.add('hidden');
+    whatsappLink.classList.add('hidden');
+    return;
+  }
+  if(!paymentId){
     icon.textContent='!';
     statusNode.textContent=t.error;
     statusNode.classList.add('error');
     return;
   }
   try{
-    const r=await fetch('/api/payment?tap_id='+encodeURIComponent(tapId),{cache:'no-store'});
+    const endpoint=isTabby?'/api/tabby-payment?payment_id=':'/api/payment?tap_id=';
+    const r=await fetch(endpoint+encodeURIComponent(paymentId),{cache:'no-store'});
     const data=await r.json();
-    if(data.success && data.status==='CAPTURED'){
+    const success=isTabby ? data.success && data.status==='CLOSED' : data.success && data.status==='CAPTURED';
+    if(success){
       icon.textContent='✓';
       document.getElementById('title').textContent=t.success;
       document.getElementById('text').textContent=t.successText;
       statusNode.textContent=`${t.paid} ${Number(data.amount||data.total||0).toFixed(2)} SAR`;
-      breakdown.innerHTML=lang==='ar' ? `سعر الباقة: <b>${Number(data.subtotal||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; رسوم الخدمة: <b>${Number(data.serviceFee||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; الضريبة: <b>${Number(data.tax||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; الإجمالي: <b>${Number(data.total||data.amount||0).toFixed(2)} SAR</b>` : `Package: <b>${Number(data.subtotal||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; Service fee: <b>${Number(data.serviceFee||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; VAT: <b>${Number(data.tax||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; Total: <b>${Number(data.total||data.amount||0).toFixed(2)} SAR</b>`;
+      breakdown.innerHTML=lang==='ar'
+        ? `سعر الباقة: <b>${Number(data.subtotal||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; رسوم الدفع: <b>${Number(data.paymentFee||data.serviceFee||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; الإجمالي: <b>${Number(data.total||data.amount||0).toFixed(2)} SAR</b>`
+        : `Package: <b>${Number(data.subtotal||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; Payment fee: <b>${Number(data.paymentFee||data.serviceFee||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; Total: <b>${Number(data.total||data.amount||0).toFixed(2)} SAR</b>`;
       breakdown.classList.remove('hidden');
-      invoiceLink.href='/invoice.html?tap_id='+encodeURIComponent(tapId);
+      invoiceLink.href=isTabby?'/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentId):'/invoice.html?tap_id='+encodeURIComponent(paymentId);
       const business='966565117739';
-      const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.tapId||''}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Charge ID: ${data.tapId||''}`;
+      const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- طريقة الدفع: ${isTabby?'تابي':'بطاقة'}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.paymentId||data.tapId||paymentId}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Payment method: ${isTabby?'Tabby':'Card'}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Payment ID: ${data.paymentId||data.tapId||paymentId}`;
       whatsappLink.href='https://wa.me/'+business+'?text='+encodeURIComponent(msg);
       actions.classList.remove('hidden');
+      sessionStorage.removeItem('ayan_tabby_payment_id');
       return;
     }
-    if(attempt<6){
+    if(attempt<8){
       statusNode.textContent=(data.status||'').toUpperCase()||t.checkingStatus;
-      setTimeout(()=>verify(attempt+1),2000);
+      setTimeout(()=>verify(attempt+1),2500);
       return;
     }
     icon.textContent='!';
@@ -82,7 +129,7 @@ async function verify(attempt=0){
     invoiceLink.classList.add('hidden');
     whatsappLink.classList.add('hidden');
   }catch(e){
-    if(attempt<3){setTimeout(()=>verify(attempt+1),2000);return;}
+    if(attempt<4){setTimeout(()=>verify(attempt+1),2500);return;}
     icon.textContent='!';
     statusNode.textContent=t.error;
     statusNode.classList.add('error');

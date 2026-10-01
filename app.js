@@ -51,9 +51,9 @@ const translations = {
     service4Title: 'Custom Concept', service4Text: 'فكرة خاصة يتم تنسيقها حسب أسلوبك والرسالة التي تريد إيصالها.',
     processTitle: 'طريقة العمل', processText: 'أربع خطوات واضحة بدون تعقيد.',
     step1Title: 'اختَر', step1Text: 'حدد الباقة ونوع الجلسة المناسبة.', step2Title: 'أرسل', step2Text: 'أرسل بياناتك وملاحظاتك من نموذج الحجز.', step3Title: 'نسّق', step3Text: 'نكمل التفاصيل معك عبر الواتساب.', step4Title: 'صوّر', step4Text: 'ننفذ الجلسة ونرتب التسليم.',
-    bookingHeroKicker: 'Booking', bookingHeroTitle: 'احجز جلستك في أقل من دقيقة.', bookingHeroText: 'عبّ البيانات، راجع الإجمالي شامل الضريبة، وبعدها انتقل للدفع الآمن عبر Tap.', bookingMeta1: 'اختر الباقة', bookingMeta2: 'أدخل التفاصيل', bookingMeta3: 'الدفع عبر Tap', bookingSideTitle: 'ابدأ بالباقة المناسبة.', bookingSideText: 'اختر مستوى التصوير أولًا، وبعدها نكمل معك باقي التفاصيل.', selectedLabel: 'الباقة المختارة', selectedEmpty: 'اختر باقة للبدء', sideFoot1: 'تنسيق مباشر', sideFoot2: 'أسعار واضحة', sideFoot3: 'تحويل للواتساب', bookingStep1: 'الباقة', bookingStep2: 'البيانات', bookingStep3: 'الدفع', flowStep1: 'اختر الباقة', flowStep2: 'أضف تفاصيل الجلسة', flowStep3: 'ادفع بأمان عبر Tap', formKicker: 'Start your session', packageHint: 'اختَر المستوى الذي يناسب اللقطة التي في بالك.', tapToChoose: 'اضغط للاختيار', detailsDivider: 'بيانات الجلسة', submitTitle: 'جاهز؟ خلنا نكمل.', submitText: 'بعد التأكيد راح تنتقل إلى صفحة الدفع الآمنة من Tap.',
+    bookingHeroKicker: 'Booking', bookingHeroTitle: 'احجز جلستك في أقل من دقيقة.', bookingHeroText: 'عبّ البيانات، راجع الإجمالي شامل الضريبة، وبعدها انتقل للدفع الآمن عبر Tap.', bookingMeta1: 'اختر الباقة', bookingMeta2: 'أدخل التفاصيل', bookingMeta3: 'الدفع عبر Tap', bookingSideTitle: 'ابدأ بالباقة المناسبة.', bookingSideText: 'اختر مستوى التصوير أولًا، وبعدها نكمل معك باقي التفاصيل.', selectedLabel: 'الباقة المختارة', selectedEmpty: 'اختر باقة للبدء', sideFoot1: 'تنسيق مباشر', sideFoot2: 'أسعار واضحة', sideFoot3: 'تحويل للواتساب', bookingStep1: 'الباقة', bookingStep2: 'البيانات', bookingStep3: 'الدفع', flowStep1: 'اختر الباقة', flowStep2: 'أضف تفاصيل الجلسة', flowStep3: 'ادفع بأمان عبر Tap', formKicker: 'Start your session', packageHint: 'اختَر المستوى الذي يناسب اللقطة التي في بالك.', tapToChoose: 'اضغط للاختيار', detailsDivider: 'بيانات الجلسة', submitTitle: 'جاهز؟ خلنا نكمل.', submitText: 'بعد التأكيد راح تراجع المبلغ وتختار طريقة الدفع.',
     formTitle: 'استمارة الحجز الفوري', formRequired: 'الحقول بعلامة * إلزامية', nameLabel: 'اسمك الكامل *', namePlaceholder: 'اسمك بالكامل', phoneLabel: 'رقم الواتساب *', phonePlaceholder: '05xxxxxxxx', packageLabel: 'الباقة *', packagePlaceholder: 'اختر الباقة المطلوبة', carLabel: 'نوع السيارة *', carPlaceholder: 'اختر نوع السيارة', regionLabel: 'منطقة التصوير *', regionPlaceholder: 'اختر المنطقة', notesLabel: 'ملاحظات إضافية', notesPlaceholder: 'زوايا معينة، فكرة خاصة، وقت مناسب، أو أي طلب آخر...', submit: 'متابعة إلى الدفع', formNote: 'المبلغ النهائي يعرض سعر الباقة والضريبة بشكل منفصل قبل الدفع.',
-    bookingAsideTitle: 'قبل الدفع', bookingAsideText: 'راجع بياناتك والإجمالي النهائي قبل الانتقال إلى Tap.', aside1: 'اختر الباقة أولًا.', aside2: 'اكتب رقم واتساب متاح.', aside3: 'اذكر أي فكرة خاصة في الملاحظات.', priceNoteTitle: 'الأسعار الأساسية', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'سعر الباقة', serviceFeeLabel: 'رسوم الخدمة', taxLabel: 'ضريبة القيمة المضافة', totalLabel: 'الإجمالي', taxNotice: 'ضريبة القيمة المضافة 15% تُعرض فقط عند انطباق متطلبات التسجيل الضريبي. رسوم الخدمة قابلة للتعديل من إعدادات المشروع.', selectedBaseLabel: 'قبل الإضافات', paymentError: 'تعذر تجهيز عملية الدفع. حاول مرة ثانية.', paymentPreparing: 'جاري تجهيز الدفع…',
+    bookingAsideTitle: 'قبل الدفع', bookingAsideText: 'راجع بياناتك وسعر الباقة قبل اختيار طريقة الدفع.', aside1: 'اختر الباقة أولًا.', aside2: 'اكتب رقم واتساب متاح.', aside3: 'اذكر أي فكرة خاصة في الملاحظات.', priceNoteTitle: 'الأسعار الأساسية', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'سعر الباقة', serviceFeeLabel: 'رسوم الدفع', taxLabel: 'الضريبة', totalLabel: 'الإجمالي', taxNotice: 'رسوم الدفع تُحسب حسب طريقة الدفع المختارة.', selectedBaseLabel: 'قبل الإضافات', paymentError: 'تعذر تجهيز عملية الدفع. حاول مرة ثانية.', paymentPreparing: 'جاري تجهيز الدفع…',
     galleryHeroKicker: 'Gallery', galleryHeroTitle: 'شوف النتيجة قبل ما تحجز.', galleryHeroText: 'مكتبة الصور والفيديوهات في مكان واحد، مع فلترة سريعة وفتح كامل للمحتوى.', galleryAll: 'الكل', galleryVideos: 'الفيديوهات', galleryImages: 'الصور', galleryCount: 'محتوى', readyTitle: 'عجبك الشغل؟', readyText: 'انتقل مباشرة إلى نموذج الحجز واختَر الباقة المناسبة.', startBooking: 'ابدأ الحجز ←',
     footerCopy: 'تصوير سيارات احترافي، رولينق، جلسات ثابتة، ومونتاج سينمائي بأسلوب يناسب كل سيارة.', footerNav: 'التنقل', footerContact: 'تواصل', footerLocation: 'المنطقة الشرقية، السعودية', footerTag: 'Built for cinematic car content',
     loading1: 'جاري تهيئة Ayan Photography...', loading2: 'جاري تجهيز اللقطات السينمائية...', loading3: 'كل شيء جاهز 🚀',
@@ -80,8 +80,8 @@ const translations = {
     workflowKicker: 'Ayan Workflow', workflowTitle: 'From the first idea to the final frame.', workflowText: 'Every page has one clear job, so clients find what they need quickly.', workflow1: 'Choose the right package.', workflow2: 'Add car and shoot details.', workflow3: 'Receive and coordinate the request on WhatsApp.', workflow4: 'Shoot and deliver based on the package.', galleryKicker: 'Gallery', galleryTitle: 'See the work before you book.', galleryText: 'The gallery now lives on its own page so the focus stays on the visual work.', exploreGallery: 'Explore gallery →',
     featuresHeroKicker: 'Why Ayan Photography', featuresHeroTitle: 'Every detail is designed to make your car look its best.', featuresHeroText: 'Quiet visual direction, smooth motion, and a clear journey from the first message to final delivery.', feature4Title: 'Shot planning', feature4Text: 'We shape the concept around the car, location, and content style you want.', feature5Title: 'Intentional editing', feature5Text: 'Cuts, motion, and transitions that support the scene instead of fighting it.', feature6Title: 'Mobile-first experience', feature6Text: 'The website and booking flow are designed to feel fast on both phone and desktop.', servicesTitle: 'Services', servicesText: 'Choose the production type that fits your goal, whether it is reels, details, or a full session.', catalogKicker: 'Available Packages', catalogTitle: 'Services & Pricing', catalogText: 'All bookable packages are listed here with a clear description, current price, and selected Ayan Photography work.', catalogLink: 'Book now →', catalogSilverTitle: 'Silver Package', catalogSilverText: 'Rolling coverage from multiple angles with all original clips delivered without editing.', catalogBasicTitle: 'Basic Package', catalogBasicText: 'Rolling coverage with 10+ varied clips, full editing, music selection, and an optional custom concept.', catalogAdvancedTitle: 'Advanced Package', catalogAdvancedText: 'Rolling and static coverage from multiple angles, 10+ clips, full editing, and fast delivery based on the session.', catalogRoyalTitle: 'Cinematic Package', catalogRoyalText: 'A complete cinematic session combining rolling, static coverage, professional editing, and a custom concept option.', catalogChoose: 'Choose package', catalogNoteTitle: 'Note:', catalogNoteText: 'Displayed prices are the current package prices. Any additional service is explained before the order is confirmed.', service1Title: 'Rolling Shots', service1Text: 'Moving coverage from different angles to show design, speed, and presence.', service2Title: 'Static Details', service2Text: 'Still frames that focus on exterior, interior, and design details.', service3Title: 'Cinematic Edit', service3Text: 'A full edit with a visual rhythm built around the car and the platform.', service4Title: 'Custom Concept', service4Text: 'A tailored idea coordinated around your style and the message you want to convey.',
     processTitle: 'How it works', processText: 'Four clear steps with no unnecessary complexity.', step1Title: 'Choose', step1Text: 'Pick the package and session type.', step2Title: 'Send', step2Text: 'Submit your details and notes.', step3Title: 'Coordinate', step3Text: 'We finalize the details through WhatsApp.', step4Title: 'Shoot', step4Text: 'We execute the session and arrange delivery.',
-    bookingHeroKicker: 'Booking', bookingHeroTitle: 'Book your session in under a minute.', bookingHeroText: 'Fill in your details, review the total including tax, then continue to secure payment through Tap.', bookingMeta1: 'Choose a package', bookingMeta2: 'Add your details', bookingMeta3: 'Pay through Tap', bookingSideTitle: 'Start with the right package.', bookingSideText: 'Choose your production level first, then we will handle the rest with you.', selectedLabel: 'Selected package', selectedEmpty: 'Choose a package to begin', sideFoot1: 'Direct coordination', sideFoot2: 'Clear pricing', sideFoot3: 'WhatsApp handoff', bookingStep1: 'Package', bookingStep2: 'Details', bookingStep3: 'Payment', flowStep1: 'Choose your package', flowStep2: 'Add your session details', flowStep3: 'Pay securely with Tap', formKicker: 'Start your session', packageHint: 'Choose the production level that fits the shot in your head.', tapToChoose: 'Tap to choose', detailsDivider: 'Session details', submitTitle: 'Ready? Let’s finish it.', submitText: 'After confirmation, you will continue to Tap’s secure payment page.',
-    formTitle: 'Instant booking form', formRequired: 'Fields marked * are required', nameLabel: 'Full name *', namePlaceholder: 'Your full name', phoneLabel: 'WhatsApp number *', phonePlaceholder: '05xxxxxxxx', packageLabel: 'Package *', packagePlaceholder: 'Choose a package', carLabel: 'Car type *', carPlaceholder: 'Choose your car type', regionLabel: 'Shoot area *', regionPlaceholder: 'Choose an area', notesLabel: 'Additional notes', notesPlaceholder: 'Specific angles, a custom idea, preferred time, or anything else...', submit: 'Continue to payment', formNote: 'The final amount shows the package price, service fee, and VAT separately before payment.', bookingAsideTitle: 'Before payment', bookingAsideText: 'Review your details and final total before continuing to Tap.', aside1: 'Choose the package first.', aside2: 'Use an active WhatsApp number.', aside3: 'Add any special idea in the notes.', priceNoteTitle: 'Base prices', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'Package price', serviceFeeLabel: 'Service fee', taxLabel: 'VAT', totalLabel: 'Total', taxNotice: '15% VAT is shown only when the applicable VAT registration requirements apply. Service fee is configurable in the project settings.', selectedBaseLabel: 'Before additions', paymentError: 'We could not prepare the payment. Please try again.', paymentPreparing: 'Preparing secure payment…',
+    bookingHeroKicker: 'Booking', bookingHeroTitle: 'Book your session in under a minute.', bookingHeroText: 'Fill in your details, review the total including tax, then continue to secure payment through Tap.', bookingMeta1: 'Choose a package', bookingMeta2: 'Add your details', bookingMeta3: 'Pay through Tap', bookingSideTitle: 'Start with the right package.', bookingSideText: 'Choose your production level first, then we will handle the rest with you.', selectedLabel: 'Selected package', selectedEmpty: 'Choose a package to begin', sideFoot1: 'Direct coordination', sideFoot2: 'Clear pricing', sideFoot3: 'WhatsApp handoff', bookingStep1: 'Package', bookingStep2: 'Details', bookingStep3: 'Payment', flowStep1: 'Choose your package', flowStep2: 'Add your session details', flowStep3: 'Pay securely with Tap', formKicker: 'Start your session', packageHint: 'Choose the production level that fits the shot in your head.', tapToChoose: 'Tap to choose', detailsDivider: 'Session details', submitTitle: 'Ready? Let’s finish it.', submitText: 'After confirmation, you will review the total and choose a payment method.',
+    formTitle: 'Instant booking form', formRequired: 'Fields marked * are required', nameLabel: 'Full name *', namePlaceholder: 'Your full name', phoneLabel: 'WhatsApp number *', phonePlaceholder: '05xxxxxxxx', packageLabel: 'Package *', packagePlaceholder: 'Choose a package', carLabel: 'Car type *', carPlaceholder: 'Choose your car type', regionLabel: 'Shoot area *', regionPlaceholder: 'Choose an area', notesLabel: 'Additional notes', notesPlaceholder: 'Specific angles, a custom idea, preferred time, or anything else...', submit: 'Continue to payment', formNote: 'The final amount shows the package price and payment fee separately before payment.', bookingAsideTitle: 'Before payment', bookingAsideText: 'Review your details and the package price before choosing a payment method.', aside1: 'Choose the package first.', aside2: 'Use an active WhatsApp number.', aside3: 'Add any special idea in the notes.', priceNoteTitle: 'Base prices', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'Package price', serviceFeeLabel: 'Payment fee', taxLabel: 'Tax', totalLabel: 'Total', taxNotice: 'Payment fees are shown on the checkout page based on the selected method.', selectedBaseLabel: 'Before additions', paymentError: 'We could not prepare the payment. Please try again.', paymentPreparing: 'Preparing secure payment…',
     galleryHeroKicker: 'Gallery', galleryHeroTitle: 'See the result before you book.', galleryHeroText: 'Photos and videos in one place, with quick filters and a full-view lightbox.', galleryAll: 'All', galleryVideos: 'Videos', galleryImages: 'Photos', galleryCount: 'items', readyTitle: 'Like what you see?', readyText: 'Go straight to the booking form and choose the right package.', startBooking: 'Start booking →', footerCopy: 'Professional car photography, rolling shots, static sessions, and cinematic edits shaped around every car.', footerNav: 'Navigation', footerContact: 'Contact', footerLocation: 'Eastern Province, Saudi Arabia', footerTag: 'Built for cinematic car content',
     loading1: 'Initializing Ayan Photography...', loading2: 'Preparing cinematic frames...', loading3: 'Everything is ready 🚀', bookingSuccess: '✨ Request received. Redirecting to WhatsApp...', requiredAlert: 'Please complete the required fields.', waitAlert: '⚠️ Please wait a moment before sending another request.', networkAlert: 'The system request could not be sent. WhatsApp will open directly.', whatsappAr: 'Hello, I would like to book a car photography session',
   }
@@ -210,7 +210,7 @@ function packageValueForLang(value, lang = getLang()) {
   return pair ? pair[lang === 'en' ? 1 : 0] : value;
 }
 
-function sendLog(event, details = {}) {
+async function sendLog(event, details = {}) {
   const payload = {
     event,
     page: location.pathname,
@@ -223,14 +223,124 @@ function sendLog(event, details = {}) {
     details
   };
   try {
-    const request = fetch('/api/log', {
+    await fetch('/api/log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       keepalive: true
     });
-    request.catch(() => {});
   } catch (_) {}
+}
+
+function setupPreferenceMenus() {
+  const menus = [...document.querySelectorAll('[data-pref-menu]')];
+  if (!menus.length) return;
+
+  const nav = document.querySelector('[data-nav-links]');
+  const closeAll = (except = null) => {
+    menus.forEach((menu) => {
+      if (menu !== except) {
+        menu.classList.remove('open');
+        menu.querySelector('[data-pref-trigger]')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  };
+
+  const toggleMenu = (menu) => {
+    if (!menu) return;
+    const trigger = menu.querySelector('[data-pref-trigger]');
+    const willOpen = !menu.classList.contains('open');
+    closeAll(menu);
+    if (nav && willOpen) nav.classList.remove('open');
+    menu.classList.toggle('open', willOpen);
+    trigger?.setAttribute('aria-expanded', String(willOpen));
+  };
+
+  menus.forEach((menu) => {
+    const trigger = menu.querySelector('[data-pref-trigger]');
+    if (!trigger) return;
+    const activate = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleMenu(menu);
+    };
+    trigger.addEventListener('pointerup', activate, { passive: false });
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') activate(event);
+    });
+  });
+
+  const preferenceAction = (event) => {
+    const themeButton = event.target?.closest?.('[data-set-theme]');
+    const langButton = event.target?.closest?.('[data-set-lang]');
+    if (themeButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      setTheme(themeButton.dataset.setTheme);
+      closeAll();
+      return true;
+    }
+    if (langButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      setLang(langButton.dataset.setLang);
+      closeAll();
+      return true;
+    }
+    return false;
+  };
+
+  document.addEventListener('pointerup', (event) => {
+    if (preferenceAction(event)) return;
+    if (!event.target?.closest?.('[data-pref-menu]')) closeAll();
+  }, { passive: false });
+
+  document.addEventListener('click', (event) => {
+    if (event.target?.closest?.('[data-set-theme], [data-set-lang], [data-pref-trigger]')) return;
+    if (!event.target?.closest?.('[data-pref-menu]')) closeAll();
+  }, true);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeAll();
+  });
+
+  window.__ayanClosePreferenceMenus = closeAll;
+}
+
+function setupMobileMenu() {
+  const btn = document.querySelector('[data-menu]');
+  const nav = document.querySelector('[data-nav-links]');
+  if (!btn || !nav) return;
+
+  let backdrop = document.querySelector('[data-mobile-menu-backdrop]');
+  if (!backdrop) {
+    backdrop = document.createElement('button');
+    backdrop.type = 'button';
+    backdrop.className = 'mobile-menu-backdrop';
+    backdrop.setAttribute('aria-label', 'Close menu');
+    backdrop.setAttribute('data-mobile-menu-backdrop', '');
+    document.body.appendChild(backdrop);
+  }
+
+  const setOpen = (open) => {
+    nav.classList.toggle('open', open);
+    btn.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    backdrop.classList.toggle('is-visible', open);
+    if (open) window.__ayanClosePreferenceMenus?.();
+  };
+
+  const activate = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(!nav.classList.contains('open'));
+  };
+
+  btn.addEventListener('pointerup', activate, { passive: false });
+  backdrop.addEventListener('pointerup', (event) => { event.preventDefault(); setOpen(false); });
+  nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) setOpen(false); }, { passive: true });
 }
 
 function setupActiveNav() {
@@ -259,16 +369,12 @@ function setupReveal() {
 
 function setupCardGlow() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   document.querySelectorAll('.card').forEach((card) => {
-    let rect = null;
-    card.addEventListener('pointerenter', () => { rect = card.getBoundingClientRect(); }, { passive: true });
-    card.addEventListener('pointerleave', () => { rect = null; }, { passive: true });
     card.addEventListener('pointermove', (event) => {
-      if (!rect) rect = card.getBoundingClientRect();
+      const rect = card.getBoundingClientRect();
       card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
       card.style.setProperty('--my', `${event.clientY - rect.top}px`);
-    }, { passive: true });
+    });
   });
 }
 
@@ -288,19 +394,11 @@ function setupAmbientParallax() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const blobs = document.querySelectorAll('.ambient span');
   if (!blobs.length) return;
-  let raf = 0;
-  let lastY = -1;
-  const render = () => {
-    raf = 0;
+  window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    if (y === lastY) return;
-    lastY = y;
     blobs.forEach((blob, index) => {
       blob.style.transform = `translate3d(${index ? y * .018 : -y * .012}px, ${y * (index ? -.02 : .014)}px, 0)`;
     });
-  };
-  window.addEventListener('scroll', () => {
-    if (!raf) raf = requestAnimationFrame(render);
   }, { passive: true });
 }
 
@@ -339,7 +437,9 @@ function setupHeroBackgroundVideo() {
     if (!document.hidden && video.paused) play('resume');
   };
 
-  video.addEventListener('loadedmetadata', () => play('metadata'), { once: true });
+  video.addEventListener('loadedmetadata', () => play('metadata'));
+  video.addEventListener('loadeddata', () => play('data'));
+  video.addEventListener('canplay', () => play('canplay'));
   video.addEventListener('playing', () => {
     retries = 0;
     window.clearTimeout(retryTimer);
@@ -363,6 +463,7 @@ function setupHeroBackgroundVideo() {
   window.addEventListener('focus', ensurePlaying);
   window.addEventListener('online', () => { video.load(); play('online'); });
 
+  video.load();
   window.setTimeout(() => play('startup'), 80);
 }
 
@@ -406,6 +507,7 @@ function setupBookingBackgroundVideo() {
   });
   document.addEventListener('visibilitychange', () => { if (!document.hidden && video.paused) start(); });
   window.addEventListener('pageshow', () => { if (video.paused) start(); });
+  video.load();
   window.setTimeout(start, 80);
 }
 
@@ -482,29 +584,41 @@ function setupHomeLoader() {
 
 let AYAN_PAYMENT_CONFIG = {
   currency: 'SAR',
-  pricing: { vatEnabled: true, vatRate: 15, serviceFeeEnabled: true, serviceFeePercent: 0, serviceFeeFixed: 0, vatOnServiceFee: true },
+  pricing: {
+    vatEnabled: false,
+    vatRate: 0,
+    paymentFeeEnabled: true,
+    vatOnPaymentFee: false,
+    paymentFees: {
+      card: { percent: 2.75, fixed: 6 },
+      tabby: { percent: 6.99, fixed: 7.5 }
+    }
+  },
   packages: {
     silver: { price: 70 }, basic: { price: 100 }, advanced: { price: 150 }, royal: { price: 200 }
   }
 };
 
-function getPackageFinancials(key) {
+function getPackageFinancials(key, paymentMethod = 'none') {
   const pkg = AYAN_PAYMENT_CONFIG.packages?.[key];
   const subtotal = Number(pkg?.price ?? ({ silver: 70, basic: 100, advanced: 150, royal: 200 }[key] || 0));
   const p = AYAN_PAYMENT_CONFIG.pricing || {};
-  const serviceFee = p.serviceFeeEnabled
-    ? Math.round((subtotal * Number(p.serviceFeePercent || 0) / 100 + Number(p.serviceFeeFixed || 0)) * 100) / 100
+  const vatEnabled = false;
+  const taxRate = 0;
+  const tax = 0;
+  const beforeFee = subtotal;
+  const feeCfg = p.paymentFees?.[paymentMethod] || { percent: 0, fixed: 0 };
+  const paymentFee = p.paymentFeeEnabled && (paymentMethod === 'card' || paymentMethod === 'tabby')
+    ? Math.round((beforeFee * Number(feeCfg.percent || 0) / 100 + Number(feeCfg.fixed || 0)) * 100) / 100
     : 0;
-  const taxableBase = p.vatOnServiceFee === false ? subtotal : subtotal + serviceFee;
-  const tax = p.vatEnabled === false ? 0 : Math.round(taxableBase * Number(p.vatRate ?? 15) / 100 * 100) / 100;
-  const total = Math.round((subtotal + serviceFee + tax) * 100) / 100;
-  return { subtotal, serviceFee, tax, total, taxRate: Number(p.vatRate ?? 15), vatEnabled: p.vatEnabled !== false, vatOnServiceFee: p.vatOnServiceFee !== false };
+  const paymentFeeTax = 0;
+  const total = Math.round((beforeFee + paymentFee + paymentFeeTax) * 100) / 100;
+  return { subtotal, tax, paymentFee, paymentFeeTax, total, taxRate, vatEnabled, vatOnPaymentFee: p.vatOnPaymentFee === true };
 }
 
 async function loadPaymentConfig() {
-  if (!document.querySelector('#bookingForm')) return;
   try {
-    const response = await fetch('/api/payment-config', { cache: 'default' });
+    const response = await fetch('/api/payment-config', { cache: 'no-store' });
     if (!response.ok) throw new Error('config');
     const config = await response.json();
     if (config?.pricing && config?.packages) {
@@ -533,7 +647,7 @@ function updateBookingExperience() {
     if (active) selected = choice;
     const totalNode = choice.querySelector('[data-package-total]');
     if (totalNode) {
-      const finance = getPackageFinancials(choice.dataset.packageKey);
+      const finance = getPackageFinancials(choice.dataset.packageKey, 'none');
       totalNode.textContent = `${moneySar(finance.total)} SAR`;
     }
   });
@@ -563,18 +677,15 @@ function updateBookingExperience() {
 
   const key = selected.dataset.packageKey;
   const priceMap = { silver: 'silverPrice', basic: 'basicPrice', advanced: 'advancedPrice', royal: 'royalPrice' };
-  const finance = getPackageFinancials(key);
+  const finance = getPackageFinancials(key, 'none');
   summaryName.textContent = tr(key);
   summaryDesc.textContent = tr(`${key}Desc`);
   summaryPrice.textContent = moneySar(finance.total);
   if (summarySubtotal) summarySubtotal.textContent = `${moneySar(finance.subtotal)} SAR`;
-  if (summaryServiceFee) summaryServiceFee.textContent = `${moneySar(finance.serviceFee)} SAR`;
-  if (summaryTax) summaryTax.textContent = `${moneySar(finance.tax)} SAR`;
+  if (summaryServiceFee) summaryServiceFee.textContent = '—';
+  if (summaryTax) summaryTax.textContent = '—';
   if (summaryTotal) summaryTotal.textContent = `${moneySar(finance.total)} SAR`;
-  if (taxLabelNode) {
-    const label = getLang() === 'ar' ? `ضريبة القيمة المضافة ${finance.taxRate}%` : `VAT ${finance.taxRate}%`;
-    taxLabelNode.textContent = label;
-  }
+  if (taxLabelNode) taxLabelNode.textContent = getLang() === 'ar' ? 'الضريبة' : 'Tax';
   const basePriceNode = summaryCard?.querySelector('[data-booking-summary-base]');
   if (basePriceNode) basePriceNode.textContent = `${moneySar(Number(tr(priceMap[key])))} SAR`;
   if (summaryCard) {
@@ -697,7 +808,7 @@ function setupBookingForm() {
 
     sessionStorage.setItem('ayan_last_submit', String(Date.now()));
     sessionStorage.setItem('ayan_checkout_data', JSON.stringify(data));
-    sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
+    await sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
     window.location.assign('checkout.html');
   });
 }
@@ -740,7 +851,7 @@ async function loadGallery() {
   let data = null;
   for (const url of candidates) {
     try {
-      const response = await fetch(url, { cache: 'default', headers: { Accept: 'application/json' } });
+      const response = await fetch(url, { cache: 'no-store', headers: { Accept: 'application/json' } });
       const contentType = response.headers.get('content-type') || '';
       if (!response.ok) continue;
       const text = await response.text();
@@ -801,16 +912,24 @@ function keepGalleryVideosPlaying() {
     if (playPromise?.catch) playPromise.catch(() => {});
   };
 
-  const stop = (video) => {
-    if (!video.paused) video.pause();
+  const resumeSelected = (card) => {
+    const video = card.querySelector('video');
+    if (!video) return;
+    card.classList.add('is-recovering');
+    start(video);
+    window.setTimeout(() => card.classList.remove('is-recovering'), 380);
   };
 
   videos.forEach((video) => {
     const card = video.closest('.gallery-card');
     video.controls = false;
     video.disablePictureInPicture = true;
-    video.preload = 'auto';
-    video.load();
+    video.addEventListener('loadedmetadata', () => start(video), { once: true });
+    video.addEventListener('loadeddata', () => start(video), { once: true });
+    video.addEventListener('canplay', () => {
+      if (video.paused && !document.hidden) start(video);
+    });
+
     video.addEventListener('pause', () => {
       if (document.hidden) return;
       card?.classList.add('video-paused');
@@ -819,33 +938,20 @@ function keepGalleryVideosPlaying() {
     video.addEventListener('waiting', () => card?.classList.add('video-buffering'));
     video.addEventListener('playing', () => card?.classList.remove('video-buffering', 'video-paused'));
 
-  });
+    if (card) {
+      card.addEventListener('pointerenter', () => resumeSelected(card), { passive: true });
+      card.addEventListener('pointerdown', () => resumeSelected(card), { passive: true });
+      card.addEventListener('touchstart', () => resumeSelected(card), { passive: true });
+      card.addEventListener('focusin', () => resumeSelected(card));
+    }
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target.querySelector('video');
-        if (!video) return;
-        if (entry.isIntersecting) {
-          start(video);
-        } else {
-          stop(video);
-        }
-      });
-    }, { rootMargin: '220px 0px', threshold: 0.01 });
-    cards.forEach((card) => observer.observe(card));
-  } else {
-    videos.forEach(start);
-  }
+    start(video);
+  });
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
     videos.forEach((video) => {
-      const card = video.closest('.gallery-card');
-      if (!card) return;
-      const rect = card.getBoundingClientRect();
-      const visible = rect.bottom > -220 && rect.top < window.innerHeight + 220;
-      if (visible && video.paused) start(video);
+      if (video.paused) start(video);
     });
   });
 }
@@ -953,8 +1059,9 @@ function setupSocialFloat() {
   });
 }
 
-function init() {
+async function init() {
   applyPreferences();
+  await loadPaymentConfig();
   setupActiveNav();
   setupPackageButtons();
   setupBookingExperience();
@@ -968,7 +1075,6 @@ function init() {
   setupBookingBackgroundVideo();
   setupHomeLoader();
   loadGallery();
-  loadPaymentConfig();
   sendLog('page_view');
 }
 

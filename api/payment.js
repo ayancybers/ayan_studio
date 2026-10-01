@@ -67,7 +67,8 @@ export default async function handler(req, res) {
 
   const pkg = PACKAGES[packageKey];
   const cfg = getPricingConfig();
-  let pricing = calculatePricing(packageKey);
+  const paymentMethod = 'card';
+  let pricing = calculatePricing(packageKey, paymentMethod);
   let testPayment = false;
 
   // Safe Tap sandbox testing: set PAYMENT_TEST_MODE=true and use your Tap Test Secret Key.
@@ -78,6 +79,11 @@ export default async function handler(req, res) {
     pricing = {
       ...pricing,
       subtotal: configuredTestAmount,
+      paymentMethod,
+      paymentFee: 0,
+      paymentFeePercent: 0,
+      paymentFeeFixed: 0,
+      paymentFeeTax: 0,
       serviceFee: 0,
       serviceFeePercent: 0,
       serviceFeeFixed: 0,
@@ -102,12 +108,17 @@ export default async function handler(req, res) {
     package_name_ar: pkg.ar,
     package_name_en: pkg.en,
     subtotal: pricing.subtotal.toFixed(2),
-    service_fee: pricing.serviceFee.toFixed(2),
-    service_fee_percent: String(pricing.serviceFeePercent),
-    service_fee_fixed: pricing.serviceFeeFixed.toFixed(2),
+    payment_method: paymentMethod,
+    payment_fee: pricing.paymentFee.toFixed(2),
+    payment_fee_percent: String(pricing.paymentFeePercent),
+    payment_fee_fixed: pricing.paymentFeeFixed.toFixed(2),
+    payment_fee_tax: pricing.paymentFeeTax.toFixed(2),
+    service_fee: pricing.paymentFee.toFixed(2),
+    service_fee_percent: String(pricing.paymentFeePercent),
+    service_fee_fixed: pricing.paymentFeeFixed.toFixed(2),
     vat_enabled: String(pricing.vatEnabled),
     tax_rate: String(pricing.vatRate),
-    vat_on_service_fee: String(pricing.vatOnServiceFee),
+    vat_on_payment_fee: String(pricing.vatOnPaymentFee),
     taxable_base: pricing.taxableBase.toFixed(2),
     tax: pricing.tax.toFixed(2),
     total: pricing.total.toFixed(2),
@@ -145,7 +156,7 @@ export default async function handler(req, res) {
   };
 
   try {
-    const response = await fetchWithTimeout('https://api.tap.company/v2/charges/', {
+    const response = await fetch('https://api.tap.company/v2/charges/', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${secret}`,
@@ -154,7 +165,7 @@ export default async function handler(req, res) {
         lang_code: lang
       },
       body: JSON.stringify(payload)
-    }, 15000);
+    });
 
     const result = await response.json().catch(() => ({}));
     if (!response.ok) {
@@ -184,8 +195,11 @@ export default async function handler(req, res) {
       redirectUrl,
       invoiceUrl: `${baseUrl}/invoice.html?tap_id=${encodeURIComponent(tapId)}`,
       subtotal: pricing.subtotal,
-      serviceFee: pricing.serviceFee,
+      paymentMethod,
+      paymentFee: pricing.paymentFee,
+      serviceFee: pricing.paymentFee,
       tax: pricing.tax,
+      paymentFeeTax: pricing.paymentFeeTax,
       taxRate: pricing.vatRate,
       total: pricing.total,
       amount: pricing.total,
@@ -205,10 +219,10 @@ async function verifyPayment(req, res) {
   if (!secret) return res.status(500).json({ error: 'Payment configuration is incomplete' });
 
   try {
-    const response = await fetchWithTimeout(`https://api.tap.company/v2/charges/${encodeURIComponent(tapId)}`, {
+    const response = await fetch(`https://api.tap.company/v2/charges/${encodeURIComponent(tapId)}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${secret}`, accept: 'application/json' }
-    }, 12000);
+    });
 
     const charge = await response.json().catch(() => ({}));
     if (!response.ok) return res.status(502).json({ error: charge?.response?.message || 'Unable to verify payment' });
@@ -230,12 +244,18 @@ async function verifyPayment(req, res) {
       packageNameAr: metadata.package_name_ar || '',
       packageNameEn: metadata.package_name_en || '',
       subtotal: Number(metadata.subtotal || 0),
-      serviceFee: Number(metadata.service_fee || 0),
-      serviceFeePercent: Number(metadata.service_fee_percent || 0),
-      serviceFeeFixed: Number(metadata.service_fee_fixed || 0),
+      paymentMethod: metadata.payment_method === 'tabby' ? 'tabby' : 'card',
+      paymentFee: Number(metadata.payment_fee || metadata.service_fee || 0),
+      paymentFeePercent: Number(metadata.payment_fee_percent || metadata.service_fee_percent || 0),
+      paymentFeeFixed: Number(metadata.payment_fee_fixed || metadata.service_fee_fixed || 0),
+      paymentFeeTax: Number(metadata.payment_fee_tax || 0),
+      serviceFee: Number(metadata.payment_fee || metadata.service_fee || 0),
+      serviceFeePercent: Number(metadata.payment_fee_percent || metadata.service_fee_percent || 0),
+      serviceFeeFixed: Number(metadata.payment_fee_fixed || metadata.service_fee_fixed || 0),
       vatEnabled: String(metadata.vat_enabled || 'false') === 'true',
       taxRate: Number(metadata.tax_rate || 0),
-      vatOnServiceFee: String(metadata.vat_on_service_fee || 'false') === 'true',
+      vatOnPaymentFee: String(metadata.vat_on_payment_fee || 'false') === 'true',
+      vatOnServiceFee: String(metadata.vat_on_payment_fee || 'false') === 'true',
       taxableBase: Number(metadata.taxable_base || metadata.subtotal || 0),
       tax: Number(metadata.tax || 0),
       total: Number(metadata.total || charge.amount || 0),
@@ -252,16 +272,6 @@ async function verifyPayment(req, res) {
   } catch (error) {
     console.error('Tap verification error', error);
     return res.status(500).json({ error: 'Unable to verify payment' });
-  }
-}
-
-async function fetchWithTimeout(url, options = {}, timeoutMs = 15000) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } finally {
-    clearTimeout(timer);
   }
 }
 

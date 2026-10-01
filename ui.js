@@ -445,7 +445,6 @@
         img.draggable = false;
         img.decoding = 'async';
         img.loading = 'eager';
-        img.fetchPriority = 'low';
 
         banner.appendChild(img);
 
@@ -762,6 +761,7 @@
         };
 
         window.addEventListener('resize', reposition, { passive: true });
+        window.addEventListener('scroll', reposition, { passive: true });
 
         document.addEventListener('click', event => {
           const target = event.target instanceof Element ? event.target : null;
