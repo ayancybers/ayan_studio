@@ -277,7 +277,7 @@ async function verifyPayment(req, res) {
       requestId: metadata.request_id || '',
       lang: metadata.lang === 'en' ? 'en' : 'ar',
       testPayment: String(metadata.test_payment || 'false') === 'true',
-      created: charge?.transaction?.created || ''
+      created: pickPaymentCreatedAt(charge)
     };
 
     return res.status(200).json(result);
@@ -285,6 +285,12 @@ async function verifyPayment(req, res) {
     console.error('Tap verification error', error);
     return res.status(500).json({ error: 'Unable to verify payment' });
   }
+}
+
+function pickPaymentCreatedAt(charge){
+  const activities=Array.isArray(charge?.activities)?charge.activities:[];
+  const captured=activities.filter(a=>String(a?.status||'').toUpperCase()==='CAPTURED').sort((a,b)=>Number(b?.created||0)-Number(a?.created||0))[0];
+  return captured?.created || charge?.transaction?.created || charge?.created || '';
 }
 
 function fullCustomerName(charge) {

@@ -56,7 +56,7 @@ async function retrieveTap(id) {
   const c = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(c?.response?.message || 'Unable to retrieve Tap payment');
   const m = c.metadata || {};
-  return { status: String(c.status || '').toUpperCase(), paymentId: c.id || id, tapId: c.id || id, amount: Number(c.amount || m.total || 0), currency: c.currency || 'SAR', customerName: m.customer_name || '—', email: m.email || c?.customer?.email || '', phone: m.phone || '', packageName: m.package_name || m.package_name_en || '', packageNameAr: m.package_name_ar || '', packageNameEn: m.package_name_en || '', subtotal: Number(m.subtotal || 0), paymentFee: Number(m.payment_fee || m.service_fee || 0), serviceFee: Number(m.payment_fee || m.service_fee || 0), total: Number(m.total || c.amount || 0), carType: m.car_type || '', shootRegion: m.shoot_region || '', termsAccepted: String(m.terms_accepted || 'false') === 'true', termsAcceptedAt: m.terms_accepted_at || '', lang: m.lang === 'en' ? 'en' : 'ar', created: c?.transaction?.created || '', notes: m.notes || '—' };
+  return { status: String(c.status || '').toUpperCase(), paymentId: c.id || id, tapId: c.id || id, amount: Number(c.amount || m.total || 0), currency: c.currency || 'SAR', customerName: m.customer_name || '—', email: m.email || c?.customer?.email || '', phone: m.phone || '', packageName: m.package_name || m.package_name_en || '', packageNameAr: m.package_name_ar || '', packageNameEn: m.package_name_en || '', subtotal: Number(m.subtotal || 0), paymentFee: Number(m.payment_fee || m.service_fee || 0), serviceFee: Number(m.payment_fee || m.service_fee || 0), total: Number(m.total || c.amount || 0), carType: m.car_type || '', shootRegion: m.shoot_region || '', termsAccepted: String(m.terms_accepted || 'false') === 'true', termsAcceptedAt: m.terms_accepted_at || '', lang: m.lang === 'en' ? 'en' : 'ar', created: pickPaymentCreatedAt(c), notes: m.notes || '—' };
 }
 
 async function retrieveTabby(id) {
@@ -86,7 +86,8 @@ async function sendDiscordPdf({ provider, paymentId, data, pdfBytes, fileName })
         { name: '📦 Package', value: limit(data.packageName || '—', 100), inline: true },
         { name: '🚗 Car', value: limit(data.carType || '—', 80), inline: true },
         { name: '📍 Shoot Area', value: limit(data.shootRegion || '—', 80), inline: true },
-        { name: '💰 Total', value: `${Number(data.total || data.amount || 0).toFixed(2)} SAR`, inline: true }
+        { name: '💰 Total', value: `${Number(data.total || data.amount || 0).toFixed(2)} SAR`, inline: true },
+        { name: '🕒 Payment Date', value: formatDiscordDate(data.created), inline: true }
       ],
       timestamp: new Date().toISOString(),
       footer: { text: 'Ayan Photography • PDF Invoice' }
@@ -98,6 +99,14 @@ async function sendDiscordPdf({ provider, paymentId, data, pdfBytes, fileName })
   const response = await fetch(webhookUrl, { method: 'POST', body: form });
   if (!response.ok) throw new Error(`Discord returned ${response.status}`);
   return true;
+}
+
+function formatDiscordDate(value) {
+  if (value === null || value === undefined || value === '') return '—';
+  const raw = String(value).trim();
+  const d = /^\d+$/.test(raw) ? new Date(Number(raw)) : new Date(raw);
+  if (Number.isNaN(d.getTime())) return '—';
+  return new Intl.DateTimeFormat('ar-SA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(d);
 }
 
 function limit(value, max = 1000) { return String(value ?? '').slice(0, max); }

@@ -359,7 +359,7 @@ function buildTabbyResult(data, paymentId) {
     requestId: meta.request_id || '',
     lang: meta.lang === 'en' ? 'en' : 'ar',
     testPayment: Boolean(data?.is_test) || String(meta.test_payment || 'false') === 'true',
-    created: data?.created_at || ''
+    created: data?.created_at || data?.created || data?.updated_at || ''
   };
 }
 

@@ -131,5 +131,12 @@ export async function sendInvoiceEmail({ provider, paymentId, data, req, pdfBase
 
 function escapeHtml(value){return String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function row(label,value){return `<tr><td style="padding:9px 0;color:#7a899c;border-bottom:1px solid #edf1f5">${escapeHtml(label)}</td><td style="padding:9px 0;text-align:end;font-weight:700;border-bottom:1px solid #edf1f5;color:#1d2d43">${escapeHtml(value || '—')}</td></tr>`}
-function formatDate(v,ar){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return'—';return new Intl.DateTimeFormat(ar?'ar-SA':'en-US',{dateStyle:'medium',timeStyle:'short'}).format(d)}
+function formatDate(v,ar){
+  if(v===null||v===undefined||v==='') return '—';
+  let d;
+  if(typeof v==='number'&&Number.isFinite(v)) d=new Date(v);
+  else { const raw=String(v).trim(); d=/^\d+$/.test(raw)?new Date(Number(raw)):new Date(raw); }
+  if(!d||Number.isNaN(d.getTime())) return '—';
+  return new Intl.DateTimeFormat(ar?'ar-SA':'en-US',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(d);
+}
 function getBaseUrl(req){const configured=String(process.env.APP_BASE_URL||'').trim().replace(/\/$/,'');if(configured)return configured;const protocol=String(req?.headers?.['x-forwarded-proto']||'https').split(',')[0];const host=String(req?.headers?.host||'').split(',')[0];return `${protocol}://${host}`}
