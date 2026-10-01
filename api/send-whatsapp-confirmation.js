@@ -1,4 +1,4 @@
-import { retrieveTamaraOrder, mapTamaraOrder, isTamaraPaidStatus } from '../tamara.js';
+import { getTamaraOrder, mapTamaraOrder } from '../lib/server/tamara.js';
 export default async function handler(req, res) {
   setSecurityHeaders(res);
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -25,10 +25,10 @@ export default async function handler(req, res) {
     let data = provider === 'tabby'
       ? await retrieveTabby(paymentId)
       : provider === 'tamara'
-        ? mapTamaraOrder(await retrieveTamaraOrder(paymentId), { paymentId })
+        ? await retrieveTamara(paymentId)
         : await retrieveTap(paymentId);
 
-    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : provider === 'tamara' ? isTamaraPaidStatus(data.status) : data.status === 'CAPTURED';
+    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : provider === 'tamara' ? ['authorised','authorized','fully_captured'].includes(String(data.status||'').toLowerCase()) : data.status === 'CAPTURED';
     if (!confirmed) {
       return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
     }
@@ -100,6 +100,8 @@ export default async function handler(req, res) {
     return res.status(502).json({ error: 'Unable to send WhatsApp confirmation' });
   }
 }
+
+async function retrieveTamara(id) { return mapTamaraOrder(await getTamaraOrder(id)); }
 
 async function retrieveTap(id) {
   const secret = String(process.env.TAP_SECRET_KEY || '').trim();

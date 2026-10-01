@@ -1,4 +1,4 @@
-import { sendInvoiceEmail } from '../invoice-email.js';
+import { sendInvoiceEmail } from '../lib/server/invoice-email.js';
 import crypto from 'node:crypto';
 import { handleTabbyAuthorizedWebhook } from './tabby-payment.js';
 

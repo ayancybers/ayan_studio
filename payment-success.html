@@ -100,7 +100,7 @@ async function verify(attempt=0){
     const endpoint=isTabby?'/api/tabby-payment?payment_id=':isTamara?'/api/tamara-payment?order_id=':'/api/payment?tap_id=';
     const r=await fetch(endpoint+encodeURIComponent(paymentId),{cache:'no-store'});
     const data=await r.json();
-    const success=isTabby ? data.success && data.status==='CLOSED' : isTamara ? data.success && ['APPROVED','AUTHORISED','FULLY_CAPTURED','PARTIALLY_CAPTURED'].includes(String(data.status||'').toUpperCase().replace(/\s+/g,'_')) : data.success && data.status==='CAPTURED';
+    const success=isTabby ? data.success && data.status==='CLOSED' : isTamara ? data.success && ['authorised','authorized','fully_captured'].includes(String(data.status||'').toLowerCase()) : data.success && data.status==='CAPTURED';
     if(success){
       icon.textContent='✓';
       document.getElementById('title').textContent=t.success;
@@ -118,7 +118,6 @@ async function verify(attempt=0){
       void sendPdfInvoice(provider, paymentId, data);
       void sendWhatsAppConfirmation(provider, paymentId, data);
       sessionStorage.removeItem('ayan_tabby_payment_id');
-      sessionStorage.removeItem('ayan_tamara_order_id');
       return;
     }
     if(attempt<8){
@@ -190,9 +189,7 @@ async function sendPdfInvoice(providerValue, paymentRef, bookingData = {}){
   try{
     const invoiceUrl=providerValue==='tabby'
       ? '/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1'
-      : providerValue==='tamara'
-        ? '/invoice.html?provider=tamara&order_id='+encodeURIComponent(paymentRef)+'&embed=1'
-        : '/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
+      : '/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
 
     iframe=document.createElement('iframe');
     iframe.style.position='fixed';

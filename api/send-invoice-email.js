@@ -1,5 +1,5 @@
-import { sendInvoiceEmail } from '../invoice-email.js';
-import { retrieveTamaraOrder, mapTamaraOrder } from '../tamara.js';
+import { sendInvoiceEmail } from '../lib/server/invoice-email.js';
+import { getTamaraOrder, mapTamaraOrder } from '../lib/server/tamara.js';
 
 export default async function handler(req, res) {
   setSecurityHeaders(res);
@@ -15,10 +15,8 @@ export default async function handler(req, res) {
   try {
     const data = provider === 'tabby'
       ? await retrieveTabby(paymentId)
-      : provider === 'tamara'
-        ? mapTamaraOrder(await retrieveTamaraOrder(paymentId), { paymentId })
-        : await retrieveTap(paymentId);
-    const ok = provider === 'tabby' ? data.status === 'CLOSED' : provider === 'tamara' ? ['APPROVED','AUTHORISED','FULLY_CAPTURED','PARTIALLY_CAPTURED'].includes(String(data.status||'').toUpperCase().replace(/\s+/g,'_')) : data.status === 'CAPTURED';
+      : provider === 'tamara' ? mapTamaraOrder(await getTamaraOrder(paymentId)) : await retrieveTap(paymentId);
+    const ok = provider === 'tabby' ? data.status === 'CLOSED' : provider === 'tamara' ? ['authorised','authorized','fully_captured'].includes(String(data.status||'').toLowerCase()) : data.status === 'CAPTURED';
     if (!ok) return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
 
     const result = await sendInvoiceEmail({ provider, paymentId, data, req });

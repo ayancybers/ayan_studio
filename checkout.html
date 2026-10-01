@@ -64,11 +64,6 @@
               <span class="payment-choice-copy"><strong>تابي</strong><small>ادفع لاحقًا مع تابي</small></span>
               <span class="payment-choice-price" data-method-total="tabby">—</span>
             </button>
-            <button class="payment-choice" type="button" data-payment-method="tamara" aria-pressed="false">
-              <span class="payment-choice-icon"><b class="pm-tamara">Tamara</b></span>
-              <span class="payment-choice-copy"><strong>تمارا</strong><small>ادفع على 4 دفعات مع تمارا</small></span>
-              <span class="payment-choice-price" data-method-total="tamara">—</span>
-            </button>
           </div>
           <div class="payment-fee-note" id="paymentFeeNote"></div>
           <div class="invoice-email-wrap" id="invoiceEmailWrap">
@@ -87,9 +82,9 @@
             <span class="payment-method active" aria-label="Apple Pay"><b class="pm-apple"></b><span>Apple Pay</span></span>
             <span class="payment-method active" aria-label="Visa"><b class="pm-visa">VISA</b></span>
             <span class="payment-method active" aria-label="مدى"><b class="pm-mada">مدى</b></span>
-            <span class="payment-method active" aria-label="تمارا"><b class="pm-tamara">Tamara</b></span>
+            <span class="payment-method pending" aria-label="تمارا"><b class="pm-tamara">Tamara</b><small>جاري التفعيل</small></span>
           </div>
-          <div class="payment-methods-note">البطاقات تتم عبر Tap، وتابي وتمارا تتم عبر صفحات الدفع الآمنة.</div>
+          <div class="payment-methods-note">البطاقات تتم عبر Tap، وتابي تتم عبر صفحة Tabby الآمنة.</div>
         </div>
         <div id="error" class="checkout-error" role="alert"></div>
         <div id="status" class="checkout-status">جاري تجهيز عملية الدفع…</div>
@@ -136,7 +131,8 @@
         document.querySelectorAll('[data-method-total]').forEach(node=>{const m=node.dataset.methodTotal;node.textContent=money(pricingFor(m).total)});
         const cardText=`البطاقات: ${card.fee.toFixed(2)} SAR رسوم دفع (${Number(config.pricing.paymentFees.card.percent).toFixed(2)}% + 1 + 5).`;
         const tabbyText=`تابي: ${tabby.fee.toFixed(2)} SAR رسوم دفع (${Number(config.pricing.paymentFees.tabby.percent).toFixed(2)}% + 1.50 + 6).`;
-        feeNote.textContent=selectedMethod==='tabby'?tabbyText:cardText;
+        const tamaraText=`تمارا: ${tamara.fee.toFixed(2)} SAR رسوم دفع (${Number(config.pricing.paymentFees.tamara.percent).toFixed(2)}% + 1.50 + 6).`;
+        feeNote.textContent=selectedMethod==='tabby'?tabbyText:selectedMethod==='tamara'?tamaraText:cardText;
       }
 
       function setMethod(method){
@@ -168,7 +164,7 @@
           if(!response.ok) throw new Error(result.error||'تعذر تجهيز عملية الدفع');
           if(!result.redirectUrl) throw new Error('لم يتم استلام رابط الدفع.');
           if(selectedMethod==='tabby'&&result.paymentId) sessionStorage.setItem('ayan_tabby_payment_id',result.paymentId);
-           if(selectedMethod==='tamara'&&result.orderId) sessionStorage.setItem('ayan_tamara_order_id',result.orderId);
+          if(selectedMethod==='tamara'&&result.orderId) sessionStorage.setItem('ayan_tamara_order_id',result.orderId);
           sessionStorage.setItem('ayan_payment_method',selectedMethod);
           window.location.assign(result.redirectUrl);
         }catch(e){ error.textContent=e?.message||'تعذر تجهيز عملية الدفع.'; error.classList.add('show'); btn.disabled=false; status.style.display='none'; }

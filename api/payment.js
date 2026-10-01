@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PACKAGES, calculatePricing, getPricingConfig, roundMoney } from '../../pricing.js';
+import { PACKAGES, calculatePricing, getPricingConfig, roundMoney } from '../lib/pricing.js';
 
 const ALLOWED_CARS = new Set([
   'سيدان', 'SUV', 'كوبيه', 'فاخر / رياضي',
