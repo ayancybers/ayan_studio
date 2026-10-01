@@ -56,14 +56,14 @@ function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function renderInvoice(d,{demoMode=false}={}){const ref=d.paymentId||d.tapId||paymentId||tapId||'DEMO';const invoiceNo=demoMode?'AYAN-DEMO-4SAR':'AYAN-'+String(ref).replace(/[^A-Za-z0-9]/g,'').slice(-12).toUpperCase();const method=provider==='tabby'?'Tabby':'Tap';const accepted=d.termsAccepted===true;const acceptedAt=d.termsAcceptedAt||'';const statusLabel=d.status==='CLOSED'||d.status==='CAPTURED'||demoMode?t.paid:t.pending;const noticeClass=demoMode?'notice test':'notice';const noticeText=demoMode?t.test:t.digitalText;
 root.innerHTML=`<div class="invoice-top"><div class="top-row"><div class="brand"><img class="logo" src="assets/ayan-logo-icon.png" alt="Ayan Photography"><div><strong>Ayan Photography</strong><span>${lang==='ar'?'تصوير سيارات احترافي':'Professional car photography'}</span></div></div><div class="invoice-meta"><div class="eyebrow">AYAN PHOTOGRAPHY</div><h1>${escapeHtml(t.invoice)}</h1><div class="ref">${escapeHtml(t.ref)}: ${escapeHtml(invoiceNo)}</div><span class="status">● ${escapeHtml(statusLabel)}</span></div></div></div><div class="body"><div class="${noticeClass}"><span class="notice-icon">✓</span><div><strong>${escapeHtml(t.digitalTitle)}</strong><div>${escapeHtml(noticeText)}</div></div></div><div class="section-label">${escapeHtml(lang==='ar'?'بيانات الطلب':'Order details')}</div><div class="grid"><div class="cell"><small>${escapeHtml(t.customer)}</small><strong>${escapeHtml(d.customerName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.phone)}</small><strong>${escapeHtml(d.phone||'—')}</strong></div>${d.email?`<div class="cell"><small>${escapeHtml(t.email)}</small><strong>${escapeHtml(d.email)}</strong></div>`:''}<div class="cell"><small>${escapeHtml(t.package)}</small><strong>${escapeHtml(d.packageName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.car)}</small><strong>${escapeHtml(d.carType||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.area)}</small><strong>${escapeHtml(d.shootRegion||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.method)}</small><strong><span class="payment-badge">${escapeHtml(method)}</span></strong></div><div class="cell"><small>${escapeHtml(t.date)}</small><strong>${escapeHtml(formatDate(d.created||d.createdAt||d.transactionCreated||d.paymentCreatedAt||''))}</strong></div><div class="cell" style="grid-column:1/-1"><small>${escapeHtml(t.notes)}</small><strong>${escapeHtml(d.notes||'—')}</strong></div></div><div class="section-label">${escapeHtml(lang==='ar'?'ملخص الدفع':'Payment summary')}</div><div class="totals"><div class="line"><span>${escapeHtml(t.subtotal)}</span><strong>${money(d.subtotal)}</strong></div><div class="line fee"><span>${escapeHtml(t.fee)}</span><strong>+ ${money(d.paymentFee??d.serviceFee)}</strong></div><div class="line total"><span>${escapeHtml(t.total)}</span><strong>${money(d.total)}</strong></div></div><div class="terms-box"><div class="terms-row"><div class="terms-main"><span class="check">✓</span><div><div class="terms-title">${escapeHtml(t.termsTitle)}</div><div class="terms-text">${escapeHtml(t.termsText)}</div></div></div><div class="accepted">${accepted?escapeHtml(t.accepted):escapeHtml(t.notRecorded)}</div></div>${acceptedAt?`<div class="terms-time">${escapeHtml(lang==='ar'?'وقت الموافقة: ':'Accepted at: ')}${escapeHtml(formatDate(acceptedAt))}</div>`:''}</div></div><div class="foot"><div><strong>${escapeHtml(t.note)}</strong><br>${escapeHtml(t.digitalText)}</div><div class="foot-right"><strong>${escapeHtml(t.method)}:</strong> ${escapeHtml(method)}<br><strong>REF:</strong> ${escapeHtml(ref)}</div></div>`;downloadBtn.onclick=()=>downloadPdf(invoiceNo)}
 
-async function generateInvoicePdfBlob(invoiceNo='AYAN-INVOICE'){
+async function generateInvoicePdfBlob(invoiceNo='AYAN-INVOICE', compact=false){
   if(!window.html2pdf) throw new Error('PDF generator is unavailable');
   const target=root;
   const options={
     margin:[0,0,0,0],
     filename:(sanitizeFileName(invoiceNo)||'AYAN-INVOICE')+'.pdf',
-    image:{type:'jpeg',quality:0.96},
-    html2canvas:{scale:2,useCORS:true,allowTaint:false,backgroundColor:'#ffffff',logging:false,scrollX:0,scrollY:0,windowWidth:target.scrollWidth||900},
+    image:{type:'jpeg',quality:compact?0.82:0.88},
+    html2canvas:{scale:compact?1.1:1.4,useCORS:true,allowTaint:false,backgroundColor:'#ffffff',logging:false,scrollX:0,scrollY:0,windowWidth:target.scrollWidth||900},
     jsPDF:{unit:'pt',format:'a4',orientation:'portrait',compress:true},
     pagebreak:{mode:['css','legacy'],avoid:['.cell','.terms-box','.notice']}
   };
@@ -77,7 +77,8 @@ async function downloadPdf(invoiceNo){
   downloadBtn.disabled=true; downloadBtn.style.opacity='0.75';
   downloadBtn.textContent=lang==='ar'?'جاري تجهيز PDF…':'Preparing PDF…';
   try{
-    const blob=await generateInvoicePdfBlob(invoiceNo);
+    let blob=await generateInvoicePdfBlob(invoiceNo);
+    if(blob.size>2400000) blob=await generateInvoicePdfBlob(invoiceNo,true);
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a'); a.href=url; a.download=`${sanitizeFileName(invoiceNo)}.pdf`; document.body.appendChild(a); a.click(); a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),2000);

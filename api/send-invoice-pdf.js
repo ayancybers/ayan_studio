@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     const cleanPdf = pdfBase64.replace(/^data:application\/pdf;base64,/, '').replace(/\s+/g, '');
     if (!/^[A-Za-z0-9+/=]+$/.test(cleanPdf)) return res.status(400).json({ error: 'Invalid PDF' });
     const bytes = Buffer.from(cleanPdf, 'base64');
-    if (bytes.length < 100 || bytes.length > 3_000_000) return res.status(413).json({ error: 'PDF is too large' });
+    if (bytes.length < 100 || bytes.length > 3_200_000) return res.status(413).json({ error: 'PDF is too large' });
     if (bytes.subarray(0, 4).toString() !== '%PDF') return res.status(400).json({ error: 'Invalid PDF file' });
 
     const emailResult = await sendInvoiceEmail({
@@ -42,7 +42,10 @@ export default async function handler(req, res) {
       console.error('Discord PDF upload failed', error?.message || String(error));
     }
 
-    return res.status(200).json({ success: true, emailSent: Boolean(emailResult?.sent), discordSent });
+    const emailSent = Boolean(emailResult?.sent);
+    const discordConfigured = Boolean(String(process.env.webhookbooking || process.env.DISCORD_WEBHOOK_Booking || '').trim());
+    const complete = emailSent && (!discordConfigured || discordSent);
+    return res.status(complete ? 200 : 502).json({ success: complete, complete, emailSent, discordSent, error: complete ? undefined : 'PDF delivery incomplete' });
   } catch (error) {
     console.error('Invoice PDF delivery failed', { provider, paymentId, error: error?.message || String(error) });
     return res.status(502).json({ error: 'Unable to deliver PDF invoice' });

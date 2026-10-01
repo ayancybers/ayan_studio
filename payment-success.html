@@ -164,31 +164,33 @@ async function sendPdfInvoice(providerValue, paymentRef){
   try{
     const invoiceUrl=providerValue==='tabby'?'/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1':'/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
     iframe=document.createElement('iframe');
-    iframe.style.position='fixed';iframe.style.left='-10000px';iframe.style.top='0';iframe.style.width='900px';iframe.style.height='1400px';iframe.style.border='0';iframe.setAttribute('aria-hidden','true');
+    iframe.style.position='fixed';iframe.style.left='-10000px';iframe.style.top='0';iframe.style.width='900px';iframe.style.height='1800px';iframe.style.border='0';iframe.setAttribute('aria-hidden','true');
     document.body.appendChild(iframe);
-    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),20000);iframe.onload=()=>{clearTimeout(timer);resolve()};iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};iframe.src=invoiceUrl});
-    if(iframe.contentWindow.invoiceReady) await Promise.race([iframe.contentWindow.invoiceReady,new Promise((_,rej)=>setTimeout(()=>rej(new Error('Invoice data timeout')),20000))]);
-    await new Promise(r=>setTimeout(r,500));
+    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),25000);iframe.onload=()=>{clearTimeout(timer);setTimeout(resolve,250)};iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};iframe.src=invoiceUrl});
+    if(iframe.contentWindow.invoiceReady) await Promise.race([iframe.contentWindow.invoiceReady,new Promise((_,rej)=>setTimeout(()=>rej(new Error('Invoice data timeout')),25000))]);
+    await new Promise(r=>setTimeout(r,700));
     const invoiceNo=iframe.contentDocument?.querySelector('.invoice-meta .ref')?.textContent?.replace(/^.*?:\s*/,'').trim() || `AYAN-${paymentRef}`;
-    const blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo);
+    let blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo,false);
+    if(blob.size>2400000) blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo,true);
     const base64=await blobToBase64(blob);
-    const r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})});
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok) throw new Error(d.error||'PDF delivery failed');
+    let r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})});
+    let d=await r.json().catch(()=>({}));
+    if(!r.ok || !d.success || !d.complete){
+      // One compact-PDF retry. Resend uses the same idempotency key, so an already-sent email is not duplicated.
+      if(blob.size>2000000 || r.status===413){
+        blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo,true);
+        const compactBase64=await blobToBase64(blob);
+        r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:compactBase64})});
+        d=await r.json().catch(()=>({}));
+      }
+    }
+    if(!r.ok || !d.success || !d.complete) throw new Error(d.error||'PDF delivery incomplete');
     sessionStorage.setItem(key,'1');
-    emailStatus.textContent=lang==='ar'?'📧 تم إرسال فاتورة PDF إلى بريدك، وتم إرسال نسخة إلى Discord.':'📧 The PDF invoice was emailed to you and a copy was sent to Discord.';
+    emailStatus.textContent=lang==='ar'?'📧 تم إرسال فاتورة PDF إلى بريدك، وتم إرفاق نسخة PDF وإرسال نسخة إلى Discord.':'📧 Your PDF invoice was emailed as an attachment and a copy was sent to Discord.';
   }catch(error){
     console.error('PDF invoice delivery failed',error);
-    // Keep the existing email fallback if browser PDF generation is unavailable.
-    try{
-      const r=await fetch('/api/send-invoice-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
-      const d=await r.json().catch(()=>({}));
-      emailStatus.textContent=r.ok&&d.success
-        ? (lang==='ar'?'📧 تم إرسال الفاتورة إلى بريدك الإلكتروني. يمكنك تحميل PDF من الزر أعلاه.':'📧 Your invoice was emailed. You can download the PDF from the button above.')
-        : (lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.');
-    }catch(_){
-      emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
-    }
+    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع، لكن تعذر إرسال ملف PDF تلقائيًا. يمكنك تحميله من الزر أعلاه.':'Payment is confirmed, but the PDF could not be delivered automatically. You can download it above.';
+    emailStatus.classList.remove('hidden');
   }finally{if(iframe)iframe.remove()}
 }
 function blobToBase64(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=reject;reader.readAsDataURL(blob)})}
