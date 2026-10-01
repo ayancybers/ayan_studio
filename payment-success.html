@@ -18,7 +18,7 @@
   <div class="icon" id="icon">⌛</div>
   <h1 id="title">جاري التحقق من الدفع</h1>
   <p id="text">لحظات ونراجع العملية مباشرة مع Tap.</p>
-  <div class="status" id="status">جاري التحقق…</div><div class="status hidden" id="breakdown"></div>
+  <div class="status" id="status">جاري التحقق…</div><div class="status hidden" id="breakdown"></div><div class="status hidden" id="emailStatus"></div>
   <div class="actions hidden" id="actions">
     <a class="primary" id="invoiceLink" href="#">تحميل الفاتورة PDF</a>
     <a class="ghost" id="whatsappLink" target="_blank" rel="noopener">التنسيق عبر واتساب</a>
@@ -112,6 +112,7 @@ async function verify(attempt=0){
       const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- طريقة الدفع: ${isTabby?'تابي':'بطاقة'}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.paymentId||data.tapId||paymentId}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Payment method: ${isTabby?'Tabby':'Card'}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Payment ID: ${data.paymentId||data.tapId||paymentId}`;
       whatsappLink.href='https://wa.me/'+business+'?text='+encodeURIComponent(msg);
       actions.classList.remove('hidden');
+      sendInvoiceEmail(provider, paymentId);
       sessionStorage.removeItem('ayan_tabby_payment_id');
       return;
     }
@@ -133,6 +134,24 @@ async function verify(attempt=0){
     icon.textContent='!';
     statusNode.textContent=t.error;
     statusNode.classList.add('error');
+  }
+}
+
+const emailStatus=document.getElementById('emailStatus');
+async function sendInvoiceEmail(providerValue, paymentRef){
+  if(!paymentRef || !emailStatus) return;
+  try{
+    const r=await fetch('/api/send-invoice-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok&&d.success){
+      emailStatus.textContent=lang==='ar'?'📧 تم إرسال الفاتورة إلى بريدك الإلكتروني.':'📧 Your invoice has been sent to your email.';
+    }else{
+      emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
+    }
+    emailStatus.classList.remove('hidden');
+  }catch(_){
+    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
+    emailStatus.classList.remove('hidden');
   }
 }
 verify();

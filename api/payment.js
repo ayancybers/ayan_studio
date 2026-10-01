@@ -51,19 +51,21 @@ export default async function handler(req, res) {
   const name = limit(String(body.name || '').trim(), 80);
   const packageKey = limit(String(body.packageKey || '').trim(), 20);
   const packageType = limit(String(body.packageType || '').trim(), 120);
+  const email = limit(String(body.email || '').trim().toLowerCase(), 160);
   const carType = limit(String(body.carType || '').trim(), 40);
   const shootRegion = limit(String(body.shootRegion || '').trim(), 60);
   const phone = normalizeSaudiPhone(body.phone);
   const notes = limit(String(body.notes || '').trim(), 1200);
   const lang = body.lang === 'en' ? 'en' : 'ar';
 
-  if (!name || !packageKey || !packageType || !carType || !shootRegion || !phone) {
+  if (!name || !email || !packageKey || !packageType || !carType || !shootRegion || !phone) {
     return res.status(400).json({ error: 'Missing required fields', requestId });
   }
   if (!PACKAGES[packageKey] || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
   if (body.termsAgreement !== true) return res.status(400).json({ error: 'Terms and conditions must be accepted before payment.', requestId });
 
   const pkg = PACKAGES[packageKey];
@@ -124,6 +126,7 @@ export default async function handler(req, res) {
     tax: pricing.tax.toFixed(2),
     total: pricing.total.toFixed(2),
     customer_name: name,
+    email,
     phone,
     car_type: carType,
     shoot_region: shootRegion,
@@ -151,6 +154,7 @@ export default async function handler(req, res) {
     customer: {
       first_name: firstName,
       last_name: lastName,
+      email,
       phone: { country_code: '966', number: phone.slice(3) }
     },
     merchant: { id: merchantId },
@@ -242,6 +246,7 @@ async function verifyPayment(req, res) {
       amount: Number(charge.amount || metadata.total || 0),
       currency: charge.currency || 'SAR',
       customerName: metadata.customer_name || fullCustomerName(charge),
+      email: metadata.email || charge?.customer?.email || '',
       phone: metadata.phone || normalizeSaudiPhone(charge?.customer?.phone?.number || ''),
       packageKey: metadata.package_key || '',
       packageName: metadata.package_name || '',
