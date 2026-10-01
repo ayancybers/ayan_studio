@@ -1,5 +1,3 @@
-import { put, issueSignedToken, presignUrl } from '@vercel/blob';
-import crypto from 'node:crypto';
 import { sendInvoiceEmail } from './lib/invoice-email.js';
 
 export default async function handler(req, res) {
@@ -17,259 +15,75 @@ export default async function handler(req, res) {
 
   try {
     let data = provider === 'tabby' ? await retrieveTabby(paymentId) : await retrieveTap(paymentId);
-    const ok = provider === 'tabby' ? data.status === 'CLOSED' : data.status === 'CAPTURED';
-    if (!ok) return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
+    const confirmed = provider === 'tabby' ? data.status === 'CLOSED' : data.status === 'CAPTURED';
+    if (!confirmed) return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
 
-    const safeDetails = sanitizeBookingDetails(details);
-    data = mergeBookingDetails(data, safeDetails);
+    data = mergeBookingDetails(data, sanitizeBookingDetails(details));
 
     const ref = String(data.paymentId || data.tapId || paymentId);
     const invoiceNo = `AYAN-${ref.replace(/[^A-Za-z0-9]/g, '').slice(-12).toUpperCase()}`;
     const cleanPdf = pdfBase64.replace(/^data:application\/pdf;base64,/, '').replace(/\s+/g, '');
     if (!/^[A-Za-z0-9+/=]+$/.test(cleanPdf)) return res.status(400).json({ error: 'Invalid PDF' });
-    const bytes = Buffer.from(cleanPdf, 'base64');
-    if (bytes.length < 100 || bytes.length > 3_500_000) return res.status(413).json({ error: 'PDF is too large' });
-    if (bytes.subarray(0, 4).toString() !== '%PDF') return res.status(400).json({ error: 'Invalid PDF file' });
+    const pdfBytes = Buffer.from(cleanPdf, 'base64');
+    if (pdfBytes.length < 100) return res.status(400).json({ error: 'Invalid PDF file' });
+    if (pdfBytes.length > 3_000_000) return res.status(413).json({ error: 'PDF is too large' });
+    if (pdfBytes.subarray(0, 4).toString() !== '%PDF') return res.status(400).json({ error: 'Invalid PDF file' });
 
-    const result = { success: true, emailSent: false, discordSent: false, whatsappTextSent: false, whatsappPdfSent: false, whatsappMessageId: '', whatsappPdfMessageId: '' };
+    const result = { success: true, emailSent: false, discordSent: false };
     const errors = [];
 
-    // 1) Email with the real PDF attachment. A separate idempotency key is used for PDF vs HTML-only mail.
+    // Send the actual PDF as an email attachment.
     try {
       const emailResult = await sendInvoiceEmail({
         provider,
-        paymentId,
+        paymentId: ref,
         data,
         req,
         pdfBase64: cleanPdf,
         pdfFileName: `${invoiceNo}.pdf`
       });
       result.emailSent = Boolean(emailResult?.sent);
-      if (!result.emailSent && emailResult?.reason) errors.push(`email: ${emailResult.reason}`);
+      if (!result.emailSent) errors.push(`email: ${emailResult?.reason || 'not sent'}`);
     } catch (error) {
       errors.push(`email: ${error?.message || String(error)}`);
     }
 
-    // 2) Discord with the same PDF bytes.
+    // Send the same PDF bytes directly to Discord as a real file attachment.
     try {
-      result.discordSent = await sendDiscordPdf({ provider, paymentId: ref, data, pdfBytes: bytes, fileName: `${invoiceNo}.pdf` });
+      result.discordSent = await sendDiscordPdf({
+        provider,
+        paymentId: ref,
+        data,
+        pdfBytes,
+        fileName: `${invoiceNo}.pdf`
+      });
     } catch (error) {
       errors.push(`discord: ${error?.message || String(error)}`);
     }
 
-    // 3) WhatsLoop: send the confirmation text first, then the same PDF as a document.
-    if (boolEnv('WHATSLOOP_ENABLED', false)) {
-      try {
-        const wa = await sendWhatsLoopBooking({
-          data,
-          ref,
-          invoiceNo,
-          pdfBytes: bytes,
-          req
-        });
-        result.whatsappTextSent = Boolean(wa?.textSent);
-        result.whatsappPdfSent = Boolean(wa?.pdfSent);
-        result.whatsappMessageId = wa?.textMessageId || '';
-        result.whatsappPdfMessageId = wa?.pdfMessageId || '';
-      } catch (error) {
-        errors.push(`whatsapp: ${error?.message || String(error)}`);
-      }
+    if (errors.length) {
+      console.error('Invoice delivery partial result', {
+        provider,
+        paymentId: ref,
+        emailSent: result.emailSent,
+        discordSent: result.discordSent,
+        errors
+      });
     }
 
-    if (errors.length) console.error('Invoice delivery partial result', { provider, paymentId, result, errors });
-    if (!result.emailSent && !result.discordSent && !result.whatsappTextSent && !result.whatsappPdfSent) {
-      return res.status(502).json({ error: 'No invoice delivery channel succeeded', details: errors.slice(0, 3) });
-    }
-
-    return res.status(200).json({ ...result, partialErrors: errors.slice(0, 3) });
+    // Return the exact delivery state so the success page can tell the customer what actually happened.
+    return res.status(200).json({
+      ...result,
+      partialErrors: errors.slice(0, 3)
+    });
   } catch (error) {
-    console.error('Invoice PDF delivery failed', { provider, paymentId, error: error?.message || String(error) });
+    console.error('Invoice PDF delivery failed', {
+      provider,
+      paymentId,
+      error: error?.message || String(error)
+    });
     return res.status(502).json({ error: 'Unable to deliver PDF invoice' });
   }
-}
-
-async function sendWhatsLoopBooking({ data, ref, invoiceNo, pdfBytes, req }) {
-  const token = String(process.env.WHATSLOOP_TOKEN || '').trim();
-  const channelId = Number(process.env.WHATSLOOP_CHANNEL_ID || 0);
-  const baseUrl = String(process.env.WHATSLOOP_API_BASE_URL || 'https://api.whatsloop.net/v1').trim().replace(/\/$/, '');
-  if (!token || !/^wl_/.test(token)) throw new Error('WHATSLOOP_TOKEN is missing or invalid');
-  if (!Number.isInteger(channelId) || channelId < 1) throw new Error('WHATSLOOP_CHANNEL_ID is missing or invalid');
-
-  const to = normalizeSaudiPhone(data.phone);
-  if (!/^9665\d{8}$/.test(to)) throw new Error('Customer WhatsApp number is missing or invalid');
-
-  const total = Number(data.total || data.amount || 0);
-  const packageName = data.packageNameAr || data.packageName || data.packageNameEn || 'الباقة';
-  const message = data.lang === 'en'
-    ? [
-        `Hello ${firstName(data.customerName)} 👋`,
-        '✅ Your booking has been confirmed successfully. Thank you for completing the payment.',
-        `📸 Package: ${packageName}`,
-        `💰 Total: ${total.toFixed(2)} SAR`,
-        `🧾 Invoice: ${invoiceNo}`,
-        'Please wait until we contact you to schedule your photography session.',
-        'Thank you for choosing Ayan Photography 🤍'
-      ].join('\n')
-    : [
-        `السلام عليكم ${firstName(data.customerName)}👋`,
-        '✅ تم تأكيد حجزك بنجاح، شكرًا لإتمام الدفع.',
-        `📸 الباقة: ${packageName}`,
-        `💰 المبلغ: ${total.toFixed(2)} ريال`,
-        `🧾 رقم الفاتورة: ${invoiceNo}`,
-        'يرجى الانتظار حتى يتم التواصل معك لتحديد موعد التصوير.',
-        'شكرًا لاختيارك Ayan Photography 🤍'
-      ].join('\n');
-
-  // Preflight: confirm the destination is actually registered on WhatsApp.
-  const checkResponse = await fetch(`${baseUrl}/messages/check-phone`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({ channel_id: channelId, phone: to }),
-    signal: timeoutSignal(12000)
-  });
-  const checkResult = await checkResponse.json().catch(() => ({}));
-  if (!checkResponse.ok || checkResult?.success === false) {
-    throw new Error(`WhatsLoop could not verify ${to}: ${checkResult?.message || checkResult?.error || checkResponse.status}`);
-  }
-
-  // Send text first using the documented /messages/send endpoint.
-  let textResult = {};
-  let textResponse = await fetch(`${baseUrl}/messages/send`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      channel_id: channelId,
-      to,
-      type: 'text',
-      text: message
-    }),
-    signal: timeoutSignal(15000)
-  });
-  textResult = await textResponse.json().catch(() => ({}));
-
-  // Compatibility fallback for accounts where the legacy text endpoint is enabled.
-  if (!textResponse.ok || textResult?.success === false) {
-    const fallback = await fetch(`${baseUrl}/messages/send-text`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        accept: 'application/json'
-      },
-      body: JSON.stringify({ channel_id: channelId, to, message }),
-      signal: timeoutSignal(15000)
-    });
-    const fallbackResult = await fallback.json().catch(() => ({}));
-    if (!fallback.ok || fallbackResult?.success === false) {
-      throw new Error(`WhatsLoop text failed: ${fallbackResult?.message || fallbackResult?.error || textResult?.message || textResult?.error || fallback.status}`);
-    }
-    textResult = fallbackResult;
-  }
-
-  // Give the engine a moment to queue the text before uploading/sending the document.
-  await sleep(1200);
-
-  const blob = await put(`invoices/${invoiceNo}.pdf`, pdfBytes, {
-    access: 'private',
-    addRandomSuffix: true,
-    contentType: 'application/pdf',
-    cacheControlMaxAge: 60
-  });
-
-  // Use our signed relay URL for the external media fetch. This avoids exposing Blob credentials.
-  const expiresAt = Date.now() + 15 * 60 * 1000;
-  const signature = signRelayToken(blob.pathname, expiresAt, token);
-  const origin = getBaseUrl(req);
-  const mediaUrl = `${origin}/api/whatsapp-invoice-file?path=${encodeURIComponent(blob.pathname)}&exp=${expiresAt}&sig=${encodeURIComponent(signature)}&filename=${encodeURIComponent(`${invoiceNo}.pdf`)}`;
-
-  const caption = data.lang === 'en'
-    ? `Ayan Photography • Invoice ${invoiceNo}`
-    : `Ayan Photography • فاتورة الحجز ${invoiceNo}`;
-
-  const pdfResponse = await fetch(`${baseUrl}/messages/send`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      accept: 'application/json'
-    },
-    body: JSON.stringify({
-      channel_id: channelId,
-      to,
-      type: 'document',
-      media_url: mediaUrl,
-      caption
-    }),
-    signal: timeoutSignal(20000)
-  });
-  const pdfResult = await pdfResponse.json().catch(() => ({}));
-  if (!pdfResponse.ok || pdfResult?.success === false) {
-    throw new Error(`WhatsLoop PDF failed: ${pdfResult?.message || pdfResult?.error || pdfResponse.status}`);
-  }
-
-  return {
-    textSent: true,
-    pdfSent: true,
-    textMessageId: pdfSafeId(textResult),
-    pdfMessageId: pdfSafeId(pdfResult)
-  };
-}
-
-function pdfSafeId(result) {
-  return result?.data?.message_id || result?.data?.id || '';
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function signRelayToken(pathname, expiresAt, secret) {
-  return crypto.createHmac('sha256', secret).update(`${pathname}|${expiresAt}`).digest('hex');
-}
-
-function getBaseUrl(req) {
-  const configured = String(process.env.APP_BASE_URL || '').trim().replace(/\/$/, '');
-  if (configured) return configured;
-  const proto = String(req?.headers?.['x-forwarded-proto'] || 'https').split(',')[0];
-  const host = String(req?.headers?.host || '').split(',')[0];
-  return `${proto}://${host}`;
-}
-
-function sanitizeBookingDetails(value) {
-  const input = value && typeof value === 'object' ? value : {};
-  return {
-    customerName: limit(input.customerName, 120),
-    email: limit(input.email, 160).toLowerCase(),
-    phone: limit(input.phone, 30),
-    packageName: limit(input.packageName, 120),
-    packageNameAr: limit(input.packageNameAr, 120),
-    packageNameEn: limit(input.packageNameEn, 120),
-    carType: limit(input.carType, 120),
-    shootRegion: limit(input.shootRegion, 120),
-    notes: limit(input.notes || '—', 1200),
-    termsAccepted: input.termsAccepted === true,
-    termsAcceptedAt: limit(input.termsAcceptedAt, 120),
-    lang: input.lang === 'en' ? 'en' : 'ar'
-  };
-}
-
-function mergeBookingDetails(serverData, clientDetails) {
-  const out = { ...serverData };
-  const keys = ['customerName','email','phone','packageName','packageNameAr','packageNameEn','carType','shootRegion','notes','termsAcceptedAt','lang'];
-  for (const key of keys) {
-    const value = clientDetails?.[key];
-    if ((out[key] === undefined || out[key] === null || out[key] === '' || out[key] === '—') && value) out[key] = value;
-  }
-  if (out.termsAccepted !== true && clientDetails?.termsAccepted === true) out.termsAccepted = true;
-  return out;
 }
 
 async function retrieveTap(id) {
