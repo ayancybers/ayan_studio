@@ -57,6 +57,8 @@ async function notifyDiscord(payload, paymentId) {
   const tax = Number(meta.tax || 0).toFixed(2);
   const taxRate = Number(meta.tax_rate || 0).toString();
   const total = Number(meta.total || payload.amount || 0).toFixed(2);
+  const termsAccepted = String((meta).terms_accepted || 'false') === 'true';
+  const termsAcceptedAt = String((meta).terms_accepted_at || '');
   const testPayment = String(meta.test_payment || 'false') === 'true' || Boolean(payload.is_test);
 
   const fields = [
@@ -68,8 +70,9 @@ async function notifyDiscord(payload, paymentId) {
     { name: '📍 Shoot Area', value: limit(meta.shoot_region || '—', 80), inline: true },
     { name: '💵 Package', value: `${subtotal} SAR`, inline: true },
     { name: '💳 Payment Fee', value: `${paymentFee} SAR`, inline: true },
-    { name: `🧮 VAT ${taxRate}%`, value: `${tax} SAR`, inline: true },
     { name: '✅ Paid Total', value: `${total} SAR`, inline: true },
+    { name: '📜 Terms & Conditions', value: termsAccepted ? '✅ Accepted before payment' : '⚠️ Not recorded', inline: true },
+    { name: '🕒 Terms Accepted At', value: limit(termsAcceptedAt || '—', 100), inline: true },
     { name: '🌐 Language', value: meta.lang === 'en' ? 'EN' : 'AR', inline: true },
     { name: '🧪 Mode', value: testPayment ? 'TEST / SANDBOX' : 'LIVE', inline: true },
     { name: '💬 Notes', value: limit(meta.notes || '—', 900), inline: false }

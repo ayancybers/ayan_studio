@@ -69,6 +69,8 @@ async function notifyDiscord(payload, chargeId) {
   const tax = Number(metadata.tax || 0).toFixed(2);
   const taxRate = Number(metadata.tax_rate || 0).toString();
   const total = Number(metadata.total || payload.amount || 0).toFixed(2);
+  const termsAccepted = String((metadata).terms_accepted || 'false') === 'true';
+  const termsAcceptedAt = String((metadata).terms_accepted_at || '');
   const testPayment = String(metadata.test_payment || 'false') === 'true';
 
   const fields = [
@@ -80,8 +82,9 @@ async function notifyDiscord(payload, chargeId) {
     { name: '📍 Shoot Area', value: limit(metadata.shoot_region || '—', 80), inline: true },
     { name: '💵 Package', value: `${subtotal} SAR`, inline: true },
     { name: '🧾 Service Fee', value: `${serviceFee} SAR`, inline: true },
-    { name: `🧮 VAT ${taxRate}%`, value: `${tax} SAR`, inline: true },
     { name: '✅ Paid Total', value: `${total} SAR`, inline: true },
+    { name: '📜 Terms & Conditions', value: termsAccepted ? '✅ Accepted before payment' : '⚠️ Not recorded', inline: true },
+    { name: '🕒 Terms Accepted At', value: limit(termsAcceptedAt || '—', 100), inline: true },
     { name: '🌐 Language', value: language, inline: true },
     { name: '🧪 Mode', value: testPayment ? 'TEST / SANDBOX' : 'LIVE', inline: true },
     { name: '💬 Notes', value: limit(metadata.notes || '—', 900), inline: false }

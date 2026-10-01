@@ -64,6 +64,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
+  if (body.termsAgreement !== true) return res.status(400).json({ error: 'Terms and conditions must be accepted before payment.', requestId });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
 
   const pkg = PACKAGES[packageKey];
@@ -117,6 +118,9 @@ export default async function handler(req, res) {
     car_type: carType,
     shoot_region: shootRegion,
     notes: notes || '—',
+    terms_accepted: 'true',
+    terms_version: '2026-10-01',
+    terms_accepted_at: new Date().toISOString(),
     lang,
     test_payment: String(testMode)
   };
@@ -349,6 +353,9 @@ function buildTabbyResult(data, paymentId) {
     carType: meta.car_type || '',
     shootRegion: meta.shoot_region || '',
     notes: meta.notes || '—',
+    termsAccepted: String(meta.terms_accepted || 'false') === 'true',
+    termsVersion: meta.terms_version || '',
+    termsAcceptedAt: meta.terms_accepted_at || '',
     requestId: meta.request_id || '',
     lang: meta.lang === 'en' ? 'en' : 'ar',
     testPayment: Boolean(data?.is_test) || String(meta.test_payment || 'false') === 'true',

@@ -64,6 +64,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
+  if (body.termsAgreement !== true) return res.status(400).json({ error: 'Terms and conditions must be accepted before payment.', requestId });
 
   const pkg = PACKAGES[packageKey];
   const cfg = getPricingConfig();
@@ -127,6 +128,9 @@ export default async function handler(req, res) {
     car_type: carType,
     shoot_region: shootRegion,
     notes: notes || '—',
+    terms_accepted: 'true',
+    terms_version: '2026-10-01',
+    terms_accepted_at: new Date().toISOString(),
     lang,
     test_payment: String(testPayment)
   };
@@ -262,6 +266,9 @@ async function verifyPayment(req, res) {
       carType: metadata.car_type || '',
       shootRegion: metadata.shoot_region || '',
       notes: metadata.notes || '—',
+      termsAccepted: String(metadata.terms_accepted || 'false') === 'true',
+      termsVersion: metadata.terms_version || '',
+      termsAcceptedAt: metadata.terms_accepted_at || '',
       requestId: metadata.request_id || '',
       lang: metadata.lang === 'en' ? 'en' : 'ar',
       testPayment: String(metadata.test_payment || 'false') === 'true',
