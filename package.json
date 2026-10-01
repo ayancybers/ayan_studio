@@ -3,7 +3,5 @@
   "version": "3.3.0",
   "private": true,
   "type": "module",
-  "scripts": {
-    "build": "node scripts/prepare-vercel.mjs"
-  }
+  "scripts": {}
 }
