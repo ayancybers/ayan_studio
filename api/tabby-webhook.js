@@ -1,4 +1,3 @@
-import { sendInvoiceEmail } from './lib/invoice-email.js';
 import crypto from 'node:crypto';
 import { handleTabbyAuthorizedWebhook } from './tabby-payment.js';
 
@@ -28,7 +27,6 @@ export default async function handler(req, res) {
     }
     if (status === 'closed' && paymentId && !notifiedPayments.has(paymentId)) {
       try { await notifyDiscord(payload, paymentId); } catch (error) { console.error('Discord notification failed', error); }
-      if (String(process.env.INVOICE_WEBHOOK_FALLBACK || '').toLowerCase() === 'true') { try { await notifyInvoiceEmail(payload, paymentId, req); } catch (error) { console.error('Invoice email failed', error); } }
       notifiedPayments.add(paymentId);
     }
   } catch (error) {
@@ -45,12 +43,6 @@ function timingSafeEqual(a, b) {
   const bb = Buffer.from(String(b), 'utf8');
   try { return aa.length === bb.length && crypto.timingSafeEqual(aa, bb); }
   catch (_) { return false; }
-}
-
-async function notifyInvoiceEmail(payload, paymentId, req) {
-  const m=payload.meta||{};
-  if(!m.email) return;
-  await sendInvoiceEmail({provider:'tabby',paymentId,req,data:{status:String(payload.status||'').toUpperCase(),paymentId,tapId:paymentId,amount:Number(payload.amount||m.total||0),currency:payload.currency||'SAR',customerName:m.customer_name||payload?.buyer?.name||'—',email:m.email,packageName:m.package_name||m.package_name_en||'',packageNameAr:m.package_name_ar||'',packageNameEn:m.package_name_en||'',subtotal:Number(m.subtotal||0),paymentFee:Number(m.payment_fee||0),serviceFee:Number(m.payment_fee||0),total:Number(m.total||payload.amount||0),carType:m.car_type||'',shootRegion:m.shoot_region||'',termsAccepted:String(m.terms_accepted||'false')==='true',termsAcceptedAt:m.terms_accepted_at||'',lang:m.lang==='en'?'en':'ar',created:payload.created_at||'',notes:m.notes||'—'}});
 }
 
 async function notifyDiscord(payload, paymentId) {

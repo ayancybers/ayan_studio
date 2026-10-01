@@ -14,7 +14,7 @@
     button,a{font:inherit;text-decoration:none;border-radius:12px;padding:11px 15px;cursor:pointer}.download{background:#2f83f6;color:#fff;border:0;box-shadow:0 10px 24px rgba(47,131,246,.20)}.back{background:#fff;color:#24334a;border:1px solid #dce5ef}
     .invoice{background:#fff;border:1px solid #dce5ef;border-radius:28px;box-shadow:0 24px 70px rgba(26,48,80,.12);overflow:hidden}
     .invoice-top{position:relative;padding:34px 36px 28px;background:linear-gradient(145deg,#07111f,#10243d);color:#fff;overflow:hidden}.invoice-top:before{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(117,177,255,.15);border-radius:50%;right:-130px;top:-155px;box-shadow:0 0 0 30px rgba(117,177,255,.025),0 0 0 60px rgba(117,177,255,.015)}.invoice-top:after{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(117,177,255,.10);border-radius:50%;left:-90px;bottom:-120px}
-    .top-row{position:relative;z-index:1;display:flex;justify-content:space-between;gap:24px;align-items:flex-start}.brand{display:flex;align-items:center;gap:14px}.logo{width:76px;height:76px;object-fit:cover;display:block;flex:0 0 76px;border-radius:50%;background:transparent;padding:0;border:0;box-shadow:0 10px 24px rgba(0,0,0,.28)}.brand strong{display:block;font-size:23px;letter-spacing:-.03em}.brand span{display:block;color:#aec2dc;font-size:11px;margin-top:5px}.invoice-meta{text-align:end}.invoice-meta .eyebrow{color:#86bcff;font-size:10px;font-weight:800;letter-spacing:.18em}.invoice-meta h1{margin:5px 0 8px;font-size:26px}.invoice-meta .ref{color:#b8c9dc;font-size:11px}.status{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:7px 10px;border-radius:999px;background:rgba(72,207,144,.12);border:1px solid rgba(93,219,160,.28);color:#8fe7b5;font-size:10px;font-weight:800}
+    .top-row{position:relative;z-index:1;display:flex;justify-content:space-between;gap:24px;align-items:flex-start}.brand{display:flex;align-items:center;gap:14px}.logo{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 10px 24px rgba(0,0,0,.28));background:#fff;border-radius:18px;padding:5px}.brand strong{display:block;font-size:23px;letter-spacing:-.03em}.brand span{display:block;color:#aec2dc;font-size:11px;margin-top:5px}.invoice-meta{text-align:end}.invoice-meta .eyebrow{color:#86bcff;font-size:10px;font-weight:800;letter-spacing:.18em}.invoice-meta h1{margin:5px 0 8px;font-size:26px}.invoice-meta .ref{color:#b8c9dc;font-size:11px}.status{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:7px 10px;border-radius:999px;background:rgba(72,207,144,.12);border:1px solid rgba(93,219,160,.28);color:#8fe7b5;font-size:10px;font-weight:800}
     .body{padding:30px 36px}.notice{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:#f4f8fd;border:1px solid #dfE8f3;color:#50627a;font-size:11px;line-height:1.8;margin-bottom:24px}.notice-icon{width:30px;height:30px;flex:0 0 auto;border-radius:10px;background:#e7f1ff;color:#2f83f6;display:grid;place-items:center;font-weight:900}.notice.test{background:#fff8e7;border-color:#f1d78f;color:#765a1e}
     .section-label{display:flex;align-items:center;gap:10px;margin:22px 0 12px;color:#43536b;font-size:11px;font-weight:900}.section-label:before{content:"";width:4px;height:17px;border-radius:999px;background:#2f83f6}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}.cell{padding:14px 15px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#fbfcfe,#f8fafc)}.cell small{display:block;color:#8491a4;font-size:9px;margin-bottom:6px}.cell strong{display:block;font-size:12px;overflow-wrap:anywhere;color:#24334a}
@@ -23,7 +23,6 @@
     .foot{padding:20px 36px 24px;background:#f7f9fc;border-top:1px solid var(--line);color:#748297;font-size:10px;line-height:1.9;display:flex;justify-content:space-between;gap:20px}.foot strong{color:#50617a}.foot-right{text-align:end}.state{min-height:300px;display:grid;place-items:center;text-align:center;color:#708098}.hidden{display:none}
     @media(max-width:680px){body{padding:12px}.invoice-top,.body,.foot{padding-left:20px;padding-right:20px}.top-row{flex-direction:column}.invoice-meta{text-align:start}.grid{grid-template-columns:1fr}.terms-row{align-items:flex-start;flex-direction:column}.accepted{margin-left:40px}.toolbar{align-items:stretch}.toolbar-actions{width:100%}.toolbar-actions>*{flex:1;text-align:center}.foot{flex-direction:column}.foot-right{text-align:start}}
     @media print{body{padding:0;background:#fff}.toolbar{display:none}.invoice{border:0;box-shadow:none;border-radius:0}.invoice-top{-webkit-print-color-adjust:exact;print-color-adjust:exact}.notice,.line.total{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
-    body.embedded{padding:0;background:#fff}.embedded .toolbar{display:none}.embedded .invoice{border:0;box-shadow:none;border-radius:0}
   </style>
 </head>
 <body>
@@ -33,37 +32,20 @@
 </div>
 <script>
 const lang=localStorage.getItem('ayan_lang')==='en'?'en':'ar';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-const params=new URLSearchParams(location.search);if(params.get('embed')==='1')document.body.classList.add('embedded');const provider=params.get('provider')==='tabby'?'tabby':'tap';const tapId=params.get('tap_id');const paymentId=params.get('payment_id')||sessionStorage.getItem('ayan_tabby_payment_id');const demo=params.get('demo')==='1';const DEMO_INVOICE_AMOUNT=4;
-let __invoiceReadyResolve; window.invoiceReady=new Promise(resolve=>{__invoiceReadyResolve=resolve});
+const params=new URLSearchParams(location.search);let __invoiceReadyResolve;window.invoiceReady=new Promise(resolve=>{__invoiceReadyResolve=resolve});const provider=params.get('provider')==='tabby'?'tabby':'tap';const tapId=params.get('tap_id');const paymentId=params.get('payment_id')||sessionStorage.getItem('ayan_tabby_payment_id');const demo=params.get('demo')==='1';const DEMO_INVOICE_AMOUNT=4;
 const t=lang==='ar'?{toolbar:'فاتورة حجز إلكترونية',download:'تحميل PDF',back:'العودة للحجز',invoice:'فاتورة الحجز',customer:'العميل',phone:'رقم الواتساب',email:'البريد الإلكتروني',package:'الباقة',car:'نوع السيارة',area:'منطقة التصوير',notes:'ملاحظات',date:'تاريخ العملية',method:'طريقة الدفع',subtotal:'سعر الباقة',fee:'رسوم الدفع',total:'الإجمالي',paid:'مدفوعة',pending:'قيد المعالجة',digitalTitle:'خدمة رقمية',digitalText:'هذا الطلب خدمة/محتوى رقمي ولا يتضمن منتجًا ماديًا.',termsTitle:'الموافقة على الشروط والأحكام',termsText:'أقرّ العميل بالشروط والقواعد وسياسة عدم الاسترجاع بعد الدفع أو بدء التنفيذ.',accepted:'✅ تمت الموافقة قبل الدفع',notRecorded:'غير مسجلة',ref:'رقم الفاتورة',note:'رسوم الدفع مضافة حسب طريقة الدفع المختارة. لا توجد ضريبة مضافة على هذا الطلب.',unknown:'تعذر تحميل الفاتورة.',test:'فاتورة تجريبية — 4.00 SAR'}:{toolbar:'Electronic booking invoice',download:'Download PDF',back:'Back to booking',invoice:'Booking Invoice',customer:'Customer',phone:'WhatsApp',email:'Email',package:'Package',car:'Car type',area:'Shoot area',notes:'Notes',date:'Payment date',method:'Payment method',subtotal:'Package price',fee:'Payment fee',total:'Total',paid:'PAID',pending:'PROCESSING',digitalTitle:'Digital Service',digitalText:'This order is a digital service/content and does not include a physical product.',termsTitle:'Terms & Conditions Acceptance',termsText:'The customer accepted the terms, rules, and the non-refundable policy after payment or once work has started.',accepted:'✅ Accepted before payment',notRecorded:'Not recorded',ref:'Invoice No.',note:'Payment fees are added according to the selected method. No VAT is added to this order.',unknown:'Unable to load invoice.',test:'Demo invoice — 4.00 SAR'};
 const toolbarText=document.getElementById('toolbarText'),downloadBtn=document.getElementById('downloadBtn'),backBtn=document.getElementById('backBtn'),root=document.getElementById('invoice');toolbarText.textContent=t.toolbar;downloadBtn.textContent=t.download;backBtn.textContent=t.back;
-function money(n){return Number(n||0).toFixed(2)+' SAR'}
-function normalizeDateValue(v){
-  if(v===null||v===undefined||v==='') return null;
-  if(typeof v==='number' && Number.isFinite(v)) return new Date(v);
-  const raw=String(v).trim();
-  if(!raw) return null;
-  if(/^\d+$/.test(raw)){ const num=Number(raw); if(Number.isFinite(num)) return new Date(num); }
-  const d=new Date(raw);
-  return Number.isNaN(d.getTime())?null:d;
-}
-function formatDate(v){
-  const d=normalizeDateValue(v);
-  if(!d) return t.notRecorded;
-  return new Intl.DateTimeFormat(lang==='ar'?'ar-SA':'en-US',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(d);
-}
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function money(n){return Number(n||0).toFixed(2)+' SAR'}function normalizeDateValue(v){if(v===null||v===undefined||v==='')return null;if(typeof v==='number'&&Number.isFinite(v))return new Date(v);const raw=String(v).trim();if(!raw)return null;if(/^\d+$/.test(raw)){const num=Number(raw);if(Number.isFinite(num))return new Date(num)}const d=new Date(raw);return Number.isNaN(d.getTime())?null:d}function formatDate(v){const d=normalizeDateValue(v);if(!d)return'—';return new Intl.DateTimeFormat(lang==='ar'?'ar-SA':'en-US',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(d)}function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderInvoice(d,{demoMode=false}={}){const ref=d.paymentId||d.tapId||paymentId||tapId||'DEMO';const invoiceNo=demoMode?'AYAN-DEMO-4SAR':'AYAN-'+String(ref).replace(/[^A-Za-z0-9]/g,'').slice(-12).toUpperCase();const method=provider==='tabby'?'Tabby':'Tap';const accepted=d.termsAccepted===true;const acceptedAt=d.termsAcceptedAt||'';const statusLabel=d.status==='CLOSED'||d.status==='CAPTURED'||demoMode?t.paid:t.pending;const noticeClass=demoMode?'notice test':'notice';const noticeText=demoMode?t.test:t.digitalText;
-root.innerHTML=`<div class="invoice-top"><div class="top-row"><div class="brand"><img class="logo" src="assets/ayan-logo-icon.png" alt="Ayan Photography"><div><strong>Ayan Photography</strong><span>${lang==='ar'?'تصوير سيارات احترافي':'Professional car photography'}</span></div></div><div class="invoice-meta"><div class="eyebrow">AYAN PHOTOGRAPHY</div><h1>${escapeHtml(t.invoice)}</h1><div class="ref">${escapeHtml(t.ref)}: ${escapeHtml(invoiceNo)}</div><span class="status">● ${escapeHtml(statusLabel)}</span></div></div></div><div class="body"><div class="${noticeClass}"><span class="notice-icon">✓</span><div><strong>${escapeHtml(t.digitalTitle)}</strong><div>${escapeHtml(noticeText)}</div></div></div><div class="section-label">${escapeHtml(lang==='ar'?'بيانات الطلب':'Order details')}</div><div class="grid"><div class="cell"><small>${escapeHtml(t.customer)}</small><strong>${escapeHtml(d.customerName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.phone)}</small><strong>${escapeHtml(d.phone||'—')}</strong></div>${d.email?`<div class="cell"><small>${escapeHtml(t.email)}</small><strong>${escapeHtml(d.email)}</strong></div>`:''}<div class="cell"><small>${escapeHtml(t.package)}</small><strong>${escapeHtml(d.packageName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.car)}</small><strong>${escapeHtml(d.carType||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.area)}</small><strong>${escapeHtml(d.shootRegion||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.method)}</small><strong><span class="payment-badge">${escapeHtml(method)}</span></strong></div><div class="cell"><small>${escapeHtml(t.date)}</small><strong>${escapeHtml(formatDate(d.created||d.createdAt||d.transactionCreated||d.paymentCreatedAt||''))}</strong></div><div class="cell" style="grid-column:1/-1"><small>${escapeHtml(t.notes)}</small><strong>${escapeHtml(d.notes||'—')}</strong></div></div><div class="section-label">${escapeHtml(lang==='ar'?'ملخص الدفع':'Payment summary')}</div><div class="totals"><div class="line"><span>${escapeHtml(t.subtotal)}</span><strong>${money(d.subtotal)}</strong></div><div class="line fee"><span>${escapeHtml(t.fee)}</span><strong>+ ${money(d.paymentFee??d.serviceFee)}</strong></div><div class="line total"><span>${escapeHtml(t.total)}</span><strong>${money(d.total)}</strong></div></div><div class="terms-box"><div class="terms-row"><div class="terms-main"><span class="check">✓</span><div><div class="terms-title">${escapeHtml(t.termsTitle)}</div><div class="terms-text">${escapeHtml(t.termsText)}</div></div></div><div class="accepted">${accepted?escapeHtml(t.accepted):escapeHtml(t.notRecorded)}</div></div>${acceptedAt?`<div class="terms-time">${escapeHtml(lang==='ar'?'وقت الموافقة: ':'Accepted at: ')}${escapeHtml(formatDate(acceptedAt))}</div>`:''}</div></div><div class="foot"><div><strong>${escapeHtml(t.note)}</strong><br>${escapeHtml(t.digitalText)}</div><div class="foot-right"><strong>${escapeHtml(t.method)}:</strong> ${escapeHtml(method)}<br><strong>REF:</strong> ${escapeHtml(ref)}</div></div>`;downloadBtn.onclick=()=>downloadPdf(invoiceNo)}
-
-async function generateInvoicePdfBlob(invoiceNo='AYAN-INVOICE', compact=false){
+root.innerHTML=`<div class="invoice-top"><div class="top-row"><div class="brand"><img class="logo" src="assets/ayan-logo-v2.webp" alt="Ayan Photography"><div><strong>Ayan Photography</strong><span>${lang==='ar'?'تصوير سيارات احترافي':'Professional car photography'}</span></div></div><div class="invoice-meta"><div class="eyebrow">AYAN PHOTOGRAPHY</div><h1>${escapeHtml(t.invoice)}</h1><div class="ref">${escapeHtml(t.ref)}: ${escapeHtml(invoiceNo)}</div><span class="status">● ${escapeHtml(statusLabel)}</span></div></div></div><div class="body"><div class="${noticeClass}"><span class="notice-icon">✓</span><div><strong>${escapeHtml(t.digitalTitle)}</strong><div>${escapeHtml(noticeText)}</div></div></div><div class="section-label">${escapeHtml(lang==='ar'?'بيانات الطلب':'Order details')}</div><div class="grid"><div class="cell"><small>${escapeHtml(t.customer)}</small><strong>${escapeHtml(d.customerName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.phone)}</small><strong>${escapeHtml(d.phone||'—')}</strong></div>${d.email?`<div class="cell"><small>${escapeHtml(t.email)}</small><strong>${escapeHtml(d.email)}</strong></div>`:''}<div class="cell"><small>${escapeHtml(t.package)}</small><strong>${escapeHtml(d.packageName||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.car)}</small><strong>${escapeHtml(d.carType||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.area)}</small><strong>${escapeHtml(d.shootRegion||'—')}</strong></div><div class="cell"><small>${escapeHtml(t.method)}</small><strong><span class="payment-badge">${escapeHtml(method)}</span></strong></div><div class="cell"><small>${escapeHtml(t.date)}</small><strong>${escapeHtml(formatDate(d.created))}</strong></div><div class="cell" style="grid-column:1/-1"><small>${escapeHtml(t.notes)}</small><strong>${escapeHtml(d.notes||'—')}</strong></div></div><div class="section-label">${escapeHtml(lang==='ar'?'ملخص الدفع':'Payment summary')}</div><div class="totals"><div class="line"><span>${escapeHtml(t.subtotal)}</span><strong>${money(d.subtotal)}</strong></div><div class="line fee"><span>${escapeHtml(t.fee)}</span><strong>+ ${money(d.paymentFee??d.serviceFee)}</strong></div><div class="line total"><span>${escapeHtml(t.total)}</span><strong>${money(d.total)}</strong></div></div><div class="terms-box"><div class="terms-row"><div class="terms-main"><span class="check">✓</span><div><div class="terms-title">${escapeHtml(t.termsTitle)}</div><div class="terms-text">${escapeHtml(t.termsText)}</div></div></div><div class="accepted">${accepted?escapeHtml(t.accepted):escapeHtml(t.notRecorded)}</div></div>${acceptedAt?`<div class="terms-time">${escapeHtml(lang==='ar'?'وقت الموافقة: ':'Accepted at: ')}${escapeHtml(formatDate(acceptedAt))}</div>`:''}</div></div><div class="foot"><div><strong>${escapeHtml(t.note)}</strong><br>${escapeHtml(t.digitalText)}</div><div class="foot-right"><strong>${escapeHtml(t.method)}:</strong> ${escapeHtml(method)}<br><strong>REF:</strong> ${escapeHtml(ref)}</div></div>`;downloadBtn.onclick=()=>downloadPdf(invoiceNo)}
+async function generateInvoicePdfBlob(invoiceNo='AYAN-INVOICE'){
   if(!window.html2pdf) throw new Error('PDF generator is unavailable');
-  const target=root;
+  const target=document.getElementById('invoice');
   const options={
     margin:[0,0,0,0],
-    filename:(sanitizeFileName(invoiceNo)||'AYAN-INVOICE')+'.pdf',
-    image:{type:'jpeg',quality:compact?0.82:0.88},
-    html2canvas:{scale:compact?1.1:1.4,useCORS:true,allowTaint:false,backgroundColor:'#ffffff',logging:false,scrollX:0,scrollY:0,windowWidth:target.scrollWidth||900},
+    filename:(invoiceNo||'AYAN-INVOICE')+'.pdf',
+    image:{type:'jpeg',quality:.88},
+    html2canvas:{scale:1.35,useCORS:true,allowTaint:false,backgroundColor:'#fff',logging:false,scrollX:0,scrollY:0,windowWidth:Math.max(target.scrollWidth||900,900)},
     jsPDF:{unit:'pt',format:'a4',orientation:'portrait',compress:true},
     pagebreak:{mode:['css','legacy'],avoid:['.cell','.terms-box','.notice']}
   };
@@ -72,28 +54,27 @@ async function generateInvoicePdfBlob(invoiceNo='AYAN-INVOICE', compact=false){
 window.generateInvoicePdfBlob=generateInvoicePdfBlob;
 function sanitizeFileName(value){return String(value||'AYAN-INVOICE').replace(/[^A-Za-z0-9_-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)||'AYAN-INVOICE'}
 async function downloadPdf(invoiceNo){
-  if(!root.querySelector('.invoice-top')) return;
-  const original=downloadBtn.textContent;
-  downloadBtn.disabled=true; downloadBtn.style.opacity='0.75';
-  downloadBtn.textContent=lang==='ar'?'جاري تجهيز PDF…':'Preparing PDF…';
-  try{
-    let blob=await generateInvoicePdfBlob(invoiceNo);
-    if(blob.size>2400000) blob=await generateInvoicePdfBlob(invoiceNo,true);
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download=`${sanitizeFileName(invoiceNo)}.pdf`; document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),2000);
-    downloadBtn.textContent=lang==='ar'?'تم تحميل PDF ✓':'PDF downloaded ✓';
-    setTimeout(()=>{downloadBtn.textContent=original},2200);
-  }catch(error){
-    console.error('Invoice PDF generation failed',error);
-    downloadBtn.textContent=lang==='ar'?'تعذر تحميل PDF':'PDF download failed';
-    setTimeout(()=>{downloadBtn.textContent=original},2200);
-  }finally{
-    setTimeout(()=>{downloadBtn.disabled=false;downloadBtn.style.opacity='1'},2300);
-  }
+  const button=downloadBtn;button.disabled=true;button.textContent=lang==='ar'?'جاري تجهيز PDF…':'Preparing PDF…';
+  try{const blob=await generateInvoicePdfBlob(invoiceNo);const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${sanitizeFileName(invoiceNo)}.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);button.textContent=lang==='ar'?'تم تحميل PDF ✓':'PDF downloaded ✓';}
+  catch(e){console.error('Invoice PDF generation failed',e);button.textContent=lang==='ar'?'تعذر تحميل PDF':'PDF download failed';}
+  finally{setTimeout(()=>{button.disabled=false;button.textContent=t.download},1800)}
 }
-
-async function load(){if(demo){renderInvoice({paymentId:'demo',customerName:lang==='ar'?'عميل تجريبي':'Demo customer',phone:'05xxxxxxxx',packageName:lang==='ar'?'تجربة الدفع':'Payment test',carType:'—',shootRegion:'—',notes:lang==='ar'?'عملية تجريبية بقيمة 4 ريال':'4 SAR test payment',subtotal:DEMO_INVOICE_AMOUNT,paymentFee:0,total:DEMO_INVOICE_AMOUNT,termsAccepted:true,termsAcceptedAt:new Date().toISOString(),created:Date.now()},{demoMode:true});__invoiceReadyResolve?.(true);return}const validRef=provider==='tabby'?paymentId:tapId;if(!validRef){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false);return}try{const endpoint=provider==='tabby'?'/api/tabby-payment?payment_id=':'/api/payment?tap_id=';const r=await fetch(endpoint+encodeURIComponent(validRef),{cache:'no-store'});const d=await r.json();const ok=provider==='tabby'?(r.ok&&d.success&&d.status==='CLOSED'):(r.ok&&d.success&&d.status==='CAPTURED');if(!ok){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false);return}renderInvoice(d);__invoiceReadyResolve?.(true)}catch(e){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false)}}load();
-</script>
+async function load(){
+  if(demo){
+    renderInvoice({paymentId:'demo',customerName:lang==='ar'?'عميل تجريبي':'Demo customer',phone:'05xxxxxxxx',packageName:lang==='ar'?'تجربة الدفع':'Payment test',carType:'—',shootRegion:'—',notes:lang==='ar'?'عملية تجريبية بقيمة 4 ريال':'4 SAR test payment',subtotal:DEMO_INVOICE_AMOUNT,paymentFee:0,total:DEMO_INVOICE_AMOUNT,termsAccepted:true,termsAcceptedAt:new Date().toISOString(),created:Date.now()},{demoMode:true});
+    __invoiceReadyResolve?.(true);return;
+  }
+  const validRef=provider==='tabby'?paymentId:tapId;
+  if(!validRef){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false);return}
+  try{
+    const endpoint=provider==='tabby'?'/api/tabby-payment?payment_id=':'/api/payment?tap_id=';
+    const r=await fetch(endpoint+encodeURIComponent(validRef),{cache:'no-store'});
+    const d=await r.json();
+    const ok=provider==='tabby'?(r.ok&&d.success&&d.status==='CLOSED'):(r.ok&&d.success&&d.status==='CAPTURED');
+    if(!ok){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false);return}
+    renderInvoice(d);__invoiceReadyResolve?.(true);
+  }catch(e){console.error(e);root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false)}
+}
+load();</script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-import { sendInvoiceEmail } from './lib/invoice-email.js';
 import crypto from 'node:crypto';
 
 const notifiedCharges = globalThis.__ayanNotifiedCharges || new Set();
@@ -23,7 +22,6 @@ export default async function handler(req, res) {
   if (status === 'CAPTURED' && chargeId) {
     try { await notifyDiscord(payload, chargeId); }
     catch (error) { console.error('Discord notification failed', error); }
-    if (String(process.env.INVOICE_WEBHOOK_FALLBACK || '').toLowerCase() === 'true') { try { await notifyInvoiceEmail(payload, chargeId, req); } catch (error) { console.error('Invoice email failed', error); } }
   }
 
   return res.status(200).json({ received: true, status, chargeId });
@@ -51,12 +49,6 @@ function formatTapAmount(value, currency) {
   const amount = Number(value || 0);
   const threeDecimal = new Set(['BHD', 'KWD', 'OMR']);
   return amount.toFixed(threeDecimal.has(String(currency || '').toUpperCase()) ? 3 : 2);
-}
-
-async function notifyInvoiceEmail(payload, chargeId, req) {
-  const m=payload.metadata||{};
-  if(!m.email) return;
-  await sendInvoiceEmail({provider:'tap',paymentId:chargeId,req,data:{status:String(payload.status||'').toUpperCase(),tapId:chargeId,paymentId:chargeId,amount:Number(payload.amount||m.total||0),currency:payload.currency||'SAR',customerName:m.customer_name||'—',email:m.email,packageName:m.package_name||m.package_name_en||'',packageNameAr:m.package_name_ar||'',packageNameEn:m.package_name_en||'',subtotal:Number(m.subtotal||0),paymentFee:Number(m.payment_fee||m.service_fee||0),serviceFee:Number(m.payment_fee||m.service_fee||0),total:Number(m.total||payload.amount||0),carType:m.car_type||'',shootRegion:m.shoot_region||'',termsAccepted:String(m.terms_accepted||'false')==='true',termsAcceptedAt:m.terms_accepted_at||'',lang:m.lang==='en'?'en':'ar',created:payload?.transaction?.created||'',notes:m.notes||'—'}});
 }
 
 async function notifyDiscord(payload, chargeId) {

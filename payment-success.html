@@ -138,59 +138,57 @@ async function verify(attempt=0){
 }
 
 const emailStatus=document.getElementById('emailStatus');
-async function sendInvoiceEmail(providerValue, paymentRef){
-  if(!paymentRef || !emailStatus) return;
-  try{
-    const r=await fetch('/api/send-invoice-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
-    const d=await r.json().catch(()=>({}));
-    if(r.ok&&d.success){
-      emailStatus.textContent=lang==='ar'?'📧 تم إرسال الفاتورة إلى بريدك الإلكتروني.':'📧 Your invoice has been sent to your email.';
-    }else{
-      emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
-    }
-    emailStatus.classList.remove('hidden');
-  }catch(_){
-    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع. يمكنك تحميل الفاتورة من الزر أعلاه.':'Payment is confirmed. You can download the invoice using the button above.';
-    emailStatus.classList.remove('hidden');
-  }
-}
 async function sendPdfInvoice(providerValue, paymentRef){
   if(!paymentRef || !emailStatus) return;
-  const key=`ayan_pdf_sent_${providerValue}_${paymentRef}`;
+  const key=`ayan_pdf_delivery_${providerValue}_${paymentRef}`;
   if(sessionStorage.getItem(key)==='1') return;
   emailStatus.textContent=lang==='ar'?'جاري تجهيز وإرسال الفاتورة PDF…':'Preparing and sending your PDF invoice…';
   emailStatus.classList.remove('hidden');
-  let iframe;
+  let iframe=null;
   try{
-    const invoiceUrl=providerValue==='tabby'?'/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1':'/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
+    const invoiceUrl=providerValue==='tabby'
+      ? '/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1'
+      : '/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
     iframe=document.createElement('iframe');
-    iframe.style.position='fixed';iframe.style.left='-10000px';iframe.style.top='0';iframe.style.width='900px';iframe.style.height='1800px';iframe.style.border='0';iframe.setAttribute('aria-hidden','true');
+    Object.assign(iframe.style,{position:'fixed',left:'-10000px',top:'0',width:'900px',height:'1400px',border:'0',opacity:'0',pointerEvents:'none'});
+    iframe.setAttribute('aria-hidden','true');
     document.body.appendChild(iframe);
-    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),25000);iframe.onload=()=>{clearTimeout(timer);setTimeout(resolve,250)};iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};iframe.src=invoiceUrl});
-    if(iframe.contentWindow.invoiceReady) await Promise.race([iframe.contentWindow.invoiceReady,new Promise((_,rej)=>setTimeout(()=>rej(new Error('Invoice data timeout')),25000))]);
-    await new Promise(r=>setTimeout(r,700));
-    const invoiceNo=iframe.contentDocument?.querySelector('.invoice-meta .ref')?.textContent?.replace(/^.*?:\s*/,'').trim() || `AYAN-${paymentRef}`;
-    let blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo,false);
-    if(blob.size>2400000) blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo,true);
-    const base64=await blobToBase64(blob);
-    let r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})});
-    let d=await r.json().catch(()=>({}));
-    if(!r.ok || !d.success || !d.complete){
-      // One compact-PDF retry. Resend uses the same idempotency key, so an already-sent email is not duplicated.
-      if(blob.size>2000000 || r.status===413){
-        blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo,true);
-        const compactBase64=await blobToBase64(blob);
-        r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:compactBase64})});
-        d=await r.json().catch(()=>({}));
-      }
+    await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),25000);
+      iframe.onload=()=>{clearTimeout(timer);resolve()};
+      iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};
+      iframe.src=invoiceUrl;
+    });
+    if(iframe.contentWindow?.invoiceReady){
+      const ready=await Promise.race([
+        iframe.contentWindow.invoiceReady,
+        new Promise((_,reject)=>setTimeout(()=>reject(new Error('Invoice data timeout')),25000))
+      ]);
+      if(ready===false) throw new Error('Invoice data unavailable');
     }
-    if(!r.ok || !d.success || !d.complete) throw new Error(d.error||'PDF delivery incomplete');
+    if(iframe.contentDocument?.fonts?.ready) await iframe.contentDocument.fonts.ready.catch(()=>{});
+    await new Promise(r=>setTimeout(r,600));
+    const invoiceNo=iframe.contentDocument?.querySelector('.invoice-meta .ref')?.textContent?.replace(/^.*?:\s*/,'').trim() || `AYAN-${paymentRef}`;
+    if(typeof iframe.contentWindow?.generateInvoicePdfBlob!=='function') throw new Error('PDF generator is unavailable');
+    const blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo);
+    if(!blob || blob.size<100) throw new Error('Generated PDF is empty');
+    if(blob.size>2500000) throw new Error('Generated PDF is too large');
+    const base64=await blobToBase64(blob);
+    const r=await fetch('/api/send-invoice-pdf',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})
+    });
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok || !d.success) throw new Error(d.error||'PDF delivery failed');
     sessionStorage.setItem(key,'1');
-    emailStatus.textContent=lang==='ar'?'📧 تم إرسال فاتورة PDF إلى بريدك، وتم إرفاق نسخة PDF وإرسال نسخة إلى Discord.':'📧 Your PDF invoice was emailed as an attachment and a copy was sent to Discord.';
+    const emailOk=d.emailSent!==false;
+    const discordOk=d.discordSent===true;
+    emailStatus.textContent=lang==='ar'
+      ? `📧 ${emailOk?'تم إرفاق الفاتورة PDF في بريدك.':'تعذر إرسال الفاتورة للبريد.'} ${discordOk?' وتم إرفاق نسخة PDF في Discord.':'تعذر إرفاق نسخة PDF في Discord.'}`
+      : `📧 ${emailOk?'The PDF invoice was attached to your email.':'Email delivery failed.'} ${discordOk?' A PDF copy was attached to Discord.':' Discord attachment failed.'}`;
   }catch(error){
-    console.error('PDF invoice delivery failed',error);
-    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع، لكن تعذر إرسال ملف PDF تلقائيًا. يمكنك تحميله من الزر أعلاه.':'Payment is confirmed, but the PDF could not be delivered automatically. You can download it above.';
-    emailStatus.classList.remove('hidden');
+    console.error('PDF delivery failed',error);
+    emailStatus.textContent=lang==='ar'?'تم تأكيد الدفع، لكن تعذر إرسال ملف PDF تلقائيًا. يمكنك تحميل الفاتورة PDF من الزر.':'Payment is confirmed, but the PDF could not be sent automatically. You can download it from the invoice button.';
   }finally{if(iframe)iframe.remove()}
 }
 function blobToBase64(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=reject;reader.readAsDataURL(blob)})}
