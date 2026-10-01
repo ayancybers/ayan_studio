@@ -1,5 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/api/log", "destination": "/api?route=log" },
+    { "source": "/api/payment-config", "destination": "/api?route=payment-config" },
+    { "source": "/api/payment", "destination": "/api?route=payment" },
+    { "source": "/api/send-invoice-email", "destination": "/api?route=send-invoice-email" },
+    { "source": "/api/send-invoice-pdf", "destination": "/api?route=send-invoice-pdf" },
+    { "source": "/api/send-whatsapp-confirmation", "destination": "/api?route=send-whatsapp-confirmation" },
+    { "source": "/api/tabby-payment", "destination": "/api?route=tabby-payment" },
+    { "source": "/api/tabby-webhook", "destination": "/api?route=tabby-webhook" },
+    { "source": "/api/tamara-payment", "destination": "/api?route=tamara-payment" },
+    { "source": "/api/tamara-webhook", "destination": "/api?route=tamara-webhook" },
+    { "source": "/api/tap-webhook", "destination": "/api?route=tap-webhook" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

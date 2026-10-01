@@ -10,7 +10,7 @@ import tamaraPaymentHandler from '../lib/server/routes/tamara-payment.js';
 import tamaraWebhookHandler from '../lib/server/routes/tamara-webhook.js';
 import tapWebhookHandler from '../lib/server/routes/tap-webhook.js';
 
-const ROUTES = Object.freeze({
+const routes = Object.freeze({
   log: logHandler,
   'payment-config': paymentConfigHandler,
   payment: paymentHandler,
@@ -21,12 +21,12 @@ const ROUTES = Object.freeze({
   'tabby-webhook': tabbyWebhookHandler,
   'tamara-payment': tamaraPaymentHandler,
   'tamara-webhook': tamaraWebhookHandler,
-  'tap-webhook': tapWebhookHandler,
+  'tap-webhook': tapWebhookHandler
 });
 
 export default async function handler(req, res) {
   const route = resolveRoute(req);
-  const target = ROUTES[route];
+  const target = routes[route];
 
   if (!target) {
     return res.status(404).json({ error: 'API route not found', route });
@@ -37,28 +37,18 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error('API route failure', {
       route,
-      error: error?.message || String(error),
+      error: error?.message || String(error)
     });
     if (!res.headersSent) {
-      return res.status(500).json({ error: 'Internal server error', route });
+      return res.status(500).json({ error: 'Internal server error' });
     }
   }
 }
 
 function resolveRoute(req) {
-  // Vercel catch-all functions expose the matched path as req.query.path.
-  const matchedPath = req?.query?.path;
-  if (Array.isArray(matchedPath) && matchedPath.length) {
-    return String(matchedPath.at(-1) || '').trim().toLowerCase();
-  }
-  if (matchedPath) {
-    const value = String(matchedPath).trim().toLowerCase();
-    if (value) return value.split('/').filter(Boolean).at(-1) || '';
-  }
-
   const queryRoute = req?.query?.route;
   if (Array.isArray(queryRoute) && queryRoute.length) {
-    return String(queryRoute.at(-1) || '').trim().toLowerCase();
+    return String(queryRoute.at(-1)).trim().toLowerCase();
   }
   if (queryRoute) return String(queryRoute).trim().toLowerCase();
 
@@ -67,9 +57,7 @@ function resolveRoute(req) {
     const url = new URL(rawUrl, 'https://ayan.local');
     const fromQuery = url.searchParams.get('route');
     if (fromQuery) return fromQuery.trim().toLowerCase();
-
     const parts = url.pathname.split('/').filter(Boolean);
-    // /api/<route> => the final segment is the route name.
     return String(parts.at(-1) || '').trim().toLowerCase();
   } catch {
     const parts = rawUrl.split('?')[0].split('/').filter(Boolean);
