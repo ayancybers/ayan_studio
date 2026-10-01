@@ -51,7 +51,7 @@ const translations = {
     service4Title: 'Custom Concept', service4Text: 'فكرة خاصة يتم تنسيقها حسب أسلوبك والرسالة التي تريد إيصالها.',
     processTitle: 'طريقة العمل', processText: 'أربع خطوات واضحة بدون تعقيد.',
     step1Title: 'اختَر', step1Text: 'حدد الباقة ونوع الجلسة المناسبة.', step2Title: 'أرسل', step2Text: 'أرسل بياناتك وملاحظاتك من نموذج الحجز.', step3Title: 'نسّق', step3Text: 'نكمل التفاصيل معك عبر الواتساب.', step4Title: 'صوّر', step4Text: 'ننفذ الجلسة ونرتب التسليم.',
-    bookingHeroKicker: 'Booking', bookingHeroTitle: 'احجز جلستك في أقل من دقيقة.', bookingHeroText: 'عبّ البيانات، راجع الإجمالي ورسوم الدفع، وبعدها انتقل للدفع الآمن.', bookingMeta1: 'اختر الباقة', bookingMeta2: 'أدخل التفاصيل', bookingMeta3: 'الدفع عبر Tap', bookingSideTitle: 'ابدأ بالباقة المناسبة.', bookingSideText: 'اختر مستوى التصوير أولًا، وبعدها نكمل معك باقي التفاصيل.', selectedLabel: 'الباقة المختارة', selectedEmpty: 'اختر باقة للبدء', sideFoot1: 'تنسيق مباشر', sideFoot2: 'أسعار واضحة', sideFoot3: 'تحويل للواتساب', bookingStep1: 'الباقة', bookingStep2: 'البيانات', bookingStep3: 'الدفع', flowStep1: 'اختر الباقة', flowStep2: 'أضف تفاصيل الجلسة', flowStep3: 'ادفع بأمان عبر Tap', formKicker: 'Start your session', packageHint: 'اختَر المستوى الذي يناسب اللقطة التي في بالك.', tapToChoose: 'اضغط للاختيار', detailsDivider: 'بيانات الجلسة', submitTitle: 'جاهز؟ خلنا نكمل.', submitText: 'بعد التأكيد راح تراجع المبلغ وتختار طريقة الدفع.',
+    bookingHeroKicker: 'Booking', bookingHeroTitle: 'احجز جلستك في أقل من دقيقة.', bookingHeroText: 'عبّ البيانات، راجع الإجمالي ورسوم الدفع، وبعدها انتقل للدفع الآمن.', bookingMeta1: 'اختر الباقة', bookingMeta2: 'أدخل التفاصيل', bookingMeta3: 'الدفع عبر Tap', bookingSideTitle: 'ابدأ بالباقة المناسبة.', bookingSideText: 'اختر مستوى التصوير أولًا، وبعدها نكمل معك باقي التفاصيل.', selectedLabel: 'الباقة المختارة', selectedEmpty: 'اختر باقة للبدء', sideFoot1: 'تنسيق مباشر', sideFoot2: 'أسعار واضحة', sideFoot3: 'تحويل للواتساب', bookingStep1: 'الباقة', bookingStep2: 'البيانات', bookingStep3: 'الدفع', flowStep1: 'اختر الباقة', flowStep2: 'أضف تفاصيل الجلسة', flowStep3: 'ادفع بأمان عبر Tap', flowSelected: 'تم اختيار', flowDetails: 'أكمل البيانات المطلوبة', flowReady: 'جاهز للدفع الآمن', validationPackage: 'اختر الباقة أولًا.', validationName: 'اكتب اسمك الكامل.', validationPhone: 'اكتب رقم واتساب سعودي صحيح.', validationCar: 'اختر نوع السيارة.', validationRegion: 'اختر منطقة التصوير.', validationTerms: 'وافق على الشروط والأحكام قبل المتابعة.', formKicker: 'Start your session', packageHint: 'اختَر المستوى الذي يناسب اللقطة التي في بالك.', tapToChoose: 'اضغط للاختيار', detailsDivider: 'بيانات الجلسة', submitTitle: 'جاهز؟ خلنا نكمل.', submitText: 'بعد التأكيد راح تراجع المبلغ وتختار طريقة الدفع.',
     formTitle: 'استمارة الحجز الفوري', formRequired: 'الحقول بعلامة * إلزامية', nameLabel: 'اسمك الكامل *', namePlaceholder: 'اسمك بالكامل', phoneLabel: 'رقم الواتساب *', phonePlaceholder: '05xxxxxxxx', packageLabel: 'الباقة *', packagePlaceholder: 'اختر الباقة المطلوبة', carLabel: 'نوع السيارة *', carPlaceholder: 'اختر نوع السيارة', regionLabel: 'منطقة التصوير *', regionPlaceholder: 'اختر المنطقة', notesLabel: 'ملاحظات إضافية', notesPlaceholder: 'زوايا معينة، فكرة خاصة، وقت مناسب، أو أي طلب آخر...', submit: 'متابعة إلى الدفع', formNote: 'المبلغ النهائي يعرض سعر الباقة ورسوم الدفع بشكل منفصل قبل الدفع.', termsAgreement: 'أوافق على الشروط والأحكام وأقر بأن الخدمة/المحتوى الرقمي غير قابل للاسترجاع بعد الدفع أو بدء التنفيذ.', termsLink: 'عرض الشروط والأحكام',
     bookingAsideTitle: 'قبل الدفع', bookingAsideText: 'راجع بياناتك وسعر الباقة قبل اختيار طريقة الدفع.', aside1: 'اختر الباقة أولًا.', aside2: 'اكتب رقم واتساب متاح.', aside3: 'اذكر أي فكرة خاصة في الملاحظات.', priceNoteTitle: 'الأسعار الأساسية', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'سعر الباقة', serviceFeeLabel: 'رسوم الدفع', totalLabel: 'الإجمالي', taxNotice: 'رسوم الدفع تُحسب حسب طريقة الدفع المختارة.', selectedBaseLabel: 'قبل الإضافات', paymentError: 'تعذر تجهيز عملية الدفع. حاول مرة ثانية.', paymentPreparing: 'جاري تجهيز الدفع…',
     galleryHeroKicker: 'Gallery', galleryHeroTitle: 'شوف النتيجة قبل ما تحجز.', galleryHeroText: 'مكتبة الصور والفيديوهات في مكان واحد، مع فلترة سريعة وفتح كامل للمحتوى.', galleryAll: 'الكل', galleryVideos: 'الفيديوهات', galleryImages: 'الصور', galleryCount: 'محتوى', readyTitle: 'عجبك الشغل؟', readyText: 'انتقل مباشرة إلى نموذج الحجز واختَر الباقة المناسبة.', startBooking: 'ابدأ الحجز ←',
@@ -80,7 +80,7 @@ const translations = {
     workflowKicker: 'Ayan Workflow', workflowTitle: 'From the first idea to the final frame.', workflowText: 'Every page has one clear job, so clients find what they need quickly.', workflow1: 'Choose the right package.', workflow2: 'Add car and shoot details.', workflow3: 'Receive and coordinate the request on WhatsApp.', workflow4: 'Shoot and deliver based on the package.', galleryKicker: 'Gallery', galleryTitle: 'See the work before you book.', galleryText: 'The gallery now lives on its own page so the focus stays on the visual work.', exploreGallery: 'Explore gallery →',
     featuresHeroKicker: 'Why Ayan Photography', featuresHeroTitle: 'Every detail is designed to make your car look its best.', featuresHeroText: 'Quiet visual direction, smooth motion, and a clear journey from the first message to final delivery.', feature4Title: 'Shot planning', feature4Text: 'We shape the concept around the car, location, and content style you want.', feature5Title: 'Intentional editing', feature5Text: 'Cuts, motion, and transitions that support the scene instead of fighting it.', feature6Title: 'Mobile-first experience', feature6Text: 'The website and booking flow are designed to feel fast on both phone and desktop.', servicesTitle: 'Services', servicesText: 'Choose the production type that fits your goal, whether it is reels, details, or a full session.', catalogKicker: 'Available Packages', catalogTitle: 'Services & Pricing', catalogText: 'All bookable packages are listed here with a clear description, current price, and selected Ayan Photography work.', catalogLink: 'Book now →', catalogSilverTitle: 'Silver Package', catalogSilverText: 'Rolling coverage from multiple angles with all original clips delivered without editing.', catalogBasicTitle: 'Basic Package', catalogBasicText: 'Rolling coverage with 10+ varied clips, full editing, music selection, and an optional custom concept.', catalogAdvancedTitle: 'Advanced Package', catalogAdvancedText: 'Rolling and static coverage from multiple angles, 10+ clips, full editing, and fast delivery based on the session.', catalogRoyalTitle: 'Cinematic Package', catalogRoyalText: 'A complete cinematic session combining rolling, static coverage, professional editing, and a custom concept option.', catalogChoose: 'Choose package', catalogNoteTitle: 'Note:', catalogNoteText: 'Displayed prices are the current package prices. Any additional service is explained before the order is confirmed.', service1Title: 'Rolling Shots', service1Text: 'Moving coverage from different angles to show design, speed, and presence.', service2Title: 'Static Details', service2Text: 'Still frames that focus on exterior, interior, and design details.', service3Title: 'Cinematic Edit', service3Text: 'A full edit with a visual rhythm built around the car and the platform.', service4Title: 'Custom Concept', service4Text: 'A tailored idea coordinated around your style and the message you want to convey.',
     processTitle: 'How it works', processText: 'Four clear steps with no unnecessary complexity.', step1Title: 'Choose', step1Text: 'Pick the package and session type.', step2Title: 'Send', step2Text: 'Submit your details and notes.', step3Title: 'Coordinate', step3Text: 'We finalize the details through WhatsApp.', step4Title: 'Shoot', step4Text: 'We execute the session and arrange delivery.',
-    bookingHeroKicker: 'Booking', bookingHeroTitle: 'Book your session in under a minute.', bookingHeroText: 'Fill in your details, review the total and payment fee, then continue to secure payment.', bookingMeta1: 'Choose a package', bookingMeta2: 'Add your details', bookingMeta3: 'Pay through Tap', bookingSideTitle: 'Start with the right package.', bookingSideText: 'Choose your production level first, then we will handle the rest with you.', selectedLabel: 'Selected package', selectedEmpty: 'Choose a package to begin', sideFoot1: 'Direct coordination', sideFoot2: 'Clear pricing', sideFoot3: 'WhatsApp handoff', bookingStep1: 'Package', bookingStep2: 'Details', bookingStep3: 'Payment', flowStep1: 'Choose your package', flowStep2: 'Add your session details', flowStep3: 'Pay securely with Tap', formKicker: 'Start your session', packageHint: 'Choose the production level that fits the shot in your head.', tapToChoose: 'Tap to choose', detailsDivider: 'Session details', submitTitle: 'Ready? Let’s finish it.', submitText: 'After confirmation, you will review the total and choose a payment method.',
+    bookingHeroKicker: 'Booking', bookingHeroTitle: 'Book your session in under a minute.', bookingHeroText: 'Fill in your details, review the total and payment fee, then continue to secure payment.', bookingMeta1: 'Choose a package', bookingMeta2: 'Add your details', bookingMeta3: 'Pay through Tap', bookingSideTitle: 'Start with the right package.', bookingSideText: 'Choose your production level first, then we will handle the rest with you.', selectedLabel: 'Selected package', selectedEmpty: 'Choose a package to begin', sideFoot1: 'Direct coordination', sideFoot2: 'Clear pricing', sideFoot3: 'WhatsApp handoff', bookingStep1: 'Package', bookingStep2: 'Details', bookingStep3: 'Payment', flowStep1: 'Choose your package', flowStep2: 'Add your session details', flowStep3: 'Pay securely with Tap', flowSelected: 'Selected', flowDetails: 'Complete the required details', flowReady: 'Ready for secure payment', validationPackage: 'Choose a package first.', validationName: 'Enter your full name.', validationPhone: 'Enter a valid Saudi WhatsApp number.', validationCar: 'Choose your car type.', validationRegion: 'Choose the shoot area.', validationTerms: 'Accept the terms and conditions before continuing.', formKicker: 'Start your session', packageHint: 'Choose the production level that fits the shot in your head.', tapToChoose: 'Tap to choose', detailsDivider: 'Session details', submitTitle: 'Ready? Let’s finish it.', submitText: 'After confirmation, you will review the total and choose a payment method.',
     formTitle: 'Instant booking form', termsAgreement: 'I agree to the terms and conditions and acknowledge that the digital service/content is non-refundable after payment or once work has started.', termsLink: 'View terms and conditions', formRequired: 'Fields marked * are required', nameLabel: 'Full name *', namePlaceholder: 'Your full name', phoneLabel: 'WhatsApp number *', phonePlaceholder: '05xxxxxxxx', packageLabel: 'Package *', packagePlaceholder: 'Choose a package', carLabel: 'Car type *', carPlaceholder: 'Choose your car type', regionLabel: 'Shoot area *', regionPlaceholder: 'Choose an area', notesLabel: 'Additional notes', notesPlaceholder: 'Specific angles, a custom idea, preferred time, or anything else...', submit: 'Continue to payment', formNote: 'The final amount shows the package price and payment fee separately before payment.', bookingAsideTitle: 'Before payment', bookingAsideText: 'Review your details and the package price before choosing a payment method.', aside1: 'Choose the package first.', aside2: 'Use an active WhatsApp number.', aside3: 'Add any special idea in the notes.', priceNoteTitle: 'Base prices', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'Package price', serviceFeeLabel: 'Payment fee', totalLabel: 'Total', taxNotice: 'Payment fees are shown on the checkout page based on the selected method.', selectedBaseLabel: 'Before additions', paymentError: 'We could not prepare the payment. Please try again.', paymentPreparing: 'Preparing secure payment…',
     galleryHeroKicker: 'Gallery', galleryHeroTitle: 'See the result before you book.', galleryHeroText: 'Photos and videos in one place, with quick filters and a full-view lightbox.', galleryAll: 'All', galleryVideos: 'Videos', galleryImages: 'Photos', galleryCount: 'items', readyTitle: 'Like what you see?', readyText: 'Go straight to the booking form and choose the right package.', startBooking: 'Start booking →', footerCopy: 'Professional car photography, rolling shots, static sessions, and cinematic edits shaped around every car.', footerNav: 'Navigation', footerContact: 'Contact', footerLocation: 'Eastern Province, Saudi Arabia', footerTag: 'Built for cinematic car content', termsPageLink: 'Terms & Conditions', termsKicker: 'Terms & Conditions', termsTitle: 'Terms & Conditions', termsIntro: 'Please read the terms and rules for Ayan Photography digital services and content before completing your booking.', termsDigitalTitle: 'Digital Services & Products', termsDigitalText: 'Ayan Photography services and content are digital services/products, including digital photography, videos, images, and editing. Once payment is completed or work has started, the amount is non-refundable.', termsRefundTitle: 'Refund Policy', termsRefund1: 'Payments for digital services are non-refundable after payment or once execution has started.', termsRefund2: 'Once photography, editing, or content preparation has started, the customer is not entitled to request a refund.', termsRefund3: 'Payment-method fees are included in the final checkout amount according to the selected method.', termsBookingTitle: 'Booking & Execution', termsBooking1: 'The service is delivered according to the selected package and the information submitted during booking.', termsBooking2: 'Please confirm your name, mobile number, car type, and area before payment.', termsBooking3: 'Any service outside the package description will be explained before the order is confirmed.', termsDeliveryTitle: 'Delivery & Content', termsDelivery1: 'Digital content is delivered according to the agreed package details.', termsDelivery2: 'Delivered content is digital and does not include a physical product or returnable shipment.', termsContactTitle: 'Contact', termsContactText: 'For any booking or service question, contact us through WhatsApp before completing payment.', termsContactButton: 'Contact via WhatsApp',
     loading1: 'Initializing Ayan Photography...', loading2: 'Preparing cinematic frames...', loading3: 'Everything is ready 🚀', bookingSuccess: '✨ Request received. Redirecting to WhatsApp...', requiredAlert: 'Please complete the required fields.', waitAlert: '⚠️ Please wait a moment before sending another request.', networkAlert: 'The system request could not be sent. WhatsApp will open directly.', whatsappAr: 'Hello, I would like to book a car photography session',
@@ -670,6 +670,8 @@ function setupBookingExperience() {
       const value = packageValueForLang(choice.dataset.bookingPackage, getLang());
       select.value = value;
       updateBookingExperience();
+      clearBookingValidation();
+      updateBookingFlowSummary();
       sendLog('package_select', { package: value, packageKey: choice.dataset.packageKey, source: 'booking_picker' });
       document.querySelector('.booking-package-wrap')?.classList.add('chosen');
     });
@@ -677,9 +679,11 @@ function setupBookingExperience() {
 
   select.addEventListener('change', () => {
     updateBookingExperience();
+    updateBookingFlowSummary();
     sendLog('package_select', { package: select.value, source: 'booking_select' });
   });
   updateBookingExperience();
+  updateBookingFlowSummary();
 }
 
 function setupPackageButtons() {
@@ -714,17 +718,76 @@ function normalizePhone(value) {
   return raw;
 }
 
+function clearBookingValidation() {
+  document.querySelectorAll('.booking-validation-error').forEach((el) => el.remove());
+  document.querySelectorAll('.booking-field-invalid').forEach((el) => el.classList.remove('booking-field-invalid'));
+  document.querySelectorAll('.booking-signature-step').forEach((el) => el.classList.remove('is-missing'));
+}
+
+function markBookingFieldInvalid(target, message, stepName) {
+  clearBookingValidation();
+  const node = typeof target === 'string' ? document.querySelector(target) : target;
+  if (!node) return;
+  const group = node.closest('.form-group') || node.closest('.booking-package-wrap') || node.parentElement;
+  const wrapper = node.closest('.booking-package-wrap');
+  (wrapper || group || node).classList.add('booking-field-invalid');
+  const error = document.createElement('div');
+  error.className = 'booking-validation-error';
+  error.textContent = message;
+  (wrapper || group || node.parentElement || node).appendChild(error);
+  if (stepName) document.querySelector(`[data-flow-step="${stepName}"]`)?.classList.add('is-missing');
+  const scrollTarget = wrapper || group || node;
+  window.setTimeout(() => {
+    scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (node !== wrapper && typeof node.focus === 'function') {
+      window.setTimeout(() => node.focus({ preventScroll: true }), 280);
+    }
+  }, 20);
+  showToast(message);
+}
+
+function updateBookingFlowSummary() {
+  const packageKey = document.querySelector('.booking-package-choice.selected')?.dataset.packageKey || '';
+  const name = document.querySelector('#fullName')?.value.trim() || '';
+  const phone = document.querySelector('#phone')?.value.trim() || '';
+  const car = document.querySelector('#carType')?.value || '';
+  const region = document.querySelector('#shootRegion')?.value || '';
+  const terms = document.querySelector('#termsAgreement')?.checked === true;
+  const packageValue = document.querySelector('#packageType')?.value || '';
+  const packageNode = document.querySelector('[data-flow-value="package"]');
+  const detailsNode = document.querySelector('[data-flow-value="details"]');
+  const paymentNode = document.querySelector('[data-flow-value="payment"]');
+
+  document.querySelectorAll('.booking-signature-step').forEach((el) => el.classList.remove('is-active', 'is-done'));
+
+  if (packageNode) packageNode.textContent = packageValue ? `${tr('flowSelected')}: ${packageValue}` : tr('flowStep1');
+  const readableDetails = [name, car, region].filter(Boolean).join(' • ');
+  if (detailsNode) detailsNode.textContent = readableDetails ? readableDetails : tr('flowStep2');
+  const detailsComplete = !!name && /^05\d{8}$/.test(phone) && !!car && !!region;
+  if (paymentNode) paymentNode.textContent = terms && detailsComplete ? tr('flowReady') : tr('flowStep3');
+
+  const packageStep = document.querySelector('[data-flow-step="package"]');
+  const detailsStep = document.querySelector('[data-flow-step="details"]');
+  const paymentStep = document.querySelector('[data-flow-step="payment"]');
+  if (packageStep && packageKey) { packageStep.classList.add('is-active', 'is-done'); }
+  if (detailsStep && detailsComplete) { detailsStep.classList.add('is-active', 'is-done'); }
+  if (paymentStep && terms && detailsComplete && packageKey) { paymentStep.classList.add('is-active'); }
+}
+
 function setupBookingForm() {
   const form = document.querySelector('#bookingForm');
   if (!form) return;
 
+  ['fullName','phone','carType','shootRegion','termsAgreement'].forEach((id) => {
+    const node = document.getElementById(id);
+    node?.addEventListener('input', () => { clearBookingValidation(); updateBookingFlowSummary(); });
+    node?.addEventListener('change', () => { clearBookingValidation(); updateBookingFlowSummary(); });
+  });
+  updateBookingFlowSummary();
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const lastSubmit = Number(sessionStorage.getItem('ayan_last_submit') || 0);
-    if (Date.now() - lastSubmit < 15000) {
-      showToast(tr('waitAlert'));
-      return;
-    }
+    clearBookingValidation();
 
     const selectedChoice = document.querySelector('[data-booking-package].selected');
     const packageKey = selectedChoice?.dataset.packageKey || '';
@@ -745,19 +808,22 @@ function setupBookingForm() {
       termsAgreement: document.querySelector('#termsAgreement')?.checked === true
     };
 
-    const required = ['name', 'packageType', 'carType', 'shootRegion', 'phone'];
-    if (required.some((key) => !data[key]) || !packageKey) {
-      showToast(tr('requiredAlert'));
-      return;
-    }
-    if (!data.termsAgreement) {
-      showToast(getLang() === 'ar' ? 'يجب الموافقة على الشروط والقواعد قبل المتابعة.' : 'You must agree to the terms and rules before continuing.');
-      return;
-    }
+    if (!packageKey) { markBookingFieldInvalid('.booking-package-wrap', tr('validationPackage'), 'package'); return; }
+    if (!data.name) { markBookingFieldInvalid('#fullName', tr('validationName'), 'details'); return; }
+    if (!data.phone) { markBookingFieldInvalid('#phone', tr('validationPhone'), 'details'); return; }
 
     const normalizedPhone = normalizePhone(data.phone);
     if (!/^9665\d{8}$/.test(normalizedPhone)) {
-      showToast(getLang() === 'ar' ? 'اكتب رقم جوال سعودي صحيح.' : 'Enter a valid Saudi mobile number.');
+      markBookingFieldInvalid('#phone', tr('validationPhone'), 'details');
+      return;
+    }
+    if (!data.carType) { markBookingFieldInvalid('#carType', tr('validationCar'), 'details'); return; }
+    if (!data.shootRegion) { markBookingFieldInvalid('#shootRegion', tr('validationRegion'), 'details'); return; }
+    if (!data.termsAgreement) { markBookingFieldInvalid('#termsAgreement', tr('validationTerms'), 'payment'); return; }
+
+    const lastSubmit = Number(sessionStorage.getItem('ayan_last_submit') || 0);
+    if (Date.now() - lastSubmit < 15000) {
+      showToast(tr('waitAlert'));
       return;
     }
 

@@ -30,7 +30,7 @@
     .payment-choice-icon{display:flex;align-items:center;gap:7px;min-width:68px;justify-content:center}.payment-choice-icon b{font-size:11px}
     .payment-choice-copy{display:grid;gap:2px}.payment-choice-copy strong{font-size:12px}.payment-choice-copy small{font-size:9px;color:#91a2b8;line-height:1.4}.payment-choice-price{font-size:12px;font-weight:900;white-space:nowrap}
     .payment-fee-note{text-align:center;color:var(--muted);font-size:9px;line-height:1.7;margin-top:11px}
-    .tabby-email-wrap{display:block;margin-top:12px}.tabby-email-wrap label{display:block;font-size:10px;color:var(--text-secondary);margin:0 0 6px}.checkout-email{width:100%;height:46px;padding:0 13px;border-radius:13px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);color:#eef5ff;outline:none}.checkout-email:focus{border-color:rgba(117,178,255,.58)}
+    .invoice-email-wrap{display:block;margin-top:16px}.tabby-email-wrap label{display:block;font-size:10px;color:var(--text-secondary);margin:0 0 6px}.checkout-email{width:100%;height:46px;padding:0 13px;border-radius:13px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);color:#eef5ff;outline:none}.checkout-email:focus{border-color:rgba(117,178,255,.58)}
     @media(max-width:620px){.payment-choice-grid{grid-template-columns:1fr}.payment-choice{grid-template-columns:auto 1fr auto}}
 </style>
 </head>
@@ -66,9 +66,10 @@
             </button>
           </div>
           <div class="payment-fee-note" id="paymentFeeNote"></div>
-          <div class="tabby-email-wrap" id="tabbyEmailWrap">
-            <label for="tabbyEmail">البريد الإلكتروني لإرسال الفاتورة</label>
-            <input id="tabbyEmail" class="checkout-email" aria-label="البريد الإلكتروني لإرسال الفاتورة" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+          <div class="invoice-email-wrap" id="invoiceEmailWrap">
+            <label for="invoiceEmail">البريد الإلكتروني لإرسال الفاتورة</label>
+            <input id="invoiceEmail" class="checkout-email" aria-label="البريد الإلكتروني لإرسال الفاتورة" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+            <small style="display:block;margin-top:6px;color:#7f8da1;font-size:9px;line-height:1.6">ستصلك الفاتورة وتفاصيل الطلب على هذا البريد بعد نجاح الدفع.</small>
           </div>
         </div>
 
@@ -92,8 +93,8 @@
       </section>
     </main>
   </div>
-  <script src="ui.js?v=61"></script>
-  <script src="app.js?v=61"></script>
+  <script src="ui.js?v=62"></script>
+  <script src="app.js?v=62"></script>
   <script>
     (() => {
       const key='ayan_checkout_data';
@@ -103,7 +104,7 @@
       try { order=JSON.parse(sessionStorage.getItem(key)||'null'); } catch(_) {}
       const ar=(localStorage.getItem('ayan_lang')||'ar')==='ar';
       const summary=document.getElementById('summary'), customer=document.getElementById('customer'), error=document.getElementById('error'), btn=document.getElementById('payBtn'), status=document.getElementById('status'), demo=document.getElementById('demoNotice');
-      const emailWrap=document.getElementById('tabbyEmailWrap'), emailInput=document.getElementById('tabbyEmail'), feeNote=document.getElementById('paymentFeeNote');
+      const emailInput=document.getElementById('invoiceEmail'), feeNote=document.getElementById('paymentFeeNote');
       const money=n=>`${Number(n||0).toFixed(2)} SAR`;
       const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
       const names={silver:ar?'الباقة الفضية':'Silver Package',basic:ar?'الباقة الأساسية':'Basic Package',advanced:ar?'الباقة المتقدمة':'Advanced Package',royal:ar?'الباقة السينمائية':'Cinematic Package'};
@@ -139,7 +140,6 @@
           const active=node.dataset.paymentMethod===selectedMethod;
           node.classList.toggle('selected',active);node.setAttribute('aria-pressed',String(active));
         });
-        emailWrap.classList.add('show');
         if(!emailInput.value) setTimeout(()=>emailInput?.focus(),60);
         renderSummary();
       }
