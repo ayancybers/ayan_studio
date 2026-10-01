@@ -39,36 +39,5 @@
         }
       ]
     }
-  ],
-  "outputDirectory": ".",
-  "rewrites": [
-    {
-      "source": "/api/send-invoice-email",
-      "destination": "/api/invoice?__route=send-invoice-email"
-    },
-    {
-      "source": "/api/send-invoice-pdf",
-      "destination": "/api/invoice?__route=send-invoice-pdf"
-    },
-    {
-      "source": "/api/send-whatsapp-confirmation",
-      "destination": "/api/whatsapp"
-    },
-    {
-      "source": "/api/tabby-payment",
-      "destination": "/api/tabby?__route=tabby-payment"
-    },
-    {
-      "source": "/api/tabby-webhook",
-      "destination": "/api/tabby?__route=tabby-webhook"
-    },
-    {
-      "source": "/api/tamara-payment",
-      "destination": "/api/tamara?__route=tamara-payment"
-    },
-    {
-      "source": "/api/tamara-webhook",
-      "destination": "/api/tamara?__route=tamara-webhook"
-    }
   ]
 }
