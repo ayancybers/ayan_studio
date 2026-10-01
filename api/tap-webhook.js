@@ -23,8 +23,7 @@ export default async function handler(req, res) {
   if (status === 'CAPTURED' && chargeId) {
     try { await notifyDiscord(payload, chargeId); }
     catch (error) { console.error('Discord notification failed', error); }
-    try { await notifyInvoiceEmail(payload, chargeId, req); }
-    catch (error) { console.error('Invoice email failed', error); }
+    if (String(process.env.INVOICE_WEBHOOK_FALLBACK || '').toLowerCase() === 'true') { try { await notifyInvoiceEmail(payload, chargeId, req); } catch (error) { console.error('Invoice email failed', error); } }
   }
 
   return res.status(200).json({ received: true, status, chargeId });

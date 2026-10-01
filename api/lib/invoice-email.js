@@ -1,4 +1,4 @@
-export async function sendInvoiceEmail({ provider, paymentId, data, req }) {
+export async function sendInvoiceEmail({ provider, paymentId, data, req, pdfBase64 = '', pdfFileName = '' }) {
   const apiKey = String(process.env.RESEND_API_KEY || '').trim();
   if (!apiKey) return { skipped: true, reason: 'RESEND_API_KEY is not configured' };
 
@@ -32,18 +32,18 @@ export async function sendInvoiceEmail({ provider, paymentId, data, req }) {
 
   const html = `<!doctype html>
 <html lang="${isArabic ? 'ar' : 'en'}" dir="${isArabic ? 'rtl' : 'ltr'}">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:24px 10px;background:#07111f;font-family:Arial,Helvetica,sans-serif;color:#17263b;">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"></head>
+<body style="margin:0;padding:24px 10px;background:#07111f;font-family:Arial,Helvetica,sans-serif;color:#17263b;-webkit-text-size-adjust:100%;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;">
     <tr><td align="center">
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:680px;border-collapse:separate;border-spacing:0;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.22);">
         <tr>
-          <td align="center" style="padding:30px 26px 28px;background:linear-gradient(135deg,#0d2238,#142f4b);color:#ffffff;">
-            <div style="margin:0 auto 14px;width:84px;height:84px;border-radius:50%;background:#ffffff;padding:5px;box-shadow:0 12px 32px rgba(0,0,0,.20);">
-              <img src="${escapeHtml(logoUrl)}" alt="Ayan Photography" width="74" height="74" style="display:block;width:74px;height:74px;border-radius:50%;object-fit:contain;border:0;outline:none;">
+          <td align="center" bgcolor="#0d2238" style="padding:30px 26px 28px;background:#0d2238;background:linear-gradient(135deg,#0d2238,#142f4b);color:#ffffff !important;">
+            <div style="margin:0 auto 14px;width:84px;height:84px;border-radius:50%;background:transparent;padding:0;box-shadow:0 10px 28px rgba(0,0,0,.28);overflow:hidden;">
+              <img src="${escapeHtml(logoUrl)}" alt="Ayan Photography" width="84" height="84" style="display:block;width:84px;height:84px;border-radius:50%;object-fit:cover;border:0;outline:none;background:transparent;">
             </div>
             <div style="font-size:11px;letter-spacing:.16em;font-weight:800;color:#7db7ff;">AYAN PHOTOGRAPHY</div>
-            <h1 style="margin:8px 0 5px;font-size:28px;line-height:1.25;color:#ffffff;">${isArabic ? 'فاتورة حجز إلكترونية' : 'Electronic Booking Invoice'}</h1>
+            <h1 style="margin:8px 0 5px;font-size:28px;line-height:1.25;color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;">${isArabic ? 'فاتورة حجز إلكترونية' : 'Electronic Booking Invoice'}</h1>
             <div style="font-size:12px;color:#b9c9db;">${escapeHtml(invoiceNo)}</div>
           </td>
         </tr>
@@ -105,6 +105,13 @@ export async function sendInvoiceEmail({ provider, paymentId, data, req }) {
   const bcc = String(process.env.EMAIL_BCC || '').trim();
   const body = { from, to:[email], subject, html };
   if (bcc) body.bcc = [bcc];
+  const cleanPdf = String(pdfBase64 || '').replace(/^data:application\/pdf;base64,/, '').trim();
+  if (cleanPdf) {
+    if (!/^[A-Za-z0-9+/=\r\n]+$/.test(cleanPdf)) throw new Error('Invalid PDF payload');
+    const bytes = Buffer.from(cleanPdf, 'base64');
+    if (bytes.length < 100 || bytes.length > 3_000_000) throw new Error('PDF size is invalid');
+    body.attachments = [{ filename: pdfFileName || `${invoiceNo}.pdf`, content: cleanPdf }];
+  }
 
   const response = await fetch('https://api.resend.com/emails', {
     method:'POST',

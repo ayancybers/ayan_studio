@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     }
     if (status === 'closed' && paymentId && !notifiedPayments.has(paymentId)) {
       try { await notifyDiscord(payload, paymentId); } catch (error) { console.error('Discord notification failed', error); }
-      try { await notifyInvoiceEmail(payload, paymentId, req); } catch (error) { console.error('Invoice email failed', error); }
+      if (String(process.env.INVOICE_WEBHOOK_FALLBACK || '').toLowerCase() === 'true') { try { await notifyInvoiceEmail(payload, paymentId, req); } catch (error) { console.error('Invoice email failed', error); } }
       notifiedPayments.add(paymentId);
     }
   } catch (error) {
