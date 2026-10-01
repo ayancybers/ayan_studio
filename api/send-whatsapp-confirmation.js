@@ -9,6 +9,7 @@ export default async function handler(req, res) {
 
   const body = req.body || {};
   const provider = body.provider === 'tabby' ? 'tabby' : 'tap';
+  const details = body.details && typeof body.details === 'object' ? body.details : {};
   const paymentId = String(body.paymentId || body.tapId || '').trim();
   if (!paymentId) return res.status(400).json({ error: 'Missing payment reference' });
 
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const data = provider === 'tabby'
+    let data = provider === 'tabby'
       ? await retrieveTabby(paymentId)
       : await retrieveTap(paymentId);
 
@@ -28,6 +29,8 @@ export default async function handler(req, res) {
     if (!confirmed) {
       return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
     }
+
+    data = mergeBookingDetails(data, details);
 
     const to = normalizeSaudiPhone(data.phone);
     if (!/^9665\d{8}$/.test(to)) {

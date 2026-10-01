@@ -64,7 +64,15 @@ async function notifyDiscord(payload, chargeId) {
   if (!webhookUrl || notifiedCharges.has(chargeId)) return;
   notifiedCharges.add(chargeId);
 
-  const metadata = payload.metadata || {};
+  let metadata = payload.metadata || {};
+  if (!metadata.customer_name || !metadata.phone || !metadata.package_name || !metadata.car_type || !metadata.shoot_region) {
+    try {
+      const enriched = await fetchTapCharge(chargeId);
+      metadata = { ...enriched.metadata, ...metadata };
+    } catch (error) {
+      console.warn('Tap webhook metadata enrichment failed', error?.message || String(error));
+    }
+  }
   const baseUrl = String(process.env.APP_BASE_URL || '').replace(/\/$/, '');
   const invoiceUrl = baseUrl ? `${baseUrl}/invoice.html?tap_id=${encodeURIComponent(chargeId)}` : '';
   const language = metadata.lang === 'en' ? 'EN' : 'AR';
@@ -110,6 +118,17 @@ async function notifyDiscord(payload, chargeId) {
 
   const response = await fetch(webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   if (!response.ok) { notifiedCharges.delete(chargeId); throw new Error(`Discord webhook returned ${response.status}`); }
+}
+
+async function fetchTapCharge(chargeId) {
+  const secret = String(process.env.TAP_SECRET_KEY || '').trim();
+  if (!secret) return {};
+  const r = await fetch(`https://api.tap.company/v2/charges/${encodeURIComponent(chargeId)}`, {
+    headers: { Authorization: `Bearer ${secret}`, accept: 'application/json' }
+  });
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(body?.response?.message || `Tap returned ${r.status}`);
+  return { metadata: body.metadata || {} };
 }
 
 function limit(value, max = 1000) { return String(value ?? '').slice(0, max); }

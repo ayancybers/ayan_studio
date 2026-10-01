@@ -1,4 +1,5 @@
-import { put, issueSignedToken, presignUrl } from '@vercel/blob';
+import { put } from '@vercel/blob';
+import crypto from 'node:crypto';
 import { sendInvoiceEmail } from './lib/invoice-email.js';
 
 export default async function handler(req, res) {
@@ -10,13 +11,17 @@ export default async function handler(req, res) {
   const provider = body.provider === 'tabby' ? 'tabby' : 'tap';
   const paymentId = String(body.paymentId || body.tapId || '').trim();
   const pdfBase64 = String(body.pdfBase64 || '').trim();
+  const details = body.details && typeof body.details === 'object' ? body.details : {};
   if (!paymentId) return res.status(400).json({ error: 'Missing payment reference' });
   if (!pdfBase64) return res.status(400).json({ error: 'Missing PDF' });
 
   try {
-    const data = provider === 'tabby' ? await retrieveTabby(paymentId) : await retrieveTap(paymentId);
+    let data = provider === 'tabby' ? await retrieveTabby(paymentId) : await retrieveTap(paymentId);
     const ok = provider === 'tabby' ? data.status === 'CLOSED' : data.status === 'CAPTURED';
     if (!ok) return res.status(409).json({ error: 'Payment is not confirmed yet', status: data.status });
+
+    const safeDetails = sanitizeBookingDetails(details);
+    data = mergeBookingDetails(data, safeDetails);
 
     const ref = String(data.paymentId || data.tapId || paymentId);
     const invoiceNo = `AYAN-${ref.replace(/[^A-Za-z0-9]/g, '').slice(-12).toUpperCase()}`;
@@ -59,7 +64,8 @@ export default async function handler(req, res) {
           data,
           ref,
           invoiceNo,
-          pdfBytes: bytes
+          pdfBytes: bytes,
+          req
         });
       } catch (error) {
         errors.push(`whatsapp-pdf: ${error?.message || String(error)}`);
@@ -78,7 +84,7 @@ export default async function handler(req, res) {
   }
 }
 
-async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes }) {
+async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes, req }) {
   const token = String(process.env.WHATSLOOP_TOKEN || '').trim();
   const channelId = Number(process.env.WHATSLOOP_CHANNEL_ID || 0);
   const baseUrl = String(process.env.WHATSLOOP_API_BASE_URL || 'https://api.whatsloop.net/v1').trim().replace(/\/$/, '');
@@ -87,23 +93,19 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes }) {
 
   const to = normalizeSaudiPhone(data.phone);
   if (!/^9665\d{8}$/.test(to)) throw new Error('Customer WhatsApp number is missing or invalid');
+
   const blob = await put(`invoices/${invoiceNo}.pdf`, pdfBytes, {
     access: 'private',
     addRandomSuffix: true,
     contentType: 'application/pdf'
   });
 
-  const expiresAt = Date.now() + 10 * 60 * 1000;
-  const delegation = await issueSignedToken({
-    pathname: blob.pathname,
-    operations: ['get'],
-    validUntil: expiresAt
-  });
-  const { presignedUrl } = await presignUrl(delegation, {
-    pathname: blob.pathname,
-    operation: 'get',
-    validUntil: expiresAt
-  });
+  // WhatsLoop needs a URL it can fetch without our Blob credentials. Use a short-lived
+  // signed relay endpoint on the same Vercel project; the PDF remains in Private Blob.
+  const expiresAt = Date.now() + 30 * 60 * 1000;
+  const signature = signRelayToken(blob.pathname, expiresAt, token);
+  const origin = getBaseUrl(req);
+  const mediaUrl = `${origin}/api/whatsapp-invoice-file?path=${encodeURIComponent(blob.pathname)}&exp=${expiresAt}&sig=${encodeURIComponent(signature)}`;
 
   const caption = data.lang === 'en'
     ? `Ayan Photography • Invoice ${invoiceNo}`
@@ -120,7 +122,7 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes }) {
       channel_id: channelId,
       to,
       type: 'document',
-      media_url: presignedUrl,
+      media_url: mediaUrl,
       caption
     }),
     signal: timeoutSignal(20000)
@@ -132,6 +134,47 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes }) {
     throw new Error(reason);
   }
   return true;
+}
+
+function signRelayToken(pathname, expiresAt, secret) {
+  return crypto.createHmac('sha256', secret).update(`${pathname}|${expiresAt}`).digest('hex');
+}
+
+function getBaseUrl(req) {
+  const configured = String(process.env.APP_BASE_URL || '').trim().replace(/\/$/, '');
+  if (configured) return configured;
+  const proto = String(req?.headers?.['x-forwarded-proto'] || 'https').split(',')[0];
+  const host = String(req?.headers?.host || '').split(',')[0];
+  return `${proto}://${host}`;
+}
+
+function sanitizeBookingDetails(value) {
+  const input = value && typeof value === 'object' ? value : {};
+  return {
+    customerName: limit(input.customerName, 120),
+    email: limit(input.email, 160).toLowerCase(),
+    phone: limit(input.phone, 30),
+    packageName: limit(input.packageName, 120),
+    packageNameAr: limit(input.packageNameAr, 120),
+    packageNameEn: limit(input.packageNameEn, 120),
+    carType: limit(input.carType, 120),
+    shootRegion: limit(input.shootRegion, 120),
+    notes: limit(input.notes || '—', 1200),
+    termsAccepted: input.termsAccepted === true,
+    termsAcceptedAt: limit(input.termsAcceptedAt, 120),
+    lang: input.lang === 'en' ? 'en' : 'ar'
+  };
+}
+
+function mergeBookingDetails(serverData, clientDetails) {
+  const out = { ...serverData };
+  const keys = ['customerName','email','phone','packageName','packageNameAr','packageNameEn','carType','shootRegion','notes','termsAcceptedAt','lang'];
+  for (const key of keys) {
+    const value = clientDetails?.[key];
+    if ((out[key] === undefined || out[key] === null || out[key] === '' || out[key] === '—') && value) out[key] = value;
+  }
+  if (out.termsAccepted !== true && clientDetails?.termsAccepted === true) out.termsAccepted = true;
+  return out;
 }
 
 async function retrieveTap(id) {
@@ -161,7 +204,24 @@ async function sendDiscordPdf({ provider, paymentId, data, pdfBytes, fileName })
 
   const form = new FormData();
   const title = provider === 'tabby' ? '📄 AYAN PHOTOGRAPHY • TABBY PDF INVOICE' : '📄 AYAN PHOTOGRAPHY • TAP PDF INVOICE';
-  const payload = { embeds: [{ title, description: `PDF invoice for **${String(data.customerName || 'Customer').slice(0, 100)}** • ${Number(data.total || data.amount || 0).toFixed(2)} SAR`, color: 3066993, fields: [{ name: '🆔 Payment ID', value: limit(paymentId, 100), inline: true }, { name: '📦 Package', value: limit(data.packageName || '—', 100), inline: true }, { name: '🚗 Car', value: limit(data.carType || '—', 80), inline: true }, { name: '📍 Shoot Area', value: limit(data.shootRegion || '—', 80), inline: true }, { name: '💰 Total', value: `${Number(data.total || data.amount || 0).toFixed(2)} SAR`, inline: true }, { name: '🕒 Payment Date', value: formatDiscordDate(data.created), inline: true }], timestamp: new Date().toISOString(), footer: { text: 'Ayan Photography • PDF Invoice' } }] };
+  const fields = [
+    { name: '🆔 Payment ID', value: limit(paymentId, 100), inline: true },
+    { name: '👤 Customer', value: limit(data.customerName || '—', 100), inline: true },
+    { name: '📱 WhatsApp', value: limit(data.phone || '—', 100), inline: true },
+    { name: '📧 Email', value: limit(data.email || '—', 140), inline: true },
+    { name: '📦 Package', value: limit(data.packageName || data.packageNameAr || data.packageNameEn || '—', 100), inline: true },
+    { name: '🚗 Car', value: limit(data.carType || '—', 80), inline: true },
+    { name: '📍 Shoot Area', value: limit(data.shootRegion || '—', 80), inline: true },
+    { name: '💵 Package Price', value: `${Number(data.subtotal || 0).toFixed(2)} SAR`, inline: true },
+    { name: '🧾 Payment Fee', value: `+ ${Number(data.paymentFee || data.serviceFee || 0).toFixed(2)} SAR`, inline: true },
+    { name: '✅ Paid Total', value: `${Number(data.total || data.amount || 0).toFixed(2)} SAR`, inline: true },
+    { name: '🕒 Payment Date', value: formatDiscordDate(data.created), inline: true },
+    { name: '📜 Terms & Conditions', value: data.termsAccepted === true ? '✅ Accepted before payment' : '⚠️ Not recorded', inline: true },
+    { name: '🕒 Terms Accepted At', value: limit(formatDiscordDate(data.termsAcceptedAt) || '—', 100), inline: true },
+    { name: '🌐 Language', value: data.lang === 'en' ? 'EN' : 'AR', inline: true },
+    { name: '💬 Notes', value: limit(data.notes || '—', 900), inline: false }
+  ];
+  const payload = { embeds: [{ title, description: `PDF invoice for **${String(data.customerName || 'Customer').slice(0, 100)}** • ${Number(data.total || data.amount || 0).toFixed(2)} SAR`, color: 3066993, fields, timestamp: new Date().toISOString(), footer: { text: 'Ayan Photography • PDF Invoice' } }] };
   form.append('payload_json', JSON.stringify(payload));
   form.append('files[0]', new Blob([pdfBytes], { type: 'application/pdf' }), fileName);
 

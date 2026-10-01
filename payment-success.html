@@ -112,8 +112,8 @@ async function verify(attempt=0){
       const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- طريقة الدفع: ${isTabby?'تابي':'بطاقة'}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.paymentId||data.tapId||paymentId}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Payment method: ${isTabby?'Tabby':'Card'}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Payment ID: ${data.paymentId||data.tapId||paymentId}`;
       whatsappLink.href='https://wa.me/'+business+'?text='+encodeURIComponent(msg);
       actions.classList.remove('hidden');
-      void sendPdfInvoice(provider, paymentId);
-      void sendWhatsAppConfirmation(provider, paymentId);
+      void sendPdfInvoice(provider, paymentId, data);
+      void sendWhatsAppConfirmation(provider, paymentId, data);
       sessionStorage.removeItem('ayan_tabby_payment_id');
       return;
     }
@@ -156,12 +156,12 @@ async function sendInvoiceEmail(providerValue, paymentRef){
   }
 }
 
-async function sendWhatsAppConfirmation(providerValue, paymentRef){
+async function sendWhatsAppConfirmation(providerValue, paymentRef, bookingData = {}){
   if(!paymentRef || !emailStatus) return;
   const key=`ayan_whatsapp_sent_${providerValue}_${paymentRef}`;
   if(sessionStorage.getItem(key)==='1') return;
   try{
-    const r=await fetch('/api/send-whatsapp-confirmation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef})});
+    const r=await fetch('/api/send-whatsapp-confirmation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,details:{customerName:bookingData.customerName||'',email:bookingData.email||'',phone:bookingData.phone||'',packageName:bookingData.packageName||'',packageNameAr:bookingData.packageNameAr||'',packageNameEn:bookingData.packageNameEn||'',carType:bookingData.carType||'',shootRegion:bookingData.shootRegion||'',notes:bookingData.notes||'',termsAccepted:bookingData.termsAccepted===true,termsAcceptedAt:bookingData.termsAcceptedAt||'',lang:bookingData.lang==='en'?'en':'ar'}})});
     const d=await r.json().catch(()=>({}));
     if(r.ok && d.sent){
       sessionStorage.setItem(key,'1');
@@ -174,7 +174,7 @@ async function sendWhatsAppConfirmation(providerValue, paymentRef){
     console.error('WhatsApp confirmation failed',error);
   }
 }
-async function sendPdfInvoice(providerValue, paymentRef){
+async function sendPdfInvoice(providerValue, paymentRef, bookingData = {}){
   if(!paymentRef || !emailStatus) return;
   const key=`ayan_pdf_sent_${providerValue}_${paymentRef}`;
   window.__whatsappPdfEnabled = true;
@@ -193,7 +193,7 @@ async function sendPdfInvoice(providerValue, paymentRef){
     const invoiceNo=iframe.contentDocument?.querySelector('.invoice-meta .ref')?.textContent?.replace(/^.*?:\s*/,'').trim() || `AYAN-${paymentRef}`;
     const blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo);
     const base64=await blobToBase64(blob);
-    const r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})});
+    const r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64,details:{customerName:bookingData.customerName||'',email:bookingData.email||'',phone:bookingData.phone||'',packageName:bookingData.packageName||'',packageNameAr:bookingData.packageNameAr||'',packageNameEn:bookingData.packageNameEn||'',carType:bookingData.carType||'',shootRegion:bookingData.shootRegion||'',notes:bookingData.notes||'',termsAccepted:bookingData.termsAccepted===true,termsAcceptedAt:bookingData.termsAcceptedAt||'',lang:bookingData.lang==='en'?'en':'ar'}})});
     const d=await r.json().catch(()=>({}));
     if(!r.ok) throw new Error(d.error||'PDF delivery failed');
     const allDelivered = d.emailSent && d.discordSent && (!window.__whatsappPdfEnabled || d.whatsappPdfSent);
