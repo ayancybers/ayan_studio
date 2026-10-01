@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     if (bytes.length < 100 || bytes.length > 3_500_000) return res.status(413).json({ error: 'PDF is too large' });
     if (bytes.subarray(0, 4).toString() !== '%PDF') return res.status(400).json({ error: 'Invalid PDF file' });
 
-    const result = { success: true, emailSent: false, discordSent: false, whatsappPdfSent: false };
+    const result = { success: true, emailSent: false, discordSent: false, whatsappTextSent: false, whatsappPdfSent: false, whatsappMessageId: '', whatsappPdfMessageId: '' };
     const errors = [];
 
     // 1) Email with the real PDF attachment. A separate idempotency key is used for PDF vs HTML-only mail.
@@ -57,23 +57,27 @@ export default async function handler(req, res) {
       errors.push(`discord: ${error?.message || String(error)}`);
     }
 
-    // 3) WhatsLoop: upload the PDF to a private Vercel Blob and hand WhatsLoop a short-lived signed GET URL.
+    // 3) WhatsLoop: send the confirmation text first, then the same PDF as a document.
     if (boolEnv('WHATSLOOP_ENABLED', false)) {
       try {
-        result.whatsappPdfSent = await sendWhatsLoopPdf({
+        const wa = await sendWhatsLoopBooking({
           data,
           ref,
           invoiceNo,
           pdfBytes: bytes,
           req
         });
+        result.whatsappTextSent = Boolean(wa?.textSent);
+        result.whatsappPdfSent = Boolean(wa?.pdfSent);
+        result.whatsappMessageId = wa?.textMessageId || '';
+        result.whatsappPdfMessageId = wa?.pdfMessageId || '';
       } catch (error) {
-        errors.push(`whatsapp-pdf: ${error?.message || String(error)}`);
+        errors.push(`whatsapp: ${error?.message || String(error)}`);
       }
     }
 
     if (errors.length) console.error('Invoice delivery partial result', { provider, paymentId, result, errors });
-    if (!result.emailSent && !result.discordSent && !result.whatsappPdfSent) {
+    if (!result.emailSent && !result.discordSent && !result.whatsappTextSent && !result.whatsappPdfSent) {
       return res.status(502).json({ error: 'No invoice delivery channel succeeded', details: errors.slice(0, 3) });
     }
 
@@ -84,7 +88,7 @@ export default async function handler(req, res) {
   }
 }
 
-async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes, req }) {
+async function sendWhatsLoopBooking({ data, ref, invoiceNo, pdfBytes, req }) {
   const token = String(process.env.WHATSLOOP_TOKEN || '').trim();
   const channelId = Number(process.env.WHATSLOOP_CHANNEL_ID || 0);
   const baseUrl = String(process.env.WHATSLOOP_API_BASE_URL || 'https://api.whatsloop.net/v1').trim().replace(/\/$/, '');
@@ -94,6 +98,85 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes, req }) {
   const to = normalizeSaudiPhone(data.phone);
   if (!/^9665\d{8}$/.test(to)) throw new Error('Customer WhatsApp number is missing or invalid');
 
+  const total = Number(data.total || data.amount || 0);
+  const packageName = data.packageNameAr || data.packageName || data.packageNameEn || 'الباقة';
+  const message = data.lang === 'en'
+    ? [
+        `Hello ${firstName(data.customerName)} 👋`,
+        '✅ Your booking has been confirmed successfully. Thank you for completing the payment.',
+        `📸 Package: ${packageName}`,
+        `💰 Total: ${total.toFixed(2)} SAR`,
+        `🧾 Invoice: ${invoiceNo}`,
+        'Please wait until we contact you to schedule your photography session.',
+        'Thank you for choosing Ayan Photography 🤍'
+      ].join('\n')
+    : [
+        `السلام عليكم ${firstName(data.customerName)}👋`,
+        '✅ تم تأكيد حجزك بنجاح، شكرًا لإتمام الدفع.',
+        `📸 الباقة: ${packageName}`,
+        `💰 المبلغ: ${total.toFixed(2)} ريال`,
+        `🧾 رقم الفاتورة: ${invoiceNo}`,
+        'يرجى الانتظار حتى يتم التواصل معك لتحديد موعد التصوير.',
+        'شكرًا لاختيارك Ayan Photography 🤍'
+      ].join('\n');
+
+  // Preflight: confirm the destination is actually registered on WhatsApp.
+  const checkResponse = await fetch(`${baseUrl}/messages/check-phone`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      accept: 'application/json'
+    },
+    body: JSON.stringify({ channel_id: channelId, phone: to }),
+    signal: timeoutSignal(12000)
+  });
+  const checkResult = await checkResponse.json().catch(() => ({}));
+  if (!checkResponse.ok || checkResult?.success === false) {
+    throw new Error(`WhatsLoop could not verify ${to}: ${checkResult?.message || checkResult?.error || checkResponse.status}`);
+  }
+
+  // Send text first using the documented /messages/send endpoint.
+  let textResult = {};
+  let textResponse = await fetch(`${baseUrl}/messages/send`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      accept: 'application/json'
+    },
+    body: JSON.stringify({
+      channel_id: channelId,
+      to,
+      type: 'text',
+      text: message
+    }),
+    signal: timeoutSignal(15000)
+  });
+  textResult = await textResponse.json().catch(() => ({}));
+
+  // Compatibility fallback for accounts where the legacy text endpoint is enabled.
+  if (!textResponse.ok || textResult?.success === false) {
+    const fallback = await fetch(`${baseUrl}/messages/send-text`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        accept: 'application/json'
+      },
+      body: JSON.stringify({ channel_id: channelId, to, message }),
+      signal: timeoutSignal(15000)
+    });
+    const fallbackResult = await fallback.json().catch(() => ({}));
+    if (!fallback.ok || fallbackResult?.success === false) {
+      throw new Error(`WhatsLoop text failed: ${fallbackResult?.message || fallbackResult?.error || textResult?.message || textResult?.error || fallback.status}`);
+    }
+    textResult = fallbackResult;
+  }
+
+  // Give the engine a moment to queue the text before uploading/sending the document.
+  await sleep(1200);
+
   const blob = await put(`invoices/${invoiceNo}.pdf`, pdfBytes, {
     access: 'private',
     addRandomSuffix: true,
@@ -101,31 +184,17 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes, req }) {
     cacheControlMaxAge: 60
   });
 
-  // Give WhatsLoop a short-lived, scoped URL that can be fetched without Blob credentials.
-  // Vercel Signed URLs are specifically designed for this and keep the invoice private.
-  let mediaUrl = '';
-  try {
-    const signingToken = await issueSignedToken({ operations: ['get'] });
-    const signed = await presignUrl(signingToken, {
-      pathname: blob.pathname,
-      operation: 'get',
-      validUntil: Date.now() + 15 * 60 * 1000
-    });
-    mediaUrl = signed.presignedUrl;
-  } catch (signedUrlError) {
-    // Fallback to the project relay for environments where Signed URLs are not available yet.
-    console.error('WhatsLoop signed URL generation failed; using relay fallback', signedUrlError?.message || String(signedUrlError));
-    const expiresAt = Date.now() + 15 * 60 * 1000;
-    const signature = signRelayToken(blob.pathname, expiresAt, token);
-    const origin = getBaseUrl(req);
-    mediaUrl = `${origin}/api/whatsapp-invoice-file?path=${encodeURIComponent(blob.pathname)}&exp=${expiresAt}&sig=${encodeURIComponent(signature)}&filename=${encodeURIComponent(`${invoiceNo}.pdf`)}`;
-  }
+  // Use our signed relay URL for the external media fetch. This avoids exposing Blob credentials.
+  const expiresAt = Date.now() + 15 * 60 * 1000;
+  const signature = signRelayToken(blob.pathname, expiresAt, token);
+  const origin = getBaseUrl(req);
+  const mediaUrl = `${origin}/api/whatsapp-invoice-file?path=${encodeURIComponent(blob.pathname)}&exp=${expiresAt}&sig=${encodeURIComponent(signature)}&filename=${encodeURIComponent(`${invoiceNo}.pdf`)}`;
 
   const caption = data.lang === 'en'
     ? `Ayan Photography • Invoice ${invoiceNo}`
     : `Ayan Photography • فاتورة الحجز ${invoiceNo}`;
 
-  const response = await fetch(`${baseUrl}/messages/send`, {
+  const pdfResponse = await fetch(`${baseUrl}/messages/send`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -141,13 +210,25 @@ async function sendWhatsLoopPdf({ data, ref, invoiceNo, pdfBytes, req }) {
     }),
     signal: timeoutSignal(20000)
   });
-
-  const result = await response.json().catch(() => ({}));
-  if (!response.ok || result?.success === false) {
-    const reason = result?.message || result?.error || `WhatsLoop returned ${response.status}`;
-    throw new Error(reason);
+  const pdfResult = await pdfResponse.json().catch(() => ({}));
+  if (!pdfResponse.ok || pdfResult?.success === false) {
+    throw new Error(`WhatsLoop PDF failed: ${pdfResult?.message || pdfResult?.error || pdfResponse.status}`);
   }
-  return true;
+
+  return {
+    textSent: true,
+    pdfSent: true,
+    textMessageId: pdfSafeId(textResult),
+    pdfMessageId: pdfSafeId(pdfResult)
+  };
+}
+
+function pdfSafeId(result) {
+  return result?.data?.message_id || result?.data?.id || '';
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function signRelayToken(pathname, expiresAt, secret) {

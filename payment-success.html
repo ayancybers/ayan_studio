@@ -113,7 +113,6 @@ async function verify(attempt=0){
       whatsappLink.href='https://wa.me/'+business+'?text='+encodeURIComponent(msg);
       actions.classList.remove('hidden');
       void sendPdfInvoice(provider, paymentId, data);
-      void sendWhatsAppConfirmation(provider, paymentId, data);
       sessionStorage.removeItem('ayan_tabby_payment_id');
       return;
     }
