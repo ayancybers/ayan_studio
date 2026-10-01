@@ -752,6 +752,7 @@ function updateBookingFlowSummary() {
   const phone = document.querySelector('#phone')?.value.trim() || '';
   const car = document.querySelector('#carType')?.value || '';
   const region = document.querySelector('#shootRegion')?.value || '';
+  const notes = document.querySelector('#notes')?.value.trim() || '';
   const terms = document.querySelector('#termsAgreement')?.checked === true;
   const packageValue = document.querySelector('#packageType')?.value || '';
   const packageNode = document.querySelector('[data-flow-value="package"]');
@@ -759,17 +760,21 @@ function updateBookingFlowSummary() {
   const paymentNode = document.querySelector('[data-flow-value="payment"]');
   const detailsName = document.querySelector('[data-flow-name]');
   const detailsPhone = document.querySelector('[data-flow-phone]');
+  const detailsCar = document.querySelector('[data-flow-car]');
   const detailsRegion = document.querySelector('[data-flow-region]');
+  const detailsNotes = document.querySelector('[data-flow-notes]');
 
   document.querySelectorAll('.booking-signature-step').forEach((el) => el.classList.remove('is-active', 'is-done'));
 
   if (packageNode) packageNode.textContent = packageValue ? `${tr('flowSelected')}: ${packageValue}` : tr('flowStep1');
   if (detailsNode) {
-    detailsNode.setAttribute('aria-label', [name, phone, region].filter(Boolean).join('، ') || tr('flowStep2'));
+    detailsNode.setAttribute('aria-label', [name, phone, car, region, notes].filter(Boolean).join('، ') || tr('flowStep2'));
   }
   if (detailsName) detailsName.textContent = name || tr('flowStep2');
   if (detailsPhone) detailsPhone.textContent = phone || '—';
+  if (detailsCar) detailsCar.textContent = car || '—';
   if (detailsRegion) detailsRegion.textContent = region || '—';
+  if (detailsNotes) detailsNotes.textContent = notes ? notes : '—';
   const detailsComplete = !!name && /^05\d{8}$/.test(phone) && !!car && !!region;
   if (paymentNode) paymentNode.textContent = terms && detailsComplete ? tr('flowReady') : tr('flowStep3');
 
@@ -785,7 +790,7 @@ function setupBookingForm() {
   const form = document.querySelector('#bookingForm');
   if (!form) return;
 
-  ['fullName','phone','carType','shootRegion','termsAgreement'].forEach((id) => {
+  ['fullName','phone','carType','shootRegion','notes','termsAgreement'].forEach((id) => {
     const node = document.getElementById(id);
     node?.addEventListener('input', () => { clearBookingValidation(); updateBookingFlowSummary(); });
     node?.addEventListener('change', () => { clearBookingValidation(); updateBookingFlowSummary(); });

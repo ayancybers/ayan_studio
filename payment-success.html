@@ -30,12 +30,13 @@ const lang = localStorage.getItem('ayan_lang') === 'en' ? 'en' : 'ar';
 document.documentElement.lang = lang;
 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 const qs = new URLSearchParams(location.search);
-const provider = qs.get('provider') === 'tabby' ? 'tabby' : 'tap';
+const provider = qs.get('provider') === 'tabby' ? 'tabby' : qs.get('provider') === 'tamara' ? 'tamara' : 'tap';
 const isTabby = provider === 'tabby';
+const isTamara = provider === 'tamara';
 const t = lang === 'ar'
   ? {
       checking:'جاري التحقق من الدفع',
-      checkText:isTabby?'لحظات ونراجع العملية مباشرة مع تابي.':'لحظات ونراجع العملية مباشرة مع Tap.',
+      checkText:isTabby?'لحظات ونراجع العملية مباشرة مع تابي.':isTamara?'لحظات ونراجع العملية مباشرة مع تمارا.':'لحظات ونراجع العملية مباشرة مع Tap.',
       checkingStatus:'جاري التحقق…',
       success:'تم الدفع بنجاح 🎉',
       successText:'تم تأكيد دفعتك بنجاح. تقدر تحمل الفاتورة وتكمل التنسيق معنا.',
@@ -68,7 +69,9 @@ document.getElementById('invoiceLink').textContent=t.invoice;
 document.getElementById('whatsappLink').textContent=t.wa;
 const paymentId = isTabby
   ? (qs.get('payment_id') || sessionStorage.getItem('ayan_tabby_payment_id') || '')
-  : (qs.get('tap_id') || '');
+  : isTamara
+    ? (qs.get('order_id') || qs.get('payment_id') || sessionStorage.getItem('ayan_tamara_order_id') || '')
+    : (qs.get('tap_id') || '');
 const statusNode=document.getElementById('status');
 const icon=document.getElementById('icon');
 const actions=document.getElementById('actions');
@@ -94,10 +97,10 @@ async function verify(attempt=0){
     return;
   }
   try{
-    const endpoint=isTabby?'/api/tabby-payment?payment_id=':'/api/payment?tap_id=';
+    const endpoint=isTabby?'/api/tabby-payment?payment_id=':isTamara?'/api/tamara-payment?order_id=':'/api/payment?tap_id=';
     const r=await fetch(endpoint+encodeURIComponent(paymentId),{cache:'no-store'});
     const data=await r.json();
-    const success=isTabby ? data.success && data.status==='CLOSED' : data.success && data.status==='CAPTURED';
+    const success=isTabby ? data.success && data.status==='CLOSED' : isTamara ? data.success && ['APPROVED','AUTHORISED','FULLY_CAPTURED','PARTIALLY_CAPTURED'].includes(String(data.status||'').toUpperCase().replace(/\s+/g,'_')) : data.success && data.status==='CAPTURED';
     if(success){
       icon.textContent='✓';
       document.getElementById('title').textContent=t.success;
@@ -107,13 +110,15 @@ async function verify(attempt=0){
         ? `سعر الباقة: <b>${Number(data.subtotal||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; رسوم الدفع: <b>${Number(data.paymentFee||data.serviceFee||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; الإجمالي: <b>${Number(data.total||data.amount||0).toFixed(2)} SAR</b>`
         : `Package: <b>${Number(data.subtotal||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; Payment fee: <b>${Number(data.paymentFee||data.serviceFee||0).toFixed(2)} SAR</b> &nbsp; • &nbsp; Total: <b>${Number(data.total||data.amount||0).toFixed(2)} SAR</b>`;
       breakdown.classList.remove('hidden');
-      invoiceLink.href=isTabby?'/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentId):'/invoice.html?tap_id='+encodeURIComponent(paymentId);
+      invoiceLink.href=isTabby?'/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentId):isTamara?'/invoice.html?provider=tamara&order_id='+encodeURIComponent(paymentId):'/invoice.html?tap_id='+encodeURIComponent(paymentId);
       const business='966565117739';
-      const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- طريقة الدفع: ${isTabby?'تابي':'بطاقة'}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.paymentId||data.tapId||paymentId}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Payment method: ${isTabby?'Tabby':'Card'}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Payment ID: ${data.paymentId||data.tapId||paymentId}`;
+      const msg=lang==='ar'?`السلام عليكم، تم الدفع للحجز\n- الاسم: ${data.customerName||''}\n- الباقة: ${data.packageName||''}\n- طريقة الدفع: ${isTabby?'تابي':isTamara?'تمارا':'بطاقة'}\n- الإجمالي: ${Number(data.amount||0).toFixed(2)} ريال\n- رقم العملية: ${data.paymentId||data.tapId||paymentId}`:`Hello, my booking payment is completed\n- Name: ${data.customerName||''}\n- Package: ${data.packageName||''}\n- Payment method: ${isTabby?'Tabby':isTamara?'Tamara':'Card'}\n- Total: ${Number(data.amount||0).toFixed(2)} SAR\n- Payment ID: ${data.paymentId||data.tapId||paymentId}`;
       whatsappLink.href='https://wa.me/'+business+'?text='+encodeURIComponent(msg);
       actions.classList.remove('hidden');
-      sendInvoiceEmail(provider, paymentId);
+      void sendPdfInvoice(provider, paymentId, data);
+      void sendWhatsAppConfirmation(provider, paymentId, data);
       sessionStorage.removeItem('ayan_tabby_payment_id');
+      sessionStorage.removeItem('ayan_tamara_order_id');
       return;
     }
     if(attempt<8){
@@ -154,6 +159,135 @@ async function sendInvoiceEmail(providerValue, paymentRef){
     emailStatus.classList.remove('hidden');
   }
 }
+
+async function sendWhatsAppConfirmation(providerValue, paymentRef, bookingData = {}){
+  if(!paymentRef || !emailStatus) return;
+  const key=`ayan_whatsapp_sent_${providerValue}_${paymentRef}`;
+  if(sessionStorage.getItem(key)==='1') return;
+  try{
+    const r=await fetch('/api/send-whatsapp-confirmation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,details:{customerName:bookingData.customerName||'',email:bookingData.email||'',phone:bookingData.phone||'',packageName:bookingData.packageName||'',packageNameAr:bookingData.packageNameAr||'',packageNameEn:bookingData.packageNameEn||'',carType:bookingData.carType||'',shootRegion:bookingData.shootRegion||'',notes:bookingData.notes||'',termsAccepted:bookingData.termsAccepted===true,termsAcceptedAt:bookingData.termsAcceptedAt||'',lang:bookingData.lang==='en'?'en':'ar'}})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok && d.sent){
+      sessionStorage.setItem(key,'1');
+      emailStatus.textContent=lang==='ar'
+        ? '✅ تم إرسال رسالة تأكيد الحجز إلى واتساب.'
+        : '✅ Your booking confirmation was sent to WhatsApp.';
+      emailStatus.classList.remove('hidden');
+    }
+  }catch(error){
+    console.error('WhatsApp confirmation failed',error);
+  }
+}
+async function sendPdfInvoice(providerValue, paymentRef, bookingData = {}){
+  if(!paymentRef || !emailStatus) return;
+  const key=`ayan_pdf_sent_${providerValue}_${paymentRef}`;
+  if(sessionStorage.getItem(key)==='1') return;
+
+  emailStatus.textContent=lang==='ar'?'جاري تجهيز وإرسال الفاتورة PDF…':'Preparing and sending your PDF invoice…';
+  emailStatus.classList.remove('hidden');
+
+  let iframe;
+  try{
+    const invoiceUrl=providerValue==='tabby'
+      ? '/invoice.html?provider=tabby&payment_id='+encodeURIComponent(paymentRef)+'&embed=1'
+      : providerValue==='tamara'
+        ? '/invoice.html?provider=tamara&order_id='+encodeURIComponent(paymentRef)+'&embed=1'
+        : '/invoice.html?tap_id='+encodeURIComponent(paymentRef)+'&embed=1';
+
+    iframe=document.createElement('iframe');
+    iframe.style.position='fixed';
+    iframe.style.left='-10000px';
+    iframe.style.top='0';
+    iframe.style.width='900px';
+    iframe.style.height='1400px';
+    iframe.style.border='0';
+    iframe.setAttribute('aria-hidden','true');
+    document.body.appendChild(iframe);
+
+    await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(new Error('Invoice load timeout')),20000);
+      iframe.onload=()=>{clearTimeout(timer);resolve()};
+      iframe.onerror=()=>{clearTimeout(timer);reject(new Error('Invoice load failed'))};
+      iframe.src=invoiceUrl;
+    });
+
+    if(iframe.contentWindow.invoiceReady){
+      await Promise.race([
+        iframe.contentWindow.invoiceReady,
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error('Invoice data timeout')),20000))
+      ]);
+    }
+
+    await new Promise(r=>setTimeout(r,300));
+    const invoiceNo=iframe.contentDocument?.querySelector('.invoice-meta .ref')?.textContent?.replace(/^.*?:\s*/,'').trim() || `AYAN-${paymentRef}`;
+    if(typeof iframe.contentWindow.generateInvoicePdfBlob!=='function') throw new Error('Invoice PDF generator unavailable');
+
+    const blob=await iframe.contentWindow.generateInvoicePdfBlob(invoiceNo);
+    const base64=await blobToBase64(blob);
+    const r=await fetch('/api/send-invoice-pdf',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        provider:providerValue,
+        paymentId:paymentRef,
+        pdfBase64:base64,
+        details:{
+          customerName:bookingData.customerName||'',
+          email:bookingData.email||'',
+          phone:bookingData.phone||'',
+          packageName:bookingData.packageName||'',
+          packageNameAr:bookingData.packageNameAr||'',
+          packageNameEn:bookingData.packageNameEn||'',
+          carType:bookingData.carType||'',
+          shootRegion:bookingData.shootRegion||'',
+          notes:bookingData.notes||'',
+          termsAccepted:bookingData.termsAccepted===true,
+          termsAcceptedAt:bookingData.termsAcceptedAt||'',
+          lang:bookingData.lang==='en'?'en':'ar'
+        }
+      })
+    });
+
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(d.error||'PDF delivery failed');
+
+    const emailOk=Boolean(d.emailSent);
+    const discordOk=Boolean(d.discordSent);
+    if(emailOk && discordOk) sessionStorage.setItem(key,'1');
+
+    if(lang==='ar'){
+      if(emailOk && discordOk){
+        emailStatus.textContent='📧 تم إرسال الفاتورة PDF إلى البريد وDiscord.';
+      }else if(emailOk){
+        emailStatus.textContent='📧 تم إرسال الفاتورة PDF إلى بريدك الإلكتروني.';
+      }else if(discordOk){
+        emailStatus.textContent='💬 تم إرسال الفاتورة إلى Discord، ويمكنك تحميل PDF من الزر أعلاه.';
+      }else{
+        emailStatus.textContent='تم تأكيد الدفع، ويمكنك تحميل الفاتورة PDF من الزر أعلاه.';
+      }
+    }else{
+      if(emailOk && discordOk){
+        emailStatus.textContent='📧 The PDF invoice was sent by email and to Discord.';
+      }else if(emailOk){
+        emailStatus.textContent='📧 The PDF invoice was sent to your email.';
+      }else if(discordOk){
+        emailStatus.textContent='💬 The invoice was sent to Discord. You can download the PDF above.';
+      }else{
+        emailStatus.textContent='Payment confirmed. You can download the PDF invoice above.';
+      }
+    }
+    emailStatus.classList.remove('hidden');
+  }catch(error){
+    console.error('PDF invoice delivery failed',error);
+    emailStatus.textContent=lang==='ar'
+      ? 'تم تأكيد الدفع. يمكنك تحميل الفاتورة PDF من الزر أعلاه.'
+      : 'Payment is confirmed. You can download the PDF invoice above.';
+    emailStatus.classList.remove('hidden');
+  }finally{
+    if(iframe) iframe.remove();
+  }
+}
+function blobToBase64(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=reject;reader.readAsDataURL(blob)})}
 verify();
 </script>
 </body>
