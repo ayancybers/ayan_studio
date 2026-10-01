@@ -177,6 +177,7 @@ async function sendWhatsAppConfirmation(providerValue, paymentRef){
 async function sendPdfInvoice(providerValue, paymentRef){
   if(!paymentRef || !emailStatus) return;
   const key=`ayan_pdf_sent_${providerValue}_${paymentRef}`;
+  window.__whatsappPdfEnabled = true;
   if(sessionStorage.getItem(key)==='1') return;
   emailStatus.textContent=lang==='ar'?'جاري تجهيز وإرسال الفاتورة PDF…':'Preparing and sending your PDF invoice…';
   emailStatus.classList.remove('hidden');
@@ -195,8 +196,19 @@ async function sendPdfInvoice(providerValue, paymentRef){
     const r=await fetch('/api/send-invoice-pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:providerValue,paymentId:paymentRef,pdfBase64:base64})});
     const d=await r.json().catch(()=>({}));
     if(!r.ok) throw new Error(d.error||'PDF delivery failed');
-    sessionStorage.setItem(key,'1');
-    emailStatus.textContent=lang==='ar'?'📧 تم إرسال فاتورة PDF إلى بريدك، وتم إرسال نسخة إلى Discord.':'📧 The PDF invoice was emailed to you and a copy was sent to Discord.';
+    const allDelivered = d.emailSent && d.discordSent && (!window.__whatsappPdfEnabled || d.whatsappPdfSent);
+    if(allDelivered) sessionStorage.setItem(key,'1');
+    emailStatus.textContent=lang==='ar'
+      ? (d.emailSent && d.discordSent && d.whatsappPdfSent
+          ? '📧 تم إرسال فاتورة PDF إلى بريدك وDiscord وواتساب.'
+          : (d.emailSent && d.discordSent
+              ? '📧 تم إرسال فاتورة PDF إلى بريدك وDiscord.'
+              : 'تم تأكيد الدفع وتجهيز الفاتورة.'))
+      : (d.emailSent && d.discordSent && d.whatsappPdfSent
+          ? '📧 The PDF invoice was emailed and sent to Discord and WhatsApp.'
+          : (d.emailSent && d.discordSent
+              ? '📧 The PDF invoice was emailed and sent to Discord.'
+              : 'Payment confirmed and the invoice is ready.'));
   }catch(error){
     console.error('PDF invoice delivery failed',error);
     // Keep the existing email fallback if browser PDF generation is unavailable.

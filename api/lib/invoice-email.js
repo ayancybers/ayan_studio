@@ -119,7 +119,7 @@ export async function sendInvoiceEmail({ provider, paymentId, data, req, pdfBase
       Authorization:`Bearer ${apiKey}`,
       'Content-Type':'application/json',
       accept:'application/json',
-      'Idempotency-Key':`invoice/${provider}/${ref}`.slice(0,256)
+      'Idempotency-Key':`${cleanPdf ? 'invoice-pdf' : 'invoice-html'}/${provider}/${ref}`.slice(0,256)
     },
     body:JSON.stringify(body),
     signal: typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(12000) : undefined
