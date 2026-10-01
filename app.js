@@ -369,6 +369,7 @@ function setupReveal() {
 
 function setupCardGlow() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('pointermove', (event) => {
       const rect = card.getBoundingClientRect();
@@ -379,6 +380,7 @@ function setupCardGlow() {
 }
 
 function setupPointerGlow() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const glow = document.querySelector('#pointer-glow');
   if (!glow || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let raf = 0;
@@ -392,6 +394,7 @@ function setupPointerGlow() {
 
 function setupAmbientParallax() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const blobs = document.querySelectorAll('.ambient span');
   if (!blobs.length) return;
   window.addEventListener('scroll', () => {
@@ -407,108 +410,78 @@ function setupHeroBackgroundVideo() {
   const video = document.querySelector('[data-hero-video]');
   if (!video) return;
 
+  video.muted = true;
+  video.defaultMuted = true;
+  video.volume = 0;
+  video.loop = true;
+  video.playsInline = true;
+  video.controls = false;
+  video.preload = 'metadata';
+
   let retryTimer = 0;
   let retries = 0;
-  const play = (reason = 'initial') => {
+  const play = () => {
     window.clearTimeout(retryTimer);
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.loop = true;
-    video.playsInline = true;
-    video.controls = false;
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('loop', '');
-
     const promise = video.play();
-    if (promise && typeof promise.catch === 'function') {
+    if (promise?.catch) {
       promise.catch(() => {
-        if (document.hidden) return;
+        if (document.hidden || retries >= 3) return;
         retries += 1;
-        if (retries <= 8) retryTimer = window.setTimeout(() => play('retry'), 700);
+        retryTimer = window.setTimeout(play, 1200);
       });
     }
   };
 
-  const ensurePlaying = () => {
-    if (!document.hidden && video.paused) play('resume');
-  };
-
-  video.addEventListener('loadedmetadata', () => play('metadata'));
-  video.addEventListener('loadeddata', () => play('data'));
-  video.addEventListener('canplay', () => play('canplay'));
-  video.addEventListener('playing', () => {
-    retries = 0;
-    window.clearTimeout(retryTimer);
-  });
-  video.addEventListener('pause', () => {
-    if (!document.hidden) window.setTimeout(ensurePlaying, 120);
-  });
-  video.addEventListener('ended', () => {
-    video.currentTime = 0;
-    play('ended');
-  });
+  video.addEventListener('playing', () => { retries = 0; });
   video.addEventListener('error', () => {
+    if (document.hidden || retries >= 2) return;
     retries += 1;
-    if (!document.hidden && retries <= 4) retryTimer = window.setTimeout(() => {
-      video.load();
-      play('error-reload');
-    }, 1200);
+    retryTimer = window.setTimeout(play, 1600);
   });
-  document.addEventListener('visibilitychange', ensurePlaying);
-  window.addEventListener('pageshow', ensurePlaying);
-  window.addEventListener('focus', ensurePlaying);
-  window.addEventListener('online', () => { video.load(); play('online'); });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && video.paused) play();
+  });
 
-  video.load();
-  window.setTimeout(() => play('startup'), 80);
+  // The HTML autoplay attribute starts the media; don't call load() here because it can restart the request.
+  window.setTimeout(play, 0);
 }
 
 function setupBookingBackgroundVideo() {
   const video = document.querySelector('[data-packingbackground]');
   if (!video) return;
 
+  video.muted = true;
+  video.defaultMuted = true;
+  video.volume = 0;
+  video.loop = true;
+  video.playsInline = true;
+  video.controls = false;
+  video.preload = 'metadata';
+
   let retryTimer = 0;
   let attempts = 0;
   const start = () => {
     window.clearTimeout(retryTimer);
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.loop = true;
-    video.playsInline = true;
-    video.controls = false;
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('loop', '');
     const promise = video.play();
     if (promise?.catch) promise.catch(() => {
-      if (document.hidden) return;
+      if (document.hidden || attempts >= 3) return;
       attempts += 1;
-      if (attempts <= 8) retryTimer = window.setTimeout(start, 700);
+      retryTimer = window.setTimeout(start, 1200);
     });
   };
 
   video.addEventListener('playing', () => { attempts = 0; });
-  video.addEventListener('pause', () => {
-    if (!document.hidden) window.setTimeout(() => { if (video.paused) start(); }, 120);
-  });
-  video.addEventListener('ended', () => { video.currentTime = 0; start(); });
   video.addEventListener('error', () => {
+    if (document.hidden || attempts >= 2) return;
     attempts += 1;
-    if (!document.hidden && attempts <= 4) {
-      retryTimer = window.setTimeout(() => { video.load(); start(); }, 1200);
-    }
+    retryTimer = window.setTimeout(start, 1600);
   });
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && video.paused) start(); });
-  window.addEventListener('pageshow', () => { if (video.paused) start(); });
-  video.load();
-  window.setTimeout(start, 80);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && video.paused) start();
+  });
+
+  // Keep the booking background video, but avoid forcing an extra media load/reload.
+  window.setTimeout(start, 0);
 }
 
 function setupHomeLoader() {
@@ -813,7 +786,7 @@ function setupBookingForm() {
 
     sessionStorage.setItem('ayan_last_submit', String(Date.now()));
     sessionStorage.setItem('ayan_checkout_data', JSON.stringify(data));
-    await sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
+    void sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
     window.location.assign('checkout.html');
   });
 }
@@ -901,62 +874,55 @@ function renderGalleryCard(item) {
 
 function keepGalleryVideosPlaying() {
   const cards = Array.from(document.querySelectorAll('.gallery-card.video-card'));
+  if (!cards.length) return;
   const videos = cards.map((card) => card.querySelector('video')).filter(Boolean);
-  if (!videos.length) return;
 
   const start = (video) => {
     video.muted = true;
     video.defaultMuted = true;
     video.loop = true;
     video.playsInline = true;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('loop', '');
     video.controls = false;
+    video.disablePictureInPicture = true;
     const playPromise = video.play();
     if (playPromise?.catch) playPromise.catch(() => {});
   };
 
-  const resumeSelected = (card) => {
-    const video = card.querySelector('video');
-    if (!video) return;
-    card.classList.add('is-recovering');
-    start(video);
-    window.setTimeout(() => card.classList.remove('is-recovering'), 380);
+  const stop = (video) => {
+    if (!video || video.paused) return;
+    video.pause();
   };
+
+  // Keep the videos in the gallery, but don't make all six compete for bandwidth at page load.
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) start(video);
+        else stop(video);
+      });
+    }, { rootMargin: '160px 0px', threshold: 0.05 });
+    videos.forEach((video) => observer.observe(video));
+  } else {
+    videos.forEach(start);
+  }
 
   videos.forEach((video) => {
     const card = video.closest('.gallery-card');
-    video.controls = false;
-    video.disablePictureInPicture = true;
-    video.addEventListener('loadedmetadata', () => start(video), { once: true });
-    video.addEventListener('loadeddata', () => start(video), { once: true });
-    video.addEventListener('canplay', () => {
-      if (video.paused && !document.hidden) start(video);
-    });
-
+    video.addEventListener('waiting', () => card?.classList.add('video-buffering'), { passive: true });
+    video.addEventListener('playing', () => card?.classList.remove('video-buffering', 'video-paused'), { passive: true });
     video.addEventListener('pause', () => {
-      if (document.hidden) return;
-      card?.classList.add('video-paused');
-    });
-    video.addEventListener('play', () => card?.classList.remove('video-paused'));
-    video.addEventListener('waiting', () => card?.classList.add('video-buffering'));
-    video.addEventListener('playing', () => card?.classList.remove('video-buffering', 'video-paused'));
-
-    if (card) {
-      card.addEventListener('pointerenter', () => resumeSelected(card), { passive: true });
-      card.addEventListener('pointerdown', () => resumeSelected(card), { passive: true });
-      card.addEventListener('touchstart', () => resumeSelected(card), { passive: true });
-      card.addEventListener('focusin', () => resumeSelected(card));
-    }
-
-    start(video);
+      if (!document.hidden) card?.classList.add('video-paused');
+    }, { passive: true });
   });
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
-    videos.forEach((video) => {
-      if (video.paused) start(video);
+    cards.forEach((card) => {
+      const video = card.querySelector('video');
+      if (!video) return;
+      const rect = card.getBoundingClientRect();
+      if (rect.bottom > -160 && rect.top < window.innerHeight + 160) start(video);
     });
   });
 }
@@ -1066,7 +1032,8 @@ function setupSocialFloat() {
 
 async function init() {
   applyPreferences();
-  await loadPaymentConfig();
+  // Start the config request in the background so the header, form, and interactions are usable immediately.
+  void loadPaymentConfig();
   setupActiveNav();
   setupPackageButtons();
   setupBookingExperience();

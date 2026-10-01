@@ -80,6 +80,7 @@
   if (!touchDevice()) {
     window.addEventListener('resize', checkTools, { passive: true });
     window.addEventListener('focus', checkTools, { passive: true });
-    setInterval(checkTools, 1600);
+    // Event-based checks are enough here; avoid a recurring timer that wakes the page while idle.
+    checkTools();
   }
 })();

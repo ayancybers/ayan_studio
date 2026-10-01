@@ -5236,3 +5236,8 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   .terms-page .terms-card { padding: 20px; }
   .terms-page .terms-hero { padding-top: 48px; }
 }
+
+
+/* Performance tuning v60: keep scrolling and navigation responsive without changing the visual design. */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
