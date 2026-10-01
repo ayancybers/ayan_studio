@@ -145,7 +145,7 @@ export default async function handler(req, res) {
   };
 
   try {
-    const response = await fetch('https://api.tap.company/v2/charges/', {
+    const response = await fetchWithTimeout('https://api.tap.company/v2/charges/', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${secret}`,
@@ -154,7 +154,7 @@ export default async function handler(req, res) {
         lang_code: lang
       },
       body: JSON.stringify(payload)
-    });
+    }, 15000);
 
     const result = await response.json().catch(() => ({}));
     if (!response.ok) {
@@ -205,10 +205,10 @@ async function verifyPayment(req, res) {
   if (!secret) return res.status(500).json({ error: 'Payment configuration is incomplete' });
 
   try {
-    const response = await fetch(`https://api.tap.company/v2/charges/${encodeURIComponent(tapId)}`, {
+    const response = await fetchWithTimeout(`https://api.tap.company/v2/charges/${encodeURIComponent(tapId)}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${secret}`, accept: 'application/json' }
-    });
+    }, 12000);
 
     const charge = await response.json().catch(() => ({}));
     if (!response.ok) return res.status(502).json({ error: charge?.response?.message || 'Unable to verify payment' });
@@ -252,6 +252,16 @@ async function verifyPayment(req, res) {
   } catch (error) {
     console.error('Tap verification error', error);
     return res.status(500).json({ error: 'Unable to verify payment' });
+  }
+}
+
+async function fetchWithTimeout(url, options = {}, timeoutMs = 15000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
   }
 }
 

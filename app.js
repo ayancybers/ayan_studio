@@ -210,7 +210,7 @@ function packageValueForLang(value, lang = getLang()) {
   return pair ? pair[lang === 'en' ? 1 : 0] : value;
 }
 
-async function sendLog(event, details = {}) {
+function sendLog(event, details = {}) {
   const payload = {
     event,
     page: location.pathname,
@@ -223,124 +223,14 @@ async function sendLog(event, details = {}) {
     details
   };
   try {
-    await fetch('/api/log', {
+    const request = fetch('/api/log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       keepalive: true
     });
+    request.catch(() => {});
   } catch (_) {}
-}
-
-function setupPreferenceMenus() {
-  const menus = [...document.querySelectorAll('[data-pref-menu]')];
-  if (!menus.length) return;
-
-  const nav = document.querySelector('[data-nav-links]');
-  const closeAll = (except = null) => {
-    menus.forEach((menu) => {
-      if (menu !== except) {
-        menu.classList.remove('open');
-        menu.querySelector('[data-pref-trigger]')?.setAttribute('aria-expanded', 'false');
-      }
-    });
-  };
-
-  const toggleMenu = (menu) => {
-    if (!menu) return;
-    const trigger = menu.querySelector('[data-pref-trigger]');
-    const willOpen = !menu.classList.contains('open');
-    closeAll(menu);
-    if (nav && willOpen) nav.classList.remove('open');
-    menu.classList.toggle('open', willOpen);
-    trigger?.setAttribute('aria-expanded', String(willOpen));
-  };
-
-  menus.forEach((menu) => {
-    const trigger = menu.querySelector('[data-pref-trigger]');
-    if (!trigger) return;
-    const activate = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      toggleMenu(menu);
-    };
-    trigger.addEventListener('pointerup', activate, { passive: false });
-    trigger.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') activate(event);
-    });
-  });
-
-  const preferenceAction = (event) => {
-    const themeButton = event.target?.closest?.('[data-set-theme]');
-    const langButton = event.target?.closest?.('[data-set-lang]');
-    if (themeButton) {
-      event.preventDefault();
-      event.stopPropagation();
-      setTheme(themeButton.dataset.setTheme);
-      closeAll();
-      return true;
-    }
-    if (langButton) {
-      event.preventDefault();
-      event.stopPropagation();
-      setLang(langButton.dataset.setLang);
-      closeAll();
-      return true;
-    }
-    return false;
-  };
-
-  document.addEventListener('pointerup', (event) => {
-    if (preferenceAction(event)) return;
-    if (!event.target?.closest?.('[data-pref-menu]')) closeAll();
-  }, { passive: false });
-
-  document.addEventListener('click', (event) => {
-    if (event.target?.closest?.('[data-set-theme], [data-set-lang], [data-pref-trigger]')) return;
-    if (!event.target?.closest?.('[data-pref-menu]')) closeAll();
-  }, true);
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeAll();
-  });
-
-  window.__ayanClosePreferenceMenus = closeAll;
-}
-
-function setupMobileMenu() {
-  const btn = document.querySelector('[data-menu]');
-  const nav = document.querySelector('[data-nav-links]');
-  if (!btn || !nav) return;
-
-  let backdrop = document.querySelector('[data-mobile-menu-backdrop]');
-  if (!backdrop) {
-    backdrop = document.createElement('button');
-    backdrop.type = 'button';
-    backdrop.className = 'mobile-menu-backdrop';
-    backdrop.setAttribute('aria-label', 'Close menu');
-    backdrop.setAttribute('data-mobile-menu-backdrop', '');
-    document.body.appendChild(backdrop);
-  }
-
-  const setOpen = (open) => {
-    nav.classList.toggle('open', open);
-    btn.classList.toggle('is-open', open);
-    btn.setAttribute('aria-expanded', String(open));
-    backdrop.classList.toggle('is-visible', open);
-    if (open) window.__ayanClosePreferenceMenus?.();
-  };
-
-  const activate = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setOpen(!nav.classList.contains('open'));
-  };
-
-  btn.addEventListener('pointerup', activate, { passive: false });
-  backdrop.addEventListener('pointerup', (event) => { event.preventDefault(); setOpen(false); });
-  nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
-  window.addEventListener('resize', () => { if (window.innerWidth > 900) setOpen(false); }, { passive: true });
 }
 
 function setupActiveNav() {
@@ -369,12 +259,16 @@ function setupReveal() {
 
 function setupCardGlow() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   document.querySelectorAll('.card').forEach((card) => {
+    let rect = null;
+    card.addEventListener('pointerenter', () => { rect = card.getBoundingClientRect(); }, { passive: true });
+    card.addEventListener('pointerleave', () => { rect = null; }, { passive: true });
     card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
+      if (!rect) rect = card.getBoundingClientRect();
       card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
       card.style.setProperty('--my', `${event.clientY - rect.top}px`);
-    });
+    }, { passive: true });
   });
 }
 
@@ -394,11 +288,19 @@ function setupAmbientParallax() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const blobs = document.querySelectorAll('.ambient span');
   if (!blobs.length) return;
-  window.addEventListener('scroll', () => {
+  let raf = 0;
+  let lastY = -1;
+  const render = () => {
+    raf = 0;
     const y = window.scrollY;
+    if (y === lastY) return;
+    lastY = y;
     blobs.forEach((blob, index) => {
       blob.style.transform = `translate3d(${index ? y * .018 : -y * .012}px, ${y * (index ? -.02 : .014)}px, 0)`;
     });
+  };
+  window.addEventListener('scroll', () => {
+    if (!raf) raf = requestAnimationFrame(render);
   }, { passive: true });
 }
 
@@ -437,9 +339,7 @@ function setupHeroBackgroundVideo() {
     if (!document.hidden && video.paused) play('resume');
   };
 
-  video.addEventListener('loadedmetadata', () => play('metadata'));
-  video.addEventListener('loadeddata', () => play('data'));
-  video.addEventListener('canplay', () => play('canplay'));
+  video.addEventListener('loadedmetadata', () => play('metadata'), { once: true });
   video.addEventListener('playing', () => {
     retries = 0;
     window.clearTimeout(retryTimer);
@@ -463,7 +363,6 @@ function setupHeroBackgroundVideo() {
   window.addEventListener('focus', ensurePlaying);
   window.addEventListener('online', () => { video.load(); play('online'); });
 
-  video.load();
   window.setTimeout(() => play('startup'), 80);
 }
 
@@ -507,7 +406,6 @@ function setupBookingBackgroundVideo() {
   });
   document.addEventListener('visibilitychange', () => { if (!document.hidden && video.paused) start(); });
   window.addEventListener('pageshow', () => { if (video.paused) start(); });
-  video.load();
   window.setTimeout(start, 80);
 }
 
@@ -604,8 +502,9 @@ function getPackageFinancials(key) {
 }
 
 async function loadPaymentConfig() {
+  if (!document.querySelector('#bookingForm')) return;
   try {
-    const response = await fetch('/api/payment-config', { cache: 'no-store' });
+    const response = await fetch('/api/payment-config', { cache: 'default' });
     if (!response.ok) throw new Error('config');
     const config = await response.json();
     if (config?.pricing && config?.packages) {
@@ -798,7 +697,7 @@ function setupBookingForm() {
 
     sessionStorage.setItem('ayan_last_submit', String(Date.now()));
     sessionStorage.setItem('ayan_checkout_data', JSON.stringify(data));
-    await sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
+    sendLog('booking_checkout_open', { success: true, package: data.packageType, packageKey, car: data.carType, area: data.shootRegion });
     window.location.assign('checkout.html');
   });
 }
@@ -841,7 +740,7 @@ async function loadGallery() {
   let data = null;
   for (const url of candidates) {
     try {
-      const response = await fetch(url, { cache: 'no-store', headers: { Accept: 'application/json' } });
+      const response = await fetch(url, { cache: 'default', headers: { Accept: 'application/json' } });
       const contentType = response.headers.get('content-type') || '';
       if (!response.ok) continue;
       const text = await response.text();
@@ -902,24 +801,16 @@ function keepGalleryVideosPlaying() {
     if (playPromise?.catch) playPromise.catch(() => {});
   };
 
-  const resumeSelected = (card) => {
-    const video = card.querySelector('video');
-    if (!video) return;
-    card.classList.add('is-recovering');
-    start(video);
-    window.setTimeout(() => card.classList.remove('is-recovering'), 380);
+  const stop = (video) => {
+    if (!video.paused) video.pause();
   };
 
   videos.forEach((video) => {
     const card = video.closest('.gallery-card');
     video.controls = false;
     video.disablePictureInPicture = true;
-    video.addEventListener('loadedmetadata', () => start(video), { once: true });
-    video.addEventListener('loadeddata', () => start(video), { once: true });
-    video.addEventListener('canplay', () => {
-      if (video.paused && !document.hidden) start(video);
-    });
-
+    video.preload = 'auto';
+    video.load();
     video.addEventListener('pause', () => {
       if (document.hidden) return;
       card?.classList.add('video-paused');
@@ -928,20 +819,33 @@ function keepGalleryVideosPlaying() {
     video.addEventListener('waiting', () => card?.classList.add('video-buffering'));
     video.addEventListener('playing', () => card?.classList.remove('video-buffering', 'video-paused'));
 
-    if (card) {
-      card.addEventListener('pointerenter', () => resumeSelected(card), { passive: true });
-      card.addEventListener('pointerdown', () => resumeSelected(card), { passive: true });
-      card.addEventListener('touchstart', () => resumeSelected(card), { passive: true });
-      card.addEventListener('focusin', () => resumeSelected(card));
-    }
-
-    start(video);
   });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target.querySelector('video');
+        if (!video) return;
+        if (entry.isIntersecting) {
+          start(video);
+        } else {
+          stop(video);
+        }
+      });
+    }, { rootMargin: '220px 0px', threshold: 0.01 });
+    cards.forEach((card) => observer.observe(card));
+  } else {
+    videos.forEach(start);
+  }
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) return;
     videos.forEach((video) => {
-      if (video.paused) start(video);
+      const card = video.closest('.gallery-card');
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const visible = rect.bottom > -220 && rect.top < window.innerHeight + 220;
+      if (visible && video.paused) start(video);
     });
   });
 }
@@ -1049,9 +953,8 @@ function setupSocialFloat() {
   });
 }
 
-async function init() {
+function init() {
   applyPreferences();
-  await loadPaymentConfig();
   setupActiveNav();
   setupPackageButtons();
   setupBookingExperience();
@@ -1065,6 +968,7 @@ async function init() {
   setupBookingBackgroundVideo();
   setupHomeLoader();
   loadGallery();
+  loadPaymentConfig();
   sendLog('page_view');
 }
 

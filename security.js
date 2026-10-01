@@ -80,6 +80,5 @@
   if (!touchDevice()) {
     window.addEventListener('resize', checkTools, { passive: true });
     window.addEventListener('focus', checkTools, { passive: true });
-    setInterval(checkTools, 1600);
   }
 })();
