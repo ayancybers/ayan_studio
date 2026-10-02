@@ -4,344 +4,90 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Ayan Photography — تصوير سيارات احترافي، رولينق، مونتاج ومحتوى سينمائي.">
-  <link rel="canonical" href="https://ayancybers.store/">
-  <link rel="icon" type="image/png" href="assets/ayan-logo-icon.png">
-  <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png">
-  <title>Ayan Photography | تصوير سيارات احترافي</title>
-  <link rel="preload" as="image" href="assets/ayan-logo-icon.png" fetchpriority="high">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="styles.css?v=60">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Ayan Photography — الموقع تحت الصيانة مؤقتًا.">
+  <title>Ayan Photography | تحت الصيانة</title>
+  <link rel="icon" type="image/png" href="https://c.top4top.io/p_3918gds6e2.png">
+  <link rel="apple-touch-icon" href="https://c.top4top.io/p_3918gds6e2.png">
+  <link rel="stylesheet" href="styles.css?v=30">
+  <style>
+    :root{color-scheme:dark}
+    body{min-height:100vh;margin:0;background:#07111f;color:#eef6ff;overflow:hidden}
+    .maintenance-page{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative;isolation:isolate}
+    .maintenance-page::before,.maintenance-page::after{content:"";position:absolute;border-radius:999px;filter:blur(80px);opacity:.28;z-index:-1}
+    .maintenance-page::before{width:360px;height:360px;background:#1d7ff2;top:-100px;right:-90px}
+    .maintenance-page::after{width:320px;height:320px;background:#38bdf8;bottom:-130px;left:-100px}
+    .maintenance-card{width:min(720px,100%);text-align:center;padding:48px 32px;border:1px solid rgba(120,190,255,.2);background:rgba(8,20,36,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:30px;box-shadow:0 30px 80px rgba(0,0,0,.32)}
+    .brand-mark{width:112px;height:112px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 24px;border:1px solid rgba(255,255,255,.14);box-shadow:0 14px 40px rgba(0,0,0,.35)}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;border:1px solid rgba(93,177,255,.22);background:rgba(41,124,214,.1);color:#8ccaff;font-size:14px;margin-bottom:20px}
+    .dot{width:8px;height:8px;border-radius:50%;background:#67b9ff;box-shadow:0 0 16px #67b9ff}
+    h1{margin:0 0 14px;font-size:clamp(34px,6vw,62px);line-height:1.06;letter-spacing:-1px}
+    h1 span{color:#67b9ff}
+    .lead{margin:0 auto;color:#a9bdd2;max-width:610px;font-size:clamp(16px,2.4vw,20px);line-height:1.9}
+    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .btn{border:1px solid rgba(123,194,255,.2);border-radius:14px;padding:13px 20px;font:inherit;cursor:pointer;transition:.2s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+    .btn-primary{background:#4ba7ff;color:#07111f;font-weight:700;border-color:#4ba7ff}
+    .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .btn-secondary{background:rgba(255,255,255,.04);color:#d8e9fa}
+    .btn-secondary:hover{background:rgba(255,255,255,.08)}
+    .footer{margin-top:26px;color:#71869d;font-size:13px}
+    .lang-toggle{position:fixed;top:18px;left:18px;z-index:3}
+    .lang-toggle button{background:rgba(7,17,31,.7);color:#cfe5f8;border:1px solid rgba(123,194,255,.18);padding:10px 14px;border-radius:999px;cursor:pointer;font:inherit;backdrop-filter:blur(12px)}
+    [data-en]{display:none}
+    html[lang="en"] [data-ar]{display:none}
+    html[lang="en"] [data-en]{display:inline}
+    html[lang="en"] .lead[data-ar],html[lang="en"] .footer[data-ar]{display:none}
+    html[lang="en"] .lead[data-en],html[lang="en"] .footer[data-en]{display:block}
+    @media (max-width:560px){.maintenance-card{padding:36px 20px;border-radius:24px}.brand-mark{width:92px;height:92px}.footer{line-height:1.8}.lang-toggle{top:12px;left:12px}}
+  </style>
 </head>
-<body data-theme="relax">
-  <div class="ambient" aria-hidden="true"><span></span><span></span></div>
-  <div id="pointer-glow" aria-hidden="true"></div>
-  <div class="page-shell">
+<body>
+  <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">English</button>
 
-<header class="site-header">
-  <div class="container navbar">
-    <a class="brand" href="index.html" aria-label="Ayan Photography">
-      <img class="brand-mark" src="assets/ayan-logo-v2.webp" alt="Ayan Photography">
-      <div class="brand-copy"><strong>Ayan Photography</strong><span data-i18n="brandTag">Car Photography Studio</span></div>
-    </a>
-    <nav class="nav-links" data-nav-links>
-      <a href="index.html" data-page="home" data-i18n="home">الرئيسية</a>
-      <a href="features.html" data-page="features" data-i18n="features">المميزات</a>
-      <a href="booking.html" data-page="booking" data-i18n="booking">الحجز</a>
-      <a href="gallery.html" data-page="gallery" data-i18n="gallery">المعرض</a>
-      <a href="terms.html" data-page="terms" data-i18n="termsPageLink">الشروط والأحكام</a>
-    </nav>
-    <div class="nav-actions">
-      <div class="pref-menu" data-pref-menu="theme">
-        <button type="button" class="pill pref-trigger" data-pref-trigger="theme" aria-haspopup="menu" aria-expanded="false">
-          <span data-theme-label>مريح 💙</span>
-        </button>
-        <div class="pref-panel" data-pref-panel="theme" role="menu">
-          <button type="button" data-set-theme="relax" role="menuitemradio" aria-checked="true"><span data-i18n="relax">مريح 💙</span></button>
-          <button type="button" data-set-theme="dark" role="menuitemradio" aria-checked="false"><span data-i18n="dark">داكن 🌙</span></button>
-          <button type="button" data-set-theme="light" role="menuitemradio" aria-checked="false"><span data-i18n="light">فاتح ☀️</span></button>
-        </div>
+  <main class="maintenance-page">
+    <section class="maintenance-card" aria-live="polite">
+      <img class="brand-mark" src="https://c.top4top.io/p_3918gds6e2.png" alt="Ayan Photography">
+
+      <div class="eyebrow">
+        <span class="dot" aria-hidden="true"></span>
+        <span data-ar>تحديثات مؤقتة</span>
+        <span data-en>Temporary update</span>
       </div>
-      <div class="pref-menu" data-pref-menu="lang">
-        <button type="button" class="pill pref-trigger" data-pref-trigger="lang" aria-haspopup="menu" aria-expanded="false">
-          <span data-lang-label>العربية</span>
-        </button>
-        <div class="pref-panel" data-pref-panel="lang" role="menu">
-          <button type="button" data-set-lang="ar" role="menuitemradio" aria-checked="true">العربية</button>
-          <button type="button" data-set-lang="en" role="menuitemradio" aria-checked="false">English</button>
-        </div>
+
+      <h1>
+        <span data-ar>الموقع تحت الصيانة</span>
+        <span data-en>Website under maintenance</span>
+      </h1>
+
+      <p class="lead" data-ar>نعمل حاليًا على تجهيز وتحسين نظام الحجز والدفع الإلكتروني. بنرجع لكم قريبًا بتجربة أفضل.</p>
+      <p class="lead" data-en>We are currently preparing and improving the booking and online payment system. We’ll be back soon with a better experience.</p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="https://wa.me/966599232488" target="_blank" rel="noopener">
+          <span data-ar>تواصل معنا واتساب</span>
+          <span data-en>Contact us on WhatsApp</span>
+        </a>
       </div>
-      <a class="btn btn-primary" href="booking.html"><span data-i18n="quick">حجز سريع</span></a>
-      <button class="icon-btn mobile-toggle" type="button" data-menu aria-label="Menu" aria-expanded="false"><span class="hamburger-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
-    </div>
-  </div>
-</header>
-  <div class="loader ayan-premium-loader" data-home-loader aria-hidden="true">
-    <div class="loader-inner">
-      <div class="home-loader-mark" aria-label="Ayan Photography">
-        <img src="assets/ayan-loader-logo.webp" alt="Ayan Photography logo">
-        <div class="home-loader-progress" aria-live="polite" aria-label="Loading progress">
-          <span class="home-loader-percent" data-loader-percent>01%</span>
-          <div class="home-loader-progress-line" aria-hidden="true">
-            <span class="home-loader-progress-bar" data-loader-progress></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="toast" role="status" aria-live="polite"></div>
 
-  <main>
-    <section class="hero">
-      <div class="hero-media" aria-hidden="true">
-        <video data-hero-video autoplay muted loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" tabindex="-1">
-          <source src="https://i.top4top.io/m_3918mcgr01.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">تصوير سيارات بطابع سينمائي</span></div>
-          <h1 data-i18n="heroTitle">خلّ سيارتك <span>تتكلم بالصورة.</span></h1>
-          <p class="hero-lead" data-i18n="heroLead">جلسات رولينق، تصوير ثابت، ومونتاج احترافي — من أول لقطة إلى آخر فريم، بتجربة حجز أبسط وأسرع.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="booking.html" data-i18n="bookNow">احجز جلستك</a>
-            <a class="btn btn-secondary" href="gallery.html" data-i18n="watchGallery">شاهد المعرض</a>
-          </div>
-        </div>
-        <div class="hero-side">
-          <article class="floating-card reveal" data-delay="1"><small data-i18n="heroCard1Title">Visual identity</small><strong data-i18n="heroCard1Text">لقطات مصممة لإظهار تفاصيل السيارة وشخصيتها بشكل يليق بالمحتوى.</strong></article>
-          <article class="floating-card reveal" data-delay="2"><small data-i18n="heroCard2Title">Faster workflow</small><strong data-i18n="heroCard2Text">مسار حجز واضح، تنسيق مباشر، وتسليم مرتب حسب الباقة المختارة.</strong></article>
-          <article class="floating-card reveal" data-delay="3"><small data-i18n="heroCard3Title">Flexible experience</small><strong data-i18n="heroCard3Text">اختر الباقة، المنطقة، ونوع السيارة واترك الباقي علينا.</strong></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="packages" class="section packages-showcase">
-  <div class="packages-backdrop" aria-hidden="true">
-    <span class="packages-orb packages-orb-a"></span>
-    <span class="packages-orb packages-orb-b"></span>
-    <span class="packages-streak packages-streak-a"></span>
-    <span class="packages-streak packages-streak-b"></span>
-  </div>
-  <div class="container packages-showcase-inner">
-    <div class="packages-showcase-head reveal">
-      <div class="packages-showcase-title">
-        <div class="kicker" data-i18n="packagesKicker">OUR PACKAGES</div>
-        <h2 data-i18n="packagesTitle">الباقات مصممة على حسب اللقطة اللي تبيها.</h2>
-        <p data-i18n="packagesText">اختر مستوى الإنتاج المناسب لك — من رولينق بدون مونتاج إلى جلسة سينمائية متكاملة.</p>
-      </div>
-      <a class="packages-book-link" href="booking.html" data-i18n="packagesLink">تخصيص وحجز ←</a>
-    </div>
-
-    <div class="packages-grid packages-grid-cinematic" aria-label="Ayan Photography packages">
-      <article class="card package package-cinematic package-silver reveal" data-delay="1">
-        <div class="package-visual cinematic-visual no-package-image">
-          <div class="package-visual-copy">
-            <span class="package-en-label">SILVER</span>
-          </div>
-          <span class="package-rank-icon rank-silver" aria-label="Silver package icon">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><circle class="rank-lens" cx="24" cy="24" r="15"/><circle class="rank-lens-inner" cx="24" cy="24" r="7"/><path class="rank-spark" d="M24 5v6M24 37v6M5 24h6M37 24h6"/></svg>
-          </span>
-        </div>
-        <div class="package-content">
-          <div class="package-heading">
-            <h3 data-i18n="silver">الباقة الفضية</h3>
-            <div class="descriptor" data-i18n="silverDesc">رولينق بدون مونتاج</div>
-          </div>
-          <div class="package-highlights" aria-hidden="true">
-            <span><b>RAW</b><small data-i18n="silverH1">مقاطع أصلية</small></span>
-            <span><b>↗</b><small data-i18n="silverH2">زوايا متعددة</small></span>
-            <span><b>Ø</b><small data-i18n="silverH3">بدون مونتاج</small></span>
-          </div>
-          <ul>
-            <li data-i18n="silverF1">تصوير رولينق للسيارة.</li>
-            <li data-i18n="silverF2">تصوير أثناء الحركة من زوايا متنوعة.</li>
-            <li data-i18n="silverF3">تسليم جميع المقاطع الأصلية بدون مونتاج.</li>
-          </ul>
-          <div class="package-bottom">
-            <div class="price"><strong data-i18n="silverPrice">70</strong><span>SAR</span></div>
-            <a class="btn btn-secondary package-cta" href="booking.html" data-package="الباقة الفضية - 70 ريال" data-i18n="selectPackage">اختر الباقة</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card package package-cinematic package-basic reveal" data-delay="2">
-        <div class="package-visual cinematic-visual no-package-image">
-          <div class="package-visual-copy">
-            <span class="package-en-label">BASIC</span>
-          </div>
-          <span class="package-rank-icon rank-bronze" aria-label="Basic package icon">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path class="rank-film" d="M10 13h28v22H10z"/><path class="rank-film-line" d="M16 13v22M32 13v22M10 20h28M10 28h28"/></svg>
-          </span>
-        </div>
-        <div class="package-content">
-          <div class="package-heading package-heading-with-badge">
-            <div>
-              <h3 data-i18n="basic">الباقة الأساسية</h3>
-              <div class="descriptor" data-i18n="basicDesc">رولينق + أكثر من 5 مقاطع متنوعة + مونتاج</div>
-            </div>
-            <span class="package-badge popular" data-i18n="popularBadge">الأكثر طلبًا</span>
-          </div>
-          <div class="package-highlights" aria-hidden="true">
-            <span><b>5+</b><small data-i18n="basicH1">مقاطع</small></span>
-            <span><b>✂</b><small data-i18n="basicH2">مونتاج كامل</small></span>
-            <span><b>♫</b><small data-i18n="basicH3">اختيار أغنية</small></span>
-          </div>
-          <ul>
-            <li data-i18n="basicF1">تصوير رولينق للسيارة.</li>
-            <li data-i18n="basicF2">أكثر من 5 مقاطع متنوعة.</li>
-            <li data-i18n="basicF3">مونتاج كامل للمقاطع.</li>
-            <li data-i18n="basicF4">اختيار أغنية على ذوقك.</li>
-            <li data-i18n="basicF5">إمكانية تنفيذ فكرة خاصة حسب طلبك.</li>
-          </ul>
-          <div class="package-bottom">
-            <div class="price"><strong data-i18n="basicPrice">100</strong><span>SAR</span></div>
-            <a class="btn btn-primary package-cta" href="booking.html" data-package="الباقة الأساسية - 100 ريال" data-i18n="selectPackage">اختر الباقة</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card package package-cinematic package-advanced reveal" data-delay="3">
-        <div class="package-visual cinematic-visual no-package-image">
-          <div class="package-visual-copy">
-            <span class="package-en-label">ADVANCED</span>
-          </div>
-          <span class="package-rank-icon rank-advanced" aria-label="Advanced package icon">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><rect class="rank-camera" x="8" y="15" width="32" height="21" rx="4"/><path class="rank-camera-top" d="M16 15l3-5h10l3 5"/><circle class="rank-camera-lens" cx="24" cy="25.5" r="7"/><circle class="rank-camera-dot" cx="24" cy="25.5" r="2"/></svg>
-          </span>
-        </div>
-        <div class="package-content">
-          <div class="package-heading">
-            <h3 data-i18n="advanced">الباقة المتقدمة</h3>
-            <div class="descriptor" data-i18n="advancedDesc">رولينق + تصوير ثابت + أكثر من 10 مقاطع + مونتاج</div>
-          </div>
-          <div class="package-highlights" aria-hidden="true">
-            <span><b>10+</b><small data-i18n="advancedH1">مقاطع</small></span>
-            <span><b>▣</b><small data-i18n="advancedH2">تصوير ثابت</small></span>
-            <span><b>✂</b><small data-i18n="advancedH3">مونتاج متكامل</small></span>
-          </div>
-          <ul>
-            <li data-i18n="advancedF1">تصوير رولينق للسيارة.</li>
-            <li data-i18n="advancedF2">تصوير ثابت من عدة زوايا.</li>
-            <li data-i18n="advancedF3">أكثر من 10 مقاطع متنوعة.</li>
-            <li data-i18n="advancedF4">مونتاج متكامل.</li>
-            <li data-i18n="advancedF5">تنويع في الزوايا والحركات.</li>
-            <li data-i18n="advancedF6">تسليم الفيديوهات في نفس اليوم بإذن الله.</li>
-          </ul>
-          <div class="package-bottom">
-            <div class="price"><strong data-i18n="advancedPrice">150</strong><span>SAR</span></div>
-            <a class="btn btn-primary package-cta" href="booking.html" data-package="الباقة المتقدمة - 150 ريال" data-i18n="selectPackage">اختر الباقة</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card package package-cinematic package-royal reveal" data-delay="4">
-        <div class="package-visual cinematic-visual no-package-image">
-          <div class="package-visual-copy">
-            <span class="package-en-label">CINEMATIC</span>
-          </div>
-          <span class="package-rank-icon rank-cinematic" aria-label="Cinematic package icon">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path class="rank-star" d="M24 6l4.3 11.1L40 19l-9.1 7.2L34 38l-10-6.5L14 38l3.1-11.8L8 19l11.7-1.9z"/></svg>
-          </span>
-        </div>
-        <div class="package-content">
-          <div class="package-heading package-heading-with-badge">
-            <div>
-              <h3 data-i18n="royal">الباقة السينمائية</h3>
-              <div class="descriptor" data-i18n="royalDesc">التصوير السينمائي + 20+ مقطع متنوع</div>
-            </div>
-            <span class="package-badge signature" data-i18n="royalBadge">Signature</span>
-          </div>
-          <div class="package-highlights" aria-hidden="true">
-            <span><b>20+</b><small data-i18n="royalH1">مقاطع</small></span>
-            <span><b>◆</b><small data-i18n="royalH2">سينمائي</small></span>
-            <span><b>★</b><small data-i18n="royalH3">فكرة خاصة</small></span>
-          </div>
-          <ul>
-            <li data-i18n="royalF1">تصوير سينمائي متكامل للسيارة.</li>
-            <li data-i18n="royalF2">رولينق وتصوير ثابت بزوايا وحركات متنوعة.</li>
-            <li data-i18n="royalF3">أكثر من 20 مقطع متنوع.</li>
-            <li data-i18n="royalF4">مونتاج سينمائي احترافي.</li>
-            <li data-i18n="royalF5">تنفيذ فكرة خاصة حسب طلبك.</li>
-            <li data-i18n="royalF6">إخراج يناسب سيارتك.</li>
-          </ul>
-          <div class="package-bottom">
-            <div class="price"><strong data-i18n="royalPrice">200</strong><span>SAR</span></div>
-            <a class="btn btn-primary package-cta" href="booking.html" data-package="الباقة السينمائية - 200 ريال" data-i18n="selectPackage">اختر الباقة</a>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <div class="package-benefits-strip reveal">
-      <div><span class="benefit-icon">♢</span><strong>تجربة مخصصة</strong><small>حسب طلبك</small></div>
-      <div><span class="benefit-icon">◉</span><strong>معدات متطورة</strong><small>نتائج مميزة</small></div>
-      <div><span class="benefit-icon">↗</span><strong>تنفيذ سريع</strong><small>بمواعيد مرنة</small></div>
-      <div><span class="benefit-icon">✦</span><strong>صور احترافية</strong><small>بأعلى جودة</small></div>
-    </div>
-  </div>
-</section>
-
-    <section class="section-sm">
-      <div class="container">
-        <div class="section-head reveal"><div><div class="kicker" data-i18n="whyKicker">Why Ayan Photography</div><h2 data-i18n="whyTitle">تجربة مرتبة من الحجز إلى التسليم.</h2><p data-i18n="whyText">بدل الزحمة في صفحة واحدة، صار عندك مسارات واضحة لكل شيء.</p></div><a class="text-link" href="features.html" data-i18n="featureLink">شوف كل المميزات ←</a></div>
-        <div class="feature-grid">
-          <article class="card feature reveal" data-delay="1"><div class="icon">📷</div><h3 data-i18n="feature1Title">جلسات احترافية</h3><p data-i18n="feature1Text">معدات وعدسات مخصصة لإبراز تفاصيل السيارة وإخراج اللقطة بشكل سينمائي.</p></article>
-          <article class="card feature reveal" data-delay="2"><div class="icon">⚡</div><h3 data-i18n="feature2Title">تسليم سريع</h3><p data-i18n="feature2Text">ترتيب واضح للمحتوى والمعالجة والتسليم بدون ما تضيع وقتك بين خطوات كثيرة.</p></article>
-          <article class="card feature reveal" data-delay="3"><div class="icon">💬</div><h3 data-i18n="feature3Title">تواصل مباشر</h3><p data-i18n="feature3Text">ترسل طلبك من الموقع وينتقل معك مباشرة إلى الواتساب للتنسيق مع المصور.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-sm">
-      <div class="container story-grid">
-        <article class="card story-card reveal"><div class="kicker" data-i18n="workflowKicker">Ayan Workflow</div><h3 data-i18n="workflowTitle">من أول فكرة إلى آخر فريم.</h3><p data-i18n="workflowText">كل صفحة لها وظيفة واضحة، عشان العميل يلقى اللي يحتاجه بسرعة.</p><ul class="detail-list"><li data-i18n="workflow1">اختيار الباقة المناسبة.</li><li data-i18n="workflow2">تعبئة بيانات السيارة وموقع التصوير.</li><li data-i18n="workflow3">استلام الطلب والتنسيق عبر الواتساب.</li><li data-i18n="workflow4">التصوير والتسليم حسب تفاصيل الباقة.</li></ul></article>
-        <article class="card story-card reveal" data-delay="1"><div class="kicker" data-i18n="galleryKicker">Gallery</div><h3 data-i18n="galleryTitle">خذ فكرة عن الشغل قبل ما تحجز.</h3><p data-i18n="galleryText">المعرض صار صفحة مستقلة عشان يبقى التركيز على الفيديو والمحتوى.</p><a class="btn btn-primary" href="gallery.html" data-i18n="exploreGallery">استكشف المعرض ←</a></article>
+      <div class="footer">
+        <span data-ar>© Ayan Photography — Car Photography Studio</span>
+        <span data-en>© Ayan Photography — Car Photography Studio</span>
       </div>
     </section>
   </main>
 
-
-<div class="social-float" data-social-float>
-  <div class="social-float-menu" id="social-float-menu" data-social-menu>
-    <a class="social-float-link whatsapp" href="https://wa.me/966565117739" target="_blank" rel="noopener noreferrer" data-social="whatsapp">
-      <span class="social-float-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg>
-      </span><span data-i18n="socialWhatsApp">واتساب</span><span class="social-arrow">↗</span>
-    </a>
-    <a class="social-float-link instagram" href="https://instagram.com/13345" target="_blank" rel="noopener noreferrer" data-social="instagram">
-      <span class="social-float-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img"><rect x="4.2" y="4.2" width="15.6" height="15.6" rx="4.2"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.3" cy="6.9" r="1.05"/></svg>
-      </span><span data-i18n="socialInstagram">إنستغرام</span><span class="social-arrow">↗</span>
-    </a>
-    <a class="social-float-link snapchat" href="https://snapchat.com/t/vsu8gtHC" target="_blank" rel="noopener noreferrer" data-social="snapchat">
-      <span class="social-float-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img"><path d="M12 4.35c-2.64 0-4.35 1.94-4.35 4.63v2.2c0 .46-.28.8-.84 1.02-.41.17-.72.41-.72.71 0 .44.6.58 1.22.76.5.15.75.36.82.77.09.51.42.79.96.84.4.04.71.13.96.28.45.27.85.67 1.95.67 1.1 0 1.5-.4 1.95-.67.25-.15.56-.24.96-.28.54-.05.87-.33.96-.84.07-.41.32-.62.82-.77.62-.18 1.22-.32 1.22-.76 0-.3-.31-.54-.72-.71-.56-.22-.84-.56-.84-1.02v-2.2c0-2.69-1.71-4.63-4.35-4.63Z"/></svg>
-      </span><span data-i18n="socialSnapchat">سناب شات</span><span class="social-arrow">↗</span>
-    </a>
-  </div>
-  <button class="social-float-toggle" type="button" data-social-toggle aria-expanded="false" aria-controls="social-float-menu" aria-label="WhatsApp">
-    <span class="social-float-toggle-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg>
-    </span>
-    <span class="social-float-ping" aria-hidden="true"></span>
-  </button>
-</div>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="brand">
-          <img class="brand-mark" src="assets/ayan-logo-v2.webp" alt="Ayan Photography">
-          <div class="brand-copy"><strong>Ayan Photography</strong><span data-i18n="brandTag">Car Photography Studio</span></div>
-        </div>
-        <p data-i18n="footerCopy">تصوير سيارات احترافي، رولينق، جلسات ثابتة، ومونتاج سينمائي بأسلوب يناسب كل سيارة.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footerNav">التنقل</h4>
-        <a href="index.html" data-i18n="home">الرئيسية</a>
-        <a href="features.html" data-i18n="features">المميزات</a>
-        <a href="booking.html" data-i18n="booking">الحجز</a>
-        <a href="gallery.html" data-i18n="gallery">المعرض</a>
-        <a href="terms.html" data-i18n="termsPageLink">الشروط والأحكام</a>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footerContact">تواصل</h4>
-        <a href="https://wa.me/966565117739" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="https://instagram.com/13345" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://snapchat.com/t/vsu8gtHC" target="_blank" rel="noopener">Snapchat</a>
-        <span data-i18n="footerLocation">المنطقة الشرقية، السعودية</span>
-      </div>
-    </div>
-    <div class="footer-bottom"><span>© Ayan Photography 2024–2026</span><span data-i18n="footerTag">Built for cinematic car content</span></div>
-  </div>
-</footer>
-
-  </div>
-  <script src="ui.js?v=60"></script>
-  <script src="app.js?v=60"></script>
-  <script src="security.js?v=60"></script>
+  <script>
+    const root = document.documentElement;
+    const button = document.getElementById('langToggle');
+    function setLanguage(lang){
+      root.lang = lang;
+      root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      button.textContent = lang === 'ar' ? 'English' : 'العربية';
+      localStorage.setItem('ayan-maintenance-lang', lang);
+    }
+    const saved = localStorage.getItem('ayan-maintenance-lang');
+    setLanguage(saved === 'en' ? 'en' : 'ar');
+    button.addEventListener('click', () => setLanguage(root.lang === 'ar' ? 'en' : 'ar'));
+  </script>
 </body>
 </html>
