@@ -185,9 +185,9 @@ export default async function handler(req, res) {
     lang,
     merchant_code: merchantCode,
     merchant_urls: {
-      success: `${baseUrl}/payment-success.html?provider=tabby`,
-      cancel: `${baseUrl}/payment-success.html?provider=tabby&result=cancel`,
-      failure: `${baseUrl}/payment-success.html?provider=tabby&result=failure`
+      success: `${baseUrl}/payment-success?provider=tabby`,
+      cancel: `${baseUrl}/payment-success?provider=tabby&result=cancel`,
+      failure: `${baseUrl}/payment-success?provider=tabby&result=failure`
     }
   };
 
@@ -231,7 +231,7 @@ export default async function handler(req, res) {
       paymentId,
       status: result.status,
       redirectUrl: webUrl,
-      invoiceUrl: `${baseUrl}/invoice.html?provider=tabby&payment_id=${encodeURIComponent(paymentId)}`,
+      invoiceUrl: `${baseUrl}/invoice?provider=tabby&payment_id=${encodeURIComponent(paymentId)}`,
       subtotal: sessionPricing.subtotal,
       paymentFee: sessionPricing.paymentFee,
       serviceFee: sessionPricing.paymentFee,

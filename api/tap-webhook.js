@@ -74,7 +74,7 @@ async function notifyDiscord(payload, chargeId) {
     }
   }
   const baseUrl = String(process.env.APP_BASE_URL || '').replace(/\/$/, '');
-  const invoiceUrl = baseUrl ? `${baseUrl}/invoice.html?tap_id=${encodeURIComponent(chargeId)}` : '';
+  const invoiceUrl = baseUrl ? `${baseUrl}/invoice?tap_id=${encodeURIComponent(chargeId)}` : '';
   const language = metadata.lang === 'en' ? 'EN' : 'AR';
   const packageName = metadata.package_name || metadata.package_name_en || '—';
   const subtotal = Number(metadata.subtotal || 0).toFixed(2);

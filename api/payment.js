@@ -165,7 +165,7 @@ export default async function handler(req, res) {
     merchant: { id: merchantId },
     source: { id: 'src_all' },
     post: { url: `${baseUrl}/api/tap-webhook` },
-    redirect: { url: `${baseUrl}/payment-success.html` }
+    redirect: { url: `${baseUrl}/payment-success` }
   };
 
   try {
@@ -206,7 +206,7 @@ export default async function handler(req, res) {
       tapId,
       status,
       redirectUrl,
-      invoiceUrl: `${baseUrl}/invoice.html?tap_id=${encodeURIComponent(tapId)}`,
+      invoiceUrl: `${baseUrl}/invoice?tap_id=${encodeURIComponent(tapId)}`,
       subtotal: pricing.subtotal,
       paymentMethod,
       paymentFee: pricing.paymentFee,

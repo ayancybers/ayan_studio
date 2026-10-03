@@ -78,9 +78,9 @@ export default async function handler(req, res) {
     country_code: 'SA',
     description: `Ayan Photography - ${pkg.en}`,
     merchant_url: {
-      success: `${baseUrl}/payment-success.html?provider=tamara`,
-      failure: `${baseUrl}/payment-success.html?provider=tamara&result=failure`,
-      cancel: `${baseUrl}/payment-success.html?provider=tamara&result=cancel`
+      success: `${baseUrl}/payment-success?provider=tamara`,
+      failure: `${baseUrl}/payment-success?provider=tamara&result=failure`,
+      cancel: `${baseUrl}/payment-success?provider=tamara&result=cancel`
     },
     shipping_address: { first_name: firstName, last_name: lastName, line1: 'Ayan Photography - Automotive Photography Service', city, country_code: 'SA' },
     billing_address: { first_name: firstName, last_name: lastName, line1: 'Ayan Photography - Automotive Photography Service', city, country_code: 'SA' },

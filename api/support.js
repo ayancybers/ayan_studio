@@ -35,7 +35,7 @@ export default async function handler(req, res) {
 
   const ticket = `AYAN-${Date.now().toString(36).toUpperCase()}`;
   const createdAt = new Date().toISOString();
-  const page = clean(body.sourcePage, 120) || '/support.html';
+  const page = clean(body.sourcePage, 120) || '/support';
   const theme = clean(body.theme, 30);
   const screen = clean(body.screen, 30);
   const typeLabel = TYPE_LABELS[type][lang];
@@ -134,7 +134,7 @@ async function sendDiscord(webhook, data) {
           { name: 'Email', value: truncate(data.email, 120), inline: false },
           { name: 'Subject', value: truncate(data.subject, 200), inline: false },
           { name: 'Message', value: truncate(data.message, 1000), inline: false },
-          { name: 'Page', value: truncate(data.page || 'support.html', 120), inline: true },
+          { name: 'Page', value: truncate(data.page || '/support', 120), inline: true },
           { name: 'Theme', value: truncate(data.theme || '—', 60), inline: true },
           { name: 'Screen', value: truncate(data.screen || '—', 60), inline: true }
         ],

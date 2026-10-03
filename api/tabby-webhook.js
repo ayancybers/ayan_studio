@@ -58,7 +58,7 @@ async function notifyDiscord(payload, paymentId) {
   if (!webhookUrl) return;
   const meta = payload.meta || {};
   const baseUrl = String(process.env.APP_BASE_URL || '').replace(/\/$/, '');
-  const invoiceUrl = baseUrl ? `${baseUrl}/invoice.html?provider=tabby&payment_id=${encodeURIComponent(paymentId)}` : '';
+  const invoiceUrl = baseUrl ? `${baseUrl}/invoice?provider=tabby&payment_id=${encodeURIComponent(paymentId)}` : '';
   const packageName = meta.package_name || meta.package_name_en || '—';
   const subtotal = Number(meta.subtotal || 0).toFixed(2);
   const paymentFee = Number(meta.payment_fee || 0).toFixed(2);
