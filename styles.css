@@ -5480,3 +5480,37 @@ html { scroll-behavior: smooth; }
 @media (max-width:560px){
   .footer-developer-credit{width:100%;justify-content:flex-start;white-space:normal;border-radius:15px;padding:10px 12px}
 }
+
+/* E-commerce authentication footer badge */
+.ecommerce-verification {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+  padding: 15px 17px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface, var(--bg)) 78%, transparent);
+}
+.verification-mark {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+  border-radius: 12px;
+  color: #287c65;
+  background: rgba(40, 124, 101, .10);
+}
+.verification-mark svg { width: 25px; height: 25px; }
+.verification-copy { display: grid; gap: 4px; min-width: 170px; }
+.verification-copy strong { color: var(--text); font-size: 12px; font-weight: 750; }
+.verification-copy span { color: var(--muted); font-size: 10px; direction: rtl; }
+.verification-link { margin-inline-start: auto; color: var(--brand); font-size: 11px; font-weight: 700; text-decoration: none; }
+.verification-link:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  .ecommerce-verification { gap: 10px; padding: 13px; }
+  .verification-copy { min-width: 0; flex: 1; }
+  .verification-link { width: 100%; margin-inline-start: 0; padding-top: 9px; border-top: 1px solid var(--border); }
+}
