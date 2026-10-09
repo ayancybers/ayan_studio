@@ -90,8 +90,8 @@
               gap: 4px !important;
               padding: 8px !important;
               margin: 0 !important;
-              background: #08182a !important;
-              border: 1px solid #294766 !important;
+              background: color-mix(in srgb, var(--surface-strong) 98%, var(--bg)) !important;
+              border: 1px solid var(--border-strong) !important;
               border-radius: 18px !important;
               box-shadow: 0 22px 55px rgba(0,0,0,.58) !important;
               backdrop-filter: none !important;
@@ -153,19 +153,19 @@
             .site-header .nav-links a:hover,
             .site-header .nav-links a:focus-visible,
             .site-header .nav-links a.active {
-              background: #173657 !important;
-              color: #fff !important;
+              background: color-mix(in srgb, var(--brand) 13%, var(--surface-strong)) !important;
+              color: var(--text) !important;
               outline: none !important;
             }
 
             [data-theme="dark"] .site-header .nav-links {
-              background: #070f1a !important;
-              border-color: #223b57 !important;
+              background: var(--surface-strong) !important;
+              border-color: var(--border-strong) !important;
             }
 
             [data-theme="light"] .site-header .nav-links {
               background: #ffffff !important;
-              border-color: rgba(20,57,94,.16) !important;
+              border-color: var(--border-strong) !important;
             }
 
             [data-theme="light"] .site-header .nav-links a {
@@ -175,14 +175,14 @@
             [data-theme="light"] .site-header .nav-links a:hover,
             [data-theme="light"] .site-header .nav-links a:focus-visible,
             [data-theme="light"] .site-header .nav-links a.active {
-              background: #eef5ff !important;
-              color: #102038 !important;
+              background: var(--surface-soft) !important;
+              color: var(--text) !important;
             }
           }
 
           /* Preference panels: solid and above every page layer */
           .site-header .pref-panel {
-            background: #08182a !important;
+            background: color-mix(in srgb, var(--surface-strong) 98%, var(--bg)) !important;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
             z-index: 2147483646 !important;
@@ -201,11 +201,11 @@
           }
 
           [data-theme="dark"] .site-header .pref-panel {
-            background: #070f1a !important;
+            background: var(--surface-strong) !important;
           }
 
           [data-theme="light"] .site-header .pref-panel {
-            background: #fff !important;
+            background: var(--surface-strong) !important;
           }
 
           /* V33: compact booking package selector + package banner */

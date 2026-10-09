@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Ayan Developer — صفحة المطور والمشاريع البرمجية من Ayan Photography.">
+  <meta name="theme-color" content="#080d12">
+  <meta name="description" content="تعرّف على Ayan Developer ومشاريعه في تصميم وتطوير المواقع والتجارب الرقمية.">
   <link rel="canonical" href="/info">
   <link rel="icon" type="image/png" href="assets/ayan-logo-icon.png">
   <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png">
-  <link rel="preload" as="image" href="assets/ayan-logo-icon.png" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=63">
+  <link rel="preload" as="image" href="assets/ayan-logo-v2.webp" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css?v=71">
   <title>Ayan Developer | مطور الموقع</title>
+<link rel="stylesheet" href="refresh.css?v=74">
 </head>
-<body data-theme="relax" class="info-page">
+<body data-theme="relax" data-page-title="info" class="info-page">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
   <div id="pointer-glow" aria-hidden="true"></div>
   <div class="page-shell">
@@ -59,17 +60,17 @@
         <div class="info-orb info-orb-b" aria-hidden="true"></div>
         <div class="container info-hero-inner">
           <div class="info-hero-copy reveal">
-            <div class="eyebrow"><span class="dot"></span><span>Ayan Developer</span></div>
-            <h1>الموقع هذا <span>من برمجتي.</span></h1>
-            <p>هذه الصفحة تعرّفك على المطوّر خلف Ayan Photography، وتجمع بعض المشاريع التي صممتها وطورتها من الفكرة إلى الإطلاق.</p>
+            <div class="eyebrow"><span class="dot"></span><span data-i18n="devEyebrow">Ayan Developer</span></div>
+            <h1 data-i18n="devTitle">من الفكرة إلى <span>منتج جاهز.</span></h1>
+            <p data-i18n="devLead">أصمم وأطوّر تجارب رقمية واضحة وسريعة، من أول تصور إلى إطلاق موقع يعمل لخدمة الناس والأعمال.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#projects">شوف مشاريعي</a>
-              <a class="btn btn-secondary" href="https://wa.me/966565117739" target="_blank" rel="noopener">تواصل معي ↗</a>
+              <a class="btn btn-primary" href="#projects" data-i18n="devProjectsCta">استكشف أعمالي</a>
+              <a class="btn btn-secondary" href="https://wa.me/966565117739" target="_blank" rel="noopener" data-i18n="devContactCta">تواصل معي ↗</a>
             </div>
-            <div class="info-proof-row" aria-label="Developer highlights">
-              <div><strong>01</strong><span>هوية رقمية</span></div>
-              <div><strong>02+</strong><span>مشاريع منشورة</span></div>
-              <div><strong>24/7</strong><span>تطوير ودعم</span></div>
+            <div class="info-proof-row" aria-label="مراحل تطوير المنتج" data-i18n-aria-label="devProofAria">
+              <div><strong>01</strong><span data-i18n="devProof1">الهوية</span></div>
+              <div><strong>02</strong><span data-i18n="devProof2">التطوير</span></div>
+              <div><strong>03</strong><span data-i18n="devProof3">الإطلاق</span></div>
             </div>
           </div>
 
@@ -92,13 +93,13 @@
       <section class="section info-about">
         <div class="container">
           <div class="section-head reveal">
-            <div><div class="kicker">ABOUT THE DEVELOPER</div><h2>أبني الموقع، وأرتّب التجربة معه.</h2></div>
-            <p>مو هدفي يكون الموقع مجرد شكل. أركز على السرعة، وضوح المحتوى، سهولة الطلب، وتجربة العميل من أول زيارة إلى آخر خطوة.</p>
+            <div><div class="kicker" data-i18n="devAboutKicker">عن المطوّر</div><h2 data-i18n="devAboutTitle">أبني المنتج من الفكرة إلى التفاصيل.</h2></div>
+            <p data-i18n="devAboutText">أجمع بين التصميم والبرمجة حتى تكون التجربة جميلة، مفهومة، وسهلة الاستخدام على كل شاشة.</p>
           </div>
           <div class="info-about-grid">
-            <article class="card info-pillar reveal"><span class="info-number">01</span><h3>تصميم</h3><p>واجهة واضحة ومريحة للعين، مع هوية بصرية مناسبة للمشروع بدل القوالب المكررة.</p></article>
-            <article class="card info-pillar reveal" data-delay="1"><span class="info-number">02</span><h3>تطوير</h3><p>صفحات متجاوبة، تفاعلات سلسة، ونظام مرتب يسهل تطويره وإضافة ميزات جديدة.</p></article>
-            <article class="card info-pillar reveal" data-delay="2"><span class="info-number">03</span><h3>إطلاق</h3><p>تهيئة الموقع للنشر، ربط الدومين والخدمات، وتجهيز المسارات الأساسية للعميل والإدارة.</p></article>
+            <article class="card info-pillar reveal"><span class="info-number">01</span><h3 data-i18n="devPillar1Title">تجربة واضحة</h3><p data-i18n="devPillar1Text">واجهة مرتبة تساعد الزائر يوصل للمعلومة والخطوة التالية بسرعة.</p></article>
+            <article class="card info-pillar reveal" data-delay="1"><span class="info-number">02</span><h3 data-i18n="devPillar2Title">تطوير متجاوب</h3><p data-i18n="devPillar2Text">صفحات تعمل بسلاسة على الجوال والكمبيوتر وتدعم العربية والإنجليزية.</p></article>
+            <article class="card info-pillar reveal" data-delay="2"><span class="info-number">03</span><h3 data-i18n="devPillar3Title">إطلاق متكامل</h3><p data-i18n="devPillar3Text">ربط الصفحات والخدمات الأساسية وتجهيز المسارات قبل نشر المشروع.</p></article>
           </div>
         </div>
       </section>
@@ -106,23 +107,23 @@
       <section id="projects" class="section info-projects">
         <div class="container">
           <div class="section-head reveal">
-            <div><div class="kicker">SELECTED WORK</div><h2>مشاريع أفتخر إني بنيتها.</h2></div>
-            <p>كل مشروع هنا مشروع فعلي منشور، وليس تصميمًا تجريبيًا.</p>
+            <div><div class="kicker" data-i18n="devWorkKicker">أعمال مختارة</div><h2 data-i18n="devWorkTitle">مشاريع فعلية على الويب.</h2></div>
+            <p data-i18n="devWorkText">نماذج من مواقع منشورة تجمع بين الهوية البصرية والوظائف التي يحتاجها العميل.</p>
           </div>
           <div class="info-project-grid">
             <a class="info-project-card reveal" href="https://ayancybers.store/" target="_blank" rel="noopener">
               <div class="project-topline"><span>01</span><span>LIVE PROJECT</span></div>
               <div class="project-logo project-logo-ayan">AYAN</div>
-              <div class="info-project-main"><h3>Ayan Photography</h3><p>منصة تصوير سيارات تشمل عرض الباقات، الحجز، المعرض، الدفع وتجربة كاملة للعميل.</p></div>
+              <div class="info-project-main"><h3>Ayan Photography</h3><p data-i18n="devAyanDescription">منصة تصوير سيارات تعرض الباقات والمعرض والحجز والدفع في رحلة واحدة للعميل.</p></div>
               <div class="project-tags"><span>Booking</span><span>Payments</span><span>Responsive</span></div>
-              <span class="project-visit">زيارة الموقع ↗</span>
+              <span class="project-visit" data-i18n="devVisitProject">زيارة المشروع ↗</span>
             </a>
             <a class="info-project-card reveal" data-delay="1" href="https://www.5lo.store/" target="_blank" rel="noopener">
               <div class="project-topline"><span>02</span><span>LIVE PROJECT</span></div>
               <div class="project-logo project-logo-5lo">5LO</div>
-              <div class="info-project-main"><h3>5LO Photography</h3><p>تجربة بصرية لاستوديو تصوير سيارات، تركّز على الحضور المرئي والحركة وسهولة الوصول للحجز.</p></div>
+              <div class="info-project-main"><h3>5LO Photography</h3><p data-i18n="dev5loDescription">موقع لاستوديو تصوير سيارات يركز على عرض الأعمال والوصول السريع للحجز.</p></div>
               <div class="project-tags"><span>Visual UI</span><span>Motion</span><span>Photography</span></div>
-              <span class="project-visit">زيارة الموقع ↗</span>
+              <span class="project-visit" data-i18n="devVisitProject">زيارة المشروع ↗</span>
             </a>
           </div>
         </div>
@@ -131,8 +132,8 @@
       <section class="section info-stack">
         <div class="container">
           <div class="info-stack-panel reveal">
-            <div class="info-stack-copy"><div class="kicker">MY STACK</div><h2>أدوات أستخدمها لصناعة المنتج.</h2><p>التقنية تتغير حسب المشروع، لكن التركيز ثابت: أداء ممتاز، تجربة واضحة، وكود قابل للتطوير.</p></div>
-            <div class="stack-cloud" aria-label="Technology stack">
+            <div class="info-stack-copy"><div class="kicker" data-i18n="devStackKicker">التقنيات</div><h2 data-i18n="devStackTitle">الأدوات تتغير حسب احتياج المشروع.</h2><p data-i18n="devStackText">أختار التقنية التي تخدم التجربة، مع تركيز دائم على الأداء والوضوح وسهولة التطوير.</p></div>
+            <div class="stack-cloud" aria-label="أدوات وتقنيات التطوير" data-i18n-aria-label="devStackAria">
               <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Vercel</span><span>REST APIs</span><span>Responsive UI</span><span>Web Animations</span><span>Payment Flows</span>
             </div>
           </div>
@@ -142,8 +143,8 @@
       <section class="section info-cta">
         <div class="container">
           <div class="cta-banner info-cta-banner reveal">
-            <div><div class="kicker">BUILD SOMETHING</div><h2>عندك فكرة موقع؟ خلّنا نحولها لشيء حقيقي.</h2><p>من صفحة بسيطة إلى منصة كاملة، أبدأ من الفكرة وأبني التجربة معك خطوة بخطوة.</p></div>
-            <div class="cta-actions"><a class="btn btn-primary" href="https://wa.me/966565117739" target="_blank" rel="noopener">راسلني واتساب ↗</a><a class="btn btn-secondary" href="mailto:info@ayancybers.store">إرسال إيميل</a></div>
+            <div><div class="kicker" data-i18n="devCtaKicker">لنبدأ مشروعك</div><h2 data-i18n="devCtaTitle">عندك فكرة؟ خلّنا نبنيها.</h2><p data-i18n="devCtaText">أرسل فكرتك ونرتب الخطوات المناسبة لتحويلها إلى موقع أو تجربة رقمية جاهزة.</p></div>
+            <div class="cta-actions"><a class="btn btn-primary" href="https://wa.me/966565117739" target="_blank" rel="noopener" data-i18n="devContactCta">تواصل معي ↗</a><a class="btn btn-secondary" href="mailto:info@ayancybers.store" data-i18n="devEmail">إرسال بريد إلكتروني</a></div>
           </div>
         </div>
       </section>
@@ -166,9 +167,9 @@
       </div>
     </footer>
   </div>
-  <script src="ui.js?v=63"></script>
-  <script src="app.js?v=63"></script>
-  <script src="security.js?v=63"></script>
+  <script src="ui.js?v=71"></script>
+  <script src="app.js?v=72"></script>
+  <script src="security.js?v=71"></script>
   <script>
     (() => {
       const reveal = () => document.querySelectorAll('.info-page .reveal').forEach(el => el.classList.add('is-visible'));

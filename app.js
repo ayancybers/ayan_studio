@@ -8,6 +8,7 @@ const DEFAULT_THEME = 'relax';
 const translations = {
   ar: {
     brandTag: 'Car Photography Studio',
+    devEyebrow: 'Ayan Developer', devTitle: 'من الفكرة إلى <span>منتج جاهز.</span>', devLead: 'أصمم وأطوّر تجارب رقمية واضحة وسريعة، من أول تصور إلى إطلاق موقع يعمل لخدمة الناس والأعمال.', devProjectsCta: 'استكشف أعمالي', devContactCta: 'تواصل معي ↗', devProofAria: 'مراحل تطوير المنتج', devProof1: 'الهوية', devProof2: 'التطوير', devProof3: 'الإطلاق', devAboutKicker: 'عن المطوّر', devAboutTitle: 'أبني المنتج من الفكرة إلى التفاصيل.', devAboutText: 'أجمع بين التصميم والبرمجة حتى تكون التجربة جميلة، مفهومة، وسهلة الاستخدام على كل شاشة.', devPillar1Title: 'تجربة واضحة', devPillar1Text: 'واجهة مرتبة تساعد الزائر يوصل للمعلومة والخطوة التالية بسرعة.', devPillar2Title: 'تطوير متجاوب', devPillar2Text: 'صفحات تعمل بسلاسة على الجوال والكمبيوتر وتدعم العربية والإنجليزية.', devPillar3Title: 'إطلاق متكامل', devPillar3Text: 'ربط الصفحات والخدمات الأساسية وتجهيز المسارات قبل نشر المشروع.', devWorkKicker: 'أعمال مختارة', devWorkTitle: 'مشاريع فعلية على الويب.', devWorkText: 'نماذج من مواقع منشورة تجمع بين الهوية البصرية والوظائف التي يحتاجها العميل.', devAyanDescription: 'منصة تصوير سيارات تعرض الباقات والمعرض والحجز والدفع في رحلة واحدة للعميل.', dev5loDescription: 'موقع لاستوديو تصوير سيارات يركز على عرض الأعمال والوصول السريع للحجز.', devVisitProject: 'زيارة المشروع ↗', devStackKicker: 'التقنيات', devStackTitle: 'الأدوات تتغير حسب احتياج المشروع.', devStackText: 'أختار التقنية التي تخدم التجربة، مع تركيز دائم على الأداء والوضوح وسهولة التطوير.', devStackAria: 'أدوات وتقنيات التطوير', devCtaKicker: 'لنبدأ مشروعك', devCtaTitle: 'عندك فكرة؟ خلّنا نبنيها.', devCtaText: 'أرسل فكرتك ونرتب الخطوات المناسبة لتحويلها إلى موقع أو تجربة رقمية جاهزة.', devEmail: 'إرسال بريد إلكتروني',
     home: 'الرئيسية', features: 'المميزات', booking: 'الحجز', gallery: 'المعرض', support: 'الدعم والمساعدة', quick: 'حجز سريع', socialWhatsApp: 'واتساب', socialInstagram: 'إنستغرام', socialSnapchat: 'سناب شات',
     theme: 'الثيم', lang: 'اللغة', relax: 'مريح 💙', dark: 'داكن 🌙', light: 'فاتح ☀️',
     heroEyebrow: 'تصوير سيارات بطابع سينمائي',
@@ -39,7 +40,8 @@ const translations = {
     feature3Title: 'تواصل مباشر', feature3Text: 'ترسل طلبك من الموقع وينتقل معك مباشرة إلى الواتساب للتنسيق مع المصور.',
     workflowKicker: 'Ayan Workflow', workflowTitle: 'من أول فكرة إلى آخر فريم.', workflowText: 'كل صفحة لها وظيفة واضحة، عشان العميل يلقى اللي يحتاجه بسرعة.',
     workflow1: 'اختيار الباقة المناسبة.', workflow2: 'تعبئة بيانات السيارة وموقع التصوير.', workflow3: 'استلام الطلب والتنسيق عبر الواتساب.', workflow4: 'التصوير والتسليم حسب تفاصيل الباقة.',
-    galleryKicker: 'Gallery', galleryTitle: 'خذ فكرة عن الشغل قبل ما تحجز.', galleryText: 'المعرض صار صفحة مستقلة عشان يبقى التركيز على الفيديو والمحتوى.', exploreGallery: 'استكشف المعرض ←',
+    homeShowcaseKicker: 'من المعرض', homeShowcaseTitle: 'لقطات تحكي طابع كل سيارة.', homeShowcaseText: 'نماذج من جلسات Ayan Photography — من الرولينق إلى التفاصيل السينمائية.', homeShowcaseLink: 'شاهد كل الأعمال ←', homeShowcaseFrame1: 'شاهد لقطة من أعمال Ayan Photography — 01', homeShowcaseFrame2: 'شاهد لقطة من أعمال Ayan Photography — 02', homeShowcaseFrame3: 'شاهد لقطة من أعمال Ayan Photography — 03',
+    galleryKicker: 'Gallery', galleryTitle: 'خذ فكرة عن الشغل قبل ما تحجز.', galleryText: 'المعرض صار صفحة مستقلة عشان يبقى التركيز على الفيديو والمحتوى.', exploreGallery: 'استكشف المعرض ←', galleryLoading: 'جاري تجهيز المعرض…',
     featuresHeroKicker: 'Why Ayan Photography', featuresHeroTitle: 'كل تفصيلة محسوبة عشان تطلع سيارتك بأفضل صورة.', featuresHeroText: 'هوية بصرية هادئة، حركة ناعمة، ومسار واضح من أول تواصل إلى آخر تسليم.',
     feature4Title: 'تخطيط اللقطة', feature4Text: 'نرتب فكرة التصوير حسب شكل السيارة والمكان وطابع المحتوى الذي تريده.',
     feature5Title: 'مونتاج مدروس', feature5Text: 'قص وحركة وانتقالات تخدم المشهد بدل ما تكون مجرد مؤثرات عشوائية.',
@@ -62,6 +64,7 @@ const translations = {
   },
   en: {
     brandTag: 'Car Photography Studio',
+    devEyebrow: 'Ayan Developer', devTitle: 'From an idea to a <span>finished product.</span>', devLead: 'I design and build clear, fast digital experiences — from the first concept to a live website that works for people and businesses.', devProjectsCta: 'Explore my work', devContactCta: 'Get in touch ↗', devProofAria: 'Product development stages', devProof1: 'Identity', devProof2: 'Development', devProof3: 'Launch', devAboutKicker: 'About the developer', devAboutTitle: 'I build the product from the idea to the details.', devAboutText: 'I bring design and development together to make experiences feel polished, clear, and easy to use on every screen.', devPillar1Title: 'Clear experience', devPillar1Text: 'A considered interface that helps people find the right information and next step.', devPillar2Title: 'Responsive development', devPillar2Text: 'Pages that work smoothly on phones and desktops, in both Arabic and English.', devPillar3Title: 'Launch-ready', devPillar3Text: 'Core pages and services connected, with the main customer paths ready to go live.', devWorkKicker: 'Selected work', devWorkTitle: 'Real projects on the web.', devWorkText: 'A selection of live websites combining visual identity with the tools customers need.', devAyanDescription: 'A car photography platform bringing packages, gallery, booking, and payments into one customer journey.', dev5loDescription: 'A car photography studio website focused on presenting the work and making booking easy to reach.', devVisitProject: 'Visit project ↗', devStackKicker: 'Technology', devStackTitle: 'The tools follow the project.', devStackText: 'I choose the technology that serves the experience, with a steady focus on performance, clarity, and maintainability.', devStackAria: 'Development tools and technologies', devCtaKicker: 'Start a project', devCtaTitle: 'Have an idea? Let’s build it.', devCtaText: 'Send me your idea and we can map out the right steps to turn it into a website or digital experience.', devEmail: 'Send an email',
     home: 'Home', features: 'Features', booking: 'Booking', gallery: 'Gallery', support: 'Support', quick: 'Quick Booking', socialWhatsApp: 'WhatsApp', socialInstagram: 'Instagram', socialSnapchat: 'Snapchat',
     theme: 'Theme', lang: 'Language', relax: 'Relax 💙', dark: 'Dark 🌙', light: 'Light ☀️',
     heroEyebrow: 'Cinematic car photography', heroTitle: 'Let your car <span>speak in frames.</span>', heroLead: 'Rolling shots, static details, and polished edits — from the first frame to the final cut, with a cleaner booking experience.', bookNow: 'Book your session', watchGallery: 'View gallery',
@@ -77,12 +80,12 @@ const translations = {
     advanced: 'SIGNATURE', advancedDesc: 'Rolling + static + more than 10 varied clips + editing', advancedPrice: '130', advancedOldPrice: '150 SAR', advancedDiscount: '20 SAR OFF', advancedBadge: 'Most Popular', advancedF1: 'Rolling shots of the car.', advancedF2: 'Static shots from several angles.', advancedF3: 'More than 10 varied clips.', advancedF4: 'Complete edit.', advancedF5: 'Varied camera movements and angles.', advancedF6: 'Same-day delivery when possible.',
     royal: 'CINEMATIC', royalDesc: 'Cinematic production + 20+ clips', royalPrice: '180', royalOldPrice: '200 SAR', royalDiscount: '20 SAR OFF', royalBadge: '', royalF1: 'Complete cinematic car coverage.', royalF2: 'Rolling and static shots with varied movement.', royalF3: 'More than 20 varied clips.', royalF4: 'Professional cinematic edit.', royalF5: 'Custom concept execution.', royalF6: 'Direction tailored to your car.',
     whyKicker: 'Why Ayan Photography', whyTitle: 'A clean experience from booking to delivery.', whyText: 'Instead of a crowded one-page site, every part of the journey now has a clear path.', featureLink: 'Explore all features →', feature1Title: 'Professional sessions', feature1Text: 'Purpose-built camera work and lenses to reveal the car with cinematic detail.', feature2Title: 'Fast delivery', feature2Text: 'A clear workflow for production, processing, and delivery without unnecessary steps.', feature3Title: 'Direct coordination', feature3Text: 'Submit your request on the site and continue straight to WhatsApp for coordination.',
-    workflowKicker: 'Ayan Workflow', workflowTitle: 'From the first idea to the final frame.', workflowText: 'Every page has one clear job, so clients find what they need quickly.', workflow1: 'Choose the right package.', workflow2: 'Add car and shoot details.', workflow3: 'Receive and coordinate the request on WhatsApp.', workflow4: 'Shoot and deliver based on the package.', galleryKicker: 'Gallery', galleryTitle: 'See the work before you book.', galleryText: 'The gallery now lives on its own page so the focus stays on the visual work.', exploreGallery: 'Explore gallery →',
+    workflowKicker: 'Ayan Workflow', workflowTitle: 'From the first idea to the final frame.', workflowText: 'Every page has one clear job, so clients find what they need quickly.', workflow1: 'Choose the right package.', workflow2: 'Add car and shoot details.', workflow3: 'Receive and coordinate the request on WhatsApp.', workflow4: 'Shoot and deliver based on the package.', homeShowcaseKicker: 'Selected work', homeShowcaseTitle: 'Frames shaped around every car.', homeShowcaseText: 'A selection from Ayan Photography sessions — from rolling shots to cinematic details.', homeShowcaseLink: 'View all work →', homeShowcaseFrame1: 'View Ayan Photography work — frame 01', homeShowcaseFrame2: 'View Ayan Photography work — frame 02', homeShowcaseFrame3: 'View Ayan Photography work — frame 03', galleryKicker: 'Gallery', galleryTitle: 'See the work before you book.', galleryText: 'The gallery now lives on its own page so the focus stays on the visual work.', exploreGallery: 'Explore gallery →',
     featuresHeroKicker: 'Why Ayan Photography', featuresHeroTitle: 'Every detail is designed to make your car look its best.', featuresHeroText: 'Quiet visual direction, smooth motion, and a clear journey from the first message to final delivery.', feature4Title: 'Shot planning', feature4Text: 'We shape the concept around the car, location, and content style you want.', feature5Title: 'Intentional editing', feature5Text: 'Cuts, motion, and transitions that support the scene instead of fighting it.', feature6Title: 'Mobile-first experience', feature6Text: 'The website and booking flow are designed to feel fast on both phone and desktop.', servicesTitle: 'Services', servicesText: 'Choose the production type that fits your goal, whether it is reels, details, or a full session.', catalogKicker: 'Available Packages', catalogTitle: 'Services & Pricing', catalogText: 'All bookable packages are listed here with a clear description, current price, and selected Ayan Photography work.', catalogLink: 'Book now →', catalogSilverTitle: 'ROLL', catalogSilverText: 'Rolling coverage from multiple angles with all original clips delivered without editing.', catalogBasicTitle: 'MOTION', catalogBasicText: 'Rolling coverage with 10+ varied clips, full editing, music selection, and an optional custom concept.', catalogAdvancedTitle: 'SIGNATURE', catalogAdvancedText: 'Rolling and static coverage from multiple angles, 10+ clips, full editing, and fast delivery based on the session.', catalogRoyalTitle: 'CINEMATIC', catalogRoyalText: 'A complete cinematic session combining rolling, static coverage, professional editing, and a custom concept option.', catalogChoose: 'Choose package', catalogNoteTitle: 'Note:', catalogNoteText: 'Displayed prices are the current package prices. Any additional service is explained before the order is confirmed.', service1Title: 'Rolling Shots', service1Text: 'Moving coverage from different angles to show design, speed, and presence.', service2Title: 'Static Details', service2Text: 'Still frames that focus on exterior, interior, and design details.', service3Title: 'Cinematic Edit', service3Text: 'A full edit with a visual rhythm built around the car and the platform.', service4Title: 'Custom Concept', service4Text: 'A tailored idea coordinated around your style and the message you want to convey.',
     processTitle: 'How it works', processText: 'Four clear steps with no unnecessary complexity.', step1Title: 'Choose', step1Text: 'Pick the package and session type.', step2Title: 'Send', step2Text: 'Submit your details and notes.', step3Title: 'Coordinate', step3Text: 'We finalize the details through WhatsApp.', step4Title: 'Shoot', step4Text: 'We execute the session and arrange delivery.',
     bookingHeroKicker: 'Booking', bookingHeroTitle: 'Book your session in under a minute.', bookingHeroText: 'Fill in your details, review the total and payment fee, then continue to secure payment.', bookingMeta1: 'Choose a package', bookingMeta2: 'Add your details', bookingMeta3: 'Pay with Tabby or Tamara', bookingSideTitle: 'Start with the right package.', bookingSideText: 'Choose your production level first, then we will handle the rest with you.', selectedLabel: 'Selected package', selectedEmpty: 'Choose a package to begin', sideFoot1: 'Direct coordination', sideFoot2: 'Clear pricing', sideFoot3: 'WhatsApp handoff', bookingStep1: 'Package', bookingStep2: 'Details', bookingStep3: 'Payment', flowStep1: 'Choose your package', flowStep2: 'Add your session details', flowStep3: 'Pay securely with Tabby or Tamara', flowSelected: 'Selected', flowDetails: 'Complete the required details', flowReady: 'Ready for secure payment', validationPackage: 'Choose a package first.', validationName: 'Enter your full name.', validationPhone: 'Enter a valid Saudi WhatsApp number.', validationCar: 'Choose your car type.', validationRegion: 'Choose the shoot area.', validationTerms: 'Accept the terms and conditions before continuing.', formKicker: 'Start your session', packageHint: 'Choose the production level that fits the shot in your head.', tapToChoose: 'Tap to choose', packageDiscountNote: '20 SAR discount on all packages.', detailsDivider: 'Session details', submitTitle: 'Ready? Let’s finish it.', submitText: 'After confirmation, you will review the total and choose a payment method.',
     formTitle: 'Instant booking form', termsAgreement: 'I agree to the terms and conditions and acknowledge that the digital service/content is non-refundable after payment or once work has started.', termsLink: 'View terms and conditions', formRequired: 'Fields marked * are required', nameLabel: 'Full name *', namePlaceholder: 'Your full name', phoneLabel: 'WhatsApp number *', phonePlaceholder: '05xxxxxxxx', packageLabel: 'Package *', packagePlaceholder: 'Choose a package', carLabel: 'Car type *', carPlaceholder: 'Choose your car type', regionLabel: 'Shoot area *', regionPlaceholder: 'Choose an area', notesLabel: 'Additional notes', notesPlaceholder: 'Specific angles, a custom idea, preferred time, or anything else...', submit: 'Continue to payment', formNote: 'The final amount shows the package price and payment fee separately before payment.', bookingAsideTitle: 'Before payment', bookingAsideText: 'Review your details and the package price before choosing a payment method.', aside1: 'Choose the package first.', aside2: 'Use an active WhatsApp number.', aside3: 'Add any special idea in the notes.', priceNoteTitle: 'Base prices', priceNoteText: '70 / 100 / 150 / 200 SAR', subtotalLabel: 'Package price', serviceFeeLabel: 'Payment fee', totalLabel: 'Total', taxNotice: 'Payment fees are shown on the checkout page based on the selected method.', selectedBaseLabel: 'Before additions', paymentError: 'We could not prepare the payment. Please try again.', paymentPreparing: 'Preparing secure payment…', paymentMethodsTitle: 'Payment methods', paymentMaintenance: 'Under maintenance', paymentMethodsNote: 'Tabby and Tamara are currently available. Apple Pay, Visa and mada are temporarily under maintenance.',
-    galleryHeroKicker: 'Gallery', galleryHeroTitle: 'See the result before you book.', galleryHeroText: 'Photos and videos in one place, with quick filters and a full-view lightbox.', galleryAll: 'All', galleryVideos: 'Videos', galleryImages: 'Photos', galleryCount: 'items', readyTitle: 'Like what you see?', readyText: 'Go straight to the booking form and choose the right package.', startBooking: 'Start booking →', footerCopy: 'Professional car photography, rolling shots, static sessions, and cinematic edits shaped around every car.', developerCreditLabel: 'Developed by', footerNav: 'Navigation', footerContact: 'Contact', footerLocation: 'Eastern Province, Saudi Arabia', footerTag: 'Built for cinematic car content', termsPageLink: 'Terms & Conditions', termsKicker: 'Terms & Conditions', termsTitle: 'Terms & Conditions', termsIntro: 'Please read the terms and rules for Ayan Photography digital services and content before completing your booking.', termsDigitalTitle: 'Digital Services & Products', termsDigitalText: 'Ayan Photography services and content are digital services/products, including digital photography, videos, images, and editing. Once payment is completed or work has started, the amount is non-refundable.', termsRefundTitle: 'Refund Policy', termsRefund1: 'Payments for digital services are non-refundable after payment or once execution has started.', termsRefund2: 'Once photography, editing, or content preparation has started, the customer is not entitled to request a refund.', termsRefund3: 'Payment-method fees are included in the final checkout amount according to the selected method.', termsBookingTitle: 'Booking & Execution', termsBooking1: 'The service is delivered according to the selected package and the information submitted during booking.', termsBooking2: 'Please confirm your name, mobile number, car type, and area before payment.', termsBooking3: 'Any service outside the package description will be explained before the order is confirmed.', termsDeliveryTitle: 'Delivery & Content', termsDelivery1: 'Digital content is delivered according to the agreed package details.', termsDelivery2: 'Delivered content is digital and does not include a physical product or returnable shipment.', termsContactTitle: 'Contact', termsContactText: 'For any booking or service question, contact us through WhatsApp before completing payment.', termsContactButton: 'Contact via WhatsApp',
+    galleryHeroKicker: 'Gallery', galleryHeroTitle: 'See the result before you book.', galleryHeroText: 'Photos and videos in one place, with quick filters and a full-view lightbox.', galleryAll: 'All', galleryVideos: 'Videos', galleryImages: 'Photos', galleryCount: 'items', galleryLoading: 'Preparing the gallery…', readyTitle: 'Like what you see?', readyText: 'Go straight to the booking form and choose the right package.', startBooking: 'Start booking →', footerCopy: 'Professional car photography, rolling shots, static sessions, and cinematic edits shaped around every car.', developerCreditLabel: 'Developed by', footerNav: 'Navigation', footerContact: 'Contact', footerLocation: 'Eastern Province, Saudi Arabia', footerTag: 'Built for cinematic car content', termsPageLink: 'Terms & Conditions', termsKicker: 'Terms & Conditions', termsTitle: 'Terms & Conditions', termsIntro: 'Please read the terms and rules for Ayan Photography digital services and content before completing your booking.', termsDigitalTitle: 'Digital Services & Products', termsDigitalText: 'Ayan Photography services and content are digital services/products, including digital photography, videos, images, and editing. Once payment is completed or work has started, the amount is non-refundable.', termsRefundTitle: 'Refund Policy', termsRefund1: 'Payments for digital services are non-refundable after payment or once execution has started.', termsRefund2: 'Once photography, editing, or content preparation has started, the customer is not entitled to request a refund.', termsRefund3: 'Payment-method fees are included in the final checkout amount according to the selected method.', termsBookingTitle: 'Booking & Execution', termsBooking1: 'The service is delivered according to the selected package and the information submitted during booking.', termsBooking2: 'Please confirm your name, mobile number, car type, and area before payment.', termsBooking3: 'Any service outside the package description will be explained before the order is confirmed.', termsDeliveryTitle: 'Delivery & Content', termsDelivery1: 'Digital content is delivered according to the agreed package details.', termsDelivery2: 'Delivered content is digital and does not include a physical product or returnable shipment.', termsContactTitle: 'Contact', termsContactText: 'For any booking or service question, contact us through WhatsApp before completing payment.', termsContactButton: 'Contact via WhatsApp',
     loading1: 'Initializing Ayan Photography...', loading2: 'Preparing cinematic frames...', loading3: 'Everything is ready 🚀', bookingSuccess: '✨ Request received. Redirecting to WhatsApp...', requiredAlert: 'Please complete the required fields.', waitAlert: '⚠️ Please wait a moment before sending another request.', networkAlert: 'The system request could not be sent. WhatsApp will open directly.', whatsappAr: 'Hello, I would like to book a car photography session',
   }
 };
@@ -146,15 +149,23 @@ function applyPreferences() {
     const key = el.dataset.i18nPlaceholder;
     if (translations[lang][key] !== undefined) el.placeholder = translations[lang][key];
   });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+    const key = el.dataset.i18nAriaLabel;
+    if (translations[lang][key] !== undefined) el.setAttribute('aria-label', translations[lang][key]);
+  });
   updateSelects(lang);
   updateBookingExperience();
-  document.title = document.body.dataset.pageTitle === 'gallery'
-    ? (lang === 'ar' ? 'المعرض | Ayan Photography' : 'Gallery | Ayan Photography')
-    : (document.body.dataset.pageTitle === 'support'
-      ? (lang === 'ar' ? 'الدعم والمساعدة | Ayan Photography' : 'Support & Help | Ayan Photography')
-      : (document.body.dataset.page === 'terms'
-        ? (lang === 'ar' ? 'الشروط والقواعد | Ayan Photography' : 'Terms & Rules | Ayan Photography')
-        : document.title));
+  const pageTitles = {
+    home: ['Ayan Photography | تصوير سيارات احترافي', 'Ayan Photography | Professional Car Photography'],
+    features: ['المميزات | Ayan Photography', 'Features | Ayan Photography'],
+    booking: ['الحجز | Ayan Photography', 'Booking | Ayan Photography'],
+    gallery: ['المعرض | Ayan Photography', 'Gallery | Ayan Photography'],
+    support: ['الدعم والمساعدة | Ayan Photography', 'Support & Help | Ayan Photography'],
+    terms: ['الشروط والقواعد | Ayan Photography', 'Terms & Rules | Ayan Photography'],
+    info: ['Ayan Developer | مطوّر الموقع', 'Ayan Developer | Web developer']
+  };
+  const title = pageTitles[document.body.dataset.pageTitle];
+  if (title) document.title = title[lang === 'ar' ? 0 : 1];
 }
 
 function updateSelects(lang = getLang()) {
@@ -414,8 +425,8 @@ function setupAmbientParallax() {
 }
 
 
-function setupHeroBackgroundVideo() {
-  const video = document.querySelector('[data-hero-video]');
+function deferBackgroundVideo(selector) {
+  const video = document.querySelector(selector);
   if (!video) return;
 
   video.muted = true;
@@ -424,142 +435,41 @@ function setupHeroBackgroundVideo() {
   video.loop = true;
   video.playsInline = true;
   video.controls = false;
-  video.preload = 'metadata';
+  video.preload = 'none';
+  video.addEventListener('playing', () => video.classList.add('is-playing'));
+  video.addEventListener('pause', () => video.classList.remove('is-playing'));
 
-  let retryTimer = 0;
-  let retries = 0;
-  const play = () => {
-    window.clearTimeout(retryTimer);
-    const promise = video.play();
-    if (promise?.catch) {
-      promise.catch(() => {
-        if (document.hidden || retries >= 3) return;
-        retries += 1;
-        retryTimer = window.setTimeout(play, 1200);
-      });
-    }
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const constrainedConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType);
+  if (reducedMotion || constrainedConnection) return;
+
+  let started = false;
+  const start = () => {
+    if (started || document.hidden) return;
+    started = true;
+    video.play()?.catch(() => { started = false; });
   };
 
-  video.addEventListener('playing', () => { retries = 0; });
-  video.addEventListener('error', () => {
-    if (document.hidden || retries >= 2) return;
-    retries += 1;
-    retryTimer = window.setTimeout(play, 1600);
-  });
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && video.paused) play();
-  });
+  const schedule = () => {
+    if (document.hidden) return;
+    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 1800 });
+    else window.setTimeout(start, 1100);
+  };
 
-  // The HTML autoplay attribute starts the media; don't call load() here because it can restart the request.
-  window.setTimeout(play, 0);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && !started) schedule();
+    else if (document.hidden) { video.pause(); started = false; }
+  });
+  schedule();
+}
+
+function setupHeroBackgroundVideo() {
+  deferBackgroundVideo('[data-hero-video]');
 }
 
 function setupBookingBackgroundVideo() {
-  const video = document.querySelector('[data-packingbackground]');
-  if (!video) return;
-
-  video.muted = true;
-  video.defaultMuted = true;
-  video.volume = 0;
-  video.loop = true;
-  video.playsInline = true;
-  video.controls = false;
-  video.preload = 'metadata';
-
-  let retryTimer = 0;
-  let attempts = 0;
-  const start = () => {
-    window.clearTimeout(retryTimer);
-    const promise = video.play();
-    if (promise?.catch) promise.catch(() => {
-      if (document.hidden || attempts >= 3) return;
-      attempts += 1;
-      retryTimer = window.setTimeout(start, 1200);
-    });
-  };
-
-  video.addEventListener('playing', () => { attempts = 0; });
-  video.addEventListener('error', () => {
-    if (document.hidden || attempts >= 2) return;
-    attempts += 1;
-    retryTimer = window.setTimeout(start, 1600);
-  });
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && video.paused) start();
-  });
-
-  // Keep the booking background video, but avoid forcing an extra media load/reload.
-  window.setTimeout(start, 0);
-}
-
-function setupHomeLoader() {
-  const loader = document.querySelector('[data-home-loader]');
-  if (!loader) return;
-
-  const percentEl = loader.querySelector('[data-loader-percent]');
-  const barEl = loader.querySelector('[data-loader-progress]');
-  const startedAt = performance.now();
-  const minimumVisibleMs = 1050;
-  const maxWaitMs = 3200;
-  let current = 1;
-  let target = 1;
-  let finishing = false;
-  let rafId = 0;
-
-  const render = (value) => {
-    const v = Math.max(1, Math.min(100, Math.round(value)));
-    if (percentEl) percentEl.textContent = `${String(v).padStart(2, '0')}%`;
-    if (barEl) barEl.style.width = `${v}%`;
-  };
-
-  const tick = () => {
-    if (current < target) {
-      current += Math.max(.35, (target - current) * .22);
-      render(current);
-    }
-    rafId = window.requestAnimationFrame(tick);
-  };
-
-  // Start with the small milestone values requested: 01% → 04% → 06% → 08%,
-  // then continue smoothly toward the real load state.
-  const milestones = [1, 4, 6, 8, 14, 28, 46, 68, 82, 92];
-  let milestoneIndex = 0;
-  const milestoneTimer = window.setInterval(() => {
-    if (finishing) return;
-    milestoneIndex = Math.min(milestoneIndex + 1, milestones.length - 1);
-    target = milestones[milestoneIndex];
-    if (milestoneIndex === milestones.length - 1) window.clearInterval(milestoneTimer);
-  }, 125);
-
-  const finish = () => {
-    if (finishing) return;
-    finishing = true;
-    window.clearInterval(milestoneTimer);
-    target = 100;
-    const elapsed = performance.now() - startedAt;
-    const wait = Math.max(0, minimumVisibleMs - elapsed);
-    window.setTimeout(() => {
-      const doneAt = performance.now();
-      const complete = () => {
-        if (performance.now() - doneAt < 420) {
-          requestAnimationFrame(complete);
-          return;
-        }
-        loader.classList.add('hide');
-      };
-      complete();
-    }, wait + 120);
-  };
-
-  render(1);
-  rafId = window.requestAnimationFrame(tick);
-
-  if (document.readyState === 'complete') finish();
-  else window.addEventListener('load', finish, { once: true });
-
-  // Never block the site forever because of a slow remote asset.
-  window.setTimeout(finish, maxWaitMs);
-  window.setTimeout(() => window.cancelAnimationFrame(rafId), maxWaitMs + 1800);
+  deferBackgroundVideo('[data-packingbackground]');
 }
 
 
@@ -776,11 +686,15 @@ function updateBookingFlowSummary() {
   if (detailsNode) {
     detailsNode.setAttribute('aria-label', [name, phone, car, region, notes].filter(Boolean).join('، ') || tr('flowStep2'));
   }
-  if (detailsName) detailsName.textContent = name || tr('flowStep2');
-  if (detailsPhone) detailsPhone.textContent = phone || '—';
-  if (detailsCar) detailsCar.textContent = car || '—';
-  if (detailsRegion) detailsRegion.textContent = region || '—';
-  if (detailsNotes) detailsNotes.textContent = notes ? notes : '—';
+  if (detailsName) {
+    detailsName.textContent = name || tr('flowStep2');
+    detailsName.classList.toggle('is-placeholder', !name);
+  }
+  [[detailsPhone, phone], [detailsCar, car], [detailsRegion, region], [detailsNotes, notes]].forEach(([node, value]) => {
+    if (!node) return;
+    node.textContent = value;
+    node.classList.toggle('is-empty', !value);
+  });
   const detailsComplete = !!name && /^05\d{8}$/.test(phone) && !!car && !!region;
   if (paymentNode) paymentNode.textContent = terms && detailsComplete ? tr('flowReady') : tr('flowStep3');
 
@@ -895,6 +809,9 @@ async function loadGallery() {
   const grid = document.querySelector('[data-gallery-grid]');
   if (!grid) return;
 
+  grid.setAttribute('aria-busy', 'true');
+  grid.innerHTML = `<div class="gallery-loading-status" role="status">${escapeHtml(tr('galleryLoading'))}</div>${Array.from({ length: 4 }, () => '<div class="gallery-skeleton" aria-hidden="true"></div>').join('')}`;
+
   const candidates = [
     new URL('./data/gallery.json', document.baseURI).href,
     '/data/gallery.json'
@@ -923,10 +840,12 @@ async function loadGallery() {
   ];
 
   if (!items.length) {
+    grid.setAttribute('aria-busy', 'false');
     grid.innerHTML = `<div class="card" style="grid-column:1/-1;padding:30px;text-align:center;color:var(--muted);">${escapeHtml(getLang() === 'ar' ? 'لا يوجد محتوى في المعرض حاليًا.' : 'No gallery content is available yet.')}</div>`;
     return;
   }
 
+  grid.setAttribute('aria-busy', 'false');
   grid.innerHTML = items.map((item) => renderGalleryCard(item)).join('');
   setupGalleryFilters();
   setupGalleryLightbox();
@@ -941,7 +860,7 @@ function renderGalleryCard(item) {
   const escapedSrc = escapeHtml(item.src || '');
   const escapedPoster = escapeHtml(item.poster || '');
   const media = item.type === 'video'
-    ? `<video autoplay muted loop playsinline preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" aria-label="${escapedTitle}" ${escapedPoster ? `poster="${escapedPoster}"` : ''}><source src="${escapedSrc}" type="video/mp4"></video>`
+    ? `<video muted loop playsinline preload="none" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" aria-label="${escapedTitle}" ${escapedPoster ? `poster="${escapedPoster}"` : ''}><source src="${escapedSrc}" type="video/mp4"></video>`
     : `<img src="${escapedSrc}" alt="${escapedTitle}" loading="lazy" decoding="async" onerror="this.dataset.missing='true'">`;
   return `<article class="card media-card gallery-card ${item.type}-card reveal" data-gallery-type="${item.type}" data-gallery-src="${escapedSrc}" data-gallery-title="${escapedTitle}" data-gallery-poster="${escapedPoster}"><div class="media-wrap">${media}<span class="media-badge">${escapeHtml(typeLabel)}</span><span class="media-shade"></span></div><div class="caption">${escapedTitle}</div></article>`;
 }
@@ -1243,7 +1162,6 @@ async function init() {
   setupAmbientParallax();
   setupHeroBackgroundVideo();
   setupBookingBackgroundVideo();
-  setupHomeLoader();
   loadGallery();
   sendLog('page_view');
 }

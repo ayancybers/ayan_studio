@@ -3,15 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Ayan Photography — تصوير سيارات احترافي، رولينق، مونتاج ومحتوى سينمائي.">
+  <meta name="theme-color" content="#080d12">
+  <meta name="description" content="احجز جلسة تصوير سيارتك في المنطقة الشرقية. اختر الباقة، أضف بياناتك، وراجع التكلفة قبل الدفع الآمن.">
   <link rel="canonical" href="https://ayancybers.store/booking">
   <link rel="icon" type="image/png" href="assets/ayan-logo-icon.png">
   <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png">
   <title>Booking | Ayan Photography</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="styles.css?v=61">
+<link rel="stylesheet" href="styles.css?v=71">
 
 <style>
 .booking-signature {
@@ -220,7 +218,8 @@
 .payment-method.active:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--brand) 30%,var(--border));box-shadow:0 10px 24px rgba(0,0,0,.10)}
 .payment-method img{width:100%;max-width:100px;height:30px;object-fit:contain;display:block}
 .payment-method.maintenance{flex-direction:column;gap:7px;min-width:0}
-.payment-method.maintenance img{height:28px;opacity:.84}
+.payment-method.maintenance img{height:28px;opacity:1}
+.payment-method.maintenance .payment-brand--apple{width:72px;max-width:72px;height:46px;object-fit:contain}
 .payment-method.maintenance small{font-size:9px;font-weight:800;color:var(--muted);white-space:nowrap;line-height:1}
 .payment-methods-note{text-align:center;color:var(--muted);font-size:9px;margin-top:11px;line-height:1.7}
 @media(max-width:760px){.payment-methods{padding:16px}.payment-methods-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.payment-method{min-height:68px}.payment-method img{max-width:115px}.payment-method.maintenance{grid-column:span 1}}
@@ -319,8 +318,9 @@
 .booking-package-price del{display:block !important;}
 .booking-package-price em{display:block !important;}
 </style>
+<link rel="stylesheet" href="refresh.css?v=74">
 </head>
-<body class="booking-page" data-theme="relax">
+<body class="booking-page" data-theme="relax" data-page-title="booking">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
   <div id="pointer-glow" aria-hidden="true"></div>
   <div class="page-shell">
@@ -414,7 +414,7 @@
         </aside>
 
         <div class="card form-card booking-main-card reveal">
-<video class="packingbackground" data-packingbackground autoplay muted loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" aria-hidden="true" tabindex="-1">
+<video class="packingbackground" data-packingbackground muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" aria-hidden="true" tabindex="-1">
             <source src="https://e.top4top.io/m_3918oxx0h1.mp4" type="video/mp4">
           </video>
           <span class="packingbackground-glow" aria-hidden="true"></span>
@@ -488,11 +488,11 @@
               <div class="payment-methods-title" data-i18n="paymentMethodsTitle">طرق الدفع</div>
               <div class="payment-methods-list">
                 <span class="payment-method active" aria-label="Tabby"><img src="assets/payments/tabby.svg" alt="Tabby" loading="lazy"></span>
-                <span class="payment-method active" aria-label="Tamara"><img src="assets/payments/tamara.svg" alt="Tamara" loading="lazy"></span>
-                <span class="payment-method maintenance" aria-label="Visa تحت الصيانة" aria-disabled="true"><img src="assets/payments/visa.svg" alt="Visa" loading="lazy"><small data-i18n="paymentMaintenance">تحت الصيانة</small></span>
+                <span class="payment-method active" aria-label="Tamara"><img src="assets/payments/tamara-logo-badge-en.png" alt="Tamara" loading="lazy"></span>
+                <span class="payment-method maintenance" aria-label="Visa تحت الصيانة" aria-disabled="true"><img src="assets/payments/visa.svg?v=2" alt="Visa" loading="lazy"><small data-i18n="paymentMaintenance">تحت الصيانة</small></span>
                 <span class="payment-method maintenance" aria-label="مدى تحت الصيانة" aria-disabled="true"><img src="assets/payments/mada.svg" alt="mada" loading="lazy"><small data-i18n="paymentMaintenance">تحت الصيانة</small></span>
                 <span class="payment-method maintenance" aria-label="Apple Pay تحت الصيانة" aria-disabled="true">
-                  <img src="assets/payments/apple-pay.svg" alt="Apple Pay" loading="lazy"><small data-i18n="paymentMaintenance">تحت الصيانة</small>
+                  <img class="payment-brand--apple" src="assets/payments/apple-pay.svg?v=2" alt="Apple Pay" loading="lazy"><small data-i18n="paymentMaintenance">تحت الصيانة</small>
                 </span>
               </div>
               <div class="payment-methods-note" data-i18n="paymentMethodsNote">المتاح حاليًا: تابي وتمارا. Apple Pay وVisa ومدى تحت الصيانة مؤقتًا.</div>
@@ -587,8 +587,8 @@
 </footer>
 
   </div>
-  <script src="ui.js?v=62"></script>
-  <script src="app.js?v=62"></script>
-  <script src="security.js?v=62"></script>
+  <script src="ui.js?v=71"></script>
+  <script src="app.js?v=72"></script>
+  <script src="security.js?v=71"></script>
 </body>
 </html>
