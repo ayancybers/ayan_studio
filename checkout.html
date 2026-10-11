@@ -16,6 +16,11 @@
 
     .payment-selector{margin-top:18px;padding:18px;border:1px solid rgba(132,178,232,.14);border-radius:20px;background:rgba(255,255,255,.025)}
     .payment-selector-title{text-align:center;color:var(--text-secondary);font-size:12px;font-weight:900;margin-bottom:12px}
+    .payment-category-menu{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+    .payment-category-tab{display:grid;gap:4px;text-align:start;padding:12px 14px;border-radius:14px;border:1px solid rgba(132,178,232,.15);background:rgba(255,255,255,.035);color:#eef5ff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+    .payment-category-tab strong{font-size:12px}.payment-category-tab small{font-size:9px;color:#91a2b8;line-height:1.5}
+    .payment-category-tab[aria-selected="true"]{border-color:rgba(117,178,255,.58);background:rgba(77,150,255,.10);box-shadow:0 8px 25px rgba(31,102,211,.10)}
+    .payment-category-tab:disabled{opacity:.5;cursor:not-allowed}.payment-choice-panel[hidden]{display:none}
     .payment-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .payment-choice{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;text-align:start;width:100%;padding:13px 14px;border-radius:15px;border:1px solid rgba(132,178,232,.15);background:rgba(255,255,255,.035);color:#eef5ff;cursor:pointer;transition:transform .18s ease,border-color .18s ease,background .18s ease}
     .payment-choice:hover{transform:translateY(-1px)}
@@ -25,10 +30,14 @@
     .payment-choice-icon .payment-brand{height:25px;max-width:58px}
     .payment-choice-icon .payment-brand--stc{width:82px;max-width:82px;height:32px}
     .payment-choice-copy{display:grid;gap:2px}.payment-choice-copy strong{font-size:12px}.payment-choice-copy small{font-size:9px;color:#91a2b8;line-height:1.4}.payment-choice-price{font-size:12px;font-weight:900;white-space:nowrap}
+    .payment-card-choice{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr minmax(185px,auto) auto;align-items:center;gap:14px;padding:13px 14px;border-radius:15px;border:1px solid rgba(132,178,232,.15);background:rgba(255,255,255,.035);transition:border-color .18s ease,background .18s ease}
+    .payment-card-choice.selected{border-color:rgba(117,178,255,.58);background:rgba(77,150,255,.08);box-shadow:0 8px 25px rgba(31,102,211,.12)}
+    .payment-card-origin{width:100%;min-height:38px;padding:0 10px;border-radius:10px;border:1px solid rgba(132,178,232,.18);background:#101c27;color:#eef5ff;font:inherit;font-size:10px;outline:none}
+    .payment-card-origin:focus{border-color:rgba(117,178,255,.58)}.payment-card-choice.is-disabled{opacity:.58}
     .payment-fee-note{text-align:center;color:var(--muted);font-size:9px;line-height:1.7;margin-top:11px}
     .payment-note{text-align:center;color:var(--muted);font-size:9px;line-height:1.6;margin-top:10px}
     .invoice-email-wrap{display:block;margin-top:16px}.tabby-email-wrap label{display:block;font-size:10px;color:var(--text-secondary);margin:0 0 6px}.checkout-email{width:100%;height:46px;padding:0 13px;border-radius:13px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);color:#eef5ff;outline:none}.checkout-email:focus{border-color:rgba(117,178,255,.58)}
-    @media(max-width:620px){.payment-choice-grid{grid-template-columns:1fr}.payment-choice{grid-template-columns:auto 1fr auto}}
+    @media(max-width:620px){.payment-choice-grid{grid-template-columns:1fr}.payment-choice{grid-template-columns:auto 1fr auto}.payment-card-choice{grid-template-columns:auto 1fr auto}.payment-card-origin{grid-column:1/-1;grid-row:2}.payment-card-choice .payment-choice-price{grid-column:3;grid-row:1}.payment-category-tab{padding:10px}.payment-category-tab strong{font-size:10px}.payment-category-tab small{font-size:8px}}
 
 </style>
   <link rel="stylesheet" href="refresh.css?v=74">
@@ -52,7 +61,17 @@
 
         <div class="payment-selector" aria-label="اختيار طريقة الدفع">
           <div class="payment-selector-title" data-checkout-key="paymentSelector">اختيار طريقة الدفع</div>
-          <div class="payment-choice-grid">
+          <div class="payment-category-menu" role="tablist" aria-label="فئة طريقة الدفع">
+            <button class="payment-category-tab" id="standardPaymentTab" type="button" role="tab" aria-selected="true" aria-controls="standardPaymentMethods" data-payment-category-tab="standard">
+              <strong data-checkout-key="standardPaymentsTitle">طرق الدفع العادية</strong>
+              <small data-checkout-key="standardPaymentsDescription">مدى و Apple Pay والبطاقات والمحافظ</small>
+            </button>
+            <button class="payment-category-tab" id="installmentPaymentTab" type="button" role="tab" aria-selected="false" aria-controls="installmentPaymentMethods" data-payment-category-tab="installments">
+              <strong data-checkout-key="installmentPaymentsTitle">الدفع بالتقسيط</strong>
+              <small data-checkout-key="installmentPaymentsDescription">تابي وتمارا</small>
+            </button>
+          </div>
+          <div class="payment-choice-grid payment-choice-panel" id="standardPaymentMethods" role="tabpanel" aria-labelledby="standardPaymentTab" data-payment-category-panel="standard">
             <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_apple_pay" aria-pressed="false" disabled>
               <span class="payment-choice-icon"><img class="payment-brand payment-brand--apple" src="assets/payments/apple-pay.svg?v=3" alt="Apple Pay"></span>
               <span class="payment-choice-copy"><strong data-checkout-key="applePayTitle">Apple Pay</strong><small data-checkout-key="applePayDescription">1.2% + 1 ريال رسوم</small></span>
@@ -63,16 +82,15 @@
               <span class="payment-choice-copy"><strong data-checkout-key="madaTitle">مدى</strong><small data-checkout-key="madaDescription">بطاقة مدى السعودية</small></span>
               <span class="payment-choice-price" data-method-total="tuwaiqpay_mada">—</span>
             </button>
-            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_visa_local" aria-pressed="false" disabled>
+            <div class="payment-card-choice tuwaiqpay-choice" id="visaMastercardChoice">
               <span class="payment-choice-icon"><img class="payment-brand" src="assets/payments/visa.svg?v=3" alt="Visa"><img class="payment-brand" src="assets/payments/mastercard.svg?v=1" alt="Mastercard"></span>
-              <span class="payment-choice-copy"><strong data-checkout-key="localCardTitle">Visa / Mastercard</strong><small data-checkout-key="localCardDescription">بطاقة صادرة من السعودية</small></span>
-              <span class="payment-choice-price" data-method-total="tuwaiqpay_visa_local">—</span>
-            </button>
-            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_visa_international" aria-pressed="false" disabled>
-              <span class="payment-choice-icon"><img class="payment-brand" src="assets/payments/visa.svg?v=3" alt="Visa"><img class="payment-brand" src="assets/payments/mastercard.svg?v=1" alt="Mastercard"></span>
-              <span class="payment-choice-copy"><strong data-checkout-key="internationalCardTitle">Visa / Mastercard</strong><small data-checkout-key="internationalCardDescription">بطاقة خليجية أو دولية</small></span>
-              <span class="payment-choice-price" data-method-total="tuwaiqpay_visa_international">—</span>
-            </button>
+              <span class="payment-choice-copy"><strong data-checkout-key="localCardTitle">Visa / Mastercard</strong><small data-checkout-key="cardOriginDescription">اختر نوع البطاقة ليظهر الإجمالي المناسب</small></span>
+              <select class="payment-card-origin" id="cardOrigin" aria-label="نوع بطاقة Visa أو Mastercard">
+                <option value="tuwaiqpay_visa_local" data-checkout-key="localCardOption">بطاقة صادرة من السعودية — 2.5% + 1 ريال</option>
+                <option value="tuwaiqpay_visa_international" data-checkout-key="internationalCardOption">بطاقة خليجية أو دولية — 3% + 1 ريال</option>
+              </select>
+              <span class="payment-choice-price" id="cardOriginTotal">—</span>
+            </div>
             <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_amex" aria-pressed="false" disabled>
               <span class="payment-choice-icon"><img class="payment-brand payment-brand--large" src="assets/payments/amex.svg?v=1" alt="American Express"></span>
               <span class="payment-choice-copy"><strong data-checkout-key="amexTitle">American Express</strong><small data-checkout-key="amexDescription">بطاقة أمريكان إكسبريس</small></span>
@@ -83,7 +101,9 @@
               <span class="payment-choice-copy"><strong data-checkout-key="stcPayTitle">STC Pay</strong><small data-checkout-key="stcPayDescription">المحفظة الرقمية</small></span>
               <span class="payment-choice-price" data-method-total="tuwaiqpay_stc_pay">—</span>
             </button>
-            <button class="payment-choice selected" type="button" data-payment-method="tabby" aria-pressed="true">
+          </div>
+          <div class="payment-choice-grid payment-choice-panel" id="installmentPaymentMethods" role="tabpanel" aria-labelledby="installmentPaymentTab" data-payment-category-panel="installments" hidden>
+            <button class="payment-choice" type="button" data-payment-method="tabby" aria-pressed="false">
               <span class="payment-choice-icon">
                 <img class="payment-brand payment-brand--large" src="assets/payments/tabby.svg?v=2" alt="Tabby" loading="lazy">
               </span>
@@ -119,6 +139,6 @@
   </div>
   <script src="ui.js?v=71"></script>
   <script src="app.js?v=74"></script>
-  <script src="checkout.js?v=2"></script>
+  <script src="checkout.js?v=4"></script>
 </body>
 </html>

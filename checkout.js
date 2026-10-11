@@ -24,7 +24,9 @@
 
   let order = null;
   let config = fallbackConfig;
-  let selectedMethod = 'tabby';
+  let selectedMethod = '';
+  let activePaymentGroup = 'standard';
+  const selectedMethodsByGroup = { standard: '', installments: '' };
   const availableMethods = new Set();
   try { order = JSON.parse(sessionStorage.getItem(checkoutKey) || 'null'); } catch (_) {}
 
@@ -35,9 +37,12 @@
     demoNotice: 'وضع الدفع التجريبي مفعّل حاليًا. لن يتم تحصيل سعر الباقة الحقيقي أثناء الاختبار؛ سيتم استخدام مفاتيح الدفع التجريبية المخصصة للموقع.',
     paymentSelector: 'اختر طريقة الدفع', applePayTitle: 'Apple Pay', applePayDescription: 'الدفع عبر محفظة Apple',
     methodUnavailable: 'غير مفعّلة لدى طويق باي حاليًا',
+    standardPaymentsTitle: 'طرق الدفع العادية', standardPaymentsDescription: 'مدى و Apple Pay والبطاقات والمحافظ',
+    installmentPaymentsTitle: 'الدفع بالتقسيط', installmentPaymentsDescription: 'تابي وتمارا',
     madaTitle: 'مدى', madaDescription: 'بطاقة مدى السعودية', localCardTitle: 'Visa / Mastercard',
-    localCardDescription: 'بطاقة صادرة من السعودية', internationalCardTitle: 'Visa / Mastercard',
-    internationalCardDescription: 'بطاقة خليجية أو دولية', amexTitle: 'American Express',
+    cardOriginDescription: 'اختر نوع البطاقة ليظهر الإجمالي المناسب',
+    localCardOption: 'بطاقة صادرة من السعودية — 2.5% + 1 ريال',
+    internationalCardOption: 'بطاقة خليجية أو دولية — 3% + 1 ريال', amexTitle: 'American Express',
     amexDescription: 'بطاقة أمريكان إكسبريس', stcPayTitle: 'STC Pay', stcPayDescription: 'المحفظة الرقمية',
     tabbyDescription: 'ادفع لاحقًا', tamaraDescription: 'ادفع على دفعات',
     emailLabel: 'البريد الإلكتروني لإرسال الفاتورة', emailHelp: 'ستصلك الفاتورة وتفاصيل الطلب على هذا البريد بعد تأكيد الدفع.',
@@ -59,9 +64,12 @@
     demoNotice: 'Test payment mode is enabled. The live package price will not be charged during testing; the site is using its dedicated test payment keys.',
     paymentSelector: 'Choose a payment method', applePayTitle: 'Apple Pay', applePayDescription: 'Pay with Apple Wallet',
     methodUnavailable: 'Not enabled by TuwaiqPay yet',
+    standardPaymentsTitle: 'Regular payment methods', standardPaymentsDescription: 'mada, Apple Pay, cards, and wallets',
+    installmentPaymentsTitle: 'Pay in installments', installmentPaymentsDescription: 'Tabby and Tamara',
     madaTitle: 'mada', madaDescription: 'Saudi mada card', localCardTitle: 'Visa / Mastercard',
-    localCardDescription: 'Card issued in Saudi Arabia', internationalCardTitle: 'Visa / Mastercard',
-    internationalCardDescription: 'Gulf or international card', amexTitle: 'American Express',
+    cardOriginDescription: 'Choose the card type to show the matching total',
+    localCardOption: 'Issued in Saudi Arabia — 2.5% + SAR 1',
+    internationalCardOption: 'Gulf or international — 3% + SAR 1', amexTitle: 'American Express',
     amexDescription: 'American Express card', stcPayTitle: 'STC Pay', stcPayDescription: 'Digital wallet',
     tabbyDescription: 'Pay later', tamaraDescription: 'Split your payment',
     emailLabel: 'Email address for your invoice', emailHelp: 'Your invoice and booking details will be sent here after payment is confirmed.',
@@ -89,6 +97,10 @@
     tuwaiqpay_visa_local: ['VISA', 'MASTER'], tuwaiqpay_visa_international: ['VISA', 'MASTER'],
     tuwaiqpay_amex: ['AMEX'], tuwaiqpay_stc_pay: ['STC_PAY']
   };
+  const paymentGroups = {
+    standard: ['tuwaiqpay_mada', 'tuwaiqpay_apple_pay', 'tuwaiqpay_visa_local', 'tuwaiqpay_visa_international', 'tuwaiqpay_amex', 'tuwaiqpay_stc_pay'],
+    installments: ['tabby', 'tamara']
+  };
   const methodNames = {
     tuwaiqpay_apple_pay: 'Apple Pay', tuwaiqpay_mada: ar ? 'مدى' : 'mada',
     tuwaiqpay_visa_local: ar ? 'Visa / Mastercard محلية' : 'Local Visa / Mastercard',
@@ -106,6 +118,29 @@
   const demoNotice = byId('demoNotice');
   const emailInput = byId('invoiceEmail');
   const feeNote = byId('paymentFeeNote');
+  const cardOrigin = byId('cardOrigin');
+  const cardOriginTotal = byId('cardOriginTotal');
+  const cardChoice = byId('visaMastercardChoice');
+  function setPaymentGroup(group) {
+    activePaymentGroup = group;
+    document.querySelectorAll('[data-payment-category-tab]').forEach((tab) => {
+      const active = tab.dataset.paymentCategoryTab === group;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    document.querySelectorAll('[data-payment-category-panel]').forEach((panel) => {
+      panel.hidden = panel.dataset.paymentCategoryPanel !== group;
+    });
+  }
+  function groupForMethod(method) {
+    return paymentGroups.installments.includes(method) ? 'installments' : 'standard';
+  }
+  function selectPaymentGroup(group) {
+    const methods = paymentGroups[group].filter((method) => availableMethods.has(method));
+    if (!methods.length) return;
+    const remembered = selectedMethodsByGroup[group];
+    selectMethod(methods.includes(remembered) ? remembered : methods[0]);
+  }
   payButton.disabled = true;
   const money = (value) => `${Number(value || 0).toFixed(2)} SAR`;
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
@@ -156,6 +191,7 @@
     document.querySelectorAll('[data-method-total]').forEach((node) => {
       node.textContent = money(pricingFor(node.dataset.methodTotal).total);
     });
+    if (cardOrigin && cardOriginTotal) cardOriginTotal.textContent = money(pricingFor(cardOrigin.value).total);
     if (!selectedMethod) {
       feeNote.textContent = copy.notConfigured;
       return;
@@ -171,11 +207,15 @@
   function selectMethod(method) {
     if (!availableMethods.has(method)) return;
     selectedMethod = method;
+    activePaymentGroup = groupForMethod(method);
+    selectedMethodsByGroup[activePaymentGroup] = method;
+    setPaymentGroup(activePaymentGroup);
     document.querySelectorAll('[data-payment-method]').forEach((node) => {
       const active = node.dataset.paymentMethod === selectedMethod;
       node.classList.toggle('selected', active);
       node.setAttribute('aria-pressed', String(active));
     });
+    cardChoice?.classList.toggle('selected', method === 'tuwaiqpay_visa_local' || method === 'tuwaiqpay_visa_international');
     renderSummary();
   }
 
@@ -190,6 +230,16 @@
         if (codes.some((code) => supported.has(code))) availableMethods.add(method);
       }
     }
+    const localCardAvailable = availableMethods.has('tuwaiqpay_visa_local');
+    const internationalCardAvailable = availableMethods.has('tuwaiqpay_visa_international');
+    if (cardOrigin) {
+      cardOrigin.options[0].disabled = !localCardAvailable;
+      cardOrigin.options[1].disabled = !internationalCardAvailable;
+      cardOrigin.disabled = !localCardAvailable && !internationalCardAvailable;
+      if (cardOrigin.value === 'tuwaiqpay_visa_local' && !localCardAvailable && internationalCardAvailable) cardOrigin.value = 'tuwaiqpay_visa_international';
+      if (cardOrigin.value === 'tuwaiqpay_visa_international' && !internationalCardAvailable && localCardAvailable) cardOrigin.value = 'tuwaiqpay_visa_local';
+      cardChoice?.classList.toggle('is-disabled', cardOrigin.disabled);
+    }
     document.querySelectorAll('[data-payment-method]').forEach((node) => {
       const isAvailable = availableMethods.has(node.dataset.paymentMethod);
       node.disabled = !isAvailable;
@@ -202,7 +252,22 @@
         }
       }
     });
-    if (!availableMethods.has(selectedMethod)) selectedMethod = availableMethods.values().next().value || '';
+    document.querySelectorAll('[data-payment-category-tab]').forEach((tab) => {
+      const hasAvailableMethod = paymentGroups[tab.dataset.paymentCategoryTab].some((method) => availableMethods.has(method));
+      tab.disabled = !hasAvailableMethod;
+      tab.setAttribute('aria-disabled', String(!hasAvailableMethod));
+    });
+    if (!availableMethods.has(selectedMethod)) selectedMethod = '';
+    if (!selectedMethod || groupForMethod(selectedMethod) !== activePaymentGroup) {
+      selectedMethod = paymentGroups[activePaymentGroup].find((method) => availableMethods.has(method)) || '';
+    }
+    if (!selectedMethod) {
+      activePaymentGroup = paymentGroups.standard.some((method) => availableMethods.has(method)) ? 'standard' : 'installments';
+      selectedMethod = paymentGroups[activePaymentGroup].find((method) => availableMethods.has(method)) || '';
+    }
+    if (selectedMethod) selectedMethodsByGroup[activePaymentGroup] = selectedMethod;
+    setPaymentGroup(activePaymentGroup);
+    if (cardOrigin && (selectedMethod === 'tuwaiqpay_visa_local' || selectedMethod === 'tuwaiqpay_visa_international')) cardOrigin.value = selectedMethod;
     if (!availableMethods.size) {
       feeNote.textContent = copy.notConfigured;
       payButton.disabled = true;
@@ -215,6 +280,7 @@
       node.classList.toggle('selected', active);
       node.setAttribute('aria-pressed', String(active));
     });
+    cardChoice?.classList.toggle('selected', selectedMethod === 'tuwaiqpay_visa_local' || selectedMethod === 'tuwaiqpay_visa_international');
     renderSummary();
   }
 
@@ -222,6 +288,13 @@
   customer.setAttribute('aria-busy', 'false');
   document.querySelectorAll('[data-payment-method]').forEach((node) => {
     node.addEventListener('click', () => selectMethod(node.dataset.paymentMethod));
+  });
+  document.querySelectorAll('[data-payment-category-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => selectPaymentGroup(tab.dataset.paymentCategoryTab));
+  });
+  cardOrigin?.addEventListener('change', () => selectMethod(cardOrigin.value));
+  cardChoice?.addEventListener('click', (event) => {
+    if (event.target !== cardOrigin && !cardOrigin?.disabled) selectMethod(cardOrigin.value);
   });
 
   fetch('/api/tuwaiqpay-payment?config=1', { cache: 'no-store' }).then((response) => {
