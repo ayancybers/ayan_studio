@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable, ONE_SAR_TEST_PACKAGE_KEY } from '../lib/pricing.js';
+import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable } from '../lib/pricing.js';
 import {
   createTuwaiqPayBill,
   getTuwaiqPaySupportedMethods,
@@ -138,7 +138,6 @@ function getPaymentConfig(res) {
     availablePaymentMethods: ['tuwaiqpay', 'tabby', 'tamara'],
     tabbyConfigured: Boolean(String(process.env.TABBY_SECRET_KEY || '').trim()),
     tamaraConfigured: Boolean(String(process.env.TAMARA_API_TOKEN || '').trim()),
-    oneSarTestPackageEnabled: isPackageAvailable(ONE_SAR_TEST_PACKAGE_KEY),
     testMode: ['true', '1', 'yes', 'on'].includes(String(process.env.PAYMENT_TEST_MODE || '').trim().toLowerCase()),
     pricing: config,
     packages: Object.fromEntries(

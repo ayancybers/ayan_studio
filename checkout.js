@@ -18,8 +18,7 @@
       silver: { price: 50, originalPrice: 70, discount: 20 },
       basic: { price: 80, originalPrice: 100, discount: 20 },
       advanced: { price: 130, originalPrice: 150, discount: 20 },
-      royal: { price: 180, originalPrice: 200, discount: 20 },
-      test_1_sar: { price: 1, originalPrice: 1, discount: 0 }
+      royal: { price: 180, originalPrice: 200, discount: 20 }
     }
   };
 
@@ -149,8 +148,7 @@
   }[char]));
   const packageNames = {
     silver: ar ? 'الرول' : 'ROLL', basic: ar ? 'الحركة' : 'MOTION',
-    advanced: ar ? 'البصمة' : 'SIGNATURE', royal: ar ? 'السينمائي' : 'CINEMATIC',
-    test_1_sar: ar ? 'اختبار دفع مؤقت' : 'Temporary payment test'
+    advanced: ar ? 'البصمة' : 'SIGNATURE', royal: ar ? 'السينمائي' : 'CINEMATIC'
   };
 
   document.documentElement.lang = ar ? 'ar' : 'en';
