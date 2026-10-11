@@ -11,17 +11,8 @@
     .checkout-wrap{max-width:760px;margin:0 auto;padding:70px 16px 110px}.checkout-card{padding:28px;border:1px solid rgba(120,170,230,.22);border-radius:28px;background:linear-gradient(145deg,rgba(15,29,48,.98),rgba(5,14,26,.98));box-shadow:0 24px 80px rgba(0,0,0,.18)}
     .checkout-logo{width:74px;height:74px;display:block;object-fit:contain;margin:0 auto 18px}.checkout-kicker{text-align:center;color:#75b2ff;font-size:11px;font-weight:800;letter-spacing:.16em}.checkout-title{text-align:center;margin:8px 0;font-size:clamp(28px,6vw,42px)}.checkout-sub{text-align:center;color:var(--text-secondary);line-height:1.8;margin:0 auto 26px;max-width:560px}.checkout-demo{display:none;margin:0 0 18px;padding:13px 15px;border-radius:15px;background:rgba(255,190,50,.10);border:1px solid rgba(255,190,50,.22);color:#ffd77a;font-size:12px;line-height:1.7}.checkout-demo.show{display:block}.checkout-summary{display:grid;gap:10px;padding:20px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(132,178,232,.13)}.checkout-row{display:flex;justify-content:space-between;gap:20px;font-size:13px}.checkout-row span{color:var(--text-secondary)}.checkout-row.total{padding-top:13px;margin-top:4px;border-top:1px dashed rgba(132,178,232,.18);font-size:17px}.checkout-row.total strong{color:var(--brand);font-size:24px}.checkout-customer{display:grid;gap:8px;margin:18px 0;padding:17px;border-radius:18px;background:rgba(255,255,255,.025)}.checkout-customer div{display:flex;justify-content:space-between;gap:18px;font-size:12px}.checkout-customer span{color:var(--text-secondary)}.checkout-actions{display:grid;gap:10px;margin-top:20px}.checkout-actions button{width:100%;min-height:54px}.checkout-back{text-align:center;margin-top:13px}.checkout-back a{color:var(--text-secondary);text-decoration:none}.checkout-error{display:none;margin-top:14px;padding:13px 15px;border-radius:14px;background:rgba(255,75,75,.10);border:1px solid rgba(255,75,75,.2);color:#ffb5b5;font-size:12px;line-height:1.7;white-space:pre-wrap}.checkout-error.show{display:block}.checkout-secure{text-align:center;color:var(--muted);font-size:10px;margin-top:18px}.checkout-status{display:none;text-align:center;padding:16px;color:var(--text-secondary)}
   
-    .payment-methods{margin-top:18px;padding:16px 17px;border:1px solid rgba(132,178,232,.14);border-radius:18px;background:rgba(255,255,255,.025)}
-    .payment-methods-title{text-align:center;color:var(--text-secondary);font-size:11px;font-weight:800;margin-bottom:11px}
-    .payment-methods-list{display:flex;justify-content:center;align-items:stretch;gap:8px;flex-wrap:wrap}
-    .payment-method{min-width:112px;min-height:48px;padding:8px 14px;border-radius:14px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);display:flex;align-items:center;justify-content:center;gap:8px;color:#eef5ff;font-size:11px;font-weight:800;transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}
-    .payment-method b{display:inline-flex;align-items:center;justify-content:center;font-weight:900;line-height:1}
     .payment-brand{height:24px;width:auto;max-width:88px;display:block}
-    .payment-brand--large{height:28px;max-width:104px}
-    .pm-apple{font-size:20px;display:flex;align-items:center;gap:4px}.pm-visa{font-size:17px;letter-spacing:.03em;font-style:italic;font-weight:950}.pm-mada{font-size:14px;font-weight:950;letter-spacing:.02em}.pm-tabby{font-size:16px;letter-spacing:-.04em;color:#20e9a1;font-weight:950}.pm-tamara{font-size:16px;letter-spacing:-.04em;color:#f7f7f7;font-weight:950}
-    .payment-method.active{border-color:rgba(117,178,255,.26);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025));box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 22px rgba(18,78,140,.10)}
-    .payment-method.pending{border-color:rgba(32,233,161,.25);background:rgba(32,233,161,.045);flex-direction:column;gap:2px;min-width:112px}.payment-method.pending small{font-size:8px;color:#aab8ca;font-weight:700}
-    .payment-methods-note{text-align:center;color:var(--muted);font-size:9px;margin-top:9px;line-height:1.6}
+    .payment-brand--large{height:30px;max-width:120px;display:block;object-fit:contain}
 
     .payment-selector{margin-top:18px;padding:18px;border:1px solid rgba(132,178,232,.14);border-radius:20px;background:rgba(255,255,255,.025)}
     .payment-selector-title{text-align:center;color:var(--text-secondary);font-size:12px;font-weight:900;margin-bottom:12px}
@@ -30,18 +21,15 @@
     .payment-choice:hover{transform:translateY(-1px)}
     .payment-choice:disabled{opacity:.58;cursor:not-allowed;transform:none}
     .payment-choice.selected{border-color:rgba(117,178,255,.58);background:rgba(77,150,255,.08);box-shadow:0 8px 25px rgba(31,102,211,.12)}
-    .payment-methods .maintenance{border-color:rgba(255,190,50,.25);background:rgba(255,190,50,.045);flex-direction:column;gap:2px;min-width:112px;cursor:not-allowed}.payment-methods .maintenance small{font-size:8px;color:#ffd77a;font-weight:700}
     .payment-choice-icon{display:flex;align-items:center;gap:7px;min-width:68px;justify-content:center}.payment-choice-icon b{font-size:11px}
     .payment-choice-icon .payment-brand{height:25px;max-width:58px}
+    .payment-choice-icon .payment-brand--stc{width:82px;max-width:82px;height:32px}
     .payment-choice-copy{display:grid;gap:2px}.payment-choice-copy strong{font-size:12px}.payment-choice-copy small{font-size:9px;color:#91a2b8;line-height:1.4}.payment-choice-price{font-size:12px;font-weight:900;white-space:nowrap}
     .payment-fee-note{text-align:center;color:var(--muted);font-size:9px;line-height:1.7;margin-top:11px}
+    .payment-note{text-align:center;color:var(--muted);font-size:9px;line-height:1.6;margin-top:10px}
     .invoice-email-wrap{display:block;margin-top:16px}.tabby-email-wrap label{display:block;font-size:10px;color:var(--text-secondary);margin:0 0 6px}.checkout-email{width:100%;height:46px;padding:0 13px;border-radius:13px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);color:#eef5ff;outline:none}.checkout-email:focus{border-color:rgba(117,178,255,.58)}
     @media(max-width:620px){.payment-choice-grid{grid-template-columns:1fr}.payment-choice{grid-template-columns:auto 1fr auto}}
 
-.payment-brand--large{max-width:120px;height:30px;display:block;object-fit:contain}
-.payment-method .payment-brand--large{width:94px;max-width:94px}
-.payment-method .payment-brand--apple{width:72px;max-width:72px;height:46px;object-fit:contain}
-.payment-method.maintenance small{display:block;margin-top:3px;color:#7f8da1;font-size:8px;font-weight:800}
 </style>
   <link rel="stylesheet" href="refresh.css?v=74">
 </head>
@@ -91,7 +79,7 @@
               <span class="payment-choice-price" data-method-total="tuwaiqpay_amex">—</span>
             </button>
             <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_stc_pay" aria-pressed="false" disabled>
-              <span class="payment-choice-icon"><img class="payment-brand payment-brand--large" src="assets/payments/stc-pay.svg?v=1" alt="STC Pay"></span>
+              <span class="payment-choice-icon"><img class="payment-brand payment-brand--stc" src="assets/payments/stc-pay.svg?v=2" alt="STC Pay"></span>
               <span class="payment-choice-copy"><strong data-checkout-key="stcPayTitle">STC Pay</strong><small data-checkout-key="stcPayDescription">المحفظة الرقمية</small></span>
               <span class="payment-choice-price" data-method-total="tuwaiqpay_stc_pay">—</span>
             </button>
@@ -110,6 +98,7 @@
               <span class="payment-choice-price" data-method-total="tamara">—</span>
             </button>
           </div>
+          <div class="payment-note" id="paymentNote" data-checkout-key="paymentNote">اختر وسيلة الدفع المناسبة. عند الدفع بالبطاقة، يفتح لك مزود الدفع صفحة آمنة لإتمام العملية.</div>
           <div class="payment-fee-note" id="paymentFeeNote" aria-live="polite"></div>
           <div class="invoice-email-wrap" id="invoiceEmailWrap">
             <label for="invoiceEmail" data-checkout-key="emailLabel">البريد الإلكتروني لإرسال الفاتورة</label>
@@ -121,20 +110,7 @@
         <div class="checkout-actions">
           <button id="payBtn" class="btn btn-primary" type="button" data-checkout-key="pay">متابعة إلى الدفع الآمن</button>
         </div>
-        <div class="payment-methods" aria-label="وسائل الدفع المتاحة">
-          <div class="payment-methods-title" data-checkout-key="availableMethods">وسائل الدفع المتاحة حاليًا</div>
-          <div class="payment-methods-list">
-            <span class="payment-method active" aria-label="Tabby"><img class="payment-brand payment-brand--large" src="assets/payments/tabby.svg?v=2" alt="Tabby" loading="lazy"></span>
-            <span class="payment-method active" aria-label="Tamara"><img class="payment-brand payment-brand--large" src="assets/payments/tamara-logo-badge-en.png" alt="Tamara" loading="lazy"></span>
-            <span class="payment-method active" aria-label="Apple Pay"><img class="payment-brand payment-brand--large payment-brand--apple" src="assets/payments/apple-pay.svg?v=3" alt="Apple Pay" loading="lazy"></span>
-            <span class="payment-method active" aria-label="Visa"><img class="payment-brand payment-brand--large" src="assets/payments/visa.svg?v=3" alt="Visa" loading="lazy"></span>
-            <span class="payment-method active" aria-label="Mastercard"><img class="payment-brand payment-brand--large" src="assets/payments/mastercard.svg?v=1" alt="Mastercard" loading="lazy"></span>
-            <span class="payment-method active" aria-label="مدى"><img class="payment-brand payment-brand--large" src="assets/payments/mada.svg?v=3" alt="مدى" loading="lazy"></span>
-            <span class="payment-method active" aria-label="American Express"><img class="payment-brand payment-brand--large" src="assets/payments/amex.svg?v=1" alt="American Express" loading="lazy"></span>
-            <span class="payment-method active" aria-label="STC Pay"><img class="payment-brand payment-brand--large" src="assets/payments/stc-pay.svg?v=1" alt="STC Pay" loading="lazy"></span>
-          </div>
-          <div class="payment-methods-note" id="paymentNote" data-checkout-key="paymentNote">اختر وسيلة الدفع المناسبة. عند الدفع بالبطاقة، يفتح لك مزود الدفع صفحة آمنة لإتمام العملية.</div>
-        </div><div id="error" class="checkout-error" role="alert"></div>
+        <div id="error" class="checkout-error" role="alert"></div>
         <div id="status" class="checkout-status" role="status" aria-live="polite" data-checkout-key="preparing">جاري تجهيز عملية الدفع…</div>
         <div class="checkout-back"><a href="/booking" data-checkout-key="backBooking">← العودة وتعديل البيانات</a></div>
         <div class="checkout-secure" data-checkout-key="secureNote">سيتم تحويلك إلى صفحة الدفع المستضافة من مزود الدفع. لا يتم تخزين بيانات البطاقة في موقع Ayan Photography.</div>
@@ -143,6 +119,6 @@
   </div>
   <script src="ui.js?v=71"></script>
   <script src="app.js?v=74"></script>
-  <script src="checkout.js?v=1"></script>
+  <script src="checkout.js?v=2"></script>
 </body>
 </html>

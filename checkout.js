@@ -33,14 +33,15 @@
     pageTitle: 'الدفع الآمن | Ayan Photography', editBooking: 'تعديل الطلب',
     title: 'مراجعة الطلب والدفع', subtitle: 'راجع بياناتك والمبلغ النهائي قبل الانتقال إلى صفحة الدفع الآمنة.',
     demoNotice: 'وضع الدفع التجريبي مفعّل حاليًا. لن يتم تحصيل سعر الباقة الحقيقي أثناء الاختبار؛ سيتم استخدام مفاتيح الدفع التجريبية المخصصة للموقع.',
-    paymentSelector: 'اختر طريقة الدفع', applePayTitle: 'Apple Pay', applePayDescription: '1.2% + 1 ريال رسوم',
+    paymentSelector: 'اختر طريقة الدفع', applePayTitle: 'Apple Pay', applePayDescription: 'الدفع عبر محفظة Apple',
+    methodUnavailable: 'غير مفعّلة لدى طويق باي حاليًا',
     madaTitle: 'مدى', madaDescription: 'بطاقة مدى السعودية', localCardTitle: 'Visa / Mastercard',
     localCardDescription: 'بطاقة صادرة من السعودية', internationalCardTitle: 'Visa / Mastercard',
     internationalCardDescription: 'بطاقة خليجية أو دولية', amexTitle: 'American Express',
     amexDescription: 'بطاقة أمريكان إكسبريس', stcPayTitle: 'STC Pay', stcPayDescription: 'المحفظة الرقمية',
     tabbyDescription: 'ادفع لاحقًا', tamaraDescription: 'ادفع على دفعات',
     emailLabel: 'البريد الإلكتروني لإرسال الفاتورة', emailHelp: 'ستصلك الفاتورة وتفاصيل الطلب على هذا البريد بعد تأكيد الدفع.',
-    pay: 'متابعة إلى الدفع الآمن', availableMethods: 'طرق الدفع',
+    pay: 'متابعة إلى الدفع الآمن',
     paymentNote: 'اختر وسيلة الدفع المناسبة. سيُحوّلك مزود الدفع إلى صفحة آمنة لإتمام العملية.',
     notConfigured: 'بوابة الدفع تحتاج إلى إكمال إعداد حساب التاجر قبل إتاحتها.',
     preparing: 'جاري تجهيز عملية الدفع…', backBooking: '← العودة وتعديل البيانات',
@@ -50,20 +51,21 @@
     car: 'السيارة', area: 'منطقة التصوير', noOrder: 'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.',
     chooseMethod: 'طريقة الدفع غير متاحة حاليًا. اختر إحدى الطرق المتاحة.',
     emailInvalid: 'اكتب بريدًا إلكترونيًا صحيحًا لإرسال الفاتورة.', paymentFailed: 'تعذر تجهيز عملية الدفع.',
-    noRedirect: 'لم يتم استلام رابط الدفع.', appleFee: 'Apple Pay: 1.2% + 1 ريال رسوم دفع.',
+    noRedirect: 'لم يتم استلام رابط الدفع.',
     feeDetail: '{method}: رسوم {fee} SAR ({percent}% + {fixed} SAR).'
   } : {
     pageTitle: 'Secure checkout | Ayan Photography', editBooking: 'Edit booking',
     title: 'Review your booking', subtitle: 'Check your details and final amount before moving to secure payment.',
     demoNotice: 'Test payment mode is enabled. The live package price will not be charged during testing; the site is using its dedicated test payment keys.',
-    paymentSelector: 'Choose a payment method', applePayTitle: 'Apple Pay', applePayDescription: '1.2% + 1 SAR fee',
+    paymentSelector: 'Choose a payment method', applePayTitle: 'Apple Pay', applePayDescription: 'Pay with Apple Wallet',
+    methodUnavailable: 'Not enabled by TuwaiqPay yet',
     madaTitle: 'mada', madaDescription: 'Saudi mada card', localCardTitle: 'Visa / Mastercard',
     localCardDescription: 'Card issued in Saudi Arabia', internationalCardTitle: 'Visa / Mastercard',
     internationalCardDescription: 'Gulf or international card', amexTitle: 'American Express',
     amexDescription: 'American Express card', stcPayTitle: 'STC Pay', stcPayDescription: 'Digital wallet',
     tabbyDescription: 'Pay later', tamaraDescription: 'Split your payment',
     emailLabel: 'Email address for your invoice', emailHelp: 'Your invoice and booking details will be sent here after payment is confirmed.',
-    pay: 'Continue to secure payment', availableMethods: 'Payment methods',
+    pay: 'Continue to secure payment',
     paymentNote: 'Choose a payment method. The provider will open a secure page to complete your payment.',
     notConfigured: 'The merchant account needs to be configured before this payment option is available.',
     preparing: 'Preparing your payment…', backBooking: '← Back to edit your details',
@@ -73,7 +75,7 @@
     car: 'Car', area: 'Shoot area', noOrder: 'No booking was found. Return to the booking page and try again.',
     chooseMethod: 'This payment method is unavailable. Choose an available option.',
     emailInvalid: 'Enter a valid email address for your invoice.', paymentFailed: 'Unable to prepare payment.',
-    noRedirect: 'No payment link was received.', appleFee: 'Apple Pay: 1.2% + 1 SAR fee.',
+    noRedirect: 'No payment link was received.',
     feeDetail: '{method}: {fee} SAR fee ({percent}% + {fixed} SAR).'
   };
 
@@ -122,7 +124,7 @@
     if (value) node.textContent = value;
   });
   document.querySelector('.payment-selector')?.setAttribute('aria-label', copy.paymentSelector);
-  document.querySelector('.payment-methods')?.setAttribute('aria-label', copy.availableMethods);
+  document.querySelector('.payment-selector')?.setAttribute('aria-label', copy.paymentSelector);
 
   if (!order) {
     summary.innerHTML = `<div class="checkout-empty">${copy.noOrder}</div>`;
@@ -156,10 +158,6 @@
     });
     if (!selectedMethod) {
       feeNote.textContent = copy.notConfigured;
-      return;
-    }
-    if (selectedMethod === 'tuwaiqpay_apple_pay') {
-      feeNote.textContent = copy.appleFee;
       return;
     }
     const methodPricing = pricingFor(selectedMethod);
@@ -196,6 +194,13 @@
       const isAvailable = availableMethods.has(node.dataset.paymentMethod);
       node.disabled = !isAvailable;
       node.setAttribute('aria-disabled', String(!isAvailable));
+      if (node.classList.contains('tuwaiqpay-choice')) {
+        const description = node.querySelector('[data-checkout-key]');
+        const descriptionKey = description?.dataset.checkoutKey;
+        if (description && descriptionKey && serverConfig.tuwaiqPayConfigured) {
+          description.textContent = isAvailable ? copy[descriptionKey] : copy.methodUnavailable;
+        }
+      }
     });
     if (!availableMethods.has(selectedMethod)) selectedMethod = availableMethods.values().next().value || '';
     if (!availableMethods.size) {
