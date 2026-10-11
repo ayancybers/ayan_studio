@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PACKAGES, calculatePricing, getPricingConfig, roundMoney } from '../lib/pricing.js';
+import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable, roundMoney } from '../lib/pricing.js';
 
 const ALLOWED_CARS = new Set([
   'سيدان', 'SUV', 'كوبيه', 'فاخر / رياضي',
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
   if (!name || !email || !packageKey || !packageType || !carType || !shootRegion || !phone) {
     return res.status(400).json({ error: 'Missing required fields', requestId });
   }
-  if (!PACKAGES[packageKey] || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
+  if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });

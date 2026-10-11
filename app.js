@@ -21,6 +21,7 @@ const translations = {
     packagesKicker: 'Packages', packagesTitle: 'الباقات مصممة على حسب اللقطة اللي تبيها.',
     packagesText: 'اختر مستوى الإنتاج المناسب لك — من رولينق بدون مونتاج إلى تغطية سينمائية متكاملة.',
     packagesLink: 'تخصيص وحجز ←', popularBadge: 'الأكثر طلبًا',
+    test_1_sar: 'اختبار دفع مؤقت', test_1_sarDesc: 'باقة اختبار بريال واحد — تظهر في معاينة الموقع فقط', test1SarPrice: '1',
     
     silverH1: 'مقاطع أصلية', silverH2: 'زوايا متعددة', silverH3: 'بدون مونتاج',
     basicH1: 'أكثر من 5', basicH2: 'مونتاج كامل', basicH3: 'اختيار أغنية',
@@ -70,6 +71,7 @@ const translations = {
     heroEyebrow: 'Cinematic car photography', heroTitle: 'Let your car <span>speak in frames.</span>', heroLead: 'Rolling shots, static details, and polished edits — from the first frame to the final cut, with a cleaner booking experience.', bookNow: 'Book your session', watchGallery: 'View gallery',
     heroCard1Title: 'Visual identity', heroCard1Text: 'Frames built to reveal the character, shape, and details of your car.', heroCard2Title: 'Faster workflow', heroCard2Text: 'A clear booking path, direct coordination, and delivery matched to your package.', heroCard3Title: 'Flexible experience', heroCard3Text: 'Choose the package, location, and car type — we handle the rest.',
     packagesKicker: 'Packages', packagesTitle: 'Packages built around the shot you want.', packagesText: 'Pick the production level that fits you — from rolling-only footage to a complete cinematic session.', packagesLink: 'Customize & book →',
+    test_1_sar: 'Temporary payment test', test_1_sarDesc: 'One-riyal test package — visible only on a preview deployment', test1SarPrice: '1',
     
     silverH1: 'Raw clips', silverH2: 'Multi-angle', silverH3: 'No edit',
     basicH1: '5+ clips', basicH2: 'Full edit', basicH3: 'Music choice',
@@ -173,7 +175,12 @@ function updateSelects(lang = getLang()) {
   if (packageSelect) {
     const current = packageSelect.value;
     const preserved = packageValueForLang(current, lang);
-    packageSelect.innerHTML = `<option value="">${escapeHtml(tr('packagePlaceholder'))}</option>` + packageOptions[lang].map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('');
+    const availablePackageOptions = [...packageOptions[lang]];
+    if (AYAN_PAYMENT_CONFIG.oneSarTestPackageEnabled) {
+      const testPackageLabel = lang === 'ar' ? '⚡ اختبار الدفع - 1 ريال' : '⚡ One-Riyal Payment Test';
+      availablePackageOptions.push([testPackageLabel, testPackageLabel]);
+    }
+    packageSelect.innerHTML = `<option value="">${escapeHtml(tr('packagePlaceholder'))}</option>` + availablePackageOptions.map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('');
     if ([...packageSelect.options].some((o) => o.value === preserved)) packageSelect.value = preserved;
   }
 
@@ -216,6 +223,7 @@ function packageValueForLang(value, lang = getLang()) {
     '◇ الحركة - 80 ريال': ['◇ الحركة - 80 ريال', '◇ MOTION - 80 SAR'],
     '✦ البصمة - 130 ريال': ['✦ البصمة - 130 ريال', '✦ SIGNATURE - 130 SAR'],
     '✧ السينمائي - 180 ريال': ['✧ السينمائي - 180 ريال', '✧ CINEMATIC - 180 SAR'],
+    '⚡ اختبار الدفع - 1 ريال': ['⚡ اختبار الدفع - 1 ريال', '⚡ One-Riyal Payment Test'],
     'الباقة الفضية - 70 ريال': ['◈ الرول - 50 ريال', '◈ ROLL - 50 SAR'],
     '🥈 الباقة الفضية - 70 ريال': ['◈ الرول - 50 ريال', '◈ ROLL - 50 SAR'],
     'الباقة الأساسية - 100 ريال': ['◇ الحركة - 80 ريال', '◇ MOTION - 80 SAR'],
@@ -485,7 +493,8 @@ let AYAN_PAYMENT_CONFIG = {
       tabby: { percent: 6.99, fixed: 7.5 }
     }
   },
-  packages: { silver: { price: 50, originalPrice: 70, discount: 20 }, basic: { price: 80, originalPrice: 100, discount: 20 }, advanced: { price: 130, originalPrice: 150, discount: 20 }, royal: { price: 180, originalPrice: 200, discount: 20 } }
+  packages: { silver: { price: 50, originalPrice: 70, discount: 20 }, basic: { price: 80, originalPrice: 100, discount: 20 }, advanced: { price: 130, originalPrice: 150, discount: 20 }, royal: { price: 180, originalPrice: 200, discount: 20 }, test_1_sar: { price: 1, originalPrice: 1, discount: 0 } },
+  oneSarTestPackageEnabled: false
 };
 
 function getPackageFinancials(key, paymentMethod = 'none') {
@@ -512,7 +521,13 @@ async function loadPaymentConfig() {
     const config = await response.json();
     if (config?.pricing && config?.packages) {
       AYAN_PAYMENT_CONFIG = config;
-      if (document.querySelector('#bookingForm')) updateBookingExperience();
+      const testPackageChoice = document.querySelector('[data-one-sar-test-package]');
+      if (testPackageChoice) testPackageChoice.hidden = config.oneSarTestPackageEnabled !== true;
+      if (document.querySelector('#bookingForm')) {
+        updateSelects();
+        updateBookingExperience();
+        updateBookingFlowSummary();
+      }
     }
   } catch (_) {
     // Safe fallback values are kept in AYAN_PAYMENT_CONFIG.
@@ -557,7 +572,7 @@ function updateBookingExperience() {
   }
 
   const key = selected.dataset.packageKey;
-  const priceMap = { silver: 'silverPrice', basic: 'basicPrice', advanced: 'advancedPrice', royal: 'royalPrice' };
+  const priceMap = { silver: 'silverPrice', basic: 'basicPrice', advanced: 'advancedPrice', royal: 'royalPrice', test_1_sar: 'test1SarPrice' };
   const finance = getPackageFinancials(key, 'none');
   summaryName.textContent = tr(key);
   summaryDesc.textContent = tr(`${key}Desc`);

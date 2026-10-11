@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PACKAGES, calculatePricing, getPricingConfig } from '../lib/pricing.js';
+import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable, ONE_SAR_TEST_PACKAGE_KEY } from '../lib/pricing.js';
 import {
   createTuwaiqPayBill,
   getTuwaiqPaySupportedMethods,
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
   if (!name || !email || !packageKey || !paymentMethod || !carType || !shootRegion || !phone) {
     return res.status(400).json({ error: 'Missing required booking details', requestId });
   }
-  if (!PACKAGES[packageKey] || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
+  if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
@@ -132,10 +132,11 @@ function getPaymentConfig(res) {
     availablePaymentMethods: ['tuwaiqpay', 'tabby', 'tamara'],
     tabbyConfigured: Boolean(String(process.env.TABBY_SECRET_KEY || '').trim()),
     tamaraConfigured: Boolean(String(process.env.TAMARA_API_TOKEN || '').trim()),
+    oneSarTestPackageEnabled: isPackageAvailable(ONE_SAR_TEST_PACKAGE_KEY),
     testMode: ['true', '1', 'yes', 'on'].includes(String(process.env.PAYMENT_TEST_MODE || '').trim().toLowerCase()),
     pricing: config,
     packages: Object.fromEntries(
-      Object.entries(PACKAGES).map(([key, value]) => [key, { price: value.price, originalPrice: value.originalPrice ?? value.price, discount: value.discount ?? 0, symbol: value.symbol ?? '', ar: value.ar, en: value.en }])
+      Object.entries(PACKAGES).filter(([key]) => isPackageAvailable(key)).map(([key, value]) => [key, { price: value.price, originalPrice: value.originalPrice ?? value.price, discount: value.discount ?? 0, symbol: value.symbol ?? '', ar: value.ar, en: value.en }])
     )
   });
 }

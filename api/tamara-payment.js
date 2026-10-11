@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PACKAGES, calculatePricing } from '../lib/pricing.js';
+import { PACKAGES, calculatePricing, isPackageAvailable } from '../lib/pricing.js';
 import { authoriseTamaraOrder, boolEnv, getTamaraBaseUrl, getTamaraOrder, mapTamaraOrder, normalizeSaudiPhone, normalizeTamaraStatus } from '../lib/server/tamara.js';
 
 const ALLOWED_CARS = new Set(['سيدان','SUV','كوبيه','فاخر / رياضي','Sedan','Coupe','Luxury / Sport','Luxury / Sports']);
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   const lang = body.lang === 'en' ? 'en' : 'ar';
 
   if (!name || !email || !packageKey || !carType || !shootRegion || !phone) return res.status(400).json({ error: 'Missing required fields', requestId });
-  if (!PACKAGES[packageKey] || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) return res.status(400).json({ error: 'Invalid booking option', requestId });
+  if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) return res.status(400).json({ error: 'Invalid booking option', requestId });
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
   if (body.termsAgreement !== true) return res.status(400).json({ error: 'Terms and conditions must be accepted before payment.', requestId });
