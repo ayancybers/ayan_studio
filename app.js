@@ -546,12 +546,13 @@ function updateBookingExperience() {
   const choices = [...document.querySelectorAll('[data-booking-package]')];
   if (!choices.length) return;
   const current = select?.value || '';
-  let selected = null;
+  const selectedKey = select?.dataset.selectedPackageKey || '';
+  let selected = selectedKey ? choices.find((choice) => choice.dataset.packageKey === selectedKey) : null;
+  if (!selected) selected = choices.find((choice) => current && packageValueForLang(choice.dataset.bookingPackage, getLang()) === current) || null;
   choices.forEach((choice) => {
-    const value = packageValueForLang(choice.dataset.bookingPackage, getLang());
-    const active = !!current && current === value;
+    const active = choice === selected;
     choice.classList.toggle('selected', active);
-    if (active) selected = choice;
+    choice.setAttribute('aria-pressed', String(active));
   });
 
   const summaryCard = document.querySelector('[data-booking-summary]');
@@ -561,6 +562,7 @@ function updateBookingExperience() {
   const summarySubtotal = document.querySelector('[data-booking-summary-subtotal]');
   const summaryServiceFee = document.querySelector('[data-booking-summary-service]');
   const summaryTotal = document.querySelector('[data-booking-summary-total]');
+  const basePriceNode = summaryCard?.querySelector('[data-booking-summary-base]');
   if (!summaryName || !summaryDesc || !summaryPrice) return;
 
   if (!selected) {
@@ -570,6 +572,7 @@ function updateBookingExperience() {
     if (summarySubtotal) summarySubtotal.textContent = '—';
     if (summaryServiceFee) summaryServiceFee.textContent = '—';
     if (summaryTotal) summaryTotal.textContent = '—';
+    if (basePriceNode) basePriceNode.textContent = '—';
     summaryCard?.classList.remove('is-active');
     return;
   }
@@ -583,7 +586,6 @@ function updateBookingExperience() {
   if (summarySubtotal) summarySubtotal.textContent = `${moneySar(finance.subtotal)} SAR`;
   if (summaryServiceFee) summaryServiceFee.textContent = '—';
   if (summaryTotal) summaryTotal.textContent = `${moneySar(finance.total)} SAR`;
-  const basePriceNode = summaryCard?.querySelector('[data-booking-summary-base]');
   if (basePriceNode) basePriceNode.textContent = `${moneySar(Number(tr(priceMap[key])))} SAR`;
   if (summaryCard) {
     summaryCard.classList.remove('is-changing');
@@ -596,13 +598,18 @@ function updateBookingExperience() {
 
 function setupBookingExperience() {
   const select = document.querySelector('#packageType');
-  const choices = document.querySelectorAll('[data-booking-package]');
+  const choices = [...document.querySelectorAll('[data-booking-package]')];
   if (!select || !choices.length) return;
 
   choices.forEach((choice) => {
     choice.addEventListener('click', () => {
       const value = packageValueForLang(choice.dataset.bookingPackage, getLang());
+      if (![...select.options].some((option) => option.value === value)) {
+        const label = choice.querySelector('.booking-package-copy strong')?.textContent.trim() || value;
+        select.add(new Option(label, value));
+      }
       select.value = value;
+      select.dataset.selectedPackageKey = choice.dataset.packageKey || '';
       updateBookingExperience();
       clearBookingValidation();
       updateBookingFlowSummary();
@@ -612,6 +619,8 @@ function setupBookingExperience() {
   });
 
   select.addEventListener('change', () => {
+    const selectedChoice = choices.find((choice) => packageValueForLang(choice.dataset.bookingPackage, getLang()) === select.value);
+    select.dataset.selectedPackageKey = selectedChoice?.dataset.packageKey || '';
     updateBookingExperience();
     updateBookingFlowSummary();
     sendLog('package_select', { package: select.value, source: 'booking_select' });
@@ -634,7 +643,11 @@ function setupPackageButtons() {
     const stored = sessionStorage.getItem('ayan_selected_package');
     if (stored) {
       const value = packageValueForLang(stored, getLang());
-      if ([...select.options].some((option) => option.value === value)) select.value = value;
+      if ([...select.options].some((option) => option.value === value)) {
+        select.value = value;
+        const selectedChoice = [...document.querySelectorAll('[data-booking-package]')].find((choice) => packageValueForLang(choice.dataset.bookingPackage, getLang()) === value);
+        select.dataset.selectedPackageKey = selectedChoice?.dataset.packageKey || '';
+      }
       sessionStorage.removeItem('ayan_selected_package');
       updateBookingExperience();
       select.scrollIntoView({ behavior: 'smooth', block: 'center' });
