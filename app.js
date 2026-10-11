@@ -21,7 +21,7 @@ const translations = {
     packagesKicker: 'Packages', packagesTitle: 'الباقات مصممة على حسب اللقطة اللي تبيها.',
     packagesText: 'اختر مستوى الإنتاج المناسب لك — من رولينق بدون مونتاج إلى تغطية سينمائية متكاملة.',
     packagesLink: 'تخصيص وحجز ←', popularBadge: 'الأكثر طلبًا',
-    test_1_sar: 'اختبار دفع مؤقت', test_1_sarDesc: 'باقة اختبار بريال واحد — تظهر في معاينة الموقع فقط', test1SarPrice: '1',
+    test_1_sar: 'اختبار دفع مؤقت', test_1_sarDesc: 'باقة اختبار بريال واحد — تظهر فقط عند تفعيلها في إعدادات النشر', test1SarPrice: '1',
     
     silverH1: 'مقاطع أصلية', silverH2: 'زوايا متعددة', silverH3: 'بدون مونتاج',
     basicH1: 'أكثر من 5', basicH2: 'مونتاج كامل', basicH3: 'اختيار أغنية',
@@ -71,7 +71,7 @@ const translations = {
     heroEyebrow: 'Cinematic car photography', heroTitle: 'Let your car <span>speak in frames.</span>', heroLead: 'Rolling shots, static details, and polished edits — from the first frame to the final cut, with a cleaner booking experience.', bookNow: 'Book your session', watchGallery: 'View gallery',
     heroCard1Title: 'Visual identity', heroCard1Text: 'Frames built to reveal the character, shape, and details of your car.', heroCard2Title: 'Faster workflow', heroCard2Text: 'A clear booking path, direct coordination, and delivery matched to your package.', heroCard3Title: 'Flexible experience', heroCard3Text: 'Choose the package, location, and car type — we handle the rest.',
     packagesKicker: 'Packages', packagesTitle: 'Packages built around the shot you want.', packagesText: 'Pick the production level that fits you — from rolling-only footage to a complete cinematic session.', packagesLink: 'Customize & book →',
-    test_1_sar: 'Temporary payment test', test_1_sarDesc: 'One-riyal test package — visible only on a preview deployment', test1SarPrice: '1',
+    test_1_sar: 'Temporary payment test', test_1_sarDesc: 'One-riyal test package — shown only when explicitly enabled in deployment settings', test1SarPrice: '1',
     
     silverH1: 'Raw clips', silverH2: 'Multi-angle', silverH3: 'No edit',
     basicH1: '5+ clips', basicH2: 'Full edit', basicH3: 'Music choice',
