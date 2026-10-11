@@ -117,7 +117,13 @@ export default async function handler(req, res) {
       amount: pricing.total
     });
   } catch (error) {
-    console.error('TuwaiqPay bill creation failed', { requestId, error: error?.message || String(error) });
+    console.error('TuwaiqPay bill creation failed', {
+      requestId,
+      packageKey,
+      paymentMethod,
+      amount: pricing.total,
+      error: error?.message || String(error)
+    });
     return res.status(502).json({ error: 'Unable to prepare TuwaiqPay checkout. Please try again.', requestId });
   }
 }

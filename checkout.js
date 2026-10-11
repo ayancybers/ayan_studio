@@ -326,7 +326,14 @@
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || copy.paymentFailed);
+      if (!response.ok) {
+        const genericProviderError = result.error === 'Unable to prepare TuwaiqPay checkout. Please try again.';
+        const message = genericProviderError ? copy.paymentFailed : (result.error || copy.paymentFailed);
+        const reference = result.requestId
+          ? (ar ? ` (رقم التتبع: ${String(result.requestId).slice(0, 80)})` : ` (Reference: ${String(result.requestId).slice(0, 80)})`)
+          : '';
+        throw new Error(`${message}${reference}`);
+      }
       if (!result.redirectUrl) throw new Error(copy.noRedirect);
       if (selectedMethod === 'tabby' && result.paymentId) sessionStorage.setItem('ayan_tabby_payment_id', result.paymentId);
       if (selectedMethod === 'tamara' && result.orderId) sessionStorage.setItem('ayan_tamara_order_id', result.orderId);
