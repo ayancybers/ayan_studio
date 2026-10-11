@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { PACKAGES, calculatePricing } from '../lib/pricing.js';
+import { PACKAGES, calculatePricing, getPricingConfig } from '../lib/pricing.js';
 import {
   createTuwaiqPayBill,
   getTuwaiqPaySupportedMethods,
@@ -23,7 +23,10 @@ const PAYMENT_METHODS = Object.freeze({
 
 export default async function handler(req, res) {
   setSecurityHeaders(res);
-  if (req.method === 'GET') return verifyReceipt(req, res);
+  if (req.method === 'GET') {
+    if (String(req.query?.config || '') === '1') return getPaymentConfig(res);
+    return verifyReceipt(req, res);
+  }
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'Method not allowed' });
@@ -117,6 +120,24 @@ export default async function handler(req, res) {
     console.error('TuwaiqPay bill creation failed', { requestId, error: error?.message || String(error) });
     return res.status(502).json({ error: 'Unable to prepare TuwaiqPay checkout. Please try again.', requestId });
   }
+}
+
+function getPaymentConfig(res) {
+  const config = getPricingConfig();
+  const tuwaiqPayMethods = getTuwaiqPaySupportedMethods();
+  return res.status(200).json({
+    currency: 'SAR',
+    tuwaiqPayConfigured: isTuwaiqPayReady(),
+    tuwaiqPayMethods,
+    availablePaymentMethods: ['tuwaiqpay', 'tabby', 'tamara'],
+    tabbyConfigured: Boolean(String(process.env.TABBY_SECRET_KEY || '').trim()),
+    tamaraConfigured: Boolean(String(process.env.TAMARA_API_TOKEN || '').trim()),
+    testMode: ['true', '1', 'yes', 'on'].includes(String(process.env.PAYMENT_TEST_MODE || '').trim().toLowerCase()),
+    pricing: config,
+    packages: Object.fromEntries(
+      Object.entries(PACKAGES).map(([key, value]) => [key, { price: value.price, originalPrice: value.originalPrice ?? value.price, discount: value.discount ?? 0, symbol: value.symbol ?? '', ar: value.ar, en: value.en }])
+    )
+  });
 }
 
 function verifyReceipt(req, res) {

@@ -507,7 +507,7 @@ function getPackageFinancials(key, paymentMethod = 'none') {
 
 async function loadPaymentConfig() {
   try {
-    const response = await fetch('/api/payment-config', { cache: 'no-store' });
+    const response = await fetch('/api/tuwaiqpay-payment?config=1', { cache: 'no-store' });
     if (!response.ok) throw new Error('config');
     const config = await response.json();
     if (config?.pricing && config?.packages) {

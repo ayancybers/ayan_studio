@@ -219,7 +219,7 @@
     node.addEventListener('click', () => selectMethod(node.dataset.paymentMethod));
   });
 
-  fetch('/api/payment-config', { cache: 'no-store' }).then((response) => {
+  fetch('/api/tuwaiqpay-payment?config=1', { cache: 'no-store' }).then((response) => {
     if (!response.ok) throw new Error('Payment configuration unavailable');
     return response.json();
   }).then((serverConfig) => {
