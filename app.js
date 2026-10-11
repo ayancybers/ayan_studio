@@ -178,7 +178,8 @@ function updateSelects(lang = getLang()) {
     const availablePackageOptions = [...packageOptions[lang]];
     if (AYAN_PAYMENT_CONFIG.oneSarTestPackageEnabled) {
       const testPackageLabel = lang === 'ar' ? '⚡ اختبار الدفع - 1 ريال' : '⚡ One-Riyal Payment Test';
-      availablePackageOptions.push([testPackageLabel, testPackageLabel]);
+      // Keep the submitted value stable across language changes; only the label is translated.
+      availablePackageOptions.push(['test_1_sar', testPackageLabel]);
     }
     packageSelect.innerHTML = `<option value="">${escapeHtml(tr('packagePlaceholder'))}</option>` + availablePackageOptions.map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('');
     if ([...packageSelect.options].some((o) => o.value === preserved)) packageSelect.value = preserved;
@@ -218,12 +219,14 @@ function setTheme(theme) {
 }
 
 function packageValueForLang(value, lang = getLang()) {
+  if (value === 'test_1_sar') return value;
   const map = {
     '◈ الرول - 50 ريال': ['◈ الرول - 50 ريال', '◈ ROLL - 50 SAR'],
     '◇ الحركة - 80 ريال': ['◇ الحركة - 80 ريال', '◇ MOTION - 80 SAR'],
     '✦ البصمة - 130 ريال': ['✦ البصمة - 130 ريال', '✦ SIGNATURE - 130 SAR'],
     '✧ السينمائي - 180 ريال': ['✧ السينمائي - 180 ريال', '✧ CINEMATIC - 180 SAR'],
-    '⚡ اختبار الدفع - 1 ريال': ['⚡ اختبار الدفع - 1 ريال', '⚡ One-Riyal Payment Test'],
+    '⚡ اختبار الدفع - 1 ريال': ['test_1_sar', 'test_1_sar'],
+    '⚡ One-Riyal Payment Test': ['test_1_sar', 'test_1_sar'],
     'الباقة الفضية - 70 ريال': ['◈ الرول - 50 ريال', '◈ ROLL - 50 SAR'],
     '🥈 الباقة الفضية - 70 ريال': ['◈ الرول - 50 ريال', '◈ ROLL - 50 SAR'],
     'الباقة الأساسية - 100 ريال': ['◇ الحركة - 80 ريال', '◇ MOTION - 80 SAR'],
@@ -697,7 +700,8 @@ function updateBookingFlowSummary() {
 
   document.querySelectorAll('.booking-signature-step').forEach((el) => el.classList.remove('is-active', 'is-done'));
 
-  if (packageNode) packageNode.textContent = packageValue ? `${tr('flowSelected')}: ${packageValue}` : tr('flowStep1');
+  const displayPackageValue = packageKey === 'test_1_sar' ? tr(packageKey) : packageValue;
+  if (packageNode) packageNode.textContent = packageValue ? `${tr('flowSelected')}: ${displayPackageValue}` : tr('flowStep1');
   if (detailsNode) {
     detailsNode.setAttribute('aria-label', [name, phone, car, region, notes].filter(Boolean).join('، ') || tr('flowStep2'));
   }
