@@ -19,7 +19,7 @@
   <div class="eyebrow">AYAN PHOTOGRAPHY</div>
   <div class="icon" id="icon">⌛</div>
   <h1 id="title">جاري التحقق من الدفع</h1>
-  <p id="text">لحظات ونراجع العملية مباشرة مع Tap.</p>
+  <p id="text">بانتظار تأكيد العملية من مزود الدفع.</p>
   <div class="status" id="status" role="status" aria-live="polite">جاري التحقق…</div><div class="status hidden" id="breakdown"></div><div class="status hidden" id="emailStatus" role="status" aria-live="polite"></div>
   <div class="actions hidden" id="actions">
     <a class="primary" id="invoiceLink" href="#">تحميل الفاتورة PDF</a>
@@ -32,13 +32,14 @@ const lang = localStorage.getItem('ayan_lang') === 'en' ? 'en' : 'ar';
 document.documentElement.lang = lang;
 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 const qs = new URLSearchParams(location.search);
-const provider = qs.get('provider') === 'tabby' ? 'tabby' : qs.get('provider') === 'tamara' ? 'tamara' : 'tap';
+const provider = qs.get('provider') === 'tuwaiqpay' ? 'tuwaiqpay' : qs.get('provider') === 'tabby' ? 'tabby' : qs.get('provider') === 'tamara' ? 'tamara' : 'tap';
 const isTabby = provider === 'tabby';
 const isTamara = provider === 'tamara';
+const isTuwaiqPay = provider === 'tuwaiqpay';
 const t = lang === 'ar'
   ? {
       checking:'جاري التحقق من الدفع',
-      checkText:isTabby?'لحظات ونراجع العملية مباشرة مع تابي.':isTamara?'لحظات ونراجع العملية مباشرة مع تمارا.':'لحظات ونراجع العملية مباشرة مع Tap.',
+      checkText:isTabby?'لحظات ونراجع العملية مباشرة مع تابي.':isTamara?'لحظات ونراجع العملية مباشرة مع تمارا.':'بانتظار تأكيد العملية من مزود الدفع.',
       checkingStatus:'جاري التحقق…',
       success:'تم الدفع بنجاح 🎉',
       successText:'تم تأكيد دفعتك بنجاح. تقدر تحمل الفاتورة وتكمل التنسيق معنا.',
@@ -54,7 +55,7 @@ const t = lang === 'ar'
     }
   : {
       checking:'Verifying payment',
-      checkText:isTabby?'One moment while we verify the payment with Tabby.':'One moment while we verify the transaction with Tap.',
+      checkText:isTabby?'One moment while we verify the payment with Tabby.':isTamara?'One moment while we verify the payment with Tamara.':isTuwaiqPay?'Waiting for TuwaiqPay to confirm the payment.':'One moment while we verify the transaction with Tap.',
       checkingStatus:'Verifying…',
       success:'Payment confirmed 🎉',
       successText:'Your payment has been confirmed. You can download the invoice and continue coordination.',
@@ -94,6 +95,20 @@ async function verify(attempt=0){
     actions.classList.remove('hidden');
     invoiceLink.classList.add('hidden');
     whatsappLink.classList.add('hidden');
+    return;
+  }
+  if(isTuwaiqPay){
+    icon.textContent='⌛';
+    document.getElementById('title').textContent=lang==='ar'?'بانتظار تأكيد الدفع':'Payment confirmation pending';
+    document.getElementById('text').textContent=lang==='ar'
+      ? 'وصلت إلى صفحة العودة من مزود الدفع. ننتظر تأكيد العملية من البنك؛ ستصلك الفاتورة على بريدك بعد التأكيد.'
+      : 'You returned from the payment provider. We are waiting for payment confirmation from the bank; your invoice will be emailed after confirmation.';
+    statusNode.textContent=lang==='ar'?'قد يستغرق تأكيد العملية لحظات.':'Confirmation may take a few moments.';
+    invoiceLink.classList.add('hidden');
+    whatsappLink.href='https://wa.me/966565117739?text='+encodeURIComponent(lang==='ar'
+      ? 'السلام عليكم، أحتاج التحقق من حالة دفع TuwaiqPay لحجزي.'
+      : 'Hello, I need help checking my TuwaiqPay booking payment.');
+    actions.classList.remove('hidden');
     return;
   }
   if(!paymentId){

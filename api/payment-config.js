@@ -1,4 +1,5 @@
 import { PACKAGES, getPricingConfig } from '../lib/pricing.js';
+import { getTuwaiqPaySupportedMethods, isTuwaiqPayReady } from '../lib/server/tuwaiqpay.js';
 
 export default function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
@@ -9,10 +10,14 @@ export default function handler(req, res) {
   }
 
   const config = getPricingConfig();
+  const tuwaiqPayMethods = getTuwaiqPaySupportedMethods();
   return res.status(200).json({
     currency: 'SAR',
-    cardPaymentsEnabled: boolEnv('CARD_PAYMENTS_ENABLED', false),
-    availablePaymentMethods: ['tabby', 'tamara'],
+    tuwaiqPayConfigured: isTuwaiqPayReady(),
+    tuwaiqPayMethods,
+    availablePaymentMethods: ['tuwaiqpay', 'tabby', 'tamara'],
+    tabbyConfigured: Boolean(String(process.env.TABBY_SECRET_KEY || '').trim()),
+    tamaraConfigured: Boolean(String(process.env.TAMARA_API_TOKEN || '').trim()),
     testMode: ['true','1','yes','on'].includes(String(process.env.PAYMENT_TEST_MODE || '').trim().toLowerCase()),
     pricing: config,
     packages: Object.fromEntries(

@@ -28,9 +28,11 @@
     .payment-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .payment-choice{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;text-align:start;width:100%;padding:13px 14px;border-radius:15px;border:1px solid rgba(132,178,232,.15);background:rgba(255,255,255,.035);color:#eef5ff;cursor:pointer;transition:transform .18s ease,border-color .18s ease,background .18s ease}
     .payment-choice:hover{transform:translateY(-1px)}
+    .payment-choice:disabled{opacity:.58;cursor:not-allowed;transform:none}
     .payment-choice.selected{border-color:rgba(117,178,255,.58);background:rgba(77,150,255,.08);box-shadow:0 8px 25px rgba(31,102,211,.12)}
     .payment-methods .maintenance{border-color:rgba(255,190,50,.25);background:rgba(255,190,50,.045);flex-direction:column;gap:2px;min-width:112px;cursor:not-allowed}.payment-methods .maintenance small{font-size:8px;color:#ffd77a;font-weight:700}
     .payment-choice-icon{display:flex;align-items:center;gap:7px;min-width:68px;justify-content:center}.payment-choice-icon b{font-size:11px}
+    .payment-choice-icon .payment-brand{height:25px;max-width:58px}
     .payment-choice-copy{display:grid;gap:2px}.payment-choice-copy strong{font-size:12px}.payment-choice-copy small{font-size:9px;color:#91a2b8;line-height:1.4}.payment-choice-price{font-size:12px;font-weight:900;white-space:nowrap}
     .payment-fee-note{text-align:center;color:var(--muted);font-size:9px;line-height:1.7;margin-top:11px}
     .invoice-email-wrap{display:block;margin-top:16px}.tabby-email-wrap label{display:block;font-size:10px;color:var(--text-secondary);margin:0 0 6px}.checkout-email{width:100%;height:46px;padding:0 13px;border-radius:13px;border:1px solid rgba(132,178,232,.16);background:rgba(255,255,255,.035);color:#eef5ff;outline:none}.checkout-email:focus{border-color:rgba(117,178,255,.58)}
@@ -63,6 +65,36 @@
         <div class="payment-selector" aria-label="اختيار طريقة الدفع">
           <div class="payment-selector-title" data-checkout-key="paymentSelector">اختيار طريقة الدفع</div>
           <div class="payment-choice-grid">
+            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_apple_pay" aria-pressed="false" disabled>
+              <span class="payment-choice-icon"><img class="payment-brand payment-brand--apple" src="assets/payments/apple-pay.svg?v=3" alt="Apple Pay"></span>
+              <span class="payment-choice-copy"><strong data-checkout-key="applePayTitle">Apple Pay</strong><small data-checkout-key="applePayDescription">1.2% + 1 ريال رسوم</small></span>
+              <span class="payment-choice-price" data-method-total="tuwaiqpay_apple_pay">—</span>
+            </button>
+            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_mada" aria-pressed="false" disabled>
+              <span class="payment-choice-icon"><img class="payment-brand payment-brand--large" src="assets/payments/mada.svg?v=3" alt="مدى"></span>
+              <span class="payment-choice-copy"><strong data-checkout-key="madaTitle">مدى</strong><small data-checkout-key="madaDescription">بطاقة مدى السعودية</small></span>
+              <span class="payment-choice-price" data-method-total="tuwaiqpay_mada">—</span>
+            </button>
+            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_visa_local" aria-pressed="false" disabled>
+              <span class="payment-choice-icon"><img class="payment-brand" src="assets/payments/visa.svg?v=3" alt="Visa"><img class="payment-brand" src="assets/payments/mastercard.svg?v=1" alt="Mastercard"></span>
+              <span class="payment-choice-copy"><strong data-checkout-key="localCardTitle">Visa / Mastercard</strong><small data-checkout-key="localCardDescription">بطاقة صادرة من السعودية</small></span>
+              <span class="payment-choice-price" data-method-total="tuwaiqpay_visa_local">—</span>
+            </button>
+            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_visa_international" aria-pressed="false" disabled>
+              <span class="payment-choice-icon"><img class="payment-brand" src="assets/payments/visa.svg?v=3" alt="Visa"><img class="payment-brand" src="assets/payments/mastercard.svg?v=1" alt="Mastercard"></span>
+              <span class="payment-choice-copy"><strong data-checkout-key="internationalCardTitle">Visa / Mastercard</strong><small data-checkout-key="internationalCardDescription">بطاقة خليجية أو دولية</small></span>
+              <span class="payment-choice-price" data-method-total="tuwaiqpay_visa_international">—</span>
+            </button>
+            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_amex" aria-pressed="false" disabled>
+              <span class="payment-choice-icon"><img class="payment-brand payment-brand--large" src="assets/payments/amex.svg?v=1" alt="American Express"></span>
+              <span class="payment-choice-copy"><strong data-checkout-key="amexTitle">American Express</strong><small data-checkout-key="amexDescription">بطاقة أمريكان إكسبريس</small></span>
+              <span class="payment-choice-price" data-method-total="tuwaiqpay_amex">—</span>
+            </button>
+            <button class="payment-choice tuwaiqpay-choice" type="button" data-payment-method="tuwaiqpay_stc_pay" aria-pressed="false" disabled>
+              <span class="payment-choice-icon"><img class="payment-brand payment-brand--large" src="assets/payments/stc-pay.svg?v=1" alt="STC Pay"></span>
+              <span class="payment-choice-copy"><strong data-checkout-key="stcPayTitle">STC Pay</strong><small data-checkout-key="stcPayDescription">المحفظة الرقمية</small></span>
+              <span class="payment-choice-price" data-method-total="tuwaiqpay_stc_pay">—</span>
+            </button>
             <button class="payment-choice selected" type="button" data-payment-method="tabby" aria-pressed="true">
               <span class="payment-choice-icon">
                 <img class="payment-brand payment-brand--large" src="assets/payments/tabby.svg?v=2" alt="Tabby" loading="lazy">
@@ -78,7 +110,7 @@
               <span class="payment-choice-price" data-method-total="tamara">—</span>
             </button>
           </div>
-          <div class="payment-fee-note" id="paymentFeeNote"></div>
+          <div class="payment-fee-note" id="paymentFeeNote" aria-live="polite"></div>
           <div class="invoice-email-wrap" id="invoiceEmailWrap">
             <label for="invoiceEmail" data-checkout-key="emailLabel">البريد الإلكتروني لإرسال الفاتورة</label>
             <input id="invoiceEmail" class="checkout-email" aria-label="البريد الإلكتروني لإرسال الفاتورة" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
@@ -94,11 +126,14 @@
           <div class="payment-methods-list">
             <span class="payment-method active" aria-label="Tabby"><img class="payment-brand payment-brand--large" src="assets/payments/tabby.svg?v=2" alt="Tabby" loading="lazy"></span>
             <span class="payment-method active" aria-label="Tamara"><img class="payment-brand payment-brand--large" src="assets/payments/tamara-logo-badge-en.png" alt="Tamara" loading="lazy"></span>
-            <span class="payment-method maintenance" aria-label="Apple Pay تحت الصيانة" aria-disabled="true"><img class="payment-brand payment-brand--large payment-brand--apple" src="assets/payments/apple-pay.svg?v=2" alt="Apple Pay" loading="lazy"><small data-checkout-key="maintenance">تحت الصيانة</small></span>
-            <span class="payment-method maintenance" aria-label="Visa تحت الصيانة" aria-disabled="true"><img class="payment-brand payment-brand--large" src="assets/payments/visa.svg?v=2" alt="Visa" loading="lazy"><small data-checkout-key="maintenance">تحت الصيانة</small></span>
-            <span class="payment-method maintenance" aria-label="مدى تحت الصيانة" aria-disabled="true"><img class="payment-brand payment-brand--large" src="assets/payments/mada.svg" alt="mada" loading="lazy"><small data-checkout-key="maintenance">تحت الصيانة</small></span>
+            <span class="payment-method active" aria-label="Apple Pay"><img class="payment-brand payment-brand--large payment-brand--apple" src="assets/payments/apple-pay.svg?v=3" alt="Apple Pay" loading="lazy"></span>
+            <span class="payment-method active" aria-label="Visa"><img class="payment-brand payment-brand--large" src="assets/payments/visa.svg?v=3" alt="Visa" loading="lazy"></span>
+            <span class="payment-method active" aria-label="Mastercard"><img class="payment-brand payment-brand--large" src="assets/payments/mastercard.svg?v=1" alt="Mastercard" loading="lazy"></span>
+            <span class="payment-method active" aria-label="مدى"><img class="payment-brand payment-brand--large" src="assets/payments/mada.svg?v=3" alt="مدى" loading="lazy"></span>
+            <span class="payment-method active" aria-label="American Express"><img class="payment-brand payment-brand--large" src="assets/payments/amex.svg?v=1" alt="American Express" loading="lazy"></span>
+            <span class="payment-method active" aria-label="STC Pay"><img class="payment-brand payment-brand--large" src="assets/payments/stc-pay.svg?v=1" alt="STC Pay" loading="lazy"></span>
           </div>
-          <div class="payment-methods-note" data-checkout-key="paymentNote">المتاح حاليًا: تابي وتمارا. Apple Pay وVisa ومدى تحت الصيانة مؤقتًا.</div>
+          <div class="payment-methods-note" id="paymentNote" data-checkout-key="paymentNote">اختر وسيلة الدفع المناسبة. عند الدفع بالبطاقة، يفتح لك مزود الدفع صفحة آمنة لإتمام العملية.</div>
         </div><div id="error" class="checkout-error" role="alert"></div>
         <div id="status" class="checkout-status" role="status" aria-live="polite" data-checkout-key="preparing">جاري تجهيز عملية الدفع…</div>
         <div class="checkout-back"><a href="/booking" data-checkout-key="backBooking">← العودة وتعديل البيانات</a></div>
@@ -108,97 +143,6 @@
   </div>
   <script src="ui.js?v=71"></script>
   <script src="app.js?v=74"></script>
-  <script>
-    (() => {
-      const key='ayan_checkout_data';
-      let order=null;
-      let config={pricing:{vatEnabled:false,vatRate:0,paymentFeeEnabled:true,vatOnPaymentFee:false,paymentFees:{card:{percent:2.75,fixed:6},tabby:{percent:6.99,fixed:7.5},tamara:{percent:6.99,fixed:7.5}}},packages:{silver:{price:50,originalPrice:70,discount:20},basic:{price:80,originalPrice:100,discount:20},advanced:{price:130,originalPrice:150,discount:20},royal:{price:180,originalPrice:200,discount:20}}};
-      let selectedMethod='tabby';
-      try { order=JSON.parse(sessionStorage.getItem(key)||'null'); } catch(_) {}
-      const ar=(localStorage.getItem('ayan_lang')||'ar')==='ar';
-      const copy=ar?{
-        pageTitle:'الدفع الآمن | Ayan Photography',editBooking:'تعديل الطلب',title:'مراجعة الطلب والدفع',subtitle:'راجع بياناتك والمبلغ النهائي قبل الانتقال إلى صفحة الدفع الآمنة.',demoNotice:'وضع الدفع التجريبي مفعّل حاليًا. لن يتم تحصيل سعر الباقة الحقيقي أثناء الاختبار؛ سيتم استخدام مفاتيح الدفع التجريبية المخصصة للموقع.',paymentSelector:'اختيار طريقة الدفع',tabbyDescription:'ادفع لاحقًا',tamaraDescription:'ادفع على دفعات',emailLabel:'البريد الإلكتروني لإرسال الفاتورة',emailHelp:'ستصلك الفاتورة وتفاصيل الطلب على هذا البريد بعد نجاح الدفع.',pay:'متابعة إلى الدفع الآمن',availableMethods:'وسائل الدفع المتاحة حاليًا',maintenance:'تحت الصيانة',paymentNote:'المتاح حاليًا: تابي وتمارا. Apple Pay وVisa ومدى تحت الصيانة مؤقتًا.',preparing:'جاري تجهيز عملية الدفع…',backBooking:'← العودة وتعديل البيانات',secureNote:'سيتم تحويلك إلى صفحة الدفع المستضافة من مزود الدفع. لا يتم تخزين بيانات البطاقة في موقع Ayan Photography.',package:'الباقة',beforeDiscount:'السعر قبل الخصم',afterDiscount:'السعر بعد الخصم',discount:'الخصم',fee:'رسوم الدفع',total:'الإجمالي',name:'الاسم',phone:'الجوال',car:'السيارة',area:'منطقة التصوير',noOrder:'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.',tabbyFee:'تابي: {fee} SAR رسوم دفع ({percent}% + 1.50 + 6).',tamaraFee:'تمارا: {fee} SAR رسوم دفع ({percent}% + 1.50 + 6).'
-      }:{
-        pageTitle:'Secure checkout | Ayan Photography',editBooking:'Edit booking',title:'Review your booking',subtitle:'Check your details and final amount before moving to secure payment.',demoNotice:'Test payment mode is enabled. The live package price will not be charged during testing; the site is using its dedicated test payment keys.',paymentSelector:'Choose a payment method',tabbyDescription:'Pay later',tamaraDescription:'Split your payment',emailLabel:'Email address for your invoice',emailHelp:'Your invoice and booking details will be sent to this address after payment.',pay:'Continue to secure payment',availableMethods:'Available payment methods',maintenance:'Unavailable',paymentNote:'Available now: Tabby and Tamara. Apple Pay, Visa, and mada are temporarily unavailable.',preparing:'Preparing your payment…',backBooking:'← Back to edit your details',secureNote:'You will continue to the payment provider’s secure checkout. Ayan Photography does not store card details.',package:'Package',beforeDiscount:'Original price',afterDiscount:'Discounted price',discount:'Discount',fee:'Payment fee',total:'Total',name:'Name',phone:'Mobile',car:'Car',area:'Shoot area',noOrder:'No booking was found. Return to the booking page and try again.',tabbyFee:'Tabby: {fee} SAR payment fee ({percent}% + 1.50 + 6).',tamaraFee:'Tamara: {fee} SAR payment fee ({percent}% + 1.50 + 6).'
-      };
-      document.documentElement.lang=ar?'ar':'en';
-      document.documentElement.dir=ar?'rtl':'ltr';
-      document.title=copy.pageTitle;
-      document.querySelectorAll('[data-checkout-key]').forEach(node=>{const text=copy[node.dataset.checkoutKey];if(text)node.textContent=text;});
-      document.querySelector('.payment-selector')?.setAttribute('aria-label',copy.paymentSelector);
-      document.querySelector('.payment-methods')?.setAttribute('aria-label',copy.availableMethods);
-      document.querySelectorAll('.payment-method.maintenance').forEach(node=>node.setAttribute('aria-label',`${node.querySelector('img')?.alt||''} — ${copy.maintenance}`));
-      const summary=document.getElementById('summary'), customer=document.getElementById('customer'), error=document.getElementById('error'), btn=document.getElementById('payBtn'), status=document.getElementById('status'), demo=document.getElementById('demoNotice');
-      const emailInput=document.getElementById('invoiceEmail'), feeNote=document.getElementById('paymentFeeNote');
-      const money=n=>`${Number(n||0).toFixed(2)} SAR`;
-      // Only Tabby and Tamara are selectable while card/Apple Pay is under maintenance.
-      const AVAILABLE_METHODS=new Set(['tabby','tamara']);
-      const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-      const names={silver:ar?'الرول':'ROLL',basic:ar?'الحركة':'MOTION',advanced:ar?'البصمة':'SIGNATURE',royal:ar?'السينمائي':'CINEMATIC'};
-      const fallbackPrices={silver:50,basic:80,advanced:130,royal:180};
-      const originalPrices={silver:70,basic:100,advanced:150,royal:200};
-
-      if(!order){ summary.innerHTML=`<div class="checkout-empty">${copy.noOrder}</div>`;customer.innerHTML='';summary.setAttribute('aria-busy','false');customer.setAttribute('aria-busy','false');error.textContent=copy.noOrder; error.classList.add('show'); btn.disabled=true; return; }
-
-      function pricingFor(method){
-        const base=Number(config.packages?.[order.packageKey]?.price ?? fallbackPrices[order.packageKey] ?? 0);
-        const vatEnabled=false;
-        const taxRate=0;
-        const tax=0;
-        const beforeFee=base;
-        const feeCfg=config.pricing?.paymentFees?.[method] || {percent:0,fixed:0};
-        const fee=config.pricing?.paymentFeeEnabled!==false ? Math.round((beforeFee*Number(feeCfg.percent||0)/100+Number(feeCfg.fixed||0))*100)/100 : 0;
-        const feeTax=0;
-        const total=Math.round((beforeFee+fee+feeTax)*100)/100;
-        return {base,tax,beforeFee,fee,feeTax,total,taxRate};
-      }
-
-      function renderSummary(){
-        const card=pricingFor('card'), tabby=pricingFor('tabby'), tamara=pricingFor('tamara'), finance=pricingFor(selectedMethod);
-        summary.innerHTML=`<div class="checkout-row"><span>${copy.package}</span><strong>${escapeHtml(names[order.packageKey]||order.packageType)}</strong></div><div class="checkout-row"><span>${copy.beforeDiscount}</span><strong class="checkout-old">${money(Number(config.packages?.[order.packageKey]?.originalPrice ?? originalPrices[order.packageKey] ?? finance.base))}</strong></div><div class="checkout-row"><span>${copy.afterDiscount}</span><strong>${money(finance.base)}</strong></div><div class="checkout-row"><span>${copy.discount}</span><strong class="checkout-discount">- ${money(Number(config.packages?.[order.packageKey]?.discount ?? 20))}</strong></div><div class="checkout-row"><span>${copy.fee}</span><strong>${money(finance.fee)}</strong></div><div class="checkout-row total"><span>${copy.total}</span><strong>${money(finance.total)}</strong></div>`;
-        summary.setAttribute('aria-busy','false');
-        document.querySelectorAll('[data-method-total]').forEach(node=>{const m=node.dataset.methodTotal;node.textContent=money(pricingFor(m).total)});
-        const tabbyText=copy.tabbyFee.replace('{fee}',tabby.fee.toFixed(2)).replace('{percent}',Number(config.pricing.paymentFees.tabby.percent).toFixed(2));
-        const tamaraText=copy.tamaraFee.replace('{fee}',tamara.fee.toFixed(2)).replace('{percent}',Number(config.pricing.paymentFees.tamara.percent).toFixed(2));
-        feeNote.textContent=selectedMethod==='tamara'?tamaraText:tabbyText;
-      }
-
-      function setMethod(method){
-        selectedMethod=AVAILABLE_METHODS.has(method)?method:'tabby';
-        document.querySelectorAll('[data-payment-method]').forEach(node=>{
-          const active=node.dataset.paymentMethod===selectedMethod;
-          node.classList.toggle('selected',active);node.setAttribute('aria-pressed',String(active));
-        });
-        renderSummary();
-      }
-
-      customer.innerHTML=`<div><span>${copy.name}</span><strong>${escapeHtml(order.name)}</strong></div><div><span>${copy.phone}</span><strong>${escapeHtml(order.phone)}</strong></div><div><span>${copy.car}</span><strong>${escapeHtml(order.carType)}</strong></div><div><span>${copy.area}</span><strong>${escapeHtml(order.shootRegion)}</strong></div>`;
-      customer.setAttribute('aria-busy','false');
-      document.querySelectorAll('[data-payment-method]').forEach(node=>node.addEventListener('click',()=>setMethod(node.dataset.paymentMethod)));
-
-      fetch('/api/payment-config',{cache:'no-store'}).then(r=>r.json()).then(c=>{if(c?.pricing&&c?.packages)config=c;if(config?.testMode)demo.classList.add('show');renderSummary();}).catch(()=>renderSummary());
-      setMethod('tabby');
-
-      btn.addEventListener('click',async()=>{
-        error.classList.remove('show'); btn.disabled=true; status.style.display='block';
-        try{
-          const payload={...order,paymentMethod:selectedMethod};
-          if(!AVAILABLE_METHODS.has(selectedMethod)) throw new Error(ar?'طريقة الدفع غير متاحة حاليًا. اختر تابي أو تمارا.':'This payment method is temporarily unavailable. Choose Tabby or Tamara.');
-          const email=String(emailInput?.value||'').trim().toLowerCase();
-          if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error(ar?'اكتب بريدًا إلكترونيًا صحيحًا لإرسال الفاتورة.':'Enter a valid email address for your invoice.');
-          payload.email=email;
-          const endpoint=selectedMethod==='tabby'?'/api/tabby-payment':selectedMethod==='tamara'?'/api/tamara-payment':'/api/payment';
-          const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-          const result=await response.json().catch(()=>({}));
-          if(!response.ok) throw new Error(result.error||'تعذر تجهيز عملية الدفع');
-          if(!result.redirectUrl) throw new Error('لم يتم استلام رابط الدفع.');
-          if(selectedMethod==='tabby'&&result.paymentId) sessionStorage.setItem('ayan_tabby_payment_id',result.paymentId);
-          if(selectedMethod==='tamara'&&result.orderId) sessionStorage.setItem('ayan_tamara_order_id',result.orderId);
-          sessionStorage.setItem('ayan_payment_method',selectedMethod);
-          window.location.assign(result.redirectUrl);
-        }catch(e){ error.textContent=e?.message||'تعذر تجهيز عملية الدفع.'; error.classList.add('show'); btn.disabled=false; status.style.display='none'; }
-      });
-    })();
-  </script>
+  <script src="checkout.js?v=1"></script>
 </body>
 </html>
