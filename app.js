@@ -400,13 +400,29 @@ async function sendLog(event, details = {}) {
     details
   };
   try {
-    await fetch('/api/log', {
+    const response = await fetch('/api/log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       keepalive: true
     });
-  } catch (_) {}
+    return response.ok;
+  } catch (_) { return false; }
+}
+
+function sendVisitorLogOnce() {
+  const key = 'ayan-visitor-log-sent-v1';
+  try {
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, '1');
+  } catch (_) {
+    if (window.__ayanVisitorLogSent) return;
+    window.__ayanVisitorLogSent = true;
+  }
+  void sendLog('page_view', { screen: `${window.innerWidth}x${window.innerHeight}` }).then((sent) => {
+    if (sent) return;
+    try { sessionStorage.removeItem(key); } catch (_) {}
+  });
 }
 
 function setupPreferenceMenus() {
@@ -574,11 +590,16 @@ function setupAmbientParallax() {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const blobs = document.querySelectorAll('.ambient span');
   if (!blobs.length) return;
-  window.addEventListener('scroll', () => {
+  let frame = 0;
+  const update = () => {
+    frame = 0;
     const y = window.scrollY;
     blobs.forEach((blob, index) => {
       blob.style.transform = `translate3d(${index ? y * .018 : -y * .012}px, ${y * (index ? -.02 : .014)}px, 0)`;
     });
+  };
+  window.addEventListener('scroll', () => {
+    if (!frame) frame = window.requestAnimationFrame(update);
   }, { passive: true });
 }
 
@@ -587,13 +608,17 @@ function deferBackgroundVideo(selector) {
   const video = document.querySelector(selector);
   if (!video) return;
 
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion || connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType)) return;
+
   video.muted = true;
   video.defaultMuted = true;
   video.volume = 0;
   video.loop = true;
   video.playsInline = true;
   video.controls = false;
-  video.preload = 'auto';
+  video.preload = 'none';
   const reveal = () => video.classList.add('is-playing');
   video.addEventListener('playing', reveal);
   video.addEventListener('loadeddata', () => { if (!video.paused) reveal(); }, { once: true });
@@ -604,23 +629,25 @@ function deferBackgroundVideo(selector) {
     if (started || document.hidden) return;
     started = true;
     video.autoplay = true;
-    video.preload = 'auto';
     const playback = video.play();
     if (playback && typeof playback.then === 'function') {
       playback.then(reveal).catch(() => { started = false; video.classList.remove('is-playing'); });
     } else if (!video.paused) reveal();
   };
 
-  const schedule = () => {
-    if (document.hidden) return;
-    window.requestAnimationFrame(start);
-  };
-
+  const observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => {
+      const entry = entries[entries.length - 1];
+      if (entry?.isIntersecting && !document.hidden) start();
+      else { video.pause(); started = false; }
+    }, { threshold: 0.2, rootMargin: '0px' })
+    : null;
+  if (observer) observer.observe(video);
+  else start();
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && !started) schedule();
-    else if (document.hidden) { video.pause(); started = false; }
+    if (document.hidden) { video.pause(); started = false; }
+    else if (!started && video.getBoundingClientRect().bottom > 0 && video.getBoundingClientRect().top < window.innerHeight) start();
   });
-  schedule();
 }
 
 function setupHeroBackgroundVideo() {
@@ -646,20 +673,27 @@ function setupHomeShowcaseVideos() {
     video.addEventListener('pause', () => video.classList.remove('is-playing'));
   });
 
+  const visibility = new Map(videos.map((video) => [video, 0]));
+  let activeVideo = null;
+  const syncActiveVideo = () => {
+    const nextVideo = [...visibility.entries()]
+      .filter(([, ratio]) => ratio >= 0.3)
+      .sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+    if (activeVideo && activeVideo !== nextVideo) activeVideo.pause();
+    activeVideo = nextVideo;
+    if (activeVideo && !document.hidden && activeVideo.paused) activeVideo.play()?.catch(() => {});
+  };
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting && !document.hidden) entry.target.play()?.catch(() => {});
-      else entry.target.pause();
+      visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
     });
-  }, { threshold: 0.2, rootMargin: '100px 0px' });
+    syncActiveVideo();
+  }, { threshold: [0, 0.3, 0.55, 0.8], rootMargin: '0px' });
   videos.forEach((video) => observer.observe(video));
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) videos.forEach((video) => video.pause());
-    else videos.forEach((video) => {
-      const bounds = video.getBoundingClientRect();
-      if (bounds.top < window.innerHeight + 100 && bounds.bottom > -100) video.play()?.catch(() => {});
-    });
+    else syncActiveVideo();
   });
 }
 
@@ -1249,36 +1283,34 @@ function keepGalleryVideosPlaying() {
   const cards = Array.from(document.querySelectorAll('.gallery-card.video-card'));
   if (!cards.length) return;
   const videos = cards.map((card) => card.querySelector('video')).filter(Boolean);
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion || connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType) || !('IntersectionObserver' in window)) return;
 
-  const start = (video) => {
+  videos.forEach((video) => {
     video.muted = true;
     video.defaultMuted = true;
     video.loop = true;
     video.playsInline = true;
     video.controls = false;
     video.disablePictureInPicture = true;
-    const playPromise = video.play();
-    if (playPromise?.catch) playPromise.catch(() => {});
-  };
+  });
 
-  const stop = (video) => {
-    if (!video || video.paused) return;
-    video.pause();
+  const visibility = new Map(videos.map((video) => [video, 0]));
+  let activeVideo = null;
+  const syncActiveVideo = () => {
+    const nextVideo = [...visibility.entries()]
+      .filter(([, ratio]) => ratio >= 0.3)
+      .sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+    if (activeVideo && activeVideo !== nextVideo) activeVideo.pause();
+    activeVideo = nextVideo;
+    if (activeVideo && !document.hidden && activeVideo.paused) activeVideo.play()?.catch(() => {});
   };
-
-  // Keep the videos in the gallery, but don't make all six compete for bandwidth at page load.
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target;
-        if (entry.isIntersecting) start(video);
-        else stop(video);
-      });
-    }, { rootMargin: '160px 0px', threshold: 0.05 });
-    videos.forEach((video) => observer.observe(video));
-  } else {
-    videos.forEach(start);
-  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0));
+    syncActiveVideo();
+  }, { rootMargin: '0px', threshold: [0, 0.3, 0.55, 0.8] });
+  videos.forEach((video) => observer.observe(video));
 
   videos.forEach((video) => {
     const card = video.closest('.gallery-card');
@@ -1290,13 +1322,8 @@ function keepGalleryVideosPlaying() {
   });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) return;
-    cards.forEach((card) => {
-      const video = card.querySelector('video');
-      if (!video) return;
-      const rect = card.getBoundingClientRect();
-      if (rect.bottom > -160 && rect.top < window.innerHeight + 160) start(video);
-    });
+    if (document.hidden) videos.forEach((video) => video.pause());
+    else syncActiveVideo();
   });
 }
 
@@ -1544,7 +1571,7 @@ async function init() {
   setupHomeShowcaseVideos();
   setupBookingBackgroundVideo();
   loadGallery();
-  sendLog('page_view');
+  sendVisitorLogOnce();
 }
 
 document.addEventListener('DOMContentLoaded', init);

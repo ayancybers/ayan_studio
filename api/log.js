@@ -59,8 +59,7 @@ export default async function handler(req, res) {
   const body = req.body || {};
   const event = safe(body.event, 60);
   const page = safe(body.page, 120);
-  const language = body.lang === 'en' ? 'en' : 'ar';
-  const approximateLocation = getApproximateIpLocation(req, language);
+  const approximateLocation = getApproximateIpLocation(req, 'en');
 
   if (!allowedEvents.has(event) || !page.startsWith('/') || /[\r\n]/.test(page)) {
     await emitSecurityEvent(req, {
@@ -105,33 +104,31 @@ export default async function handler(req, res) {
 
   const webhookUrl = process.env.webhook || process.env.DISCORD_WEBHOOK_URL;
 
-  if (webhookUrl) {
+  // Visitor notices are sent once by the browser per tab session. Other
+  // informational clicks stay out of Discord; security alerts remain enabled.
+  if (webhookUrl && (severity !== 'INFO' || event === 'page_view')) {
     try {
+      const embed = event === 'page_view' && severity === 'INFO'
+        ? buildVisitorEmbed({ req, requestId, eventCount: currentEvents, ip, page, approximateLocation, details })
+        : {
+          title: `🛡️ AYAN SECURITY • ${event}`,
+          color: severity === 'HIGH' ? 15158332 : 16753920,
+          fields: [
+            { name: 'Severity', value: severity, inline: true },
+            { name: 'Request ID', value: requestId, inline: true },
+            { name: 'IP Address', value: safe(ip, 100), inline: true },
+            { name: 'Approximate IP Location', value: approximateLocation, inline: false },
+            { name: 'User-Agent', value: safe(req.headers['user-agent'] || 'unknown', 300), inline: false },
+            { name: 'Endpoint', value: '/api/log', inline: true },
+            { name: 'Details', value: safeJson(details), inline: false }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: { text: 'AYAN PHOTOGRAPHY • SECURITY MONITOR' }
+        };
       await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          embeds: [{
-            title: severity === 'INFO'
-              ? '📡 AYAN SITE EVENT'
-              : '🛡️ AYAN SECURITY EVENT',
-            description: `**${event}**`,
-            color: severity === 'HIGH' ? 15158332 : severity === 'MEDIUM' ? 16753920 : 43904,
-            fields: [
-              { name: '⚠️ Severity', value: severity, inline: true },
-              { name: '🆔 Request ID', value: requestId, inline: true },
-              { name: '📊 Event #', value: String(currentEvents), inline: true },
-              { name: '🌐 IP Address', value: safe(ip, 100), inline: true },
-              { name: '📍 Approx. IP Location', value: approximateLocation, inline: false },
-              { name: '📄 Page', value: page, inline: true },
-              { name: '🌐 Language', value: body.lang === 'en' ? 'EN' : 'AR', inline: true },
-              { name: '🎨 Theme', value: ['relax', 'dark', 'light'].includes(body.theme) ? body.theme : 'relax', inline: true },
-              { name: '🧾 Details', value: safeJson(details), inline: false }
-            ],
-            timestamp: new Date().toISOString(),
-            footer: { text: 'Ayan Photography • Security Monitor' }
-          }]
-        })
+        body: JSON.stringify({ embeds: [embed] })
       });
     } catch (_) {}
   }
@@ -148,7 +145,7 @@ async function emitSecurityEvent(req, data) {
   if (!webhookUrl) return;
 
   const ip = getClientIp(req);
-  const approximateLocation = getApproximateIpLocation(req, getEventLanguage(req));
+  const approximateLocation = getApproximateIpLocation(req, 'en');
 
   try {
     await fetch(webhookUrl, {
@@ -175,9 +172,75 @@ async function emitSecurityEvent(req, data) {
   } catch (_) {}
 }
 
+function buildVisitorEmbed({ req, requestId, eventCount, ip, page, approximateLocation, details }) {
+  const body = req.body || {};
+  const language = body.lang === 'en' ? 'ENGLISH' : 'ARABIC';
+  const theme = ['relax', 'dark', 'light'].includes(body.theme) ? body.theme.toUpperCase() : 'RELAX';
+  const screen = safe(details.screen || 'Not provided', 80);
+  const agent = safe(req.headers['user-agent'] || 'Not provided', 680).replace(/`/g, "'");
+  const acceptLanguage = safe(req.headers['accept-language'] || 'Not provided', 180).replace(/`/g, "'");
+  const protocolValue = String(req.headers['x-forwarded-proto'] || (req.socket?.encrypted ? 'https' : 'http')).split(',')[0].trim();
+  const contentType = safe(req.headers['content-type'] || 'Not provided', 80);
+  const payloadSize = safe(req.headers['content-length'] || 'Not provided', 32);
+
+  return {
+    title: 'AYAN  /  NEW WEBSITE VISITOR',
+    description: '**VISITOR SESSION OPENED**\nA new browsing session has reached the website.',
+    color: 0x477fce,
+    fields: [
+      {
+        name: '01  /  VISITOR PROFILE',
+        value: `**IP Address**\n${discordCode(ip, 100)}\n**Approximate IP Location**\n${safe(approximateLocation, 400)}`,
+        inline: false
+      },
+      {
+        name: '02  /  SESSION DETAILS',
+        value: `**Page**\n${discordCode(page, 240)}\n**Browser Language**\n${discordCode(language, 24)}\n**Theme**\n${discordCode(theme, 24)}\n**Event Number**\n${discordCode(eventCount, 24)}\n**Request ID**\n${discordCode(requestId, 50)}`,
+        inline: false
+      },
+      {
+        name: '03  /  DEVICE & BROWSER',
+        value: `**Screen**\n${discordCode(screen, 100)}\n**User-Agent**\n${discordCode(agent, 700)}\n**Accept-Language**\n${discordCode(acceptLanguage, 200)}`,
+        inline: false
+      },
+      {
+        name: '04  /  VISIT SOURCE',
+        value: `**Referrer**\n${discordCode(getSafeReferrer(req), 460)}\n**Origin**\n${discordCode(getSafeOrigin(req), 220)}`,
+        inline: false
+      },
+      {
+        name: '05  /  REQUEST DETAILS',
+        value: `**Protocol**\n${discordCode(protocolValue, 24)}\n**Content-Type**\n${discordCode(contentType, 100)}\n**Payload Size**\n${discordCode(`${payloadSize} bytes`, 48)}`,
+        inline: false
+      }
+    ],
+    timestamp: new Date().toISOString(),
+    footer: { text: 'AYAN PHOTOGRAPHY  •  VISITOR MONITOR' }
+  };
+}
+
+function discordCode(value, max = 240) {
+  const text = safe(value, max).replace(/`/g, "'") || 'Not available';
+  return `\`${text}\``;
+}
+
+function getSafeReferrer(req) {
+  try {
+    const referrer = new URL(String(req.headers.referer || ''));
+    return safe(`${referrer.origin}${referrer.pathname}`, 420);
+  } catch (_) {
+    return 'Direct visit / unavailable';
+  }
+}
+
+function getSafeOrigin(req) {
+  try { return new URL(String(req.headers.origin || '')).origin; }
+  catch (_) { return 'Unavailable'; }
+}
+
 function sanitizeDetails(value) {
   const output = {};
-  const allowedKeys = new Set(['package', 'packageKey', 'source', 'filter', 'type', 'success', 'network', 'title', 'to']);
+  const allowedKeys = new Set(['package', 'packageKey', 'source', 'filter', 'type', 'success', 'network', 'title', 'to', 'screen']);
   for (const [key, item] of Object.entries(value)) {
     if (Object.keys(output).length >= 20) break;
     const cleanKey = safe(key, 60);

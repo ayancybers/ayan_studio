@@ -2339,3 +2339,31 @@ html .home-intro-progress { margin-top: 1px !important; }
   .booking-package-price b { font-size: 21px !important; }
   .booking-package-price del, .booking-package-price em { font-size: 7px !important; }
 }
+
+/* Keep the mobile controls responsive and shorten the photographic hero. */
+html .home-intro-loader { transition: opacity .28s ease, visibility .28s ease !important; }
+@media (min-width: 701px) {
+  .hero { min-height: min(720px, calc(100svh - var(--header-height))) !important; }
+}
+@media (max-width: 700px) {
+  html { scroll-behavior: auto !important; }
+  .ambient { display: none !important; }
+  .site-header {
+    background: var(--bg) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .hero { min-height: 680px !important; }
+  .hero-image, .hero-video {
+    inset: 0 0 auto !important;
+    height: 56% !important;
+    object-position: 42% 46% !important;
+    transform: none !important;
+  }
+  .hero-grid { padding-block: 270px 40px !important; }
+  .reveal {
+    transform: translate3d(0,10px,0) !important;
+    transition-duration: .34s !important;
+  }
+  .reveal.is-visible { transform: none !important; }
+}
