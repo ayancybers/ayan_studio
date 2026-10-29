@@ -31,8 +31,8 @@
       };
 
       const labels = {
-        ar: { relax: 'مريح 💙', dark: 'داكن 🌙', light: 'فاتح ☀️' },
-        en: { relax: 'Relax 💙', dark: 'Dark 🌙', light: 'Light ☀️' }
+        ar: { relax: 'مريح', dark: 'داكن 🌙', light: 'فاتح ☀️' },
+        en: { relax: 'Relax', dark: 'Dark 🌙', light: 'Light ☀️' }
       };
 
       function addHardUIStyles() {
@@ -208,7 +208,7 @@
             background: var(--surface-strong) !important;
           }
 
-          /* V33: compact booking package selector + package banner */
+          /* Compact booking package selector */
           .booking-page .booking-main-card {
             overflow: hidden !important;
           }
@@ -216,32 +216,6 @@
           .booking-page .booking-main-content {
             position: relative !important;
             z-index: 3 !important;
-          }
-
-          .booking-page .ayan-package-banner {
-            display: block !important;
-            width: min(100%, 760px) !important;
-            margin: 0 auto 22px !important;
-            border-radius: 20px !important;
-            overflow: hidden !important;
-            border: 1px solid rgba(118, 178, 255, .28) !important;
-            background: #0a1626 !important;
-            box-shadow: 0 14px 34px rgba(0,0,0,.28) !important;
-            pointer-events: none !important;
-            user-select: none !important;
-            -webkit-user-select: none !important;
-          }
-
-          .booking-page .ayan-package-banner img {
-            display: block !important;
-            width: 100% !important;
-            height: clamp(105px, 18vw, 190px) !important;
-            object-fit: cover !important;
-            object-position: center !important;
-            pointer-events: none !important;
-            user-select: none !important;
-            -webkit-user-drag: none !important;
-            -webkit-user-select: none !important;
           }
 
           .booking-page .booking-package-wrap {
@@ -345,16 +319,6 @@
           }
 
           @media (max-width: 700px) {
-            .booking-page .ayan-package-banner {
-              width: 100% !important;
-              margin-bottom: 16px !important;
-              border-radius: 16px !important;
-            }
-
-            .booking-page .ayan-package-banner img {
-              height: 112px !important;
-            }
-
             .booking-page .booking-package-grid {
               grid-template-columns: 1fr !important;
               gap: 8px !important;
@@ -398,18 +362,6 @@
             transform-origin: center !important;
           }
 
-          /* Prevent image dragging/long-press saving on the supplied banner. */
-          .booking-page .ayan-package-banner,
-          .booking-page .ayan-package-banner * {
-            -webkit-touch-callout: none !important;
-          }
-
-          /* V34: keep the banner only with the main booking form.
-             The section below is text/package information only — no repeated image. */
-          .booking-page .booking-aside .ayan-package-banner {
-            display: none !important;
-          }
-
           .booking-page .booking-aside {
             position: relative !important;
           }
@@ -423,34 +375,6 @@
           }
         `;
         document.head.appendChild(style);
-      }
-
-      function ensureBookingPackageBanner() {
-        if (!document.body?.classList.contains('booking-page')) return;
-        const content = qs('.booking-page .booking-main-content');
-        if (!content) return;
-
-        const banners = qsa('.booking-page .ayan-package-banner');
-        banners.slice(1).forEach(el => el.remove());
-
-        if (content.querySelector('.ayan-package-banner')) return;
-
-        const banner = document.createElement('div');
-        banner.className = 'ayan-package-banner';
-        banner.setAttribute('aria-hidden', 'true');
-
-        const img = document.createElement('img');
-        img.src = 'https://b.top4top.io/p_3918mczhv1.png';
-        img.alt = '';
-        img.draggable = false;
-        img.decoding = 'async';
-        img.loading = 'eager';
-
-        banner.appendChild(img);
-
-        const formHeader = qs('.form-header', content);
-        if (formHeader) content.insertBefore(banner, formHeader);
-        else content.prepend(banner);
       }
 
       function lockMobileZoom() {
@@ -622,7 +546,6 @@
 
       function bindHeader() {
         addHardUIStyles();
-        ensureBookingPackageBanner();
         lockMobileZoom();
         syncShell();
 

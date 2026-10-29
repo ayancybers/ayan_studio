@@ -1,9 +1,11 @@
 import crypto from 'node:crypto';
 import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable, roundMoney } from '../lib/pricing.js';
+import { isValidShootDate } from '../lib/booking.js';
 
 const ALLOWED_CARS = new Set([
-  'سيدان', 'SUV', 'كوبيه', 'فاخر / رياضي',
-  'Sedan', 'Coupe', 'Luxury / Sport', 'Luxury / Sports'
+  'جيب', 'سيدان', 'كوبيه', 'سيارة فاخرة',
+  'Jeep', 'Sedan', 'Coupe', 'Luxury Car',
+  'SUV', 'فاخر / رياضي', 'Luxury / Sport', 'Luxury / Sports'
 ]);
 
 const ALLOWED_REGIONS = new Set([
@@ -53,13 +55,15 @@ export default async function handler(req, res) {
   const packageType = limit(String(body.packageType || '').trim(), 120);
   const carType = limit(String(body.carType || '').trim(), 40);
   const shootRegion = limit(String(body.shootRegion || '').trim(), 60);
+  const preferredAt = limit(String(body.preferredAt || '').trim(), 10);
   const phone = normalizeSaudiPhone(body.phone);
   const notes = limit(String(body.notes || '').trim(), 1200);
   const lang = body.lang === 'en' ? 'en' : 'ar';
 
-  if (!name || !email || !packageKey || !packageType || !carType || !shootRegion || !phone) {
+  if (!name || !email || !packageKey || !packageType || !carType || !shootRegion || !preferredAt || !phone) {
     return res.status(400).json({ error: 'Missing required fields', requestId });
   }
+  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future Thursday, Friday, or Saturday for the shoot.', requestId });
   if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
@@ -117,6 +121,7 @@ export default async function handler(req, res) {
     phone,
     car_type: carType,
     shoot_region: shootRegion,
+    preferred_at: preferredAt,
     notes: notes || '—',
     terms_accepted: 'true',
     terms_version: '2026-10-01',
@@ -396,10 +401,10 @@ function boolEnv(name, fallback) {
   return fallback;
 }
 function limit(value, max = 1000) { return String(value ?? '').slice(0, max); }
-function getClientIp(req) { const raw = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'; return String(raw).split(',')[0].trim(); }
+function getClientIp(req) { const raw = req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'; return String(raw).split(',')[0].trim(); }
 function sameOrigin(req) {
   const origin = req.headers.origin;
-  if (!origin) return true;
+  if (!origin) return false;
   const host = String(req.headers.host || '').split(':')[0];
   try { return new URL(origin).hostname === host; } catch (_) { return false; }
 }

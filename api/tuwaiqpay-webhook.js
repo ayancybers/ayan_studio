@@ -91,11 +91,14 @@ export default async function handler(req, res) {
     total: amount,
     carType: parsed.carType,
     shootRegion: parsed.shootRegion,
+    preferredAt: parsed.preferredAt,
     termsAccepted: true,
     termsAcceptedAt: '',
     lang,
     created,
-    notes: '—'
+    notes: parsed.preferredAt
+      ? (lang === 'ar' ? `تاريخ التصوير المفضّل: ${parsed.preferredAt}` : `Preferred shoot date: ${parsed.preferredAt}`)
+      : '—'
   };
 
   try {
@@ -137,7 +140,8 @@ function parseBookingDescription(value) {
     paymentLabel: parts[2],
     carType: String(parts[3] || '').slice(0, 40),
     shootRegion: String(parts[4] || '').slice(0, 60),
-    lang: parts[5] === 'en' ? 'en' : 'ar'
+    lang: parts[5] === 'en' ? 'en' : 'ar',
+    preferredAt: /^\d{4}-\d{2}-\d{2}$/.test(parts[6] || '') ? parts[6] : ''
   };
 }
 

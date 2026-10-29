@@ -6,14 +6,34 @@ const TYPE_LABELS = {
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const supportRateLimit = globalThis.__ayanSupportRateLimit || new Map();
+globalThis.__ayanSupportRateLimit = supportRateLimit;
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!sameOrigin(req)) return res.status(403).json({ error: 'Forbidden origin' });
+  if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) {
+    return res.status(415).json({ error: 'Content-Type must be application/json' });
+  }
+  if (isPayloadTooLarge(req)) return res.status(413).json({ error: 'Payload too large' });
+
+  const ip = getClientIp(req);
+  const now = Date.now();
+  const recent = (supportRateLimit.get(ip) || []).filter((time) => now - time < 10 * 60 * 1000);
+  if (recent.length >= 5) return res.status(429).json({ error: 'Too many requests. Please wait before trying again.' });
+  recent.push(now);
+  supportRateLimit.set(ip, recent);
+  cleanupRateLimit(now);
+
   const body = parseBody(req);
+  if (Buffer.byteLength(JSON.stringify(body), 'utf8') > 12000) {
+    return res.status(413).json({ error: 'Payload too large' });
+  }
   if (String(body.website || '').trim()) {
     return res.status(200).json({ ok: true });
   }
@@ -103,6 +123,41 @@ function parseBody(req) {
     try { return JSON.parse(req.body); } catch (_) {}
   }
   return {};
+}
+
+function sameOrigin(req) {
+  const origin = String(req.headers.origin || '').trim();
+  const host = String(req.headers.host || '').split(':')[0].toLowerCase();
+  if (!origin || !host) return false;
+  try { return new URL(origin).hostname.toLowerCase() === host; }
+  catch (_) { return false; }
+}
+
+function getClientIp(req) {
+  const raw = req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown';
+  return String(raw).split(',')[0].trim().slice(0, 100);
+}
+
+function isPayloadTooLarge(req) {
+  const length = Number(req.headers['content-length'] || 0);
+  return Number.isFinite(length) && length > 12000;
+}
+
+function cleanupRateLimit(now) {
+  if (supportRateLimit.size < 500) return;
+  for (const [key, times] of supportRateLimit) {
+    const active = times.filter((time) => now - time < 10 * 60 * 1000);
+    if (active.length) supportRateLimit.set(key, active);
+    else supportRateLimit.delete(key);
+  }
+}
+
+function setSecurityHeaders(res) {
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
 }
 
 function clean(value, max) {

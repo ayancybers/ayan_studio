@@ -1,8 +1,9 @@
 import crypto from 'node:crypto';
 import { PACKAGES, calculatePricing, isPackageAvailable } from '../lib/pricing.js';
+import { isValidShootDate } from '../lib/booking.js';
 import { authoriseTamaraOrder, boolEnv, getTamaraBaseUrl, getTamaraOrder, mapTamaraOrder, normalizeSaudiPhone, normalizeTamaraStatus } from '../lib/server/tamara.js';
 
-const ALLOWED_CARS = new Set(['سيدان','SUV','كوبيه','فاخر / رياضي','Sedan','Coupe','Luxury / Sport','Luxury / Sports']);
+const ALLOWED_CARS = new Set(['جيب','سيدان','كوبيه','سيارة فاخرة','Jeep','Sedan','Coupe','Luxury Car','SUV','فاخر / رياضي','Luxury / Sport','Luxury / Sports']);
 const ALLOWED_REGIONS = new Set(['القطيف','سيهات','الدمام','الخبر','حفر الباطن','Qatif','Saihat','Dammam','Khobar','Hafar Al Batin']);
 const recentRequests = globalThis.__ayanTamaraRateLimit || new Map();
 globalThis.__ayanTamaraRateLimit = recentRequests;
@@ -24,11 +25,13 @@ export default async function handler(req, res) {
   const packageKey = limit(body.packageKey, 20);
   const carType = limit(body.carType, 40);
   const shootRegion = limit(body.shootRegion, 60);
+  const preferredAt = limit(String(body.preferredAt || '').trim(), 10);
   const notes = limit(body.notes, 1200) || '—';
   const phone = normalizeSaudiPhone(body.phone);
   const lang = body.lang === 'en' ? 'en' : 'ar';
 
-  if (!name || !email || !packageKey || !carType || !shootRegion || !phone) return res.status(400).json({ error: 'Missing required fields', requestId });
+  if (!name || !email || !packageKey || !carType || !shootRegion || !preferredAt || !phone) return res.status(400).json({ error: 'Missing required fields', requestId });
+  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future Thursday, Friday, or Saturday for the shoot.', requestId });
   if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) return res.status(400).json({ error: 'Invalid booking option', requestId });
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
@@ -53,6 +56,7 @@ export default async function handler(req, res) {
     subtotal: pricing.subtotal.toFixed(2), payment_fee: pricing.paymentFee.toFixed(2),
     payment_fee_percent: String(pricing.paymentFeePercent), payment_fee_fixed: pricing.paymentFeeFixed.toFixed(2),
     total: pricing.total.toFixed(2), customer_name: name, email, phone, car_type: carType,
+    preferred_at: preferredAt,
     shoot_region: shootRegion, notes, terms_accepted: 'true', terms_version: '2026-10-01',
     terms_accepted_at: new Date().toISOString(), lang
   };
@@ -138,8 +142,8 @@ function mapRegionToEnglish(value) {
   const map = {'القطيف':'Qatif','سيهات':'Saihat','الدمام':'Dammam','الخبر':'Khobar','حفر الباطن':'Hafar Al Batin',Qatif:'Qatif',Saihat:'Saihat',Dammam:'Dammam',Khobar:'Khobar','Hafar Al Batin':'Hafar Al Batin'};
   return map[value] || 'Eastern Province';
 }
-function getClientIp(req) { const raw = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'; return String(raw).split(',')[0].trim(); }
-function sameOrigin(req) { const origin = req.headers.origin; if (!origin) return true; const host = String(req.headers.host || '').split(':')[0]; try { return new URL(origin).hostname === host; } catch { return false; } }
+function getClientIp(req) { const raw = req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'; return String(raw).split(',')[0].trim(); }
+function sameOrigin(req) { const origin = req.headers.origin; if (!origin) return false; const host = String(req.headers.host || '').split(':')[0]; try { return new URL(origin).hostname === host; } catch { return false; } }
 function getBaseUrl(req) { const configured = String(process.env.APP_BASE_URL || '').trim().replace(/\/$/, ''); if (configured) return configured; return `https://${String(req.headers.host || '').split(',')[0]}`; }
 function limit(value, max = 1000) { return String(value ?? '').trim().slice(0, max); }
 function makeRequestId() { try { return crypto.randomUUID(); } catch { return `ayan-${Date.now()}-${Math.random().toString(36).slice(2,10)}`; } }

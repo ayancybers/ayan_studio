@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable } from '../lib/pricing.js';
+import { isValidShootDate } from '../lib/booking.js';
 import {
   createTuwaiqPayBill,
   getTuwaiqPaySupportedMethods,
@@ -7,7 +8,7 @@ import {
   openTuwaiqPayReceipt
 } from '../lib/server/tuwaiqpay.js';
 
-const ALLOWED_CARS = new Set(['سيدان', 'SUV', 'كوبيه', 'فاخر / رياضي', 'Sedan', 'Coupe', 'Luxury / Sport', 'Luxury / Sports']);
+const ALLOWED_CARS = new Set(['جيب', 'سيدان', 'كوبيه', 'سيارة فاخرة', 'Jeep', 'Sedan', 'Coupe', 'Luxury Car', 'SUV', 'فاخر / رياضي', 'Luxury / Sport', 'Luxury / Sports']);
 const ALLOWED_REGIONS = new Set(['القطيف', 'سيهات', 'الدمام', 'الخبر', 'حفر الباطن', 'Qatif', 'Saihat', 'Dammam', 'Khobar', 'Hafar Al Batin']);
 const RATE_LIMIT = globalThis.__ayanTuwaiqRateLimit || new Map();
 globalThis.__ayanTuwaiqRateLimit = RATE_LIMIT;
@@ -45,13 +46,15 @@ export default async function handler(req, res) {
   const paymentMethod = limit(body.paymentMethod, 50);
   const carType = limit(body.carType, 40);
   const shootRegion = limit(body.shootRegion, 60);
+  const preferredAt = limit(String(body.preferredAt || '').trim(), 10);
   const lang = body.lang === 'en' ? 'en' : 'ar';
   const phone = normalizeSaudiPhone(body.phone);
   const method = PAYMENT_METHODS[paymentMethod];
 
-  if (!name || !email || !packageKey || !paymentMethod || !carType || !shootRegion || !phone) {
+  if (!name || !email || !packageKey || !paymentMethod || !carType || !shootRegion || !preferredAt || !phone) {
     return res.status(400).json({ error: 'Missing required booking details', requestId });
   }
+  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future Thursday, Friday, or Saturday for the shoot.', requestId });
   if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
@@ -81,7 +84,8 @@ export default async function handler(req, res) {
     method.label,
     carType,
     shootRegion,
-    lang
+    lang,
+    preferredAt
   ].join(' | ').slice(0, 180);
   const baseUrl = getBaseUrl(req);
   const billPayload = {
@@ -173,7 +177,7 @@ function normalizeSaudiPhone(value) {
 }
 
 function limit(value, max) { return String(value ?? '').trim().slice(0, max); }
-function getClientIp(req) { return String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim(); }
+function getClientIp(req) { return String(req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim(); }
 function sameOrigin(req) {
   const origin = req.headers.origin;
   if (!origin) return false;

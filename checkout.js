@@ -53,7 +53,7 @@
     secureNote: 'سيتم تحويلك إلى صفحة الدفع المستضافة من مزود الدفع. لا يتم تخزين بيانات البطاقة في موقع Ayan Photography.',
     package: 'الباقة', beforeDiscount: 'السعر قبل الخصم', afterDiscount: 'السعر بعد الخصم',
     discount: 'الخصم', fee: 'رسوم الدفع', total: 'الإجمالي', name: 'الاسم', phone: 'الجوال',
-    car: 'السيارة', area: 'منطقة التصوير', noOrder: 'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.',
+    car: 'السيارة', area: 'منطقة التصوير', shootDate: 'يوم التصوير المقترح', noOrder: 'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.',
     chooseMethod: 'طريقة الدفع غير متاحة حاليًا. اختر إحدى الطرق المتاحة.',
     emailInvalid: 'اكتب بريدًا إلكترونيًا صحيحًا لإرسال الفاتورة.', paymentFailed: 'تعذر تجهيز عملية الدفع.',
     noRedirect: 'لم يتم استلام رابط الدفع.',
@@ -80,7 +80,7 @@
     secureNote: 'You will continue to the payment provider’s secure checkout. Ayan Photography does not store card details.',
     package: 'Package', beforeDiscount: 'Original price', afterDiscount: 'Discounted price',
     discount: 'Discount', fee: 'Payment fee', total: 'Total', name: 'Name', phone: 'Mobile',
-    car: 'Car', area: 'Shoot area', noOrder: 'No booking was found. Return to the booking page and try again.',
+    car: 'Car', area: 'Shoot area', shootDate: 'Preferred shoot date', noOrder: 'No booking was found. Return to the booking page and try again.',
     chooseMethod: 'This payment method is unavailable. Choose an available option.',
     emailInvalid: 'Enter a valid email address for your invoice.', paymentFailed: 'Unable to prepare payment.',
     noRedirect: 'No payment link was received.',
@@ -284,7 +284,10 @@
     renderSummary();
   }
 
-  customer.innerHTML = `<div><span>${copy.name}</span><strong>${escapeHtml(order.name)}</strong></div><div><span>${copy.phone}</span><strong>${escapeHtml(order.phone)}</strong></div><div><span>${copy.car}</span><strong>${escapeHtml(order.carType)}</strong></div><div><span>${copy.area}</span><strong>${escapeHtml(order.shootRegion)}</strong></div>`;
+  const preferredShootDate = order.preferredAt
+    ? new Intl.DateTimeFormat(ar ? 'ar-SA-u-ca-gregory' : 'en-US', { dateStyle: 'full', calendar: 'gregory', timeZone: 'UTC' }).format(new Date(`${order.preferredAt}T12:00:00Z`))
+    : '—';
+  customer.innerHTML = `<div><span>${copy.name}</span><strong>${escapeHtml(order.name)}</strong></div><div><span>${copy.phone}</span><strong>${escapeHtml(order.phone)}</strong></div><div><span>${copy.car}</span><strong>${escapeHtml(order.carType)}</strong></div><div><span>${copy.area}</span><strong>${escapeHtml(order.shootRegion)}</strong></div><div><span>${copy.shootDate}</span><strong>${escapeHtml(preferredShootDate)}</strong></div>`;
   customer.setAttribute('aria-busy', 'false');
   document.querySelectorAll('[data-payment-method]').forEach((node) => {
     node.addEventListener('click', () => selectMethod(node.dataset.paymentMethod));

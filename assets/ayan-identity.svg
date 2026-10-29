@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
+  <title id="title">Ayan Car Photography</title>
+  <defs>
+    <linearGradient id="frame" x1="9" y1="8" x2="111" y2="114" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1b2632"/>
+      <stop offset="1" stop-color="#080c11"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="27" y1="42" x2="100" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f1f3f5"/>
+      <stop offset=".72" stop-color="#b3bcc6"/>
+      <stop offset="1" stop-color="#d8b985"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="27" fill="url(#frame)"/>
+  <rect x="4.75" y="4.75" width="110.5" height="110.5" rx="26.25" fill="none" stroke="#d5dbe1" stroke-opacity=".25" stroke-width="1.5"/>
+  <circle cx="60" cy="59" r="43" fill="#0b1119" stroke="#8291a1" stroke-opacity=".6" stroke-width="1.5"/>
+  <path d="M56 20c9 0 18 2.4 25 7L67 47c-3.4-2-7-3-11-3V20Z" fill="#344254"/>
+  <path d="M56 20c9 0 18 2.4 25 7L67 47c-3.4-2-7-3-11-3V20Z" fill="#344254" transform="rotate(60 60 59)"/>
+  <path d="M56 20c9 0 18 2.4 25 7L67 47c-3.4-2-7-3-11-3V20Z" fill="#344254" transform="rotate(120 60 59)"/>
+  <path d="M56 20c9 0 18 2.4 25 7L67 47c-3.4-2-7-3-11-3V20Z" fill="#344254" transform="rotate(180 60 59)"/>
+  <path d="M56 20c9 0 18 2.4 25 7L67 47c-3.4-2-7-3-11-3V20Z" fill="#344254" transform="rotate(240 60 59)"/>
+  <path d="M56 20c9 0 18 2.4 25 7L67 47c-3.4-2-7-3-11-3V20Z" fill="#344254" transform="rotate(300 60 59)"/>
+  <circle cx="60" cy="59" r="25" fill="#0d151f" stroke="#66788d" stroke-width="1.2"/>
+  <path d="M25 70h8l5-4 5-10c1-2 3-3 5-3l11-2 8-8h12l8 8 7 2c2 1 3 2 4 4l2 9h6v6H25v-2Z" fill="none" stroke="url(#metal)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8"/>
+  <path d="m51 50 6-6h10l6 6H51Z" fill="#253549" stroke="#b7c2ce" stroke-linejoin="round" stroke-width="1.4"/>
+  <circle cx="43" cy="72" r="5.4" fill="#090e14" stroke="#d3d9df" stroke-width="2"/>
+  <circle cx="88" cy="72" r="5.4" fill="#090e14" stroke="#d8b985" stroke-width="2"/>
+  <path d="M20 94h80" stroke="#d8b985" stroke-opacity=".62" stroke-linecap="round" stroke-width="1.5"/>
+  <circle cx="60" cy="59" r="2.1" fill="#d8b985"/>
+</svg>

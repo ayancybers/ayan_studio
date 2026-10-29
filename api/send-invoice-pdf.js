@@ -163,6 +163,6 @@ function pickPaymentCreatedAt(c) {
 function normalizeSaudiPhone(value) { const raw = String(value || '').replace(/\D/g, ''); if (/^05\d{8}$/.test(raw)) return `966${raw.slice(1)}`; if (/^9665\d{8}$/.test(raw)) return raw; if (/^5\d{8}$/.test(raw)) return `966${raw}`; return raw; }
 function limit(value, max = 1000) { return String(value ?? '').slice(0, max); }
 function boolEnv(name, fallback) { const raw = String(process.env[name] ?? '').trim().toLowerCase(); if (!raw) return fallback; if (['true','1','yes','on'].includes(raw)) return true; if (['false','0','no','off'].includes(raw)) return false; return fallback; }
-function sameOrigin(req) { const origin = req.headers.origin; if (!origin) return true; const host = String(req.headers.host || '').split(':')[0]; try { return new URL(origin).hostname === host; } catch { return false; } }
+function sameOrigin(req) { const origin = req.headers.origin; if (!origin) return false; const host = String(req.headers.host || '').split(':')[0]; try { return new URL(origin).hostname === host; } catch { return false; } }
 function timeoutSignal(ms) { return typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function' ? AbortSignal.timeout(ms) : undefined; }
 function setSecurityHeaders(res) { res.setHeader('Cache-Control', 'no-store, max-age=0'); res.setHeader('X-Content-Type-Options', 'nosniff'); res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin'); res.setHeader('X-Frame-Options', 'SAMEORIGIN'); }

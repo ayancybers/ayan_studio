@@ -2,6 +2,10 @@ const logRateLimit = globalThis.__ayanLogRateLimit || new Map();
 globalThis.__ayanLogRateLimit = logRateLimit;
 
 let currentEvents = Number(globalThis.__ayanEventCount || 0);
+const allowedEvents = new Set([
+  'language_change', 'theme_change', 'package_select', 'booking_checkout_open',
+  'gallery_filter', 'gallery_open', 'support_request', 'social_click', 'page_view'
+]);
 
 export default async function handler(req, res) {
   const requestId = makeRequestId();
@@ -18,6 +22,10 @@ export default async function handler(req, res) {
       requestId
     });
     return res.status(403).json({ error: 'Forbidden origin', requestId });
+  }
+
+  if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) {
+    return res.status(415).json({ error: 'Content-Type must be application/json', requestId });
   }
 
   if (isPayloadTooLarge(req)) {
@@ -51,8 +59,10 @@ export default async function handler(req, res) {
   const body = req.body || {};
   const event = safe(body.event, 60);
   const page = safe(body.page, 120);
+  const language = body.lang === 'en' ? 'en' : 'ar';
+  const approximateLocation = getApproximateIpLocation(req, language);
 
-  if (!event || !page) {
+  if (!allowedEvents.has(event) || !page.startsWith('/') || /[\r\n]/.test(page)) {
     await emitSecurityEvent(req, {
       event: 'INVALID_EVENT',
       severity: 'MEDIUM',
@@ -111,19 +121,11 @@ export default async function handler(req, res) {
               { name: '⚠️ Severity', value: severity, inline: true },
               { name: '🆔 Request ID', value: requestId, inline: true },
               { name: '📊 Event #', value: String(currentEvents), inline: true },
-              { name: '🌍 IP', value: safe(ip, 100), inline: true },
+              { name: '🌐 IP Address', value: safe(ip, 100), inline: true },
+              { name: '📍 Approx. IP Location', value: approximateLocation, inline: false },
               { name: '📄 Page', value: page, inline: true },
               { name: '🌐 Language', value: body.lang === 'en' ? 'EN' : 'AR', inline: true },
               { name: '🎨 Theme', value: ['relax', 'dark', 'light'].includes(body.theme) ? body.theme : 'relax', inline: true },
-              { name: '🖥️ Screen', value: safe(body.screen || 'unknown', 50), inline: true },
-              { name: '🔗 Referrer', value: safe(body.referrer || 'direct', 180), inline: false },
-              { name: '🧭 User-Agent', value: safe(req.headers['user-agent'] || 'unknown', 300), inline: false },
-              { name: '🌎 Accept-Language', value: safe(req.headers['accept-language'] || 'unknown', 180), inline: true },
-              { name: '📦 Content-Type', value: safe(req.headers['content-type'] || 'unknown', 100), inline: true },
-              { name: '🔐 Origin', value: safe(req.headers.origin || 'none', 180), inline: false },
-              { name: '📡 Forwarded Proto', value: safe(req.headers['x-forwarded-proto'] || 'unknown', 50), inline: true },
-              { name: '📐 Payload', value: safe(req.headers['content-length'] || 'unknown', 30), inline: true },
-              { name: '📍 Location', value: 'GPS disabled — no hidden location collection', inline: false },
               { name: '🧾 Details', value: safeJson(details), inline: false }
             ],
             timestamp: new Date().toISOString(),
@@ -146,6 +148,7 @@ async function emitSecurityEvent(req, data) {
   if (!webhookUrl) return;
 
   const ip = getClientIp(req);
+  const approximateLocation = getApproximateIpLocation(req, getEventLanguage(req));
 
   try {
     await fetch(webhookUrl, {
@@ -159,6 +162,7 @@ async function emitSecurityEvent(req, data) {
             { name: '⚠️ Severity', value: data.severity || 'MEDIUM', inline: true },
             { name: '🆔 Request ID', value: data.requestId || 'unknown', inline: true },
             { name: '🌍 IP', value: safe(ip, 100), inline: true },
+            { name: '📍 Approx. IP Location', value: approximateLocation, inline: false },
             { name: '🧭 User-Agent', value: safe(req.headers['user-agent'] || 'unknown', 300), inline: false },
             { name: '📄 Endpoint', value: '/api/log', inline: true },
             { name: '📊 Details', value: safeJson(data.details || {}), inline: false }
@@ -173,9 +177,11 @@ async function emitSecurityEvent(req, data) {
 
 function sanitizeDetails(value) {
   const output = {};
+  const allowedKeys = new Set(['package', 'packageKey', 'source', 'filter', 'type', 'success', 'network', 'title', 'to']);
   for (const [key, item] of Object.entries(value)) {
     if (Object.keys(output).length >= 20) break;
     const cleanKey = safe(key, 60);
+    if (!allowedKeys.has(cleanKey)) continue;
     if (typeof item === 'string' || typeof item === 'number' || typeof item === 'boolean') {
       output[cleanKey] = safe(item, 250);
     } else {
@@ -198,13 +204,82 @@ function safeJson(value) {
 }
 
 function getClientIp(req) {
-  const raw = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown';
+  const raw = req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown';
   return String(raw).split(',')[0].trim();
+}
+
+function getApproximateIpLocation(req, language = 'ar') {
+  const cityHeader = cleanGeoHeader(req.headers['x-vercel-ip-city']);
+  const regionHeader = cleanGeoHeader(req.headers['x-vercel-ip-country-region']);
+  const countryCode = cleanGeoHeader(req.headers['x-vercel-ip-country']).toUpperCase();
+  const isSaudi = countryCode === 'SA';
+
+  const cityKey = cityHeader.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const cityNames = {
+    dammam: ['الدمام', 'Dammam'], 'al dammam': ['الدمام', 'Dammam'],
+    khobar: ['الخبر', 'Al Khobar'], 'al khobar': ['الخبر', 'Al Khobar'],
+    dhahran: ['الظهران', 'Dhahran'],
+    hofuf: ['الهفوف / الأحساء', 'Al Hofuf / Al Ahsa'], 'al hofuf': ['الهفوف / الأحساء', 'Al Hofuf / Al Ahsa'],
+    mubarraz: ['المبرز / الأحساء', 'Al Mubarraz / Al Ahsa'], 'al mubarraz': ['المبرز / الأحساء', 'Al Mubarraz / Al Ahsa'],
+    ahsa: ['الأحساء', 'Al Ahsa'], 'al ahsa': ['الأحساء', 'Al Ahsa'], 'al hasa': ['الأحساء', 'Al Ahsa'],
+    riyadh: ['الرياض', 'Riyadh'], jeddah: ['جدة', 'Jeddah'],
+    makkah: ['مكة المكرمة', 'Makkah'], mecca: ['مكة المكرمة', 'Makkah'],
+    madinah: ['المدينة المنورة', 'Madinah'], medina: ['المدينة المنورة', 'Madinah'],
+    qatif: ['القطيف', 'Qatif'], 'al qatif': ['القطيف', 'Qatif'],
+    saihat: ['سيهات', 'Saihat'], jubail: ['الجبيل', 'Jubail'],
+    taif: ['الطائف', 'Taif'], abha: ['أبها', 'Abha'],
+    tabuk: ['تبوك', 'Tabuk'], jazan: ['جازان', 'Jazan'], yanbu: ['ينبع', 'Yanbu']
+  };
+  const city = cityNames[cityKey]
+    ? cityNames[cityKey][language === 'en' ? 1 : 0]
+    : cityHeader;
+
+  const regionKey = regionHeader.toLowerCase().replace(/^sa[-\s]*/, '').trim();
+  const saudiRegions = {
+    '01': ['منطقة الرياض', 'Riyadh Region'], '02': ['منطقة مكة المكرمة', 'Makkah Region'],
+    '03': ['منطقة المدينة المنورة', 'Madinah Region'], '04': ['المنطقة الشرقية', 'Eastern Province'],
+    '05': ['منطقة القصيم', 'Qassim Region'], '06': ['منطقة حائل', 'Hail Region'],
+    '07': ['منطقة تبوك', 'Tabuk Region'], '08': ['الحدود الشمالية', 'Northern Borders'],
+    '09': ['منطقة جازان', 'Jazan Region'], '10': ['منطقة نجران', 'Najran Region'],
+    '11': ['منطقة الباحة', 'Al Bahah Region'], '12': ['منطقة الجوف', 'Al Jawf Region'],
+    '14': ['منطقة عسير', 'Asir Region'],
+    'eastern province': ['المنطقة الشرقية', 'Eastern Province'],
+    'riyadh province': ['منطقة الرياض', 'Riyadh Region'],
+    'makkah province': ['منطقة مكة المكرمة', 'Makkah Region'],
+    'madinah province': ['منطقة المدينة المنورة', 'Madinah Region']
+  };
+  const region = isSaudi && saudiRegions[regionKey]
+    ? saudiRegions[regionKey][language === 'en' ? 1 : 0]
+    : regionHeader;
+  const country = isSaudi
+    ? (language === 'en' ? 'Saudi Arabia' : 'السعودية')
+    : countryCode;
+  const place = [city, region, country].filter(Boolean).join(language === 'en' ? ', ' : '، ');
+
+  if (!place) {
+    return language === 'en'
+      ? 'Unavailable — hosting provider supplied no IP location'
+      : 'غير متاح — مزود الاستضافة لم يرسل موقعًا تقريبيًا عبر IP';
+  }
+  return safe(language === 'en' ? `Approximate: ${place}` : `تقريبي عبر IP: ${place}`, 180);
+}
+
+function cleanGeoHeader(value) {
+  if (Array.isArray(value)) value = value[0];
+  let decoded = String(value || '').slice(0, 240);
+  try { decoded = decodeURIComponent(decoded.replace(/\+/g, '%20')); } catch (_) {}
+  return decoded.replace(/[\u0000-\u001f`*_~|<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 100);
+}
+
+function getEventLanguage(req) {
+  if (req.body?.lang === 'en') return 'en';
+  if (req.body?.lang === 'ar') return 'ar';
+  return String(req.headers['accept-language'] || '').toLowerCase().startsWith('en') ? 'en' : 'ar';
 }
 
 function sameOrigin(req) {
   const origin = req.headers.origin;
-  if (!origin) return true;
+  if (!origin) return false;
   const host = String(req.headers.host || '').split(':')[0];
   try { return new URL(origin).hostname === host; }
   catch (_) { return false; }

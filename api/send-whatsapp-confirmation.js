@@ -180,7 +180,7 @@ function boolEnv(name, fallback) {
 
 function sameOrigin(req) {
   const origin = req.headers.origin;
-  if (!origin) return true;
+  if (!origin) return false;
   const host = String(req.headers.host || '').split(':')[0];
   try { return new URL(origin).hostname === host; } catch { return false; }
 }

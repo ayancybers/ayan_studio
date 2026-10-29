@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#080d12">
   <meta name="description" content="Ayan Photography — الدعم والمساعدة والاقتراحات والشكاوى والاستفسارات.">
   <link rel="canonical" href="https://ayancybers.store/support">
-  <link rel="icon" type="image/png" href="assets/ayan-logo-icon.png">
-  <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png">
+  <link rel="icon" type="image/png" href="assets/ayan-loader-logo.png?v=2">
+  <link rel="apple-touch-icon" href="assets/ayan-loader-logo.png?v=2">
   <title>الدعم والمساعدة | Ayan Photography</title>
   <link rel="stylesheet" href="styles.css?v=71">
   <style>
@@ -84,7 +84,7 @@
       .support-card{padding:26px 24px}
     }
   </style>
-<link rel="stylesheet" href="refresh.css?v=74">
+<link rel="stylesheet" href="refresh.css?v=90">
 </head>
 <body class="support-page" data-theme="relax" data-page-title="support">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -92,24 +92,24 @@
   <div class="page-shell">
     <header class="site-header">
       <div class="container navbar">
-        <a class="brand" href="/" aria-label="Ayan Photography">
-          <img class="brand-mark" src="assets/ayan-logo-v2.webp" alt="Ayan Photography">
-          <div class="brand-copy"><strong>Ayan Photography</strong><span data-i18n="brandTag">Car Photography Studio</span></div>
+        <a class="brand" href="index.html" aria-label="Ayan Photography">
+          <img class="brand-mark" src="assets/ayan-loader-logo.png?v=2" alt="Ayan Photography">
+          <div class="brand-copy"><strong>AYAN</strong><span data-i18n="brandTag">تصوير سيارات احترافي</span></div>
         </a>
         <nav class="nav-links" data-nav-links>
-          <a href="/" data-page="home" data-i18n="home">الرئيسية</a>
-          <a href="/features" data-page="features" data-i18n="features">المميزات</a>
-          <a href="/booking" data-page="booking" data-i18n="booking">الحجز</a>
-          <a href="/gallery" data-page="gallery" data-i18n="gallery">المعرض</a>
-          <a href="/support" data-page="support" data-i18n="support">الدعم والمساعدة</a>
-          <a href="/terms" data-page="terms" data-i18n="termsPageLink">الشروط والأحكام</a>
+          <a href="index.html" data-page="home" data-i18n="home">الرئيسية</a>
+          <a href="features.html" data-page="features" data-i18n="features">المميزات</a>
+          <a href="booking.html" data-page="booking" data-i18n="booking">الحجز</a>
+          <a href="gallery.html" data-page="gallery" data-i18n="gallery">المعرض</a>
+          <a href="support.html" data-page="support" data-i18n="support">الدعم والمساعدة</a>
+          <a href="terms.html" data-page="terms" data-i18n="termsPageLink">الشروط والأحكام</a>
         </nav>
         <div class="nav-actions">
           <div class="pref-menu" data-pref-menu="theme">
-            <button type="button" class="pill pref-trigger" data-pref-trigger="theme" aria-haspopup="menu" aria-expanded="false"><span data-theme-label>مريح 💙</span></button>
+            <button type="button" class="pill pref-trigger" data-pref-trigger="theme" aria-haspopup="menu" aria-expanded="false"><span data-theme-label>مريح</span></button>
             <div class="pref-panel" data-pref-panel="theme" role="menu">
-              <button type="button" data-set-theme="relax" role="menuitemradio" aria-checked="true"><span data-i18n="relax">مريح 💙</span></button>
-              <button type="button" data-set-theme="dark" role="menuitemradio" aria-checked="false"><span data-i18n="dark">داكن 🌙</span></button>
+              <button type="button" data-set-theme="relax" role="menuitemradio" aria-checked="true"><span data-i18n="relax">مريح</span></button>
+              <button type="button" data-set-theme="dark" role="menuitemradio" aria-checked="false"><span data-i18n="dark">داكن</span></button>
               <button type="button" data-set-theme="light" role="menuitemradio" aria-checked="false"><span data-i18n="light">فاتح ☀️</span></button>
             </div>
           </div>
@@ -120,7 +120,7 @@
               <button type="button" data-set-lang="en" role="menuitemradio" aria-checked="false">English</button>
             </div>
           </div>
-          <a class="btn btn-primary" href="/booking"><span data-i18n="quick">حجز سريع</span></a>
+          <a class="btn btn-primary" href="booking.html"><span data-i18n="quick">حجز سريع</span></a>
           <button class="icon-btn mobile-toggle" type="button" data-menu aria-label="Menu" aria-expanded="false"><span class="hamburger-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
         </div>
       </div>
@@ -130,6 +130,7 @@
 
     <main>
       <section class="page-hero support-hero">
+        <div class="support-hero-media" aria-hidden="true"><img src="assets/ayan-support-hero.webp" alt="" fetchpriority="high" decoding="async"></div>
         <div class="container">
           <div class="support-hero-grid reveal">
             <div class="support-hero-copy">
@@ -168,7 +169,7 @@
               </div>
               <input type="hidden" id="supportType" name="type" value="">
 
-              <div class="support-type-grid" aria-label="نوع الطلب">
+              <div class="support-type-grid" aria-label="نوع الطلب" data-i18n-aria-label="supportType">
                 <button class="support-type" type="button" data-support-type="suggestion" aria-pressed="false">
                   <span class="support-type-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M8.5 14.5A6 6 0 1 1 15.8 13c-.8.7-1.2 1.4-1.6 2H9.8c-.3-.2-.7-.3-1.3-.5Z"/><path d="M12 3v2"/></svg></span>
                   <strong data-i18n="supportSuggestion">اقتراح</strong><small data-i18n="supportSuggestionText">فكرة لتطوير التجربة</small>
@@ -205,7 +206,7 @@
 
           <aside class="support-side">
             <div class="card support-side-card reveal" data-delay="1">
-              <img class="support-side-logo" src="assets/ayan-logo-v2.webp" alt="Ayan Photography" loading="eager" decoding="async">
+              <img class="support-side-logo" src="assets/ayan-loader-logo.png?v=2" alt="Ayan Photography" loading="eager" decoding="async">
               <h3 class="support-side-title" data-i18n="supportSideTitle">نحن هنا لخدمتك</h3>
               <p class="support-side-text" data-i18n="supportSideText">كل طلب يتم تسجيله ومراجعته قبل التواصل معك.</p>
               <div class="support-side-list">
@@ -224,17 +225,17 @@
       <div class="container">
         <div class="footer-top">
           <div class="footer-brand">
-            <div class="brand"><img class="brand-mark" src="assets/ayan-logo-v2.webp" alt="Ayan Photography"><div class="brand-copy"><strong>Ayan Photography</strong><span data-i18n="brandTag">Car Photography Studio</span></div></div>
+            <div class="brand"><img class="brand-mark" src="assets/ayan-loader-logo.png?v=2" alt="Ayan Photography"><div class="brand-copy"><strong>AYAN</strong><span data-i18n="brandTag">تصوير سيارات احترافي</span></div></div>
             <p data-i18n="footerCopy">تصوير سيارات احترافي، رولينق، جلسات ثابتة، ومونتاج سينمائي بأسلوب يناسب كل سيارة.</p>
           </div>
           <div class="footer-col">
             <h4 data-i18n="footerNav">التنقل</h4>
-            <a href="/" data-i18n="home">الرئيسية</a>
-            <a href="/features" data-i18n="features">المميزات</a>
-            <a href="/booking" data-i18n="booking">الحجز</a>
-            <a href="/gallery" data-i18n="gallery">المعرض</a>
-            <a href="/support" data-i18n="support">الدعم والمساعدة</a>
-        <a href="/info" data-developer-link>المطور / Ayan Developer ↗</a>
+            <a href="index.html" data-i18n="home">الرئيسية</a>
+            <a href="features.html" data-i18n="features">المميزات</a>
+            <a href="booking.html" data-i18n="booking">الحجز</a>
+            <a href="gallery.html" data-i18n="gallery">المعرض</a>
+            <a href="support.html" data-i18n="support">الدعم والمساعدة</a>
+        <a href="info.html" data-developer-link>المطور / Ayan Developer ↗</a>
           </div>
           <div class="footer-col">
             <h4 data-i18n="footerContact">تواصل</h4>
@@ -244,12 +245,12 @@
             <span data-i18n="footerLocation">المنطقة الشرقية، السعودية</span>
           </div>
         </div>
-        <div class="ecommerce-verification" aria-label="توثيق التجارة الإلكترونية">
+    <div class="ecommerce-verification" aria-label="توثيق التجارة الإلكترونية" data-i18n-aria-label="verificationTitle">
       <div class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.6"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="verification-copy"><strong>توثيق التجارة الإلكترونية</strong><span>رقم التوثيق: 0000333236</span></div>
-      <a class="verification-link" href="https://business.sa/" target="_blank" rel="noopener noreferrer" aria-label="التحقق عبر المركز السعودي للأعمال">التحقق عبر المركز السعودي للأعمال <span aria-hidden="true">↗</span></a>
+      <div class="verification-copy"><strong data-i18n="verificationTitle">توثيق التجارة الإلكترونية</strong><span data-i18n="verificationNumber">رقم التوثيق: 0000333236</span></div>
+      <a class="verification-link" href="https://business.sa/" target="_blank" rel="noopener noreferrer" aria-label="التحقق عبر المركز السعودي للأعمال" data-i18n-aria-label="verificationLink"><span data-i18n="verificationLink">التحقق عبر المركز السعودي للأعمال</span> <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="footer-bottom"><span>© Ayan Photography 2024–2026</span><a href="/info" class="footer-developer-credit" aria-label="Ayan Developer — مطور الموقع">
+    <div class="footer-bottom"><span>© Ayan Photography 2024–2026</span><a href="info.html" class="footer-developer-credit" aria-label="Ayan Developer — مطور الموقع">
           <span class="footer-credit-code" aria-hidden="true">&lt;/&gt;</span>
           <span data-i18n="developerCreditLabel">مبرمج الموقع</span>
           <strong>Ayan Developer</strong>
@@ -258,8 +259,7 @@
       </div>
     </footer>
   </div>
-  <script src="ui.js?v=71"></script>
-  <script src="app.js?v=77"></script>
-  <script src="security.js?v=71"></script>
+  <script src="ui.js?v=74"></script>
+  <script src="app.js?v=90"></script>
 </body>
 </html>
