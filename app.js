@@ -9,11 +9,11 @@ const translations = {
   ar: {
     brandTag: 'Automotive Photography',
     devEyebrow: 'Ayan Developer', devTitle: 'من الفكرة إلى <span>منتج جاهز.</span>', devLead: 'أصمم وأطوّر تجارب رقمية واضحة وسريعة، من أول تصور إلى إطلاق موقع يعمل لخدمة الناس والأعمال.', devProjectsCta: 'استكشف أعمالي', devContactCta: 'تواصل معي ↗', devProofAria: 'مراحل تطوير المنتج', devProof1: 'الهوية', devProof2: 'التطوير', devProof3: 'الإطلاق', devAboutKicker: 'عن المطوّر', devAboutTitle: 'أبني المنتج من الفكرة إلى التفاصيل.', devAboutText: 'أجمع بين التصميم والبرمجة حتى تكون التجربة جميلة، مفهومة، وسهلة الاستخدام على كل شاشة.', devPillar1Title: 'تجربة واضحة', devPillar1Text: 'واجهة مرتبة تساعد الزائر يوصل للمعلومة والخطوة التالية بسرعة.', devPillar2Title: 'تطوير متجاوب', devPillar2Text: 'صفحات تعمل بسلاسة على الجوال والكمبيوتر وتدعم العربية والإنجليزية.', devPillar3Title: 'إطلاق متكامل', devPillar3Text: 'ربط الصفحات والخدمات الأساسية وتجهيز المسارات قبل نشر المشروع.', devWorkKicker: 'أعمال مختارة', devWorkTitle: 'مشاريع فعلية على الويب.', devWorkText: 'نماذج من مواقع منشورة تجمع بين الهوية البصرية والوظائف التي يحتاجها العميل.', devAyanDescription: 'منصة تصوير سيارات تعرض الباقات والمعرض والحجز والدفع في رحلة واحدة للعميل.', dev5loDescription: 'موقع لاستوديو تصوير سيارات يركز على عرض الأعمال والوصول السريع للحجز.', devVisitProject: 'زيارة المشروع ↗', devStackKicker: 'التقنيات', devStackTitle: 'الأدوات تتغير حسب احتياج المشروع.', devStackText: 'أختار التقنية التي تخدم التجربة، مع تركيز دائم على الأداء والوضوح وسهولة التطوير.', devStackAria: 'أدوات وتقنيات التطوير', devCtaKicker: 'لنبدأ مشروعك', devCtaTitle: 'عندك فكرة؟ خلّنا نبنيها.', devCtaText: 'أرسل فكرتك ونرتب الخطوات المناسبة لتحويلها إلى موقع أو تجربة رقمية جاهزة.', devEmail: 'إرسال بريد إلكتروني',
-    home: 'الرئيسية', features: 'المميزات', booking: 'الحجز', gallery: 'المعرض', support: 'الدعم والمساعدة', quick: 'حجز سريع', socialWhatsApp: 'واتساب', socialInstagram: 'إنستغرام', socialSnapchat: 'سناب شات',
+    home: 'الرئيسية', features: 'المميزات', booking: 'الحجز', gallery: 'المعرض', support: 'الدعم والمساعدة', quick: 'حجز سريع', socialWhatsApp: 'واتساب', socialInstagram: 'إنستغرام', socialSnapchat: 'سناب شات', socialMenuLabel: 'روابط التواصل',
     theme: 'الثيم', lang: 'اللغة', relax: 'مريح', dark: 'داكن 🌙', light: 'فاتح ☀️',
     heroEyebrow: 'تصوير سيارات بطابع سينمائي',
-    heroTitle: 'لقطة تليق <span>بسيارتك.</span>',
-    heroLead: 'تصوير سيارات احترافي في الشرقية — رولينق، تفاصيل ثابتة، ومونتاج سينمائي، مع حجز واضح من اختيار الباقة حتى الدفع.',
+    heroTitle: 'كل سيارة لها <span>حكاية.</span>',
+    heroLead: 'نصنع لسيارتك حضورًا يليق بها — تصوير سينمائي في الشرقية، تفاصيل مدروسة، وتجربة حجز سهلة من أول لقطة إلى آخر تفصيل.',
     bookNow: 'احجز جلستك', watchGallery: 'شاهد المعرض',
     heroCard1Title: 'الهوية البصرية', heroCard1Text: 'لقطات مصممة لإظهار تفاصيل السيارة وشخصيتها بشكل يليق بالمحتوى.',
     heroCard2Title: 'إخراج أسرع', heroCard2Text: 'مسار حجز واضح، تنسيق مباشر، وتسليم مرتب حسب الباقة المختارة.',
@@ -40,7 +40,7 @@ const translations = {
     feature3Title: 'تواصل مباشر', feature3Text: 'ترسل طلبك من الموقع وينتقل معك مباشرة إلى الواتساب للتنسيق مع المصور.',
     workflowKicker: 'Ayan Workflow', workflowTitle: 'من أول فكرة إلى آخر فريم.', workflowText: 'كل صفحة لها وظيفة واضحة، عشان العميل يلقى اللي يحتاجه بسرعة.',
     workflow1: 'اختيار الباقة المناسبة.', workflow2: 'تعبئة بيانات السيارة وموقع التصوير.', workflow3: 'استلام الطلب والتنسيق عبر الواتساب.', workflow4: 'التصوير والتسليم حسب تفاصيل الباقة.',
-    homeShowcaseKicker: 'من المعرض', homeShowcaseTitle: 'لقطات تحكي طابع كل سيارة.', homeShowcaseText: 'نماذج من جلسات Ayan Photography — من الرولينق إلى التفاصيل السينمائية.', homeShowcaseLink: 'شاهد كل الأعمال ←', homeShowcaseFrame1: 'شاهد لقطة من أعمال Ayan Photography — 01', homeShowcaseFrame2: 'شاهد لقطة من أعمال Ayan Photography — 02', homeShowcaseFrame3: 'شاهد لقطة من أعمال Ayan Photography — 03',
+    homeShowcaseKicker: 'من المعرض', homeShowcaseTitle: 'لقطات تحكي طابع كل سيارة.', homeShowcaseText: 'أربع لقطات مختارة — اختر السيارة وشاهد تفاصيلها في المعرض.', homeShowcaseLink: 'شاهد كل الأعمال ←', homeShowcaseFrame1: 'شاهد دودج تشارجر RT في المعرض', homeShowcaseFrame2: 'شاهد تويوتا كامري في المعرض', homeShowcaseFrame3: 'شاهد جاغوار F-Type في المعرض', homeShowcaseFrame4: 'شاهد BMW الفئة السابعة في المعرض',
     galleryKicker: 'Gallery', galleryTitle: 'خذ فكرة عن الشغل قبل ما تحجز.', galleryText: 'المعرض صار صفحة مستقلة عشان يبقى التركيز على الفيديو والمحتوى.', exploreGallery: 'استكشف المعرض ←', galleryLoading: 'جاري تجهيز المعرض…',
     featuresHeroKicker: 'Why Ayan Photography', featuresHeroTitle: 'كل تفصيلة محسوبة عشان تطلع سيارتك بأفضل صورة.', featuresHeroText: 'هوية بصرية هادئة، حركة ناعمة، ومسار واضح من أول تواصل إلى آخر تسليم.',
     feature4Title: 'تخطيط اللقطة', feature4Text: 'نرتب فكرة التصوير حسب شكل السيارة والمكان وطابع المحتوى الذي تريده.',
@@ -65,9 +65,9 @@ const translations = {
   en: {
     brandTag: 'Automotive Photography',
     devEyebrow: 'Ayan Developer', devTitle: 'From an idea to a <span>finished product.</span>', devLead: 'I design and build clear, fast digital experiences — from the first concept to a live website that works for people and businesses.', devProjectsCta: 'Explore my work', devContactCta: 'Get in touch ↗', devProofAria: 'Product development stages', devProof1: 'Identity', devProof2: 'Development', devProof3: 'Launch', devAboutKicker: 'About the developer', devAboutTitle: 'I build the product from the idea to the details.', devAboutText: 'I bring design and development together to make experiences feel polished, clear, and easy to use on every screen.', devPillar1Title: 'Clear experience', devPillar1Text: 'A considered interface that helps people find the right information and next step.', devPillar2Title: 'Responsive development', devPillar2Text: 'Pages that work smoothly on phones and desktops, in both Arabic and English.', devPillar3Title: 'Launch-ready', devPillar3Text: 'Core pages and services connected, with the main customer paths ready to go live.', devWorkKicker: 'Selected work', devWorkTitle: 'Real projects on the web.', devWorkText: 'A selection of live websites combining visual identity with the tools customers need.', devAyanDescription: 'A car photography platform bringing packages, gallery, booking, and payments into one customer journey.', dev5loDescription: 'A car photography studio website focused on presenting the work and making booking easy to reach.', devVisitProject: 'Visit project ↗', devStackKicker: 'Technology', devStackTitle: 'The tools follow the project.', devStackText: 'I choose the technology that serves the experience, with a steady focus on performance, clarity, and maintainability.', devStackAria: 'Development tools and technologies', devCtaKicker: 'Start a project', devCtaTitle: 'Have an idea? Let’s build it.', devCtaText: 'Send me your idea and we can map out the right steps to turn it into a website or digital experience.', devEmail: 'Send an email',
-    home: 'Home', features: 'Features', booking: 'Booking', gallery: 'Gallery', support: 'Support', quick: 'Quick Booking', socialWhatsApp: 'WhatsApp', socialInstagram: 'Instagram', socialSnapchat: 'Snapchat',
+    home: 'Home', features: 'Features', booking: 'Booking', gallery: 'Gallery', support: 'Support', quick: 'Quick Booking', socialWhatsApp: 'WhatsApp', socialInstagram: 'Instagram', socialSnapchat: 'Snapchat', socialMenuLabel: 'Social links',
     theme: 'Theme', lang: 'Language', relax: 'Relax', dark: 'Dark 🌙', light: 'Light ☀️',
-    heroEyebrow: 'Automotive photography · Eastern Province', heroTitle: 'A frame made <span>for your car.</span>', heroLead: 'Professional car photography in the Eastern Province: rolling shots, precise details, and cinematic edits, with a clear path from package to payment.', bookNow: 'Book your session', watchGallery: 'View gallery',
+    heroEyebrow: 'Automotive photography · Eastern Province', heroTitle: 'Every car has <span>a story.</span>', heroLead: 'We give your car the presence it deserves — cinematic photography in the Eastern Province, thoughtful details, and an easy booking journey from first frame to final finish.', bookNow: 'Book your session', watchGallery: 'View gallery',
     heroCard1Title: 'Visual identity', heroCard1Text: 'Frames built to reveal the character, shape, and details of your car.', heroCard2Title: 'Faster workflow', heroCard2Text: 'A clear booking path, direct coordination, and delivery matched to your package.', heroCard3Title: 'Flexible experience', heroCard3Text: 'Choose the package, location, and car type — we handle the rest.',
     packagesKicker: 'Packages', packagesTitle: 'Four packages. Your kind of frame.', packagesText: 'Pick the production level that fits you — from rolling-only footage to a complete cinematic session.', packagesLink: 'Customize & book →',
     
@@ -80,7 +80,7 @@ const translations = {
     advanced: 'SIGNATURE', advancedDesc: 'Rolling + static + more than 10 varied clips + editing', advancedPrice: '130', advancedOldPrice: '150 SAR', advancedDiscount: '20 SAR OFF', advancedBadge: 'Most Popular', advancedF1: 'Rolling shots of the car.', advancedF2: 'Static shots from several angles.', advancedF3: 'More than 10 varied clips.', advancedF4: 'Complete edit.', advancedF5: 'Varied camera movements and angles.', advancedF6: 'Same-day delivery when possible.',
     royal: 'CINEMATIC', royalDesc: 'Cinematic production + 20+ clips', royalPrice: '180', royalOldPrice: '200 SAR', royalDiscount: '20 SAR OFF', royalBadge: '', royalF1: 'Complete cinematic car coverage.', royalF2: 'Rolling and static shots with varied movement.', royalF3: 'More than 20 varied clips.', royalF4: 'Professional cinematic edit.', royalF5: 'Custom concept execution.', royalF6: 'Direction tailored to your car.',
     whyKicker: 'Why Ayan Photography', whyTitle: 'A clean experience from booking to delivery.', whyText: 'Instead of a crowded one-page site, every part of the journey now has a clear path.', featureLink: 'Explore all features →', feature1Title: 'Professional sessions', feature1Text: 'Purpose-built camera work and lenses to reveal the car with cinematic detail.', feature2Title: 'Fast delivery', feature2Text: 'A clear workflow for production, processing, and delivery without unnecessary steps.', feature3Title: 'Direct coordination', feature3Text: 'Submit your request on the site and continue straight to WhatsApp for coordination.',
-    workflowKicker: 'Ayan Workflow', workflowTitle: 'From the first idea to the final frame.', workflowText: 'Every page has one clear job, so clients find what they need quickly.', workflow1: 'Choose the right package.', workflow2: 'Add car and shoot details.', workflow3: 'Receive and coordinate the request on WhatsApp.', workflow4: 'Shoot and deliver based on the package.', homeShowcaseKicker: 'Selected work', homeShowcaseTitle: 'Frames shaped around every car.', homeShowcaseText: 'A selection from Ayan Photography sessions — from rolling shots to cinematic details.', homeShowcaseLink: 'View all work →', homeShowcaseFrame1: 'View Ayan Photography work — frame 01', homeShowcaseFrame2: 'View Ayan Photography work — frame 02', homeShowcaseFrame3: 'View Ayan Photography work — frame 03', galleryKicker: 'Gallery', galleryTitle: 'See the work before you book.', galleryText: 'The gallery now lives on its own page so the focus stays on the visual work.', exploreGallery: 'Explore gallery →',
+    workflowKicker: 'Ayan Workflow', workflowTitle: 'From the first idea to the final frame.', workflowText: 'Every page has one clear job, so clients find what they need quickly.', workflow1: 'Choose the right package.', workflow2: 'Add car and shoot details.', workflow3: 'Receive and coordinate the request on WhatsApp.', workflow4: 'Shoot and deliver based on the package.', homeShowcaseKicker: 'Selected work', homeShowcaseTitle: 'Frames shaped around every car.', homeShowcaseText: 'Four selected frames. Choose a car and explore its details in the gallery.', homeShowcaseLink: 'View all work →', homeShowcaseFrame1: 'View Dodge Charger RT in the gallery', homeShowcaseFrame2: 'View Toyota Camry in the gallery', homeShowcaseFrame3: 'View Jaguar F-Type in the gallery', homeShowcaseFrame4: 'View BMW 7 Series in the gallery', galleryKicker: 'Gallery', galleryTitle: 'See the work before you book.', galleryText: 'The gallery now lives on its own page so the focus stays on the visual work.', exploreGallery: 'Explore gallery →',
     featuresHeroKicker: 'Why Ayan Photography', featuresHeroTitle: 'Every detail is designed to make your car look its best.', featuresHeroText: 'Quiet visual direction, smooth motion, and a clear journey from the first message to final delivery.', feature4Title: 'Shot planning', feature4Text: 'We shape the concept around the car, location, and content style you want.', feature5Title: 'Intentional editing', feature5Text: 'Cuts, motion, and transitions that support the scene instead of fighting it.', feature6Title: 'Mobile-first experience', feature6Text: 'The website and booking flow are designed to feel fast on both phone and desktop.', servicesTitle: 'Services', servicesText: 'Choose the production type that fits your goal, whether it is reels, details, or a full session.', catalogKicker: 'Available Packages', catalogTitle: 'Services & Pricing', catalogText: 'All bookable packages are listed here with a clear description, current price, and selected Ayan Photography work.', catalogLink: 'Book now →', catalogSilverTitle: 'ROLL', catalogSilverText: 'Rolling coverage from multiple angles with all original clips delivered without editing.', catalogBasicTitle: 'MOTION', catalogBasicText: 'Rolling coverage with 10+ varied clips, full editing, music selection, and an optional custom concept.', catalogAdvancedTitle: 'SIGNATURE', catalogAdvancedText: 'Rolling and static coverage from multiple angles, 10+ clips, full editing, and fast delivery based on the session.', catalogRoyalTitle: 'CINEMATIC', catalogRoyalText: 'A complete cinematic session combining rolling, static coverage, professional editing, and a custom concept option.', catalogChoose: 'Choose package', catalogNoteTitle: 'Note:', catalogNoteText: 'Displayed prices are the current package prices. Any additional service is explained before the order is confirmed.', service1Title: 'Rolling Shots', service1Text: 'Moving coverage from different angles to show design, speed, and presence.', service2Title: 'Static Details', service2Text: 'Still frames that focus on exterior, interior, and design details.', service3Title: 'Cinematic Edit', service3Text: 'A full edit with a visual rhythm built around the car and the platform.', service4Title: 'Custom Concept', service4Text: 'A tailored idea coordinated around your style and the message you want to convey.',
     processTitle: 'How it works', processText: 'Four clear steps with no unnecessary complexity.', step1Title: 'Choose', step1Text: 'Pick the package and session type.', step2Title: 'Send', step2Text: 'Submit your details and notes.', step3Title: 'Coordinate', step3Text: 'We finalize the details through WhatsApp.', step4Title: 'Shoot', step4Text: 'We execute the session and arrange delivery.',
     bookingHeroKicker: 'Booking', bookingHeroTitle: 'Book your car session in three steps.', bookingHeroText: 'Choose a package, add your session details, then review the total and continue to secure payment.', bookingMeta1: 'Choose a package', bookingMeta2: 'Add your details', bookingMeta3: 'Choose your payment method', bookingSideTitle: 'Start with the right package.', bookingSideText: 'Choose your production level first, then we will handle the rest with you.', selectedLabel: 'Selected package', selectedEmpty: 'Choose a package to begin', sideFoot1: 'Direct coordination', sideFoot2: 'Clear pricing', sideFoot3: 'WhatsApp handoff', bookingStep1: 'Package', bookingStep2: 'Details', bookingStep3: 'Review & pay', flowStep1: 'Choose your package', flowStep2: 'Add your session details', flowStep3: 'Choose a secure payment method', flowSelected: 'Selected', flowDetails: 'Complete the required details', flowReady: 'Ready for secure payment', validationPackage: 'Choose a package first.', validationName: 'Enter your full name.', validationPhone: 'Enter a valid Saudi WhatsApp number.', validationCar: 'Choose your car type.', validationRegion: 'Choose the shoot area.', validationTerms: 'Accept the terms and conditions before continuing.', formKicker: 'Start your session', packageHint: 'Choose the production level that fits the shot in your head.', tapToChoose: 'Tap to choose', packageDiscountNote: '20 SAR discount on all packages.', detailsDivider: 'Session details', submitTitle: 'Ready? Let’s finish it.', submitText: 'After confirmation, you will review the total and choose a payment method.',
@@ -174,9 +174,32 @@ translations.en.supportValidationMessage = 'Please add more detail to your reque
 translations.en.supportNetworkError = 'We could not send your request. Please try again.';
 translations.en.supportGenericError = 'Your request could not be sent. Please try again.';
 translations.en.supportType = 'Request type';
-translations.en.verificationTitle = 'E-commerce verification';
+translations.en.verificationTitle = 'Verified store';
 translations.en.verificationNumber = 'Verification number: 0000333236';
-translations.en.verificationLink = 'Check the certificate at the Saudi Business Center';
+translations.en.verificationLink = 'Verified store';
+translations.ar.verificationTitle = 'متجر موثّق';
+translations.ar.verificationNumber = 'رقم الشهادة: 0000333236';
+translations.ar.verificationLink = 'متجر موثّق';
+translations.ar.verificationDialogTitle = 'متجر موثّق';
+translations.en.verificationDialogTitle = 'Verified store';
+translations.ar.verificationStoreName = 'Ayan Photography';
+translations.en.verificationStoreName = 'Ayan Photography';
+translations.ar.verificationStateLabel = 'حالة الشهادة';
+translations.en.verificationStateLabel = 'Certificate status';
+translations.ar.verificationStateText = 'تحقق من الحالة الحالية عبر منصة الأعمال';
+translations.en.verificationStateText = 'Check the current status on the Saudi Business Platform';
+translations.ar.verificationStateValue = 'ساري';
+translations.en.verificationStateValue = 'Active';
+translations.ar.verificationExpiryLabel = 'تاريخ انتهاء الصلاحية';
+translations.en.verificationExpiryLabel = 'Expiration date';
+translations.ar.verificationExpiryValue = '01/10/2027';
+translations.en.verificationExpiryValue = '01/10/2027';
+translations.ar.verificationQrHint = 'امسح الرمز لفتح صفحة التحقق';
+translations.en.verificationQrHint = 'Scan to open certificate verification';
+translations.ar.verificationOpen = 'عرض التحقق';
+translations.en.verificationOpen = 'View verification';
+translations.ar.verificationClose = 'إغلاق';
+translations.en.verificationClose = 'Close';
 translations.ar.loadingCaption = 'نجهّز لك اللقطة';
 translations.en.loadingCaption = 'Preparing your session';
 translations.ar.loadingAria = 'Ayan Photography — جارٍ تجهيز الصفحة';
@@ -553,10 +576,11 @@ function setupReveal() {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
-        obs.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('is-visible');
       }
     });
-  }, { threshold: .12, rootMargin: '0px 0px -40px' });
+  }, { threshold: .12, rootMargin: '0px 0px -7% 0px' });
   items.forEach((el) => observer.observe(el));
 }
 
@@ -604,13 +628,13 @@ function setupAmbientParallax() {
 }
 
 
-function deferBackgroundVideo(selector) {
+function deferBackgroundVideo(selector, { ignoreDataSaver = false, ignoreReducedMotion = false } = {}) {
   const video = document.querySelector(selector);
   if (!video) return;
 
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion || connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType)) return;
+  if ((!ignoreReducedMotion && reducedMotion) || (!ignoreDataSaver && (connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType)))) return;
 
   video.muted = true;
   video.defaultMuted = true;
@@ -618,7 +642,7 @@ function deferBackgroundVideo(selector) {
   video.loop = true;
   video.playsInline = true;
   video.controls = false;
-  video.preload = 'none';
+  video.preload = ignoreDataSaver ? 'auto' : 'none';
   const reveal = () => video.classList.add('is-playing');
   video.addEventListener('playing', reveal);
   video.addEventListener('loadeddata', () => { if (!video.paused) reveal(); }, { once: true });
@@ -651,7 +675,7 @@ function deferBackgroundVideo(selector) {
 }
 
 function setupHeroBackgroundVideo() {
-  deferBackgroundVideo('[data-hero-video]');
+  deferBackgroundVideo('[data-hero-video]', { ignoreDataSaver: true, ignoreReducedMotion: true });
 }
 
 function setupHomeShowcaseVideos() {
@@ -1204,18 +1228,22 @@ function showToast(message) {
 
 const GALLERY_FALLBACK = {
   videos: [
-    { src: 'https://j.top4top.io/m_3918oecxi1.mp4', titleAr: 'جلسة فيديو — 01', titleEn: 'Video Session — 01' },
-    { src: 'https://k.top4top.io/m_3918efwnf2.mp4', titleAr: 'جلسة فيديو — 02', titleEn: 'Video Session — 02' },
-    { src: 'https://l.top4top.io/m_3918tnexs3.mp4', titleAr: 'جلسة فيديو — 03', titleEn: 'Video Session — 03' },
-    { src: 'https://f.top4top.io/m_391845mmn1.mp4', titleAr: 'جلسة فيديو — 04', titleEn: 'Video Session — 04' },
-    { src: 'https://e.top4top.io/m_3918oxx0h1.mp4', titleAr: 'جلسة فيديو — 05', titleEn: 'Video Session — 05' },
-    { src: 'https://h.top4top.io/m_3918j293s3.mp4', titleAr: 'جلسة فيديو — 06', titleEn: 'Video Session — 06' }
+    { src: 'https://l.top4top.io/m_3969on2w91.mp4', poster: 'gallery/dodge.jpeg', titleAr: 'Dodge Charger RT', titleEn: 'Dodge Charger RT' },
+    { src: 'gallery/Camry.mp4', poster: 'gallery/camry-video-poster.jpg', titleAr: 'Toyota Camry', titleEn: 'Toyota Camry' },
+    { src: 'https://l.top4top.io/m_3969rze1z1.mp4', titleAr: 'Ford Mustang', titleEn: 'Ford Mustang' },
+    { src: 'https://e.top4top.io/m_3969v09a91.mp4', poster: 'gallery/ford-territory.jpeg', titleAr: 'Ford Territory', titleEn: 'Ford Territory' },
+    { src: 'https://b.top4top.io/m_3969wdsbm1.mp4', poster: 'gallery/yaris.jpg', titleAr: 'Toyota Yaris', titleEn: 'Toyota Yaris' },
+    { src: 'https://d.top4top.io/m_39690zvhv1.mp4', poster: 'gallery/jaguar-f-type-coupe.jpg', titleAr: 'Jaguar F-Type', titleEn: 'Jaguar F-Type' },
+    { src: 'https://d.top4top.io/m_39690lgvx1.mp4', titleAr: 'Mitsubishi Pajero', titleEn: 'Mitsubishi Pajero' },
+    { src: 'https://j.top4top.io/m_3969d05x81.mp4', titleAr: 'Lexus ES350', titleEn: 'Lexus ES350' }
   ],
   images: [
-    { src: 'https://c.top4top.io/p_39182lc0q1.jpeg', titleAr: 'صورة — 01', titleEn: 'Photo — 01' },
-    { src: 'https://e.top4top.io/p_3918xds303.jpeg', titleAr: 'صورة — 02', titleEn: 'Photo — 02' },
-    { src: 'https://d.top4top.io/p_3918voxck2.jpeg', titleAr: 'صورة — 03', titleEn: 'Photo — 03' },
-    { src: 'https://f.top4top.io/p_3918o93au4.jpeg', titleAr: 'صورة — 04', titleEn: 'Photo — 04' }
+    { src: 'gallery/dodge.jpeg', titleAr: 'Dodge Charger RT', titleEn: 'Dodge Charger RT' },
+    { src: 'gallery/camry.jpeg', titleAr: 'Toyota Camry', titleEn: 'Toyota Camry' },
+    { src: 'gallery/jaguar-f-type-coupe.jpg', titleAr: 'Jaguar F-Type', titleEn: 'Jaguar F-Type' },
+    { src: 'gallery/ford-territory.jpeg', titleAr: 'Ford Territory', titleEn: 'Ford Territory' },
+    { src: 'gallery/yaris.jpg', titleAr: 'Toyota Yaris', titleEn: 'Toyota Yaris' },
+    { src: 'gallery/bmw.jpg', titleAr: 'BMW 7 Series', titleEn: 'BMW 7 Series' }
   ]
 };
 
@@ -1227,8 +1255,8 @@ async function loadGallery() {
   grid.innerHTML = `<div class="gallery-loading-status" role="status">${escapeHtml(tr('galleryLoading'))}</div>${Array.from({ length: 4 }, () => '<div class="gallery-skeleton" aria-hidden="true"></div>').join('')}`;
 
   const candidates = [
-    new URL('./data/gallery.json', document.baseURI).href,
-    '/data/gallery.json'
+    new URL('./data/gallery.json?v=3', document.baseURI).href,
+    '/data/gallery.json?v=3'
   ];
 
   let data = null;
@@ -1263,7 +1291,10 @@ async function loadGallery() {
   grid.innerHTML = items.map((item) => renderGalleryCard(item)).join('');
   setupGalleryFilters();
   setupGalleryLightbox();
-  applyGalleryFilter('video');
+  const requestedFilter = new URLSearchParams(window.location.search).get('filter');
+  const initialFilter = ['image', 'all'].includes(requestedFilter) ? requestedFilter : 'video';
+  document.querySelectorAll('[data-gallery-filter]').forEach((button) => button.classList.toggle('active', button.dataset.galleryFilter === initialFilter));
+  applyGalleryFilter(initialFilter);
   keepGalleryVideosPlaying();
 }
 
@@ -1274,7 +1305,7 @@ function renderGalleryCard(item) {
   const escapedSrc = escapeHtml(item.src || '');
   const escapedPoster = escapeHtml(item.poster || '');
   const media = item.type === 'video'
-    ? `<video muted loop playsinline preload="none" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" aria-label="${escapedTitle}" ${escapedPoster ? `poster="${escapedPoster}"` : ''}><source src="${escapedSrc}" type="video/mp4"></video>`
+    ? `<video muted loop playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" aria-label="${escapedTitle}" ${escapedPoster ? `poster="${escapedPoster}"` : ''}><source src="${escapedSrc}" type="video/mp4"></video><span class="gallery-play-hint" aria-hidden="true">▶</span>`
     : `<img src="${escapedSrc}" alt="${escapedTitle}" loading="lazy" decoding="async" onerror="this.dataset.missing='true'">`;
   return `<article class="card media-card gallery-card ${item.type}-card reveal" data-gallery-type="${item.type}" data-gallery-src="${escapedSrc}" data-gallery-title="${escapedTitle}" data-gallery-poster="${escapedPoster}"><div class="media-wrap">${media}<span class="media-badge">${escapeHtml(typeLabel)}</span><span class="media-shade"></span></div><div class="caption">${escapedTitle}</div></article>`;
 }
@@ -1283,9 +1314,6 @@ function keepGalleryVideosPlaying() {
   const cards = Array.from(document.querySelectorAll('.gallery-card.video-card'));
   if (!cards.length) return;
   const videos = cards.map((card) => card.querySelector('video')).filter(Boolean);
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion || connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType) || !('IntersectionObserver' in window)) return;
 
   videos.forEach((video) => {
     video.muted = true;
@@ -1294,7 +1322,18 @@ function keepGalleryVideosPlaying() {
     video.playsInline = true;
     video.controls = false;
     video.disablePictureInPicture = true;
+    const card = video.closest('.gallery-card');
+    video.addEventListener('playing', () => card?.classList.add('is-playing'), { passive: true });
+    video.addEventListener('pause', () => card?.classList.remove('is-playing'), { passive: true });
+    video.addEventListener('waiting', () => card?.classList.add('video-buffering'), { passive: true });
+    video.addEventListener('playing', () => card?.classList.remove('video-buffering', 'video-paused', 'video-unavailable'), { passive: true });
+    video.addEventListener('error', () => card?.classList.add('video-unavailable'), { passive: true });
+    video.addEventListener('pause', () => {
+      if (!document.hidden) card?.classList.add('video-paused');
+    }, { passive: true });
   });
+
+  if (!('IntersectionObserver' in window)) return;
 
   const visibility = new Map(videos.map((video) => [video, 0]));
   let activeVideo = null;
@@ -1311,15 +1350,6 @@ function keepGalleryVideosPlaying() {
     syncActiveVideo();
   }, { rootMargin: '0px', threshold: [0, 0.3, 0.55, 0.8] });
   videos.forEach((video) => observer.observe(video));
-
-  videos.forEach((video) => {
-    const card = video.closest('.gallery-card');
-    video.addEventListener('waiting', () => card?.classList.add('video-buffering'), { passive: true });
-    video.addEventListener('playing', () => card?.classList.remove('video-buffering', 'video-paused'), { passive: true });
-    video.addEventListener('pause', () => {
-      if (!document.hidden) card?.classList.add('video-paused');
-    }, { passive: true });
-  });
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) videos.forEach((video) => video.pause());
@@ -1373,15 +1403,24 @@ function setupGalleryLightbox() {
 
   document.querySelectorAll('.gallery-card').forEach((card) => {
     card.addEventListener('click', (event) => {
-      if (card.dataset.galleryType === 'video') return;
       const type = card.dataset.galleryType;
       const src = card.dataset.gallerySrc;
       const title = card.dataset.galleryTitle || '';
       const poster = card.dataset.galleryPoster || '';
       if (!src) return;
       media.innerHTML = type === 'video'
-        ? `<video autoplay muted loop playsinline preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" ${poster ? `poster="${escapeHtml(poster)}"` : ''}><source src="${escapeHtml(src)}" type="video/mp4"></video>`
+        ? `<div class="lightbox-video-shell"><video autoplay controls loop playsinline preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" ${poster ? `poster="${escapeHtml(poster)}"` : ''}><source src="${escapeHtml(src)}" type="video/mp4"></video><button class="lightbox-video-start" type="button" aria-label="${getLang() === 'ar' ? 'تشغيل الفيديو مع الصوت' : 'Play video with sound'}">▶</button></div><a class="lightbox-video-fallback" href="${escapeHtml(src)}" target="_blank" rel="noopener" hidden>${getLang() === 'ar' ? 'فتح الفيديو مباشرة' : 'Open video directly'}</a>`
         : `<img src="${escapeHtml(src)}" alt="${escapeHtml(title)}">`;
+      if (type === 'video') {
+        const lightboxVideo = media.querySelector('video');
+        const playButton = media.querySelector('.lightbox-video-start');
+        const directLink = media.querySelector('.lightbox-video-fallback');
+        playButton?.addEventListener('click', () => lightboxVideo?.play()?.catch(() => {}));
+        lightboxVideo?.addEventListener('playing', () => playButton?.classList.add('is-hidden'), { once: true });
+        lightboxVideo?.addEventListener('pause', () => playButton?.classList.remove('is-hidden'));
+        lightboxVideo?.addEventListener('error', () => { if (directLink) directLink.hidden = false; }, { once: true });
+        lightboxVideo?.play()?.catch(() => playButton?.classList.remove('is-hidden'));
+      }
       if (caption) caption.textContent = title;
       box.classList.add('open');
       box.setAttribute('aria-hidden', 'false');
@@ -1527,7 +1566,6 @@ function setupSocialFloat() {
     toggle.setAttribute('aria-expanded', String(open));
   };
 
-  toggle.addEventListener('focus', () => setOpen(true));
   widget.addEventListener('focusout', (event) => {
     if (!widget.contains(event.relatedTarget)) setOpen(false);
   });
@@ -1553,6 +1591,93 @@ function setupSocialFloat() {
   });
 }
 
+function setupVerificationDialog() {
+  const card = document.querySelector('.ecommerce-verification');
+  const trigger = card?.querySelector('.verification-link');
+  if (!card || !trigger) return;
+
+  const seal = document.querySelector('.sbc-verify-seal');
+  const sealScript = document.querySelector('script[src*="/EAuthSealApi/seal.js"]');
+  if (seal) {
+    const useFallback = () => document.body.classList.add('sbc-seal-fallback');
+    const detectSeal = () => {
+      const nodes = Array.from(seal.querySelectorAll('img,iframe,a,button,svg,canvas'));
+      const brokenImage = nodes.some((node) => node.tagName === 'IMG' && node.complete && node.naturalWidth === 0);
+      if (brokenImage) { useFallback(); return true; }
+      const visibleContent = nodes.some((node) => {
+        const rect = node.getBoundingClientRect();
+        const style = getComputedStyle(node);
+        return rect.width > 24 && rect.height > 24 && style.display !== 'none' && style.visibility !== 'hidden';
+      });
+      if (visibleContent) {
+        document.body.classList.add('sbc-seal-rendered');
+        return true;
+      }
+      return false;
+    };
+    const observer = new MutationObserver(() => { if (detectSeal()) observer.disconnect(); });
+    observer.observe(seal, { childList: true, subtree: true, attributes: true });
+    sealScript?.addEventListener('error', useFallback, { once: true });
+    sealScript?.addEventListener('load', () => setTimeout(() => { if (!detectSeal()) useFallback(); }, 1400), { once: true });
+    setTimeout(() => { if (!detectSeal()) useFallback(); }, 3200);
+  }
+
+  const certificateUrl = 'https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236';
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&format=svg&margin=8&data=${encodeURIComponent(certificateUrl)}`;
+  const dialog = document.createElement('div');
+  dialog.className = 'verification-dialog';
+  dialog.setAttribute('aria-hidden', 'true');
+  dialog.innerHTML = `
+    <div class="verification-dialog-backdrop" data-verification-close></div>
+    <section class="verification-dialog-card" role="dialog" aria-modal="true" aria-labelledby="verificationDialogTitle">
+      <button class="verification-dialog-close" type="button" data-verification-close data-i18n-aria-label="verificationClose" aria-label="إغلاق">×</button>
+      <div class="verification-dialog-heading">
+        <span class="verification-dialog-mark" aria-hidden="true">✓</span>
+        <div><p class="verification-dialog-kicker">Saudi Business Platform</p><h2 id="verificationDialogTitle" data-i18n="verificationDialogTitle">متجر موثّق</h2><strong data-i18n="verificationStoreName">Ayan Photography</strong></div>
+      </div>
+      <div class="verification-dialog-content">
+        <a class="verification-qr-frame" href="${certificateUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open certificate verification">
+          <img src="${qrUrl}" alt="Certificate verification QR code" loading="lazy">
+        </a>
+        <div class="verification-dialog-details">
+          <div><span data-i18n="verificationNumber">رقم الشهادة: 0000333236</span><strong>0000333236</strong></div>
+          <div><span data-i18n="verificationStateLabel">حالة الشهادة</span><strong class="verification-status-active"><i></i><span data-i18n="verificationStateValue">ساري</span></strong></div>
+          <div><span data-i18n="verificationExpiryLabel">تاريخ انتهاء الصلاحية</span><strong data-i18n="verificationExpiryValue">01/10/2027</strong></div>
+          <p data-i18n="verificationQrHint">امسح الرمز لفتح صفحة التحقق</p>
+          <a class="verification-dialog-url" href="${certificateUrl}" target="_blank" rel="noopener noreferrer">${certificateUrl}</a>
+        </div>
+      </div>
+      <a class="verification-dialog-open" href="${certificateUrl}" target="_blank" rel="noopener noreferrer"><span data-i18n="verificationOpen">عرض التحقق</span><span aria-hidden="true">↗</span></a>
+    </section>`;
+  document.body.append(dialog);
+  applyPreferences();
+
+  const closeButton = dialog.querySelector('.verification-dialog-close');
+  const qrFrame = dialog.querySelector('.verification-qr-frame');
+  const qrImage = qrFrame?.querySelector('img');
+  const close = () => {
+    dialog.classList.remove('open');
+    dialog.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.focus();
+  };
+  const open = (event) => {
+    event.preventDefault();
+    dialog.classList.add('open');
+    dialog.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    closeButton?.focus();
+  };
+  trigger.setAttribute('aria-haspopup', 'dialog');
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.addEventListener('click', open);
+  dialog.querySelectorAll('[data-verification-close]').forEach((button) => button.addEventListener('click', close));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && dialog.classList.contains('open')) close();
+  });
+  qrImage?.addEventListener('error', () => qrFrame?.classList.add('is-unavailable'), { once: true });
+}
+
 async function init() {
   applyPreferences();
   // Start the config request in the background so the header, form, and interactions are usable immediately.
@@ -1566,6 +1691,7 @@ async function init() {
   setupCardGlow();
   setupPointerGlow();
   setupSocialFloat();
+  setupVerificationDialog();
   setupAmbientParallax();
   setupHeroBackgroundVideo();
   setupHomeShowcaseVideos();

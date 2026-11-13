@@ -13,9 +13,8 @@
   <link rel="icon" type="image/png" href="assets/ayan-logo-icon.png?v=1">
   <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png?v=1">
   <title>Ayan Photography</title>
-  <link rel="preload" as="image" href="assets/ayan-home-hero.webp" fetchpriority="high">
 <link rel="stylesheet" href="styles.css?v=71">
-<link rel="stylesheet" href="refresh.css?v=91">
+<link rel="stylesheet" href="refresh.css?v=111">
   <style>
     .home-intro-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,rgba(17,55,67,.58),transparent 42%),linear-gradient(145deg,#05090d 0%,#0a1219 52%,#070c11 100%);color:#f2f7f8;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .65s ease,visibility .65s ease}
     .home-intro-loader::before,.home-intro-loader::after{position:absolute;content:"";width:min(78vw,760px);aspect-ratio:1;border:1px solid rgba(132,218,224,.075);border-radius:50%;pointer-events:none}
@@ -28,6 +27,7 @@
     .home-intro-emblem::after{position:absolute;inset:9px;border:1px solid rgba(141,221,226,.15);border-radius:50%;content:""}
     .home-intro-logo{position:relative;z-index:1;width:88px;height:88px;border:1px solid rgba(204,237,239,.36);border-radius:50%;object-fit:cover;box-shadow:0 0 38px rgba(88,192,201,.18),0 12px 45px rgba(0,0,0,.38)}
     .home-intro-name{margin:0;font-family:inherit;font-size:clamp(1.3rem,3vw,1.8rem);font-weight:750;letter-spacing:.025em;color:#f5f8f8}
+    .home-intro-name span{display:block;margin-top:5px;color:rgba(203,220,223,.62);font-size:.56em;font-weight:550;letter-spacing:.32em}
     .home-intro-progress{position:relative;width:min(210px,54vw);height:2px;overflow:hidden;border-radius:9px;background:rgba(217,236,238,.14)}
     .home-intro-progress::after{position:absolute;inset:0 auto 0 0;width:42%;border-radius:inherit;background:linear-gradient(90deg,transparent,#8bdce2 42%,#e0c68d 100%);box-shadow:0 0 13px rgba(139,220,226,.5);content:"";animation:homeIntroProgress 1.35s cubic-bezier(.48,0,.32,1) infinite}
     .home-intro-caption{margin:-13px 0 0;color:rgba(203,220,223,.68);font-size:.72rem;letter-spacing:.18em}
@@ -57,7 +57,7 @@
     .verification-link{grid-area:link;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;margin:0;padding:10px 15px;border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface-strong) 78%,transparent);text-align:center;transition:border-color .2s ease,background .2s ease}
     .verification-link:hover{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 10%,var(--surface-strong));text-decoration:none}
     .verification-link:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
-    @media(max-width:600px){.ecommerce-verification{grid-template-columns:40px minmax(0,1fr);grid-template-areas:"mark copy" "link link";gap:12px;padding:15px}.verification-link{width:100%;min-height:46px;margin:0;padding:11px 12px;border:1px solid var(--border);border-radius:12px}}
+    @media(max-width:600px){.ecommerce-verification{grid-template-columns:40px minmax(0,1fr);grid-template-areas:"mark copy" "link link";gap:12px;padding:15px}.verification-link{justify-self:end;width:max-content;max-width:100%;min-height:44px;margin:0;padding:10px 12px;border:1px solid var(--border);border-radius:12px}}
   </style>
 </head>
 <body data-theme="relax" data-page-title="home">
@@ -65,6 +65,7 @@
   <div class="home-intro-loader" data-home-intro-loader role="status" data-i18n-aria-label="loadingAria" aria-label="Ayan Photography — جارٍ تجهيز الصفحة">
     <div class="home-intro-content">
       <div class="home-intro-emblem"><img class="home-intro-logo" src="assets/ayan-loader-logo.webp?v=2" alt=""></div>
+      <p class="home-intro-name">AYAN <span>PHOTOGRAPHY</span></p>
       <div class="home-intro-progress" aria-hidden="true"></div>
       <p class="home-intro-caption" data-i18n="loadingCaption">جارٍ تجهيز الصفحة</p>
     </div>
@@ -117,13 +118,13 @@
   <main>
     <section class="hero">
       <div class="hero-media" aria-hidden="true">
-        <img class="hero-image" src="assets/ayan-home-hero.webp" alt="" fetchpriority="high" decoding="async">
+        <video class="hero-video" data-hero-video autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="gallery/Camry.mp4" type="video/mp4"></video>
       </div>
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">تصوير سيارات بطابع سينمائي</span></div>
-          <h1 data-i18n="heroTitle">لقطة تليق <span>بسيارتك.</span></h1>
-          <p class="hero-lead" data-i18n="heroLead">تصوير سيارات احترافي في الشرقية — رولينق، تفاصيل ثابتة، ومونتاج سينمائي، مع حجز واضح من اختيار الباقة حتى الدفع.</p>
+          <h1 data-i18n="heroTitle">كل سيارة لها <span>حكاية.</span></h1>
+          <p class="hero-lead" data-i18n="heroLead">نصنع لسيارتك حضورًا يليق بها — تصوير سينمائي في الشرقية، تفاصيل مدروسة، وتجربة حجز سهلة من أول لقطة إلى آخر تفصيل.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="booking.html" data-i18n="bookNow">احجز جلستك</a>
             <a class="btn btn-secondary" href="gallery.html" data-i18n="watchGallery">شاهد المعرض</a>
@@ -310,25 +311,48 @@
             <a class="btn btn-secondary home-showcase-link" href="gallery.html" data-i18n="homeShowcaseLink">شاهد كل الأعمال ←</a>
           </div>
         </div>
-        <div class="home-showcase-viewport" data-home-showcase-viewport role="region" aria-label="معرض صور السيارات" tabindex="0">
+        <div class="home-showcase-viewport" data-home-showcase-viewport role="region" aria-label="Car photo selection" tabindex="0">
           <div class="home-showcase-grid" id="home-showcase-track" data-home-showcase-track>
-            <a class="home-showcase-card home-showcase-featured" href="gallery.html" data-showcase-slide data-i18n-aria-label="homeShowcaseFrame1" aria-label="شاهد لقطة من أعمال Ayan Photography — 01">
-              <video class="home-showcase-video" data-showcase-video muted loop playsinline preload="none" poster="https://c.top4top.io/p_39182lc0q1.jpeg" aria-hidden="true"><source src="https://j.top4top.io/m_3918oecxi1.mp4" type="video/mp4"></video>
-              <span class="home-showcase-index" aria-hidden="true">01 / 03</span>
+            <a class="home-showcase-card home-showcase-featured" href="gallery.html?filter=image" data-showcase-slide aria-label="Dodge Charger RT">
+              <img class="home-showcase-video" src="gallery/dodge.jpeg" alt="Dodge Charger RT" loading="lazy" decoding="async">
+              <span class="home-showcase-index">Dodge Charger RT <small>01 / 06</small></span>
               <span class="home-showcase-open" aria-hidden="true">↗</span>
             </a>
-            <a class="home-showcase-card" href="gallery.html" data-showcase-slide data-i18n-aria-label="homeShowcaseFrame2" aria-label="شاهد لقطة من أعمال Ayan Photography — 02">
-              <video class="home-showcase-video" data-showcase-video muted loop playsinline preload="none" poster="https://e.top4top.io/p_3918xds303.jpeg" aria-hidden="true"><source src="https://k.top4top.io/m_3918efwnf2.mp4" type="video/mp4"></video>
-              <span class="home-showcase-index" aria-hidden="true">02 / 03</span>
+            <a class="home-showcase-card" href="gallery.html?filter=image" data-showcase-slide aria-label="Toyota Camry">
+              <img class="home-showcase-video" src="gallery/camry.jpeg" alt="Toyota Camry" loading="lazy" decoding="async">
+              <span class="home-showcase-index">Toyota Camry <small>02 / 06</small></span>
               <span class="home-showcase-open" aria-hidden="true">↗</span>
             </a>
-            <a class="home-showcase-card" href="gallery.html" data-showcase-slide data-i18n-aria-label="homeShowcaseFrame3" aria-label="شاهد لقطة من أعمال Ayan Photography — 03">
-              <video class="home-showcase-video" data-showcase-video muted loop playsinline preload="none" poster="https://d.top4top.io/p_3918voxck2.jpeg" aria-hidden="true"><source src="https://l.top4top.io/m_3918tnexs3.mp4" type="video/mp4"></video>
-              <span class="home-showcase-index" aria-hidden="true">03 / 03</span>
+            <a class="home-showcase-card" href="gallery.html?filter=image" data-showcase-slide aria-label="Jaguar F-Type">
+              <img class="home-showcase-video" src="gallery/jaguar-f-type-coupe.jpg" alt="Jaguar F-Type" loading="lazy" decoding="async">
+              <span class="home-showcase-index">Jaguar F-Type <small>03 / 06</small></span>
+              <span class="home-showcase-open" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-showcase-card" href="gallery.html?filter=image" data-showcase-slide aria-label="Ford Territory">
+              <img class="home-showcase-video" src="gallery/ford-territory.jpeg" alt="Ford Territory" loading="lazy" decoding="async">
+              <span class="home-showcase-index">Ford Territory <small>04 / 06</small></span>
+              <span class="home-showcase-open" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-showcase-card" href="gallery.html?filter=image" data-showcase-slide aria-label="Toyota Yaris">
+              <img class="home-showcase-video" src="gallery/yaris.jpg" alt="Toyota Yaris" loading="lazy" decoding="async">
+              <span class="home-showcase-index">Toyota Yaris <small>05 / 06</small></span>
+              <span class="home-showcase-open" aria-hidden="true">↗</span>
+            </a>
+            <a class="home-showcase-card" href="gallery.html?filter=image" data-showcase-slide aria-label="BMW 7 Series">
+              <img class="home-showcase-video" src="gallery/bmw.jpg" alt="BMW 7 Series" loading="lazy" decoding="async">
+              <span class="home-showcase-index">BMW 7 Series <small>06 / 06</small></span>
               <span class="home-showcase-open" aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
+        <nav class="home-showcase-menu" data-showcase-menu aria-label="Choose a car photo">
+          <button type="button" data-showcase-jump="0" aria-pressed="true">Dodge Charger</button>
+          <button type="button" data-showcase-jump="1" aria-pressed="false">Toyota Camry</button>
+          <button type="button" data-showcase-jump="2" aria-pressed="false">Jaguar F-Type</button>
+          <button type="button" data-showcase-jump="3" aria-pressed="false">Ford Territory</button>
+          <button type="button" data-showcase-jump="4" aria-pressed="false">Toyota Yaris</button>
+          <button type="button" data-showcase-jump="5" aria-pressed="false">BMW 7 Series</button>
+        </nav>
       </div>
     </section>
 
@@ -352,30 +376,6 @@
   </main>
 
 
-<div class="social-float" data-social-float>
-  <div class="social-float-menu" id="social-float-menu" data-social-menu>
-    <a class="social-float-link whatsapp" href="https://wa.me/966565117739" target="_blank" rel="noopener noreferrer" data-social="whatsapp">
-      <span class="social-float-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg>
-      </span><span data-i18n="socialWhatsApp">واتساب</span><span class="social-arrow">↗</span>
-    </a>
-    <a class="social-float-link instagram" href="https://instagram.com/13345" target="_blank" rel="noopener noreferrer" data-social="instagram">
-      <span class="social-float-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img"><rect x="4.2" y="4.2" width="15.6" height="15.6" rx="4.2"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.3" cy="6.9" r="1.05"/></svg>
-      </span><span data-i18n="socialInstagram">إنستغرام</span><span class="social-arrow">↗</span>
-    </a>
-    <a class="social-float-link snapchat" href="https://snapchat.com/t/vsu8gtHC" target="_blank" rel="noopener noreferrer" data-social="snapchat">
-      <span class="social-float-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" role="img"><path d="M12 4.35c-2.64 0-4.35 1.94-4.35 4.63v2.2c0 .46-.28.8-.84 1.02-.41.17-.72.41-.72.71 0 .44.6.58 1.22.76.5.15.75.36.82.77.09.51.42.79.96.84.4.04.71.13.96.28.45.27.85.67 1.95.67 1.1 0 1.5-.4 1.95-.67.25-.15.56-.24.96-.28.54-.05.87-.33.96-.84.07-.41.32-.62.82-.77.62-.18 1.22-.32 1.22-.76 0-.3-.31-.54-.72-.71-.56-.22-.84-.56-.84-1.02v-2.2c0-2.69-1.71-4.63-4.35-4.63Z"/></svg>
-      </span><span data-i18n="socialSnapchat">سناب شات</span><span class="social-arrow">↗</span>
-    </a>
-  </div>
-  <button class="social-float-toggle" type="button" data-social-toggle aria-expanded="false" aria-controls="social-float-menu" aria-label="WhatsApp">
-    <span class="social-float-toggle-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg>
-    </span>
-    <span class="social-float-ping" aria-hidden="true"></span>
-  </button>
 </div>
 
 <footer class="site-footer">
@@ -406,10 +406,32 @@
         <span data-i18n="footerLocation">المنطقة الشرقية، السعودية</span>
       </div>
     </div>
-    <div class="ecommerce-verification" aria-label="توثيق التجارة الإلكترونية">
-      <div class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.6"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="verification-copy"><strong>توثيق التجارة الإلكترونية</strong><span>رقم التوثيق: 0000333236</span></div>
-      <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry" target="_blank" rel="noopener noreferrer" aria-label="الاستعلام عن شهادة التوثيق رقم 0000333236 في المركز السعودي للأعمال">تحقق من الشهادة عبر منصة الأعمال <span aria-hidden="true">↗</span></a>
+    <div class="footer-trust-controls">
+    <div class="social-float" data-social-float>
+  <div class="social-float-menu" id="social-float-menu" data-social-menu>
+    <a class="social-float-link whatsapp" href="https://wa.me/966565117739" target="_blank" rel="noopener noreferrer" data-social="whatsapp">
+      <span class="social-float-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg>
+      </span><span data-i18n="socialWhatsApp">واتساب</span><span class="social-arrow">↗</span>
+    </a>
+    <a class="social-float-link instagram" href="https://instagram.com/13345" target="_blank" rel="noopener noreferrer" data-social="instagram">
+      <span class="social-float-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="img"><rect x="4.2" y="4.2" width="15.6" height="15.6" rx="4.2"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.3" cy="6.9" r="1.05"/></svg>
+      </span><span data-i18n="socialInstagram">إنستغرام</span><span class="social-arrow">↗</span>
+    </a>
+    <a class="social-float-link snapchat" href="https://snapchat.com/t/vsu8gtHC" target="_blank" rel="noopener noreferrer" data-social="snapchat">
+      <span class="social-float-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="img"><path d="M12 4.35c-2.64 0-4.35 1.94-4.35 4.63v2.2c0 .46-.28.8-.84 1.02-.41.17-.72.41-.72.71 0 .44.6.58 1.22.76.5.15.75.36.82.77.09.51.42.79.96.84.4.04.71.13.96.28.45.27.85.67 1.95.67 1.1 0 1.5-.4 1.95-.67.25-.15.56-.24.96-.28.54-.05.87-.33.96-.84.07-.41.32-.62.82-.77.62-.18 1.22-.32 1.22-.76 0-.3-.31-.54-.72-.71-.56-.22-.84-.56-.84-1.02v-2.2c0-2.69-1.71-4.63-4.35-4.63Z"/></svg>
+      </span><span data-i18n="socialSnapchat">سناب شات</span><span class="social-arrow">↗</span>
+    </a>
+  </div>
+  <button class="social-float-toggle" type="button" data-social-toggle data-i18n-aria-label="socialMenuLabel" aria-expanded="false" aria-controls="social-float-menu" aria-label="روابط التواصل">
+    <span class="social-float-toggle-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" role="img"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.5-3.7M8.2 13.2l7.5 3.7"/></svg>
+    </span>
+    <span class="social-float-ping" aria-hidden="true"></span>
+  </button>
+</div>
     </div>
     <div class="footer-bottom"><span>© Ayan Photography 2024–2026</span><a href="info.html" class="footer-developer-credit" aria-label="Ayan Developer — مطور الموقع">
           <span class="footer-credit-code" aria-hidden="true">&lt;/&gt;</span>
@@ -422,7 +444,16 @@
 
   </div>
   <script src="ui.js?v=74"></script>
-  <script src="app.js?v=91"></script>
+  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
+<script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+  <div class="ecommerce-verification" aria-label="متجر موثّق">
+    <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
+      <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="verification-copy"><strong data-i18n="verificationLink">متجر موثّق</strong><small data-i18n="verificationNumber">رقم الشهادة: 0000333236</small></span>
+      <span class="verification-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+  <script src="app.js?v=105"></script>
   <script>
     (()=>{
       const root=document.documentElement;
@@ -456,6 +487,7 @@
       const slides=track?[...track.querySelectorAll('[data-showcase-slide]')]:[];
       const previous=document.querySelector('[data-showcase-prev]');
       const next=document.querySelector('[data-showcase-next]');
+      const menuButtons=[...document.querySelectorAll('[data-showcase-jump]')];
       if(!track||!viewport||!slides.length||!previous||!next)return;
 
       const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -475,6 +507,11 @@
           Math.abs(slide.getBoundingClientRect().right-inlineStart)<Math.abs(slides[closestIndex].getBoundingClientRect().right-inlineStart)?index:closestIndex,0);
         previous.disabled=activeIndex===0;
         next.disabled=activeIndex===slides.length-1;
+        menuButtons.forEach((button,index)=>{
+          const active=index===activeIndex;
+          button.classList.toggle('active',active);
+          button.setAttribute('aria-pressed',String(active));
+        });
       };
       const move=(step)=>{
         updateControls();
@@ -484,6 +521,14 @@
         previous.disabled=activeIndex===0;
         next.disabled=activeIndex===slides.length-1;
       };
+      menuButtons.forEach((button)=>button.addEventListener('click',()=>{
+        const targetIndex=Number(button.dataset.showcaseJump);
+        if(Number.isInteger(targetIndex)&&slides[targetIndex]){
+          slides[targetIndex].scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'nearest',inline:'start'});
+          activeIndex=targetIndex;
+          updateControls();
+        }
+      }));
 
       previous.addEventListener('click',()=>move(-1));
       next.addEventListener('click',()=>move(1));
@@ -498,6 +543,5 @@
       window.addEventListener('resize',updateControls,{passive:true});
       updateControls();
     })();
-  </script>
-</body>
+  </script></body>
 </html>

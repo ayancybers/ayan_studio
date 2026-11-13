@@ -11,7 +11,7 @@
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eef5ff;background:#07111f;}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 50% 10%,rgba(72,146,255,.14),transparent 38%),linear-gradient(145deg,#0a1828,#050c15);padding:24px}main{width:min(720px,100%);padding:38px;border:1px solid rgba(124,179,241,.2);border-radius:28px;background:rgba(11,25,42,.92);box-shadow:0 26px 80px rgba(0,0,0,.35);text-align:center}.logo{width:78px;height:78px;object-fit:contain;margin-bottom:16px}.eyebrow{color:#75b2ff;font-size:11px;letter-spacing:.16em;font-weight:800}.icon{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;margin:18px auto;font-size:35px;background:rgba(56,190,119,.12);border:1px solid rgba(82,212,144,.28)}h1{font-size:32px;margin:0 0 12px}p{color:#9eacc0;line-height:1.8;margin:0 auto;max-width:540px}.status{margin-top:18px;min-height:54px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.035);color:#dce8f7;font-size:13px;padding:14px}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}a,button{font:inherit;text-decoration:none;border:0;border-radius:14px;padding:13px 18px;cursor:pointer}.primary{background:#4d96ff;color:#fff}.ghost{color:#dce8f7;background:rgba(255,255,255,.06);border:1px solid rgba(124,179,241,.14)}.hidden{display:none}.error{color:#ffb3b3;background:rgba(255,65,65,.08);border-color:rgba(255,65,65,.2)}
   </style>
-<link rel="stylesheet" href="refresh.css?v=91">
+<link rel="stylesheet" href="refresh.css?v=111">
 </head>
 <body class="payment-result-page">
 <main>
@@ -307,6 +307,14 @@ async function sendPdfInvoice(providerValue, paymentRef, bookingData = {}){
 }
 function blobToBase64(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result||''));reader.onerror=reject;reader.readAsDataURL(blob)})}
 verify();
-</script>
+</script><div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
+<script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+  <div class="ecommerce-verification" aria-label="متجر موثّق">
+    <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
+      <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="verification-copy"><strong data-i18n="verificationLink">متجر موثّق</strong><small data-i18n="verificationNumber">رقم الشهادة: 0000333236</small></span>
+      <span class="verification-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
 </body>
 </html>
