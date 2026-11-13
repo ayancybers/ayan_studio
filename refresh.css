@@ -2759,3 +2759,25 @@ html .reveal.is-visible { filter: blur(0); }
 /* The remote seal remains embedded as required; use the local verified-store capsule to avoid its broken image placeholder. */
 html .sbc-verify-seal { display: none !important; }
 html body.sbc-seal-rendered .ecommerce-verification { display: block !important; }
+html .social-float { left: max(12px,env(safe-area-inset-left)) !important; right: auto !important; inset-inline-start: max(12px,env(safe-area-inset-left)) !important; inset-inline-end: auto !important; bottom: calc(14px + env(safe-area-inset-bottom) + 52px + 12px) !important; }
+html .social-float-icon:not(:has(svg)) { font-size: 21px; font-weight: 900; line-height: 1; }
+.horizontal-swipe-guide { display: none; }
+@media (max-width: 700px) {
+  html .ecommerce-verification {
+    left: max(12px,env(safe-area-inset-left)) !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    max-width: calc(100vw - 24px) !important;
+    padding: 3px !important;
+    border-radius: 999px !important;
+    box-shadow: 0 7px 20px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.16) !important;
+  }
+  html .ecommerce-verification .verification-link { min-height: 42px !important; gap: 8px !important; padding: 3px 10px !important; font-size: 12px !important; }
+  html .ecommerce-verification .verification-mark { width: 32px; height: 32px; flex-basis: 32px; }
+  html .footer-trust-controls .social-float { bottom: calc(12px + env(safe-area-inset-bottom) + 52px + 12px) !important; }
+  html .social-float { left: max(12px,env(safe-area-inset-left)) !important; right: auto !important; inset-inline-start: max(12px,env(safe-area-inset-left)) !important; inset-inline-end: auto !important; bottom: calc(12px + env(safe-area-inset-bottom) + 50px + 13px) !important; }
+  html .horizontal-swipe-guide { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin: -7px 0 12px; color: var(--muted); font-size: 11px; font-weight: 700; direction: rtl; }
+  html .package-swipe-guide { margin: -5px 20px 12px; }
+  html .swipe-guide-arrows { color: var(--brand); font-size: 18px; line-height: 1; animation: swipeNudge 1.8s ease-in-out infinite; }
+  @keyframes swipeNudge { 0%,100% { transform: translateX(0); opacity: .72; } 50% { transform: translateX(-5px); opacity: 1; } }
+}
+@media (prefers-reduced-motion: reduce) { html .swipe-guide-arrows { animation: none !important; } }

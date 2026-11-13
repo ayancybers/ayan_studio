@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png?v=1">
   <title>Ayan Photography</title>
 <link rel="stylesheet" href="styles.css?v=71">
-<link rel="stylesheet" href="refresh.css?v=111">
+<link rel="stylesheet" href="refresh.css?v=114">
   <style>
     .home-intro-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,rgba(17,55,67,.58),transparent 42%),linear-gradient(145deg,#05090d 0%,#0a1219 52%,#070c11 100%);color:#f2f7f8;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .65s ease,visibility .65s ease}
     .home-intro-loader::before,.home-intro-loader::after{position:absolute;content:"";width:min(78vw,760px);aspect-ratio:1;border:1px solid rgba(132,218,224,.075);border-radius:50%;pointer-events:none}
@@ -150,6 +150,7 @@
       <a class="packages-book-link" href="booking.html" data-i18n="packagesLink">تخصيص وحجز ←</a>
     </div>
 
+    <div class="horizontal-swipe-guide package-swipe-guide" aria-hidden="true"><span class="swipe-guide-arrows">↔</span><span data-i18n="swipeHint">اسحب يمينًا ويسارًا للتنقل</span></div>
     <div class="packages-grid packages-grid-cinematic" aria-label="Ayan Photography packages">
       <article class="card package package-cinematic package-silver reveal" data-delay="1">
         <div class="package-visual cinematic-visual no-package-image">
@@ -311,6 +312,7 @@
             <a class="btn btn-secondary home-showcase-link" href="gallery.html" data-i18n="homeShowcaseLink">شاهد كل الأعمال ←</a>
           </div>
         </div>
+        <div class="horizontal-swipe-guide" aria-hidden="true"><span class="swipe-guide-arrows">↔</span><span data-i18n="swipeHint">اسحب يمينًا ويسارًا للتنقل</span></div>
         <div class="home-showcase-viewport" data-home-showcase-viewport role="region" aria-label="Car photo selection" tabindex="0">
           <div class="home-showcase-grid" id="home-showcase-track" data-home-showcase-track>
             <a class="home-showcase-card home-showcase-featured" href="gallery.html?filter=image" data-showcase-slide aria-label="Dodge Charger RT">
@@ -427,7 +429,7 @@
   </div>
   <button class="social-float-toggle" type="button" data-social-toggle data-i18n-aria-label="socialMenuLabel" aria-expanded="false" aria-controls="social-float-menu" aria-label="روابط التواصل">
     <span class="social-float-toggle-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" role="img"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.5-3.7M8.2 13.2l7.5 3.7"/></svg>
+      <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="11.2" r="8.2"/><path d="m6.2 17.2-1 3.2 3.4-1M9 7.5c.35-.55.67-.57 1-.56h.5c.22 0 .43.12.53.35l.76 1.78c.1.23.07.42-.09.61l-.43.5c-.15.18-.16.34-.05.53.42.74 1 1.35 1.69 1.83.2.14.37.13.54-.04l.52-.58c.16-.18.36-.22.58-.12l1.73.78c.22.1.34.24.31.47-.06.55-.31 1.04-.76 1.39-.42.33-.94.4-1.48.27-1.13-.28-2.34-1.04-3.24-1.93-1.06-1-1.9-2.2-2.34-3.19-.27-.61-.31-1.24-.07-1.84L9 7.5Z"/></svg>
     </span>
     <span class="social-float-ping" aria-hidden="true"></span>
   </button>
@@ -453,7 +455,7 @@
       <span class="verification-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
-  <script src="app.js?v=105"></script>
+  <script src="app.js?v=107"></script>
   <script>
     (()=>{
       const root=document.documentElement;
