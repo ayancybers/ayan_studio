@@ -678,6 +678,44 @@ function setupHeroBackgroundVideo() {
   deferBackgroundVideo('[data-hero-video]', { ignoreDataSaver: true, ignoreReducedMotion: true });
 }
 
+function setupMobileFeatureMenus() {
+  const mediaQuery = window.matchMedia('(max-width: 700px)');
+  const cards = [...document.querySelectorAll('.feature-grid > .feature, .service-grid > .story-card')];
+  if (!cards.length) return;
+
+  const sync = () => cards.forEach((card) => {
+    const trigger = card.querySelector('.feature-menu-trigger');
+    const detail = card.querySelector('p');
+    if (!trigger || !detail) return;
+    trigger.disabled = !mediaQuery.matches;
+    trigger.setAttribute('aria-controls', detail.id);
+    trigger.setAttribute('aria-expanded', String(!mediaQuery.matches || card.classList.contains('is-expanded')));
+  });
+
+  cards.forEach((card) => {
+    const trigger = card.querySelector('.feature-menu-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', () => {
+      if (!mediaQuery.matches) return;
+      const shouldOpen = !card.classList.contains('is-expanded');
+      cards.filter((item) => item.parentElement === card.parentElement).forEach((item) => {
+        item.classList.remove('is-expanded');
+        item.querySelector('.feature-menu-trigger')?.setAttribute('aria-expanded', 'false');
+      });
+      if (shouldOpen) {
+        card.classList.add('is-expanded');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  mediaQuery.addEventListener?.('change', () => {
+    cards.forEach((card) => card.classList.remove('is-expanded'));
+    sync();
+  });
+  sync();
+}
+
 function setupHomeShowcaseVideos() {
   const videos = [...document.querySelectorAll('[data-showcase-video]')];
   if (!videos.length) return;
@@ -772,7 +810,6 @@ async function loadPaymentConfig() {
       }
     }
   } catch (_) {
-    // Safe fallback values are kept in AYAN_PAYMENT_CONFIG.
   }
 }
 
@@ -1230,9 +1267,11 @@ const GALLERY_FALLBACK = {
   videos: [
     { src: 'https://l.top4top.io/m_3969on2w91.mp4', poster: 'gallery/dodge.jpeg', titleAr: 'Dodge Charger RT', titleEn: 'Dodge Charger RT' },
     { src: 'gallery/Camry.mp4', poster: 'gallery/camry-video-poster.jpg', titleAr: 'Toyota Camry', titleEn: 'Toyota Camry' },
+    { src: 'https://h.top4top.io/m_3969qr5yz1.mp4', poster: 'gallery/camry-link-poster.webp', titleAr: 'Toyota Camry', titleEn: 'Toyota Camry' },
+    { src: 'https://f.top4top.io/m_3970ekc111.mp4', poster: 'gallery/patrol-video-poster.webp', titleAr: 'Nissan Patrol', titleEn: 'Nissan Patrol' },
     { src: 'https://l.top4top.io/m_3969rze1z1.mp4', titleAr: 'Ford Mustang', titleEn: 'Ford Mustang' },
     { src: 'https://e.top4top.io/m_3969v09a91.mp4', poster: 'gallery/ford-territory.jpeg', titleAr: 'Ford Territory', titleEn: 'Ford Territory' },
-    { src: 'https://b.top4top.io/m_3969wdsbm1.mp4', poster: 'gallery/yaris.jpg', titleAr: 'Toyota Yaris', titleEn: 'Toyota Yaris' },
+    { src: 'https://b.top4top.io/m_3969wdsbm1.mp4', poster: 'gallery/yaris.webp', titleAr: 'Toyota Yaris', titleEn: 'Toyota Yaris' },
     { src: 'https://d.top4top.io/m_39690zvhv1.mp4', poster: 'gallery/jaguar-f-type-coupe.jpg', titleAr: 'Jaguar F-Type', titleEn: 'Jaguar F-Type' },
     { src: 'https://d.top4top.io/m_39690lgvx1.mp4', titleAr: 'Mitsubishi Pajero', titleEn: 'Mitsubishi Pajero' },
     { src: 'https://j.top4top.io/m_3969d05x81.mp4', titleAr: 'Lexus ES350', titleEn: 'Lexus ES350' }
@@ -1242,7 +1281,7 @@ const GALLERY_FALLBACK = {
     { src: 'gallery/camry.jpeg', titleAr: 'Toyota Camry', titleEn: 'Toyota Camry' },
     { src: 'gallery/jaguar-f-type-coupe.jpg', titleAr: 'Jaguar F-Type', titleEn: 'Jaguar F-Type' },
     { src: 'gallery/ford-territory.jpeg', titleAr: 'Ford Territory', titleEn: 'Ford Territory' },
-    { src: 'gallery/yaris.jpg', titleAr: 'Toyota Yaris', titleEn: 'Toyota Yaris' },
+    { src: 'gallery/yaris.webp', titleAr: 'Toyota Yaris', titleEn: 'Toyota Yaris' },
     { src: 'gallery/bmw.jpg', titleAr: 'BMW 7 Series', titleEn: 'BMW 7 Series' }
   ]
 };
@@ -1255,8 +1294,8 @@ async function loadGallery() {
   grid.innerHTML = `<div class="gallery-loading-status" role="status">${escapeHtml(tr('galleryLoading'))}</div>${Array.from({ length: 4 }, () => '<div class="gallery-skeleton" aria-hidden="true"></div>').join('')}`;
 
   const candidates = [
-    new URL('./data/gallery.json?v=3', document.baseURI).href,
-    '/data/gallery.json?v=3'
+    new URL('./data/gallery.json?v=4', document.baseURI).href,
+    '/data/gallery.json?v=4'
   ];
 
   let data = null;
@@ -1611,35 +1650,13 @@ function setupVerificationDialog() {
   const trigger = card?.querySelector('.verification-link');
   if (!card || !trigger) return;
 
-  const seal = document.querySelector('.sbc-verify-seal');
-  const sealScript = document.querySelector('script[src*="/EAuthSealApi/seal.js"]');
-  if (seal) {
-    // Keep the official token element in the document, but use our in-site
-    // verification capsule as the only visible control (the remote seal may
-    // render a broken image or a second floating badge on mobile).
-    seal.setAttribute('aria-hidden', 'true');
-    seal.style.setProperty('display', 'none', 'important');
-    const useFallback = () => document.body.classList.add('sbc-seal-fallback');
-    const detectSeal = () => {
-      const nodes = Array.from(seal.querySelectorAll('img,iframe,a,button,svg,canvas'));
-      const brokenImage = nodes.some((node) => node.tagName === 'IMG' && node.complete && node.naturalWidth === 0);
-      if (brokenImage) { useFallback(); return true; }
-      const visibleContent = nodes.some((node) => {
-        const rect = node.getBoundingClientRect();
-        const style = getComputedStyle(node);
-        return rect.width > 24 && rect.height > 24 && style.display !== 'none' && style.visibility !== 'hidden';
-      });
-      if (visibleContent) {
-        document.body.classList.add('sbc-seal-rendered');
-        return true;
-      }
-      return false;
-    };
-    const observer = new MutationObserver(() => { if (detectSeal()) observer.disconnect(); });
-    observer.observe(seal, { childList: true, subtree: true, attributes: true });
-    sealScript?.addEventListener('error', useFallback, { once: true });
-    sealScript?.addEventListener('load', () => setTimeout(() => { if (!detectSeal()) useFallback(); }, 1400), { once: true });
-    setTimeout(() => { if (!detectSeal()) useFallback(); }, 3200);
+  const footerBottom = document.querySelector('.site-footer .footer-bottom');
+  if (footerBottom) {
+    const trustControls = card.closest('.footer-trust-controls');
+    const socialWidget = trustControls?.querySelector('[data-social-float]');
+    if (socialWidget) document.body.append(socialWidget);
+    footerBottom.insertAdjacentElement('afterend', card);
+    if (trustControls && !trustControls.children.length) trustControls.remove();
   }
 
   const certificateUrl = 'https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236';
@@ -1700,7 +1717,6 @@ function setupVerificationDialog() {
 
 async function init() {
   applyPreferences();
-  // Start the config request in the background so the header, form, and interactions are usable immediately.
   void loadPaymentConfig();
   setupActiveNav();
   setupPackageButtons();
@@ -1714,6 +1730,7 @@ async function init() {
   setupVerificationDialog();
   setupAmbientParallax();
   setupHeroBackgroundVideo();
+  setupMobileFeatureMenus();
   setupHomeShowcaseVideos();
   setupBookingBackgroundVideo();
   loadGallery();

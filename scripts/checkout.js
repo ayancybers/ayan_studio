@@ -25,6 +25,8 @@
   let order = null;
   let config = fallbackConfig;
   let selectedMethod = '';
+  let couponCode = '';
+  let couponApplied = false;
   let activePaymentGroup = 'standard';
   const selectedMethodsByGroup = { standard: '', installments: '' };
   const availableMethods = new Set();
@@ -52,7 +54,7 @@
     preparing: 'جاري تجهيز عملية الدفع…', backBooking: '← العودة وتعديل البيانات',
     secureNote: 'سيتم تحويلك إلى صفحة الدفع المستضافة من مزود الدفع. لا يتم تخزين بيانات البطاقة في موقع Ayan Photography.',
     package: 'الباقة', beforeDiscount: 'السعر قبل الخصم', afterDiscount: 'السعر بعد الخصم',
-    discount: 'الخصم', fee: 'رسوم الدفع', total: 'الإجمالي', name: 'الاسم', phone: 'الجوال',
+    discount: 'خصم الباقة', couponLabel: 'كود خصم إضافي', couponApply: 'تطبيق', couponSuccess: 'تم تطبيق خصم 10 ريالات', couponInvalid: 'كود الخصم غير صحيح', couponDiscount: 'خصم ayancybers', netPackage: 'السعر بعد كود الخصم', fee: 'رسوم الدفع', total: 'الإجمالي', name: 'الاسم', phone: 'الجوال',
     car: 'السيارة', area: 'منطقة التصوير', shootDate: 'يوم التصوير المقترح', noOrder: 'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.',
     chooseMethod: 'طريقة الدفع غير متاحة حاليًا. اختر إحدى الطرق المتاحة.',
     emailInvalid: 'اكتب بريدًا إلكترونيًا صحيحًا لإرسال الفاتورة.', paymentFailed: 'تعذر تجهيز عملية الدفع.',
@@ -79,7 +81,7 @@
     preparing: 'Preparing your payment…', backBooking: '← Back to edit your details',
     secureNote: 'You will continue to the payment provider’s secure checkout. Ayan Photography does not store card details.',
     package: 'Package', beforeDiscount: 'Original price', afterDiscount: 'Discounted price',
-    discount: 'Discount', fee: 'Payment fee', total: 'Total', name: 'Name', phone: 'Mobile',
+    discount: 'Package discount', couponLabel: 'Extra discount code', couponApply: 'Apply', couponSuccess: 'SAR 10 discount applied', couponInvalid: 'Invalid discount code', couponDiscount: 'ayancybers discount', netPackage: 'Price after coupon', fee: 'Payment fee', total: 'Total', name: 'Name', phone: 'Mobile',
     car: 'Car', area: 'Shoot area', shootDate: 'Preferred shoot date', noOrder: 'No booking was found. Return to the booking page and try again.',
     chooseMethod: 'This payment method is unavailable. Choose an available option.',
     emailInvalid: 'Enter a valid email address for your invoice.', paymentFailed: 'Unable to prepare payment.',
@@ -118,6 +120,9 @@
   const demoNotice = byId('demoNotice');
   const emailInput = byId('invoiceEmail');
   const feeNote = byId('paymentFeeNote');
+  const couponForm = byId('couponForm');
+  const couponInput = byId('couponCode');
+  const couponStatus = byId('couponStatus');
   const cardOrigin = byId('cardOrigin');
   const cardOriginTotal = byId('cardOriginTotal');
   const cardChoice = byId('visaMastercardChoice');
@@ -175,18 +180,20 @@
   function pricingFor(method) {
     const fallbackPackage = fallbackConfig.packages[order.packageKey] || { price: 0, originalPrice: 0, discount: 0 };
     const pkg = config.packages?.[order.packageKey] || fallbackPackage;
-    const base = Number(pkg.price || 0);
+    const packagePrice = Number(pkg.price || 0);
+    const couponDiscount = couponApplied ? Math.min(10, packagePrice) : 0;
+    const base = Math.max(0, packagePrice - couponDiscount);
     const key = methodPricingKey[method] || method;
     const feeConfig = config.pricing?.paymentFees?.[key] || { percent: 0, fixed: 0 };
     const fee = config.pricing?.paymentFeeEnabled !== false
       ? Math.round((base * Number(feeConfig.percent || 0) / 100 + Number(feeConfig.fixed || 0)) * 100) / 100
       : 0;
-    return { base, fee, total: Math.round((base + fee) * 100) / 100, feeConfig, pkg };
+    return { base, packagePrice, couponDiscount, fee, total: Math.round((base + fee) * 100) / 100, feeConfig, pkg };
   }
 
   function renderSummary() {
     const finance = pricingFor(selectedMethod);
-    summary.innerHTML = `<div class="checkout-row"><span>${copy.package}</span><strong>${escapeHtml(packageNames[order.packageKey] || order.packageType)}</strong></div><div class="checkout-row"><span>${copy.beforeDiscount}</span><strong class="checkout-old">${money(finance.pkg.originalPrice ?? finance.base)}</strong></div><div class="checkout-row"><span>${copy.afterDiscount}</span><strong>${money(finance.base)}</strong></div><div class="checkout-row"><span>${copy.discount}</span><strong class="checkout-discount">- ${money(finance.pkg.discount ?? 0)}</strong></div><div class="checkout-row"><span>${copy.fee}</span><strong>${money(finance.fee)}</strong></div><div class="checkout-row total"><span>${copy.total}</span><strong>${money(finance.total)}</strong></div>`;
+    summary.innerHTML = `<div class="checkout-row"><span>${copy.package}</span><strong>${escapeHtml(packageNames[order.packageKey] || order.packageType)}</strong></div><div class="checkout-row"><span>${copy.beforeDiscount}</span><strong class="checkout-old">${money(finance.pkg.originalPrice ?? finance.packagePrice)}</strong></div><div class="checkout-row"><span>${copy.afterDiscount}</span><strong>${money(finance.packagePrice)}</strong></div><div class="checkout-row"><span>${copy.discount}</span><strong class="checkout-discount">- ${money(finance.pkg.discount ?? 0)}</strong></div>${couponApplied ? `<div class="checkout-row"><span>${copy.couponDiscount}</span><strong class="checkout-discount">- ${money(finance.couponDiscount)}</strong></div>` : ''}<div class="checkout-row"><span>${copy.netPackage}</span><strong>${money(finance.base)}</strong></div><div class="checkout-row"><span>${copy.fee}</span><strong>${money(finance.fee)}</strong></div><div class="checkout-row total"><span>${copy.total}</span><strong>${money(finance.total)}</strong></div>`;
     summary.setAttribute('aria-busy', 'false');
     document.querySelectorAll('[data-method-total]').forEach((node) => {
       node.textContent = money(pricingFor(node.dataset.methodTotal).total);
@@ -299,6 +306,15 @@
   cardChoice?.addEventListener('click', (event) => {
     if (event.target !== cardOrigin && !cardOrigin?.disabled) selectMethod(cardOrigin.value);
   });
+  couponForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const entered = String(couponInput?.value || '').trim().toLowerCase();
+    couponApplied = entered === 'ayancybers';
+    couponCode = couponApplied ? entered : '';
+    couponStatus.textContent = couponApplied ? copy.couponSuccess : copy.couponInvalid;
+    couponStatus.dataset.state = couponApplied ? 'success' : 'error';
+    renderSummary();
+  });
 
   fetch('/api/tuwaiqpay-payment?config=1', { cache: 'no-store' }).then((response) => {
     if (!response.ok) throw new Error('Payment configuration unavailable');
@@ -319,7 +335,7 @@
       if (!availableMethods.has(selectedMethod)) throw new Error(copy.chooseMethod);
       const email = String(emailInput?.value || '').trim().toLowerCase();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error(copy.emailInvalid);
-      const payload = { ...order, email, lang: ar ? 'ar' : 'en', paymentMethod: selectedMethod };
+      const payload = { ...order, email, lang: ar ? 'ar' : 'en', paymentMethod: selectedMethod, couponCode };
       const endpoint = selectedMethod.startsWith('tuwaiqpay_')
         ? '/api/tuwaiqpay-payment'
         : selectedMethod === 'tabby' ? '/api/tabby-payment' : '/api/tamara-payment';

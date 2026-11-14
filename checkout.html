@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#080d12">
   <meta name="robots" content="noindex,nofollow">
   <title>الدفع الآمن | Ayan Photography</title>
-<link rel="stylesheet" href="styles.css?v=71">
+<link rel="stylesheet" href="styles.css?v=72">
   <style>
     .checkout-wrap{max-width:760px;margin:0 auto;padding:70px 16px 110px}.checkout-card{padding:28px;border:1px solid rgba(120,170,230,.22);border-radius:28px;background:linear-gradient(145deg,rgba(15,29,48,.98),rgba(5,14,26,.98));box-shadow:0 24px 80px rgba(0,0,0,.18)}
     .checkout-logo{width:74px;height:74px;display:block;object-fit:contain;margin:0 auto 18px}.checkout-kicker{text-align:center;color:#75b2ff;font-size:11px;font-weight:800;letter-spacing:.16em}.checkout-title{text-align:center;margin:8px 0;font-size:clamp(28px,6vw,42px)}.checkout-sub{text-align:center;color:var(--text-secondary);line-height:1.8;margin:0 auto 26px;max-width:560px}.checkout-demo{display:none;margin:0 0 18px;padding:13px 15px;border-radius:15px;background:rgba(255,190,50,.10);border:1px solid rgba(255,190,50,.22);color:#ffd77a;font-size:12px;line-height:1.7}.checkout-demo.show{display:block}.checkout-summary{display:grid;gap:10px;padding:20px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(132,178,232,.13)}.checkout-row{display:flex;justify-content:space-between;gap:20px;font-size:13px}.checkout-row span{color:var(--text-secondary)}.checkout-row.total{padding-top:13px;margin-top:4px;border-top:1px dashed rgba(132,178,232,.18);font-size:17px}.checkout-row.total strong{color:var(--brand);font-size:24px}.checkout-customer{display:grid;gap:8px;margin:18px 0;padding:17px;border-radius:18px;background:rgba(255,255,255,.025)}.checkout-customer div{display:flex;justify-content:space-between;gap:18px;font-size:12px}.checkout-customer span{color:var(--text-secondary)}.checkout-actions{display:grid;gap:10px;margin-top:20px}.checkout-actions button{width:100%;min-height:54px}.checkout-back{text-align:center;margin-top:13px}.checkout-back a{color:var(--text-secondary);text-decoration:none}.checkout-error{display:none;margin-top:14px;padding:13px 15px;border-radius:14px;background:rgba(255,75,75,.10);border:1px solid rgba(255,75,75,.2);color:#ffb5b5;font-size:12px;line-height:1.7;white-space:pre-wrap}.checkout-error.show{display:block}.checkout-secure{text-align:center;color:var(--muted);font-size:10px;margin-top:18px}.checkout-status{display:none;text-align:center;padding:16px;color:var(--text-secondary)}
@@ -40,7 +40,7 @@
     @media(max-width:620px){.payment-choice-grid{grid-template-columns:1fr}.payment-choice{grid-template-columns:auto 1fr auto}.payment-card-choice{grid-template-columns:auto 1fr auto}.payment-card-origin{grid-column:1/-1;grid-row:2}.payment-card-choice .payment-choice-price{grid-column:3;grid-row:1}.payment-category-tab{padding:10px}.payment-category-tab strong{font-size:10px}.payment-category-tab small{font-size:8px}}
 
 </style>
-  <link rel="stylesheet" href="refresh.css?v=114">
+  <link rel="stylesheet" href="refresh.css?v=120">
 </head>
 <body class="booking-page checkout-page" data-theme="relax">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -57,6 +57,11 @@
         <p class="checkout-sub" data-checkout-key="subtitle">راجع بياناتك والمبلغ النهائي قبل الانتقال إلى صفحة الدفع الآمنة.</p>
         <div id="demoNotice" class="checkout-demo" data-checkout-key="demoNotice">وضع الدفع التجريبي مفعّل حاليًا. لن يتم تحصيل سعر الباقة الحقيقي أثناء الاختبار؛ سيتم استخدام مفاتيح الدفع التجريبية المخصصة للموقع.</div>
         <div id="summary" class="checkout-summary" aria-busy="true"><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span></div>
+        <form id="couponForm" class="checkout-coupon" novalidate>
+          <label for="couponCode" data-checkout-key="couponLabel">كود خصم إضافي</label>
+          <div class="checkout-coupon-controls"><input id="couponCode" type="text" autocomplete="off" placeholder="ayancybers" aria-label="كود الخصم"><button type="submit" data-checkout-key="couponApply">تطبيق</button></div>
+          <small id="couponStatus" role="status" aria-live="polite"></small>
+        </form>
         <div id="customer" class="checkout-customer" aria-busy="true"><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span></div>
 
         <div class="payment-selector" aria-label="اختيار طريقة الدفع">
@@ -137,9 +142,7 @@
       </section>
     </main>
   </div>
-  <script src="ui.js?v=74"></script>
-  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
-<script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+  <script src="scripts/ui.js?v=76"></script>
   <div class="ecommerce-verification" aria-label="متجر موثّق">
     <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
       <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -147,6 +150,6 @@
       <span class="verification-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
-  <script src="app.js?v=107"></script>
-<script src="checkout.js?v=7"></script></body>
+  <script src="scripts/app.js?v=113"></script>
+<script src="scripts/checkout.js?v=9"></script></body>
 </html>

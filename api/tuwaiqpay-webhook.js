@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true, processed: false, reason: 'Booking description was not recognized.' });
   }
 
-  const pricing = calculatePricing(parsed.packageKey, pricingMethod);
+  const pricing = calculatePricing(parsed.packageKey, pricingMethod, parsed.couponCode);
   const amount = Number(bill.amount ?? details.amount ?? 0);
   if (!Number.isFinite(amount) || Math.abs(amount - pricing.total) > 0.01) {
     console.error('TuwaiqPay webhook: amount did not match the server-calculated booking total.', { paymentId, amount, expected: pricing.total });
@@ -84,6 +84,8 @@ export default async function handler(req, res) {
     paymentMethod,
     paymentMethodCode: String(bill.processedPaymentMethod?.code || details.paymentMethod?.code || '').toUpperCase(),
     subtotal: pricing.subtotal,
+    couponCode: pricing.couponCode,
+    couponDiscount: pricing.couponDiscount,
     paymentFee: pricing.paymentFee,
     paymentFeePercent: pricing.paymentFeePercent,
     paymentFeeFixed: pricing.paymentFeeFixed,
@@ -141,7 +143,8 @@ function parseBookingDescription(value) {
     carType: String(parts[3] || '').slice(0, 40),
     shootRegion: String(parts[4] || '').slice(0, 60),
     lang: parts[5] === 'en' ? 'en' : 'ar',
-    preferredAt: /^\d{4}-\d{2}-\d{2}$/.test(parts[6] || '') ? parts[6] : ''
+    preferredAt: /^\d{4}-\d{2}-\d{2}$/.test(parts[6] || '') ? parts[6] : '',
+    couponCode: String(parts[7] || '').toLowerCase() === 'ayancybers' ? 'ayancybers' : ''
   };
 }
 

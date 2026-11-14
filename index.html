@@ -13,8 +13,8 @@
   <link rel="icon" type="image/png" href="assets/ayan-logo-icon.png?v=1">
   <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png?v=1">
   <title>Ayan Photography</title>
-<link rel="stylesheet" href="styles.css?v=71">
-<link rel="stylesheet" href="refresh.css?v=114">
+<link rel="stylesheet" href="styles.css?v=72">
+<link rel="stylesheet" href="refresh.css?v=120">
   <style>
     .home-intro-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,rgba(17,55,67,.58),transparent 42%),linear-gradient(145deg,#05090d 0%,#0a1219 52%,#070c11 100%);color:#f2f7f8;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .65s ease,visibility .65s ease}
     .home-intro-loader::before,.home-intro-loader::after{position:absolute;content:"";width:min(78vw,760px);aspect-ratio:1;border:1px solid rgba(132,218,224,.075);border-radius:50%;pointer-events:none}
@@ -118,7 +118,7 @@
   <main>
     <section class="hero">
       <div class="hero-media" aria-hidden="true">
-        <video class="hero-video" data-hero-video autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="gallery/Camry.mp4" type="video/mp4"></video>
+        <video class="hero-video" data-hero-video autoplay muted loop playsinline preload="metadata" poster="gallery/dodge.jpeg" aria-hidden="true"><source src="gallery/Dodge.mp4" type="video/mp4"></video>
       </div>
       <div class="container hero-grid">
         <div class="hero-copy reveal">
@@ -336,7 +336,7 @@
               <span class="home-showcase-open" aria-hidden="true">↗</span>
             </a>
             <a class="home-showcase-card" href="gallery.html?filter=image" data-showcase-slide aria-label="Toyota Yaris">
-              <img class="home-showcase-video" src="gallery/yaris.jpg" alt="Toyota Yaris" loading="lazy" decoding="async">
+              <img class="home-showcase-video" src="gallery/yaris.webp" alt="Toyota Yaris" loading="lazy" decoding="async">
               <span class="home-showcase-index">Toyota Yaris <small>05 / 06</small></span>
               <span class="home-showcase-open" aria-hidden="true">↗</span>
             </a>
@@ -445,9 +445,7 @@
 </footer>
 
   </div>
-  <script src="ui.js?v=74"></script>
-  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
-<script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+  <script src="scripts/ui.js?v=76"></script>
   <div class="ecommerce-verification" aria-label="متجر موثّق">
     <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
       <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -455,7 +453,7 @@
       <span class="verification-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
-  <script src="app.js?v=107"></script>
+  <script src="scripts/app.js?v=113"></script>
   <script>
     (()=>{
       const root=document.documentElement;

@@ -41,7 +41,6 @@
         const style = document.createElement('style');
         style.id = 'ayan-global-ui-v35';
         style.textContent = `
-          /* V33: never allow an old backdrop/overlay to steal menu taps */
           .mobile-menu-backdrop,
           .mobile-menu-backdrop-v28,
           .global-mobile-backdrop {
@@ -49,7 +48,6 @@
             pointer-events: none !important;
           }
 
-          /* Solid mobile menu — no glass */
           @media (max-width: 900px) {
             .site-header {
               position: sticky !important;
@@ -180,7 +178,6 @@
             }
           }
 
-          /* Preference panels: solid and above every page layer */
           .site-header .pref-panel {
             background: color-mix(in srgb, var(--surface-strong) 98%, var(--bg)) !important;
             backdrop-filter: none !important;
@@ -208,7 +205,6 @@
             background: var(--surface-strong) !important;
           }
 
-          /* Compact booking package selector */
           .booking-page .booking-main-card {
             overflow: hidden !important;
           }
@@ -356,7 +352,6 @@
             }
           }
 
-          /* Keep the package selector from being visually enlarged by old hover/scale rules. */
           .booking-page .booking-package-choice,
           .booking-page .booking-package-choice * {
             transform-origin: center !important;

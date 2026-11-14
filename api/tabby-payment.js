@@ -59,6 +59,7 @@ export default async function handler(req, res) {
   const phone = normalizeSaudiPhone(body.phone);
   const notes = limit(String(body.notes || '').trim(), 1200);
   const lang = body.lang === 'en' ? 'en' : 'ar';
+  const couponCode = limit(String(body.couponCode || '').trim().toLowerCase(), 40);
 
   if (!name || !email || !packageKey || !packageType || !carType || !shootRegion || !preferredAt || !phone) {
     return res.status(400).json({ error: 'Missing required fields', requestId });
@@ -72,7 +73,9 @@ export default async function handler(req, res) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
 
   const pkg = PACKAGES[packageKey];
-  const pricing = calculatePricing(packageKey, 'tabby');
+  let pricing;
+  try { pricing = calculatePricing(packageKey, 'tabby', couponCode); }
+  catch (_) { return res.status(400).json({ error: 'Invalid coupon code', requestId }); }
   const orderReference = `AYAN-T-${requestId.replace(/-/g, '').slice(-20).toUpperCase()}`;
   const firstName = name.split(/\s+/)[0] || 'Customer';
   const baseUrl = getBaseUrl(req);
@@ -106,6 +109,8 @@ export default async function handler(req, res) {
     package_name_ar: pkg.ar,
     package_name_en: pkg.en,
     subtotal: sessionPricing.subtotal.toFixed(2),
+    coupon_code: pricing.couponCode,
+    coupon_discount: pricing.couponDiscount.toFixed(2),
     payment_fee: sessionPricing.paymentFee.toFixed(2),
     payment_fee_percent: String(sessionPricing.paymentFeePercent),
     payment_fee_fixed: sessionPricing.paymentFeeFixed.toFixed(2),
@@ -341,6 +346,8 @@ function buildTabbyResult(data, paymentId) {
     packageNameAr: meta.package_name_ar || '',
     packageNameEn: meta.package_name_en || '',
     subtotal: Number(meta.subtotal || 0),
+    couponCode: meta.coupon_code || '',
+    couponDiscount: Number(meta.coupon_discount || 0),
     paymentFee: Number(meta.payment_fee || 0),
     paymentFeePercent: Number(meta.payment_fee_percent || 0),
     paymentFeeFixed: Number(meta.payment_fee_fixed || 0),

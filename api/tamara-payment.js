@@ -29,6 +29,7 @@ export default async function handler(req, res) {
   const notes = limit(body.notes, 1200) || '—';
   const phone = normalizeSaudiPhone(body.phone);
   const lang = body.lang === 'en' ? 'en' : 'ar';
+  const couponCode = limit(String(body.couponCode || '').trim().toLowerCase(), 40);
 
   if (!name || !email || !packageKey || !carType || !shootRegion || !preferredAt || !phone) return res.status(400).json({ error: 'Missing required fields', requestId });
   if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future Thursday, Friday, or Saturday for the shoot.', requestId });
@@ -44,7 +45,9 @@ export default async function handler(req, res) {
   recentRequests.set(ip, now);
   cleanupRateLimit(now);
 
-  const pricing = calculatePricing(packageKey, 'tamara');
+  let pricing;
+  try { pricing = calculatePricing(packageKey, 'tamara', couponCode); }
+  catch (_) { return res.status(400).json({ error: 'Invalid coupon code', requestId }); }
   const pkg = PACKAGES[packageKey];
   const orderReference = `AYAN-TAMARA-${requestId.replace(/-/g, '').slice(-18).toUpperCase()}`;
   const baseUrl = getBaseUrl(req);
@@ -53,7 +56,7 @@ export default async function handler(req, res) {
   const metadata = {
     request_id: requestId, payment_method: 'tamara', order_reference: orderReference,
     package_key: packageKey, package_name: pkg[lang], package_name_ar: pkg.ar, package_name_en: pkg.en,
-    subtotal: pricing.subtotal.toFixed(2), payment_fee: pricing.paymentFee.toFixed(2),
+    subtotal: pricing.subtotal.toFixed(2), coupon_code: pricing.couponCode, coupon_discount: pricing.couponDiscount.toFixed(2), payment_fee: pricing.paymentFee.toFixed(2),
     payment_fee_percent: String(pricing.paymentFeePercent), payment_fee_fixed: pricing.paymentFeeFixed.toFixed(2),
     total: pricing.total.toFixed(2), customer_name: name, email, phone, car_type: carType,
     preferred_at: preferredAt,
@@ -122,7 +125,6 @@ async function verify(req, res) {
   try {
     let raw = await getTamaraOrder(orderId);
     let mapped = mapTamaraOrder(raw);
-    // If the merchant has not enabled Tamara auto-authorisation, use the return page as a safe fallback to authorise an approved order.
     if (mapped.status === 'approved' && boolEnv('TAMARA_AUTO_AUTHORISE', true)) {
       try { await authoriseTamaraOrder(orderId); } catch (error) { console.warn('Tamara return authorise fallback failed', error?.message || String(error)); }
       raw = await getTamaraOrder(orderId);

@@ -33,7 +33,6 @@ export default async function handler(req, res) {
     const result = { success: true, emailSent: false, discordSent: false };
     const errors = [];
 
-    // Send the actual PDF as an email attachment.
     try {
       const emailResult = await sendInvoiceEmail({
         provider,
@@ -49,7 +48,6 @@ export default async function handler(req, res) {
       errors.push(`email: ${error?.message || String(error)}`);
     }
 
-    // Send the same PDF bytes directly to Discord as a real file attachment.
     try {
       result.discordSent = await sendDiscordPdf({
         provider,
@@ -72,7 +70,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Return the exact delivery state so the success page can tell the customer what actually happened.
     return res.status(200).json({
       ...result,
       partialErrors: errors.slice(0, 3)

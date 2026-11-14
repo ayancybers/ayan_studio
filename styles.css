@@ -2594,7 +2594,7 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   .home-loader-mark img { animation: none !important; }
 }
 
-/* Merchant review package catalog */
+
 .package-catalog-section{position:relative}
 .package-catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .package-catalog-card{overflow:hidden;display:flex;flex-direction:column}
@@ -2611,7 +2611,7 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
 @media (max-width:1100px){.package-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.package-catalog-grid{grid-template-columns:1fr}.package-catalog-card>img{height:210px}}
 
-/* Package visuals */
+
 .package-visual{margin:-2px -2px 14px;border-radius:18px;overflow:hidden;border:1px solid rgba(120,170,230,.16);background:rgba(0,0,0,.18);aspect-ratio:16/8;box-shadow:inset 0 0 30px rgba(0,0,0,.2)}
 .package-visual img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 52%;filter:saturate(1.05) contrast(1.03)}
 .package-catalog-card>img{object-position:center 52%}
@@ -2620,7 +2620,7 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
 .package-catalog-popular{display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px;padding:5px 9px;border-radius:999px;background:linear-gradient(135deg,#4aa8ff,#7bc8ff);color:#06111f;font-size:9px;font-weight:900;box-shadow:0 8px 22px rgba(74,168,255,.18);}
 
 
-/* V31 — premium, perfectly aligned Ayan loader */
+
 .loader .loader-inner { gap: 16px; }
 .home-loader-mark {
   width: 286px !important;
@@ -2645,7 +2645,7 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   box-shadow: none !important;
   animation: ayanLogoPulse 2.4s cubic-bezier(.4,0,.2,1) infinite;
 }
-/* Rotating light sweep — exactly the same diameter as the logo. */
+
 .home-loader-mark::before {
   content: '';
   position: absolute;
@@ -2668,7 +2668,7 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   filter: drop-shadow(0 0 8px rgba(80,165,255,.75));
   pointer-events: none;
 }
-/* Subtle halo behind the logo. */
+
 .home-loader-mark::after {
   content: '';
   position: absolute;
@@ -2728,10 +2728,7 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
 }
 
 
-/* =========================================================
-   Ayan V10 — Cinematic homepage packages showcase
-   Package images intentionally remain the existing assets.
-   ========================================================= */
+
 .packages-showcase{
   position:relative;
   isolation:isolate;
@@ -2992,10 +2989,9 @@ select.form-control option { background:#0c1b2d !important; color:#f6f9ff !impor
   .package-content li{font-size:13px}
 }
 
-/* V12 — reference-matched packages + responsive mobile layout + full-logo loader */
 
-/* The card order follows document direction: Arabic = 70 → 100 → 150 → 200 (right-to-left),
-   English = 70 → 100 → 150 → 200 (left-to-right). */
+
+
 html[dir="rtl"] .packages-grid-cinematic{
   direction:rtl !important;
 }
@@ -3006,7 +3002,7 @@ html[dir="ltr"] .packages-grid-cinematic{
   direction:inherit;
 }
 
-/* Desktop: taller cinematic image crop like the reference screenshot. */
+
 .package-cinematic{
   min-height:860px;
   border-radius:24px;
@@ -3053,13 +3049,13 @@ html[dir="ltr"] .packages-grid-cinematic{
   flex-shrink:0;
 }
 
-/* Keep English labels pinned to the image corner in both languages. */
+
 .package-cinematic .package-en-label{
   left:18px;
   right:auto;
 }
 
-/* Full logo: never crop the supplied circular logo asset. */
+
 .loader{
   overflow:hidden;
 }
@@ -3267,7 +3263,7 @@ html[dir="ltr"] .packages-grid-cinematic{
   }
 }
 
-/* V13 — package badge separation + true logo-centered loader */
+
 .package-cinematic .package-content > .package-badge{
   position:static !important;
   inset:auto !important;
@@ -3292,7 +3288,7 @@ html[dir="ltr"] .packages-grid-cinematic{
   box-shadow:0 7px 20px rgba(74,168,255,.18) !important;
 }
 
-/* iOS/Safari-safe viewport sizing so the complete logo stays inside the visible screen. */
+
 .loader{
   min-height:100svh;
   height:100dvh;
@@ -3405,7 +3401,7 @@ html[dir="ltr"] .packages-grid-cinematic{
 }
 
 
-/* V14.5 — car-specific package art + cleaner responsive cards + reliable loader */
+
 .packages-grid-cinematic{
   display:grid !important;
   grid-template-columns:repeat(4,minmax(0,1fr)) !important;
@@ -3488,14 +3484,14 @@ html[dir="ltr"] .packages-grid-cinematic{
 .package-basic .package-cta,.package-advanced .package-cta{box-shadow:0 12px 28px rgba(35,131,237,.16)}
 .package-royal .package-cta{box-shadow:0 12px 28px rgba(229,182,76,.10)}
 
-/* Desktop / laptop */
+
 @media (min-width:1200px){
   .packages-grid-cinematic{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
   .package-cinematic{min-height:790px !important}
   .cinematic-visual{height:276px !important}
 }
 
-/* iPad / tablet: 2 cards per row, wider content and calmer spacing */
+
 @media (min-width:681px) and (max-width:1199px){
   .packages-showcase-inner{width:min(96vw,var(--container))}
   .packages-grid-cinematic{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:16px !important}
@@ -3509,7 +3505,7 @@ html[dir="ltr"] .packages-grid-cinematic{
   .package-content .price strong{font-size:43px !important}
 }
 
-/* Mobile: one card per screen section, compact but still premium */
+
 @media (max-width:680px){
   .packages-grid-cinematic{grid-template-columns:1fr !important;gap:13px !important}
   .package-cinematic{min-height:0 !important;border-radius:19px !important}
@@ -3526,7 +3522,7 @@ html[dir="ltr"] .packages-grid-cinematic{
   .package-cinematic .package-content > .package-badge{padding:5px 9px !important;font-size:10.5px !important}
 }
 
-/* Loader: center the full logo safely on phones, iPads and desktops. */
+
 .loader{
   position:fixed !important;
   inset:0 !important;
@@ -3607,10 +3603,7 @@ html[dir="ltr"] .packages-grid-cinematic{
 }
 
 
-/* =========================================================
-   Ayan V16 — reference-matched package system + loader
-   Desktop: 4 cards | iPad/tablet: 2 cards | Mobile: 1 compact horizontal card
-   ========================================================= */
+
 
 .packages-showcase {
   position: relative;
@@ -3972,7 +3965,7 @@ html[dir="ltr"] .packages-grid-cinematic { direction: ltr; }
   .packages-book-link { justify-self: center; font-size: 12px; }
   .packages-grid-cinematic { grid-template-columns: 1fr; gap: 12px; }
 
-  /* Phone: compact horizontal cards — one package per row, not full tall cards. */
+  
   .package-cinematic {
     display: grid;
     grid-template-columns: minmax(132px, 39%) 1fr;
@@ -4024,7 +4017,7 @@ html[dir="ltr"] .packages-grid-cinematic { direction: ltr; }
   .package-content .package-cta { min-height: 40px; }
 }
 
-/* V16 loader — the full logo stays completely inside the viewport; progress lives below it. */
+
 .loader {
   position: fixed !important;
   inset: 0 !important;
@@ -4138,10 +4131,7 @@ html[dir="ltr"] .packages-grid-cinematic { direction: ltr; }
 }
 
 
-/* =========================================================
-   V17 — packages without photos
-   Package cards intentionally use premium gradients only.
-   ========================================================= */
+
 .packages-showcase::before{
   background:
     radial-gradient(circle at 16% 34%, rgba(42,138,255,.10), transparent 28%),
@@ -4265,7 +4255,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* V17.1 — cleaner package identity on mobile: centered names + refined emoji badge. */
+
 @media (max-width:680px){
   .package-cinematic .cinematic-visual.no-package-image .package-visual-copy{
     inset:0 !important;
@@ -4333,9 +4323,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* =========================================================
-   V17.2 — Professional package marks + logo-as-loader
-   ========================================================= */
+
 .package-rank-icon,
 .booking-package-icon{
   display:grid !important;
@@ -4428,7 +4416,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   filter:drop-shadow(0 6px 16px rgba(0,0,0,.24));
 }
 
-/* Keep the source logo itself fixed-size; loading happens around the logo, never by resizing it. */
+
 .loader-inner{
   width:min(94vw, 560px) !important;
   gap:16px !important;
@@ -4560,7 +4548,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   .home-loader-ring,.home-loader-line span,.home-loader-halo{animation:none !important}
 }
 
-/* V17.3 — mobile package labels: same visual size, no clipping */
+
 @media (max-width:680px){
   .no-package-image .package-en-label{
     font-size:22px !important;
@@ -4596,9 +4584,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* =========================================================
-   V17.4 — click-only social menu + theme-aware package icons/colors
-   ========================================================= */
+
 :root{
   --pkg-silver:#dbe9f8;
   --pkg-basic:#69b7ff;
@@ -4658,7 +4644,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   --loader-accent:#2f78d8;
 }
 
-/* Package identity colors follow the active site theme. */
+
 .package-silver{border-color:var(--pkg-border-silver) !important;background:linear-gradient(180deg,var(--pkg-silver-bg),rgba(255,255,255,.02)) !important;}
 .package-basic{border-color:var(--pkg-border-basic) !important;background:linear-gradient(180deg,var(--pkg-basic-bg),rgba(255,255,255,.02)) !important;}
 .package-advanced{border-color:var(--pkg-border-advanced) !important;background:linear-gradient(180deg,var(--pkg-advanced-bg),rgba(255,255,255,.02)) !important;}
@@ -4682,7 +4668,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 .package-royal .package-cta{background:linear-gradient(90deg,var(--pkg-cinematic),color-mix(in srgb,var(--pkg-cinematic) 72%, #fff)) !important;color:#11151b !important;}
 .package-silver .package-cta{background:var(--surface) !important;border-color:var(--pkg-border-silver) !important;color:var(--text) !important;}
 
-/* Package rank marks: use the same clean line-art treatment on laptop, tablet, and mobile. */
+
 .package-rank-icon{
   color:var(--pkg-silver) !important;
   background:var(--pkg-icon-bg) !important;
@@ -4711,12 +4697,12 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 .package-rank-icon .rank-camera-lens{fill:none !important;stroke:currentColor !important;stroke-width:2.35 !important;}
 .package-rank-icon .rank-camera-dot{fill:currentColor !important;stroke:none !important;}
 
-/* The social panel opens only after pressing the green button, never just by hovering. */
+
 .social-float.is-open .social-float-menu{opacity:1 !important;transform:translateY(0) scale(1) !important;pointer-events:auto !important;}
 .social-float:hover .social-float-menu{opacity:0 !important;transform:translateY(12px) scale(.96) !important;pointer-events:none !important;}
 .social-float.is-open:hover .social-float-menu{opacity:1 !important;transform:translateY(0) scale(1) !important;pointer-events:auto !important;}
 
-/* Loader: the progress ring hugs the real logo without resizing or replacing it. */
+
 .loader-inner{--loader-glow:var(--glow) !important;}
 .home-loader-mark{filter:drop-shadow(0 18px 44px var(--loader-glow)) !important;}
 .home-loader-ring{
@@ -4744,9 +4730,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* =========================================================
-   V17.5 — real theme-aware package surfaces + exact logo loader
-   ========================================================= */
+
 :root{
   --pkg-heading:#f6f9ff;
   --pkg-body:#dbe7f2;
@@ -4783,7 +4767,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   --pkg-rule:rgba(27,66,106,.13);
 }
 
-/* Packages section must actually follow the selected theme. */
+
 .packages-showcase{
   background:
     radial-gradient(circle at 50% 12%, color-mix(in srgb,var(--brand) 12%,transparent), transparent 34%),
@@ -4856,7 +4840,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   background:rgba(255,255,255,.72) !important;
 }
 
-/* Exact loader: one logo, one ring. The ring is the same diameter as the logo. */
+
 .loader{
   background:var(--bg) !important;
 }
@@ -4911,7 +4895,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 @media(prefers-reduced-motion:reduce){.home-loader-ring{animation:none !important;}}
 
 
-/* V17.6 — premium logo-centered loader: one ring, one logo, zero extra UI. */
+
 .ayan-premium-loader {
   position: fixed !important;
   inset: 0 !important;
@@ -4971,7 +4955,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   transform: none !important;
   z-index: 2 !important;
 }
-/* A quiet track hugs the exact edge of the supplied circular logo. */
+
 .ayan-premium-loader .home-loader-track {
   position: absolute !important;
   inset: -2px !important;
@@ -4983,7 +4967,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   pointer-events: none !important;
   z-index: 3 !important;
 }
-/* The moving loading arc sits directly on the logo circumference. */
+
 .ayan-premium-loader .home-loader-orbit {
   position: absolute !important;
   inset: -4px !important;
@@ -5040,12 +5024,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* =========================================================
-   AYAN V17.7 — clean logo loader + numeric progress
-   - No white loader rim
-   - Progress percentage starts at 01% and advances naturally
-   - Thin line sits directly below the percentage
-   ========================================================= */
+
 .ayan-premium-loader .loader-inner {
   width: 100%;
   gap: 0;
@@ -5076,7 +5055,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
   animation: none !important;
   clip-path: none !important;
 }
-/* Blue-only loading ring: no white segment at any point. */
+
 .ayan-premium-loader .home-loader-mark::before {
   content: '';
   position: absolute;
@@ -5169,7 +5148,7 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* Terms & rules */
+
 .terms-consent {
   margin: 16px 0 4px;
   padding: 14px 16px;
@@ -5236,11 +5215,11 @@ html[dir="rtl"] .no-package-image .package-rank-icon{
 }
 
 
-/* Performance tuning v60: keep scrolling and navigation responsive without changing the visual design. */
+
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-/* Package refresh: clear identity symbols, theme-aware glow, and 20 SAR sale pricing. */
+
 .package-mark,.package-symbol{display:inline-flex;align-items:center;justify-content:center;font-weight:950;line-height:1;letter-spacing:0;}
 .package-mark{margin-inline-end:7px;font-size:.82em;}
 .package-symbol{font-size:34px;width:100%;height:100%;text-shadow:0 0 18px currentColor,0 0 36px color-mix(in srgb,currentColor 38%,transparent);}
@@ -5270,7 +5249,7 @@ html { scroll-behavior: smooth; }
 .checkout-discount{color:#20e9a1!important;}
 
 
-/* Package Accent System v61: one signature color per package, consistent across themes. */
+
 .package-cinematic.package-silver{
   --package-accent:var(--pkg-silver);
   --package-glow:rgba(219,233,248,.22);
@@ -5331,7 +5310,7 @@ html { scroll-behavior: smooth; }
   text-shadow:0 0 22px color-mix(in srgb,var(--package-accent) 18%,transparent);
 }
 
-/* Matching CTA colors: each package carries its own visual identity. */
+
 .package-silver .package-cta{
   color:var(--text) !important;
   border-color:color-mix(in srgb,var(--pkg-silver) 45%,transparent) !important;
@@ -5354,7 +5333,7 @@ html { scroll-behavior: smooth; }
   box-shadow:0 12px 30px color-mix(in srgb,var(--pkg-cinematic) 18%,transparent) !important;
 }
 
-/* Accent-responsive outer glow, kept subtle so the blue site remains dominant. */
+
 .package-cinematic.package-silver{box-shadow:0 24px 65px rgba(0,0,0,.28),0 0 34px color-mix(in srgb,var(--pkg-silver) 14%,transparent),inset 0 1px 0 rgba(255,255,255,.05) !important;}
 .package-cinematic.package-basic{box-shadow:0 24px 65px rgba(0,0,0,.28),0 0 34px color-mix(in srgb,var(--pkg-basic) 15%,transparent),inset 0 1px 0 rgba(255,255,255,.05) !important;}
 .package-cinematic.package-advanced{box-shadow:0 24px 65px rgba(0,0,0,.28),0 0 38px color-mix(in srgb,var(--pkg-advanced) 17%,transparent),inset 0 1px 0 rgba(255,255,255,.05) !important;}
@@ -5364,13 +5343,13 @@ html { scroll-behavior: smooth; }
 .package-cinematic:hover.package-advanced{box-shadow:0 30px 80px rgba(0,0,0,.40),0 0 58px color-mix(in srgb,var(--pkg-advanced) 28%,transparent) !important;}
 .package-cinematic:hover.package-royal{box-shadow:0 30px 80px rgba(0,0,0,.40),0 0 60px color-mix(in srgb,var(--pkg-cinematic) 28%,transparent) !important;}
 
-/* Mobile/booking package choices inherit the same accent identity. */
+
 .booking-package-icon.rank-silver{color:var(--pkg-silver) !important;}
 .booking-package-icon.rank-bronze{color:var(--pkg-basic) !important;}
 .booking-package-icon.rank-advanced{color:var(--pkg-advanced) !important;}
 .booking-package-icon.rank-cinematic{color:var(--pkg-cinematic) !important;}
 
-/* Ayan Developer /info page */
+
 .info-page { --mx: 0; --my: 0; }
 .info-hero { position: relative; min-height: min(860px, calc(100vh - var(--header-height))); display: grid; align-items: center; overflow: hidden; border-bottom: 1px solid var(--border); background: radial-gradient(circle at 78% 45%, rgba(118,183,255,.12), transparent 27%), radial-gradient(circle at 20% 20%, rgba(79,225,218,.07), transparent 24%), linear-gradient(180deg, rgba(6,17,31,.65), transparent 75%); }
 .info-grid-pattern { position:absolute; inset:0; opacity:.34; background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px); background-size:54px 54px; mask-image:linear-gradient(to bottom,black,transparent 90%); transform:translate(calc(var(--mx) * -8px),calc(var(--my) * -8px)); transition:transform .25s ease-out; }
@@ -5479,7 +5458,7 @@ html { scroll-behavior: smooth; }
   .footer-developer-credit{width:100%;justify-content:flex-start;white-space:normal;border-radius:15px;padding:10px 12px}
 }
 
-/* E-commerce authentication footer badge */
+
 .ecommerce-verification {
   display: flex;
   align-items: center;

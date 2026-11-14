@@ -48,6 +48,7 @@ export default async function handler(req, res) {
   const shootRegion = limit(body.shootRegion, 60);
   const preferredAt = limit(String(body.preferredAt || '').trim(), 10);
   const lang = body.lang === 'en' ? 'en' : 'ar';
+  const couponCode = limit(String(body.couponCode || '').trim().toLowerCase(), 40);
   const phone = normalizeSaudiPhone(body.phone);
   const method = PAYMENT_METHODS[paymentMethod];
 
@@ -74,7 +75,9 @@ export default async function handler(req, res) {
   RATE_LIMIT.set(ip, now);
   cleanupRateLimit(now);
 
-  const pricing = calculatePricing(packageKey, method.pricingMethod);
+  let pricing;
+  try { pricing = calculatePricing(packageKey, method.pricingMethod, couponCode); }
+  catch (_) { return res.status(400).json({ error: 'Invalid coupon code', requestId }); }
   const pkg = PACKAGES[packageKey];
   const phoneWithCountryCode = `+${phone}`;
   const packageName = lang === 'en' ? pkg.en : pkg.ar;
@@ -82,10 +85,11 @@ export default async function handler(req, res) {
     'Ayan Photography',
     packageName,
     method.label,
-    carType,
-    shootRegion,
+    String(carType).slice(0, 25),
+    String(shootRegion).slice(0, 25),
     lang,
-    preferredAt
+    preferredAt,
+    pricing.couponCode
   ].join(' | ').slice(0, 180);
   const baseUrl = getBaseUrl(req);
   const billPayload = {
@@ -114,6 +118,8 @@ export default async function handler(req, res) {
       redirectUrl: bill.link,
       paymentMethod,
       subtotal: pricing.subtotal,
+      couponCode: pricing.couponCode,
+      couponDiscount: pricing.couponDiscount,
       paymentFee: pricing.paymentFee,
       paymentFeePercent: pricing.paymentFeePercent,
       paymentFeeFixed: pricing.paymentFeeFixed,

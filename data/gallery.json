@@ -13,6 +13,18 @@
       "titleEn": "Toyota Camry"
     },
     {
+      "src": "https://h.top4top.io/m_3969qr5yz1.mp4",
+      "poster": "gallery/camry-link-poster.webp",
+      "titleAr": "Toyota Camry",
+      "titleEn": "Toyota Camry"
+    },
+    {
+      "src": "https://f.top4top.io/m_3970ekc111.mp4",
+      "poster": "gallery/patrol-video-poster.webp",
+      "titleAr": "Nissan Patrol",
+      "titleEn": "Nissan Patrol"
+    },
+    {
       "src": "https://l.top4top.io/m_3969rze1z1.mp4",
       "titleAr": "Ford Mustang",
       "titleEn": "Ford Mustang"
@@ -25,7 +37,7 @@
     },
     {
       "src": "https://b.top4top.io/m_3969wdsbm1.mp4",
-      "poster": "gallery/yaris.jpg",
+      "poster": "gallery/yaris.webp",
       "titleAr": "Toyota Yaris",
       "titleEn": "Toyota Yaris"
     },
@@ -68,7 +80,7 @@
       "titleEn": "Ford Territory"
     },
     {
-      "src": "gallery/yaris.jpg",
+      "src": "gallery/yaris.webp",
       "titleAr": "Toyota Yaris",
       "titleEn": "Toyota Yaris"
     },

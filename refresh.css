@@ -1,4 +1,4 @@
-/* Ayan Studio refresh — shared visual system */
+
 :root {
   --bg: #080d12;
   --bg-soft: #0c141b;
@@ -223,7 +223,7 @@ textarea.form-control { min-height: 120px; }
 .toast { border-color: var(--border-strong); background: color-mix(in srgb, var(--surface-strong) 96%, var(--bg)); }
 .social-float-toggle { box-shadow: 0 12px 34px var(--glow); }
 
-/* Checkout keeps its existing pricing and payment logic; only the presentation changes. */
+
 body.checkout-page { min-height: 100vh; }
 .checkout-wrap { width: min(1020px, 100%); max-width: 1020px; padding: clamp(28px, 5vw, 64px) 18px 80px; }
 .checkout-card {
@@ -306,7 +306,7 @@ body.payment-result-page {
 .payment-result-page .primary { color: var(--brand-contrast); background: linear-gradient(130deg, var(--brand), var(--brand-strong)); }
 .payment-result-page .ghost { color: var(--text); border: 1px solid var(--border); background: var(--surface-soft); }
 
-/* Invoice preview remains print-friendly. */
+
 body.invoice-page:not(.embedded) { min-height: 100vh; padding: 22px; background: linear-gradient(145deg, #0a1117, #111e25); color: #14252a; }
 .invoice-page:not(.embedded) .wrap { width: min(940px, 100%); }
 .invoice-page .toolbar-title { color: #d4e3e7; }
@@ -322,7 +322,7 @@ body.invoice-page:not(.embedded) { min-height: 100vh; padding: 22px; background:
 .invoice-page:not(.embedded) .invoice { border-radius: 26px; box-shadow: 0 30px 90px rgba(0,0,0,.30); }
 @media print { body.invoice-page:not(.embedded) { padding: 0; background: #fff; } }
 
-/* Developer page */
+
 .info-hero { min-height: 650px; background: radial-gradient(ellipse at 80% 42%, var(--glow), transparent 40%), var(--bg); }
 .info-hero-inner { grid-template-columns: minmax(0, 1.05fr) minmax(320px, .78fr); gap: clamp(28px, 7vw, 90px); padding-block: clamp(72px, 10vh, 118px); }
 .info-hero-copy h1 { max-width: 700px; font-size: clamp(48px, 7vw, 84px); line-height: 1.08; letter-spacing: -.06em; }
@@ -414,7 +414,7 @@ body.invoice-page:not(.embedded) { min-height: 100vh; padding: 22px; background:
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-/* Warm light mode with a cinematic cover keeps the pale palette crisp. */
+
 [data-theme="light"] {
   --bg: #f2efe7;
   --bg-soft: #e9eee9;
@@ -476,7 +476,7 @@ body[data-theme="light"] {
   background: rgba(255, 253, 248, .96);
 }
 
-/* Keep the booking form wide and readable in both writing directions. */
+
 .booking-layout {
   grid-template-columns: minmax(280px, .72fr) minmax(0, 1.34fr);
   align-items: start;
@@ -565,7 +565,7 @@ body[data-theme="light"] {
 }
 [data-theme="light"] .booking-progress i { background: linear-gradient(90deg, rgba(8,127,137,.28), rgba(18,50,55,.10)); }
 
-/* The gallery reads like a curated photo story instead of a plain file grid. */
+
 .gallery-hero {
   isolation: isolate;
   background:
@@ -654,7 +654,7 @@ body[data-theme="light"] {
   .gallery-card:nth-child(8n + 1) .media-wrap { aspect-ratio: 4 / 5; }
 }
 
-/* Homepage work preview adds real photography before the visitor reaches the gallery. */
+
 .home-showcase {
   position: relative;
   overflow: hidden;
@@ -796,7 +796,7 @@ body[data-theme="light"] {
   .home-showcase-head h2 { font-size: clamp(28px, 8vw, 38px); }
 }
 
-/* Final premium pass shared by every page. */
+
 html { text-rendering: optimizeLegibility; }
 body {
   background:
@@ -874,7 +874,7 @@ h1, h2, h3 { text-wrap: balance; }
   .payment-method, .gallery-card { transition: none !important; }
 }
 
-/* AYAN STUDIO — warm editorial redesign */
+
 :root {
   --bg: #11110f;
   --bg-soft: #171613;
@@ -1144,7 +1144,7 @@ body::before {
 .payment-result-page main { border-color: var(--border-strong); background: color-mix(in srgb, var(--surface-strong) 96%, transparent); }
 .payment-result-page .primary { background: linear-gradient(130deg, var(--brand), var(--brand-strong)); color: var(--brand-contrast); }
 
-/* New restrained intro loader */
+
 html .home-intro-loader {
   background: radial-gradient(ellipse at 50% 42%, rgba(177,132,77,.18), transparent 36%), linear-gradient(145deg, #0d0d0b, #171510 56%, #0b0c0a);
   color: #f3eee5;
@@ -1194,7 +1194,7 @@ html .home-intro-caption { color: rgba(229,218,198,.7); font-size: .68rem; lette
   .reveal, .reveal.is-visible { transition: none !important; }
 }
 
-/* AYAN STUDIO — graphite and electric cyan identity */
+
 :root,
 [data-theme="relax"] {
   --bg: #0c151b;
@@ -1326,7 +1326,7 @@ body::before { opacity: .06; }
 .btn-secondary { border-color: var(--border-strong) !important; }
 .nav-links a.active, .gallery-tab.active, .booking-progress span.active b, .booking-progress span.is-active b { color: var(--brand-contrast) !important; background: linear-gradient(125deg, #8becfb, var(--brand-strong)) !important; }
 
-/* Keep the cover dark and cinematic in every appearance mode. */
+
 .hero { color: #f3fbfd !important; background: #09151c !important; }
 .hero-media {
   background: radial-gradient(ellipse at 76% 38%, rgba(36, 184, 211, .2), transparent 39%), linear-gradient(135deg, #142b36, #08141a 72%) !important;
@@ -1448,7 +1448,7 @@ body::before { opacity: .06; }
   .floating-card, .home-intro-emblem::before, .home-intro-progress::after { animation: none !important; }
 }
 
-/* AYAN Automotive — full visual refresh */
+
 :root,
 [data-theme="relax"] {
   --bg: #090d12;
@@ -1581,7 +1581,7 @@ body::before { opacity: .035; background-size: 80px 80px; }
 .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.06); }
 .btn-secondary { border-color: var(--border-strong) !important; color: var(--text) !important; background: color-mix(in srgb,var(--surface-strong) 68%,transparent) !important; }
 
-/* A local photograph stays underneath the muted session video as a dependable fallback. */
+
 .hero { position: relative; min-height: min(850px,calc(100svh - 78px)); color: #f5f7fa !important; background: #070c12 !important; }
 .hero-media { overflow: hidden; background: #07101a !important; }
 .hero-image, .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 40% center; filter: saturate(.78) contrast(1.08) brightness(.72); transform: scale(1.015); }
@@ -1780,7 +1780,7 @@ body::before { opacity: .035; background-size: 80px 80px; }
   .package-cinematic, .gallery-card, .gallery-card img, .gallery-card video { transition: none !important; }
 }
 
-/* Match the intro animation and the compact mobile composition to the new mark. */
+
 .home-intro-loader {
   color: #f2f5f8 !important;
   background: radial-gradient(ellipse at 50% 45%,rgba(25,68,133,.2),transparent 42%),linear-gradient(160deg,#06090e,#0d1420 54%,#070b10) !important;
@@ -1799,7 +1799,7 @@ body::before { opacity: .035; background-size: 80px 80px; }
 .home-intro-logo, .brand-mark { filter: drop-shadow(0 4px 12px rgba(42,113,210,.22)); }
 [data-theme="light"] .home-intro-loader { color: #f2f5f8 !important; }
 
-/* Motion previews appear only while in view; the poster stays in place if motion is unavailable. */
+
 .home-showcase-card { position: relative; }
 .home-showcase-video { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; filter: saturate(.82) contrast(1.05); transition: transform .65s cubic-bezier(.2,.7,.2,1),filter .4s ease; }
 .home-showcase-card:hover .home-showcase-video { transform: scale(1.035); filter: saturate(.94) contrast(1.06); }
@@ -1824,7 +1824,7 @@ body::before { opacity: .035; background-size: 80px 80px; }
   .home-showcase-video { transition: none !important; }
 }
 
-/* Give the existing car footage a deeper, more cinematic cover treatment. */
+
 .hero-video, .booking-hero-media video, .gallery-hero-media video {
   filter: saturate(.92) contrast(1.12) brightness(.58) !important;
   transform-origin: center center;
@@ -1856,7 +1856,7 @@ body::before { opacity: .035; background-size: 80px 80px; }
   .hero-video, .booking-hero-media video, .gallery-hero-media video { animation: none !important; }
 }
 
-/* Page-specific still photography, sized and cropped for each hero. */
+
 .hero-image {
   filter: saturate(.92) contrast(1.08) brightness(.88) !important;
   object-position: 42% center;
@@ -1922,7 +1922,7 @@ body::before { opacity: .035; background-size: 80px 80px; }
   .site-header .brand-copy span { font-size: 5.5px !important; letter-spacing: .045em; }
 }
 
-/* One AYAN palette across Relax and Dark, with a matched blue-tinted Light mode. */
+
 :root,
 [data-theme="relax"],
 [data-theme="dark"] {
@@ -2081,7 +2081,7 @@ body[data-theme="light"] {
 [data-theme="light"] .hero h1 span,
 [data-theme="light"] .hero .eyebrow { color: var(--brand) !important; }
 
-/* Compact, calm booking dates and image bands on package cards. */
+
 .booking-date-options {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2128,7 +2128,7 @@ body[data-theme="light"] {
   .booking-date-number { font-size: 11px; }
 }
 
-/* A smaller package title strip leaves the price and choice in focus. */
+
 @media (max-width: 680px) {
   .package-cinematic .cinematic-visual.no-package-image {
     height: 92px !important; min-height: 92px !important; max-height: 92px !important;
@@ -2153,14 +2153,14 @@ body[data-theme="light"] {
   .package-cinematic .cinematic-visual.no-package-image::before { inset: 8px !important; border-radius: 13px !important; }
 }
 
-/* Let the photograph frame the mobile hero without swallowing the content. */
+
 @media (max-width: 700px) {
   .hero { min-height: 700px; }
   .hero-image, .hero-video { height: 59% !important; object-position: 42% 45% !important; }
   .hero-grid { padding-block: 292px 48px !important; }
 }
 
-/* Minimal AYAN intro: a smaller own logo, clear brand line and a quiet progress cue. */
+
 html .home-intro-loader {
   background: radial-gradient(ellipse at 50% 38%, rgba(49,101,173,.17), transparent 38%), linear-gradient(155deg,#070d15,#0b1420 58%,#080e16) !important;
   color: #f4f7fc !important;
@@ -2200,7 +2200,7 @@ html .home-intro-caption { margin: 0 !important; color: #aebbd0 !important; font
   html .home-intro-emblem::before, html .home-intro-progress::after { animation: none !important; }
 }
 
-/* Booking cards: keep discounts readable and never cover the price. */
+
 .booking-package-grid { gap: 12px !important; }
 .booking-package-choice {
   grid-template-columns: 46px minmax(0, 1fr) minmax(78px, auto) !important;
@@ -2270,12 +2270,12 @@ html .home-intro-caption { margin: 0 !important; color: #aebbd0 !important; font
   .booking-package-price b { font-size: 22px !important; }
 }
 
-/* Let the full mobile hero photo fill the complete story area. */
+
 @media (max-width: 700px) {
   .hero-image, .hero-video { inset: 0 !important; height: 100% !important; object-position: 50% 50% !important; }
 }
 
-/* The supplied circular mark fills its own ring; no duplicate wordmark beneath it. */
+
 html .home-intro-content { gap: 15px !important; }
 html .home-intro-emblem { width: 132px !important; height: 132px !important; }
 html .home-intro-emblem::before {
@@ -2298,7 +2298,7 @@ html .home-intro-progress { margin-top: 1px !important; }
   html .home-intro-emblem, html .home-intro-logo { width: 118px !important; height: 118px !important; }
 }
 
-/* Keep the home headline composed on both desktop and narrow phones. */
+
 .hero-copy { width: 100%; min-width: 0; max-width: 760px !important; }
 .hero h1 {
   max-width: 100% !important;
@@ -2316,7 +2316,7 @@ html .home-intro-progress { margin-top: 1px !important; }
   .site-footer .footer-brand p { margin-top: 0 !important; }
 }
 
-/* Keep package pricing on compact rows so the discount never touches the card edge. */
+
 .booking-package-choice { min-height: 112px !important; height: auto !important; }
 .booking-package-price {
   min-width: 94px !important;
@@ -2340,7 +2340,7 @@ html .home-intro-progress { margin-top: 1px !important; }
   .booking-package-price del, .booking-package-price em { font-size: 7px !important; }
 }
 
-/* Keep the mobile controls responsive and shorten the photographic hero. */
+
 html .home-intro-loader { transition: opacity .28s ease, visibility .28s ease !important; }
 @media (min-width: 701px) {
   .hero { min-height: min(720px, calc(100svh - var(--header-height))) !important; }
@@ -2368,7 +2368,7 @@ html .home-intro-loader { transition: opacity .28s ease, visibility .28s ease !i
   .reveal.is-visible { transform: none !important; }
 }
 
-/* Premium home direction: cinematic contrast, editorial vehicle frames, and four clear gallery entry points. */
+
 html .hero { isolation: isolate; }
 html .hero::after {
   position: absolute; inset: 0; z-index: 0; content: '';
@@ -2523,7 +2523,7 @@ html .social-float-toggle {
 html .social-float-toggle:hover { box-shadow: 0 16px 36px rgba(0,0,0,.42),0 0 22px rgba(106,151,230,.15) !important; }
 html .social-float-toggle-icon svg { width: 26px; height: 26px; stroke-width: 1.8; }
 html .social-float-ping { border-color: rgba(136,176,255,.34); }
-/* Keep the social launcher at the far left, as requested. */
+
 html .social-float { right: auto !important; left: 24px !important; inset-inline-end: auto !important; inset-inline-start: 24px !important; bottom: 24px !important; justify-items: start !important; }
 html .social-float-menu { transform-origin: bottom left !important; }
 @media (max-width: 640px) {
@@ -2532,7 +2532,7 @@ html .social-float-menu { transform-origin: bottom left !important; }
   html .social-float { right: auto !important; left: 16px !important; inset-inline-start: 16px !important; bottom: calc(16px + env(safe-area-inset-bottom)) !important; }
 }
 
-/* Center the footer trust badge and keep the social menu attached to its toggle. */
+
 html .footer-trust-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin: 26px auto 0; }
 html .footer-trust-controls .ecommerce-verification {
   display: flex !important; flex: 1 1 360px; width: auto; max-width: min(520px,100%); min-width: 0;
@@ -2552,7 +2552,7 @@ html .footer-trust-controls .social-float:hover .social-float-menu { opacity: 0 
 html .footer-trust-controls .social-float.is-open .social-float-menu,
 html .footer-trust-controls .social-float.is-open:hover .social-float-menu { opacity: 1 !important; transform: translate(-50%,0) scale(1) !important; pointer-events: auto !important; }
 html .footer-trust-controls .social-float-toggle { position: relative; inset: auto; }
-/* Stack the share control immediately above the verified-store badge. */
+
 html .footer-trust-controls .social-float { position: fixed !important; inset: auto !important; left: max(12px,env(safe-area-inset-left)) !important; bottom: calc(14px + env(safe-area-inset-bottom) + 58px + 12px) !important; right: auto !important; width: 58px; height: 58px; z-index: 1401 !important; }
 html .footer-trust-controls .social-float-menu { bottom: calc(100% + 10px) !important; }
 @media (max-width: 640px) {
@@ -2563,7 +2563,7 @@ html .footer-trust-controls .social-float-menu { bottom: calc(100% + 10px) !impo
   html .footer-trust-controls .social-float { left: max(10px,env(safe-area-inset-left)) !important; bottom: calc(10px + env(safe-area-inset-bottom) + 54px + 10px) !important; }
 }
 
-/* Compact verified-store capsule, styled locally so a failed third-party image cannot leave a blank box. */
+
 html .ecommerce-verification {
   position: fixed !important; left: max(12px,env(safe-area-inset-left)) !important; right: auto !important;
   bottom: calc(14px + env(safe-area-inset-bottom)) !important; z-index: 1400 !important;
@@ -2589,7 +2589,7 @@ html .ecommerce-verification .verification-copy { display: grid; min-width: 0; g
 html .ecommerce-verification .verification-copy strong { color: #fff; font-size: 13px; font-weight: 850; }
 html .ecommerce-verification .verification-copy small { display: none; }
 html .ecommerce-verification .verification-arrow { color: #b9d0ff; font-size: 14px; }
-/* Keep the official script/token in the page, but suppress its broken image layer; the local pill below remains the visible control. */
+
 html .sbc-verify-seal { position: fixed !important; left: max(12px,env(safe-area-inset-left)) !important; right: auto !important; bottom: calc(14px + env(safe-area-inset-bottom)) !important; z-index: 1399 !important; }
 html body.sbc-seal-fallback .sbc-verify-seal { display: none !important; }
 html body.sbc-seal-rendered .ecommerce-verification { display: none !important; }
@@ -2599,7 +2599,7 @@ html body.sbc-seal-rendered .ecommerce-verification { display: none !important; 
   html .ecommerce-verification .verification-copy small { font-size: 8px; }
 }
 
-/* Compact, editorial mobile layout: smaller hero frame, swipeable package selector, and repeatable scroll reveals. */
+
 @media (max-width: 700px) {
   html .hero { min-height: 0 !important; }
   html .hero-media { height: clamp(265px, 74vw, 365px) !important; inset: 0 0 auto !important; }
@@ -2656,7 +2656,7 @@ html body.sbc-seal-rendered .ecommerce-verification { display: none !important; 
 
 html .reveal { transition: opacity .68s cubic-bezier(.2,.75,.2,1), transform .68s cubic-bezier(.2,.75,.2,1), filter .68s ease !important; filter: blur(3px); }
 html .reveal.is-visible { filter: blur(0); }
-/* Shared mobile finish for inner pages. */
+
 @media (max-width: 700px) {
   html .page-hero, html .booking-hero, html .gallery-hero, html .features-page-hero, html .support-hero, html .terms-page .terms-hero {
     min-height: 0 !important; padding-block: 54px 36px !important;
@@ -2718,7 +2718,98 @@ html .reveal.is-visible { filter: blur(0); }
   html .reveal, html .reveal.is-visible { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
 }
 
-/* Final mobile fixes from the service, process, support, and footer screenshots. */
+html .feature-menu-trigger {
+  display: contents;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+html .feature-menu-trigger:disabled { opacity: 1; }
+html .feature-menu-chevron { display: none; }
+
+html .social-float-toggle-icon {
+  position: relative;
+  display: block;
+  width: 25px;
+  height: 20px;
+  border-top: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+html .social-float-toggle-icon::before {
+  position: absolute;
+  inset: 7px 0 auto;
+  height: 2px;
+  background: currentColor;
+  content: "";
+  transition: transform .2s ease, opacity .2s ease;
+}
+html .social-float-toggle-icon svg { display: none !important; }
+html .social-float.is-open .social-float-toggle-icon { border-color: transparent; }
+html .social-float.is-open .social-float-toggle-icon::before {
+  transform: rotate(45deg);
+  box-shadow: 0 0 0 1px currentColor;
+}
+html .social-float.is-open .social-float-toggle-icon::after {
+  position: absolute;
+  inset: 7px 0 auto;
+  height: 2px;
+  background: currentColor;
+  content: "";
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 700px) {
+  html .feature-grid > .feature,
+  html .service-grid > .story-card {
+    display: block !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 18px !important;
+  }
+  html .feature-menu-trigger {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 42px minmax(0,1fr) 16px;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+  html .feature-menu-trigger:focus-visible { outline: 2px solid var(--brand); outline-offset: -3px; }
+  html .feature-menu-trigger .icon { grid-column: auto !important; grid-row: auto !important; width: 42px !important; height: 42px !important; margin: 0 !important; font-size: 18px !important; }
+  html .feature-menu-trigger h3 { grid-column: auto !important; align-self: center !important; margin: 0 !important; font-size: 14px !important; line-height: 1.45; }
+  html .feature-menu-chevron {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform .2s ease;
+  }
+  html .feature-menu-trigger[aria-expanded="true"] .feature-menu-chevron { transform: rotate(225deg) translate(-2px,-1px); }
+  html .feature-grid > .feature > p,
+  html .service-grid > .story-card > p {
+    display: none;
+    margin: 0 !important;
+    padding: 0 16px 15px 69px;
+    font-size: 11px !important;
+    line-height: 1.7 !important;
+    color: var(--muted);
+  }
+  html .feature-grid > .feature.is-expanded > p,
+  html .service-grid > .story-card.is-expanded > p { display: block; }
+  html .feature-grid > .feature.is-expanded,
+  html .service-grid > .story-card.is-expanded { border-color: rgba(136,176,255,.42) !important; box-shadow: 0 10px 25px rgba(0,0,0,.16); }
+}
+
+
 @media (max-width: 700px) {
   html .service-grid { grid-template-columns: minmax(0,1fr) !important; gap: 10px !important; }
   html .service-grid > .story-card {
@@ -2756,7 +2847,7 @@ html .reveal.is-visible { filter: blur(0); }
   html .footer-bottom > *, html .footer-developer-credit { margin-inline: auto !important; justify-content: center !important; text-align: center !important; }
 }
 
-/* The remote seal remains embedded as required; use the local verified-store capsule to avoid its broken image placeholder. */
+
 html .sbc-verify-seal { display: none !important; }
 html body.sbc-seal-rendered .ecommerce-verification { display: block !important; }
 html .social-float { left: max(12px,env(safe-area-inset-left)) !important; right: auto !important; inset-inline-start: max(12px,env(safe-area-inset-left)) !important; inset-inline-end: auto !important; bottom: calc(14px + env(safe-area-inset-bottom) + 52px + 12px) !important; }
@@ -2781,3 +2872,32 @@ html .social-float-icon:not(:has(svg)) { font-size: 21px; font-weight: 900; line
   @keyframes swipeNudge { 0%,100% { transform: translateX(0); opacity: .72; } 50% { transform: translateX(-5px); opacity: 1; } }
 }
 @media (prefers-reduced-motion: reduce) { html .swipe-guide-arrows { animation: none !important; } }
+
+
+html .social-float { left: max(12px,env(safe-area-inset-left)) !important; right: auto !important; inset-inline-start: auto !important; inset-inline-end: auto !important; bottom: calc(14px + env(safe-area-inset-bottom)) !important; }
+html .ecommerce-verification {
+  position: relative !important; inset: auto !important; z-index: 2 !important;
+  display: flex !important; width: max-content !important; max-width: calc(100vw - 32px) !important;
+  margin: 14px auto 0 !important; padding: 4px !important;
+  border: 1px solid rgba(135,169,255,.34) !important; border-radius: 999px !important;
+  background: linear-gradient(145deg,#142b5b,#0a1734) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.09) !important;
+}
+html .ecommerce-verification .verification-link { min-height: 42px !important; padding: 3px 11px !important; }
+html body.sbc-seal-rendered .ecommerce-verification { display: flex !important; }
+@media (max-width: 700px) {
+  html .social-float { left: max(12px,env(safe-area-inset-left)) !important; right: auto !important; inset-inline-start: auto !important; inset-inline-end: auto !important; bottom: calc(12px + env(safe-area-inset-bottom)) !important; }
+  html .ecommerce-verification { max-width: calc(100vw - 32px) !important; margin-top: 12px !important; }
+}
+
+.checkout-coupon{display:grid;gap:7px;margin:12px 0 18px;padding:14px 16px;border:1px solid rgba(132,178,232,.15);border-radius:16px;background:rgba(255,255,255,.025)}
+.checkout-coupon label{font-size:12px;font-weight:750;color:var(--text-secondary)}
+.checkout-coupon-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.checkout-coupon-controls input{min-width:0;height:44px;padding:0 13px;border:1px solid rgba(132,178,232,.2);border-radius:12px;background:rgba(3,10,18,.5);color:var(--text);font:inherit;direction:ltr;text-align:left}
+.checkout-coupon-controls input:focus{outline:2px solid rgba(117,178,255,.45);outline-offset:1px}
+.checkout-coupon-controls button{min-width:86px;padding:0 15px;border:1px solid rgba(117,178,255,.4);border-radius:12px;background:linear-gradient(135deg,#a9c8ff,#5f8de4);color:#07111e;font:inherit;font-weight:850;cursor:pointer}
+.checkout-coupon small{min-height:1em;color:var(--muted);font-size:11px}
+.checkout-coupon small[data-state="success"]{color:#66d7a3}
+.checkout-coupon small[data-state="error"]{color:#ff9c9c}
+.hero-image,.hero-video{filter:saturate(.92) contrast(1.04) brightness(.82)}
+@media(max-width:760px){.hero-image,.hero-video{filter:saturate(.92) contrast(1.03) brightness(.76)}}

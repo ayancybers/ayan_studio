@@ -104,8 +104,6 @@ export default async function handler(req, res) {
 
   const webhookUrl = process.env.webhook || process.env.DISCORD_WEBHOOK_URL;
 
-  // Visitor notices are sent once by the browser per tab session. Other
-  // informational clicks stay out of Discord; security alerts remain enabled.
   if (webhookUrl && (severity !== 'INFO' || event === 'page_view')) {
     try {
       const embed = event === 'page_view' && severity === 'INFO'
