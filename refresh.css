@@ -3236,6 +3236,65 @@ html body iframe.sbc-seal-frame {
   box-shadow: none !important;
   outline: 0 !important;
 }
+
+html body .sbc-local-verification {
+  position: fixed !important;
+  inset: auto auto calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)) !important;
+  z-index: 1400 !important;
+  display: block !important;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  padding: 4px;
+  border: 1px solid rgba(135,169,255,.5);
+  border-radius: 999px;
+  background: linear-gradient(145deg,#142c67,#071945);
+  box-shadow: 0 10px 30px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.15);
+}
+html body .sbc-local-verification-trigger {
+  text-decoration: none !important;
+  display: inline-flex;
+  min-height: 42px;
+  max-width: 100%;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 9px;
+  padding: 3px 8px 3px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #f7f9ff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+html body .sbc-local-verification-trigger:visited { color: #f7f9ff; }
+html body .sbc-local-verification-trigger:hover { background: rgba(255,255,255,.09); }
+html body .sbc-local-verification-trigger:focus-visible { outline: 2px solid #a9c4ff; outline-offset: 2px; }
+html body .sbc-local-verification-mark {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  border-radius: 8px;
+  background: #fff;
+  color: #12326f;
+}
+html body .sbc-local-verification-mark svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 640px) {
+  html body .sbc-local-verification { left: max(10px,env(safe-area-inset-left)) !important; bottom: calc(10px + env(safe-area-inset-bottom)) !important; }
+  html body .sbc-local-verification-trigger { min-height: 40px; font-size: 12px; }
+  html .verification-dialog { padding: 10px; }
+  html .verification-dialog-card { width: min(420px,100%); max-height: calc(100dvh - 20px); padding: 20px 15px 15px; border-radius: 22px; }
+  html .verification-dialog-content { grid-template-columns: minmax(0,1fr); justify-items: center; gap: 13px; margin-top: 16px; padding: 12px; }
+  html .verification-qr-frame { width: 170px; min-height: 170px; border-width: 6px; border-radius: 21px; }
+  html .verification-dialog-details { width: 100%; text-align: center; }
+  html .verification-dialog-details .verification-dialog-url { font-size: 9px; }
+}
 @media (max-width: 700px) {
   html body .social-float { bottom: calc(66px + env(safe-area-inset-bottom)) !important; }
   html body .social-float-menu { max-width: min(270px,calc(100vw - 32px)) !important; }
