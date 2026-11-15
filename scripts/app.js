@@ -247,6 +247,8 @@ translations.en.verificationNumber = 'Verification number: 0000333236';
 translations.en.verificationLink = 'Verified store';
 translations.ar.verificationShortcutLabel = 'متجر موثّق — فتح التحقق الرسمي';
 translations.en.verificationShortcutLabel = 'Verified store — open official verification';
+translations.ar.verificationQrButton = 'عرض رمز التحقق QR';
+translations.en.verificationQrButton = 'Show verification QR code';
 translations.ar.verificationTitle = 'متجر موثّق';
 translations.ar.verificationNumber = 'رقم الشهادة: 0000333236';
 translations.ar.verificationLink = 'متجر موثّق';
@@ -1801,25 +1803,27 @@ function setupVerificationSealShortcut() {
   const seal = document.querySelector('.sbc-verify-seal[data-token]');
   if (!seal) return;
   const token = seal.dataset.token;
+  const certificateUrl = 'https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236';
+  const control = document.createElement('div');
+  control.className = 'sbc-verify-control';
   const shortcut = document.createElement('a');
   shortcut.className = 'sbc-verify-shortcut';
-  shortcut.href = 'https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal';
+  shortcut.href = certificateUrl;
   shortcut.target = '_blank';
   shortcut.rel = 'noopener noreferrer';
   shortcut.dataset.token = token;
   shortcut.dataset.i18nAriaLabel = 'verificationShortcutLabel';
   shortcut.innerHTML = `<span class="sbc-verify-shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.1 19 6v5.1c0 4.6-2.8 7.8-7 9.8-4.2-2-7-5.2-7-9.8V6l7-2.9Z"/><path d="m8.7 12.1 2.2 2.2 4.5-4.8"/></svg></span><span data-i18n="verificationLink">${getLang() === 'ar' ? 'متجر موثّق' : 'Verified store'}</span><span class="sbc-verify-shortcut-arrow" aria-hidden="true">↗</span>`;
   shortcut.setAttribute('aria-label', getLang() === 'ar' ? 'متجر موثّق — فتح التحقق الرسمي' : 'Verified store — open official verification');
-  const updateShortcutUrl = () => {
-    const url = new URL('https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal');
-    url.searchParams.set('token', token);
-    url.searchParams.set('lang', getLang());
-    url.searchParams.set('pos', 'bottom');
-    shortcut.href = url.href;
-  };
-  updateShortcutUrl();
-  shortcut.addEventListener('click', updateShortcutUrl);
-  document.body.append(shortcut);
+  const qrTrigger = document.createElement('button');
+  qrTrigger.className = 'sbc-verify-qr-trigger';
+  qrTrigger.type = 'button';
+  qrTrigger.dataset.verificationQr = '';
+  qrTrigger.dataset.i18nAriaLabel = 'verificationQrButton';
+  qrTrigger.setAttribute('aria-label', getLang() === 'ar' ? 'عرض رمز التحقق QR' : 'Show verification QR code');
+  qrTrigger.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM19 14h2v2h-2zM19 19h2v2h-5v-2"/></svg>';
+  control.append(shortcut, qrTrigger);
+  document.body.append(control);
 }
 
 function setupVerificationDialog() {
@@ -1829,18 +1833,8 @@ function setupVerificationDialog() {
     document.body.append(floatingSocial);
     if (trustRow && !trustRow.children.length) trustRow.remove();
   }
-  const card = document.querySelector('.ecommerce-verification');
-  const trigger = card?.querySelector('.verification-link');
-  if (!card || !trigger) return;
-
-  const footerBottom = document.querySelector('.site-footer .footer-bottom');
-  if (footerBottom) {
-    const trustControls = card.closest('.footer-trust-controls');
-    const socialWidget = trustControls?.querySelector('[data-social-float]');
-    if (socialWidget) document.body.append(socialWidget);
-    footerBottom.insertAdjacentElement('afterend', card);
-    if (trustControls && !trustControls.children.length) trustControls.remove();
-  }
+  const trigger = document.querySelector('[data-verification-qr]');
+  if (!trigger) return;
 
   const certificateUrl = 'https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236';
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&format=svg&margin=8&data=${encodeURIComponent(certificateUrl)}`;
