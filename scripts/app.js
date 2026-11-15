@@ -98,10 +98,11 @@ translations.ar.bookingDateOptionsLabel = 'اختر يوم التصوير';
 translations.ar.dateRequestStatus = 'موعد مقترح';
 translations.ar.phoneCountryLabel = 'رمز الدولة';
 translations.ar.carDetailsLabel = 'نوع السيارة وموديلها (اختياري)';
+translations.ar.notesLabel = 'ملاحظات إضافية (اختياري)';
 translations.ar.carDetailsPlaceholder = 'مثال: Toyota Camry 2024';
 translations.ar.bookingCouponLabel = 'لديك كود خصم؟ (اختياري)';
 translations.ar.bookingCouponFieldLabel = 'أدخل كود الخصم';
-translations.ar.bookingCouponPlaceholder = 'مثال: ayancybers';
+translations.ar.bookingCouponPlaceholder = 'إذا كان لديك كود خصم، اكتبه هنا';
 translations.ar.bookingCouponHint = 'سيتم التحقق من الكود عند الدفع';
 translations.ar.validationPhone = 'تحقق من رمز الدولة ورقم الجوال.';
 translations.ar.phonePlaceholder = 'أدخل رقم الجوال';
@@ -113,10 +114,11 @@ translations.en.bookingDateOptionsLabel = 'Choose a shoot date';
 translations.en.dateRequestStatus = 'Proposed date';
 translations.en.phoneCountryLabel = 'Country code';
 translations.en.carDetailsLabel = 'Car make and model (optional)';
+translations.en.notesLabel = 'Additional notes (optional)';
 translations.en.carDetailsPlaceholder = 'Example: Toyota Camry 2024';
 translations.en.bookingCouponLabel = 'Have a discount code? (Optional)';
 translations.en.bookingCouponFieldLabel = 'Enter your discount code';
-translations.en.bookingCouponPlaceholder = 'Example: ayancybers';
+translations.en.bookingCouponPlaceholder = 'If you have a discount code, enter it here';
 translations.en.bookingCouponHint = 'The code will be checked at payment';
 translations.en.validationPhone = 'Check the country code and mobile number.';
 translations.en.phonePlaceholder = 'Enter your mobile number';
@@ -243,6 +245,8 @@ translations.en.supportType = 'Request type';
 translations.en.verificationTitle = 'Verified store';
 translations.en.verificationNumber = 'Verification number: 0000333236';
 translations.en.verificationLink = 'Verified store';
+translations.ar.verificationShortcutLabel = 'متجر موثّق — فتح التحقق الرسمي';
+translations.en.verificationShortcutLabel = 'Verified store — open official verification';
 translations.ar.verificationTitle = 'متجر موثّق';
 translations.ar.verificationNumber = 'رقم الشهادة: 0000333236';
 translations.ar.verificationLink = 'متجر موثّق';
@@ -293,12 +297,12 @@ const carOptions = {
 
 const shootLocations = {
   ar: {
-    SA: [['Khobar', 'الخبر'], ['Dammam', 'الدمام'], ['Saihat', 'سيهات'], ['Qatif', 'القطيف'], ['Jubail', 'الجبيل'], ['Hafar Al Batin', 'حفر الباطن']],
+    SA: [['Hafar Al Batin', 'حفر الباطن'], ['Jubail', 'الجبيل'], ['Khobar', 'الخبر'], ['Dammam', 'الدمام'], ['Qatif', 'القطيف'], ['Saihat', 'سيهات']],
     BH: [['Bahrain', 'البحرين']],
     KW: [['Kuwait', 'الكويت']]
   },
   en: {
-    SA: [['Khobar', 'Khobar'], ['Dammam', 'Dammam'], ['Saihat', 'Saihat'], ['Qatif', 'Qatif'], ['Jubail', 'Jubail'], ['Hafar Al Batin', 'Hafar Al Batin']],
+    SA: [['Hafar Al Batin', 'Hafar Al Batin'], ['Jubail', 'Jubail'], ['Khobar', 'Khobar'], ['Dammam', 'Dammam'], ['Qatif', 'Qatif'], ['Saihat', 'Saihat']],
     BH: [['Bahrain', 'Bahrain']],
     KW: [['Kuwait', 'Kuwait']]
   }
@@ -1793,6 +1797,31 @@ function setupSocialFloat() {
   });
 }
 
+function setupVerificationSealShortcut() {
+  const seal = document.querySelector('.sbc-verify-seal[data-token]');
+  if (!seal) return;
+  const token = seal.dataset.token;
+  const shortcut = document.createElement('a');
+  shortcut.className = 'sbc-verify-shortcut';
+  shortcut.href = 'https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal';
+  shortcut.target = '_blank';
+  shortcut.rel = 'noopener noreferrer';
+  shortcut.dataset.token = token;
+  shortcut.dataset.i18nAriaLabel = 'verificationShortcutLabel';
+  shortcut.innerHTML = `<span class="sbc-verify-shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.1 19 6v5.1c0 4.6-2.8 7.8-7 9.8-4.2-2-7-5.2-7-9.8V6l7-2.9Z"/><path d="m8.7 12.1 2.2 2.2 4.5-4.8"/></svg></span><span data-i18n="verificationLink">${getLang() === 'ar' ? 'متجر موثّق' : 'Verified store'}</span><span class="sbc-verify-shortcut-arrow" aria-hidden="true">↗</span>`;
+  shortcut.setAttribute('aria-label', getLang() === 'ar' ? 'متجر موثّق — فتح التحقق الرسمي' : 'Verified store — open official verification');
+  const updateShortcutUrl = () => {
+    const url = new URL('https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal');
+    url.searchParams.set('token', token);
+    url.searchParams.set('lang', getLang());
+    url.searchParams.set('pos', 'bottom');
+    shortcut.href = url.href;
+  };
+  updateShortcutUrl();
+  shortcut.addEventListener('click', updateShortcutUrl);
+  document.body.append(shortcut);
+}
+
 function setupVerificationDialog() {
   const floatingSocial = document.querySelector('[data-social-float]');
   if (floatingSocial) {
@@ -1881,6 +1910,7 @@ async function init() {
   setupCardGlow();
   setupPointerGlow();
   setupSocialFloat();
+  setupVerificationSealShortcut();
   setupVerificationDialog();
   setupAmbientParallax();
   setupHeroBackgroundVideo();

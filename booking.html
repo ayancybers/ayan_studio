@@ -319,7 +319,7 @@
 .booking-package-price del{display:block !important;}
 .booking-package-price em{display:block !important;}
 </style>
-<link rel="stylesheet" href="refresh.css?v=138">
+<link rel="stylesheet" href="refresh.css?v=140">
 </head>
 <body class="booking-page" data-theme="relax" data-page-title="booking">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -484,6 +484,7 @@
               <div class="form-group"><label for="phone" data-i18n="phoneLabel">رقم التواصل *</label><div class="phone-composite"><select class="form-control" id="phoneCountry" name="phoneCountry" aria-label="رمز الدولة" required></select><input class="form-control" id="phone" name="phone" type="tel" inputmode="numeric" maxlength="10" required autocomplete="tel-national" placeholder="5xxxxxxxx" data-i18n-placeholder="phonePlaceholder" /></div></div>
               <div class="form-group"><label for="carType" data-i18n="carLabel">نوع السيارة *</label><select class="form-control" id="carType" required><option value="" data-i18n="carPlaceholder">اختر نوع السيارة</option></select></div>
               <div class="form-group"><label for="carDetails" data-i18n="carDetailsLabel">نوع السيارة وموديلها (اختياري)</label><input class="form-control" id="carDetails" name="carDetails" type="text" maxlength="100" data-i18n-placeholder="carDetailsPlaceholder" placeholder="مثال: Toyota Camry 2024" /></div>
+              <div class="form-group full"><label for="notes" data-i18n="notesLabel">ملاحظات إضافية (اختياري)</label><textarea class="form-control" id="notes" data-i18n-placeholder="notesPlaceholder" placeholder="زوايا معينة، فكرة خاصة، وقت مناسب، أو أي طلب آخر..."></textarea></div>
               <div class="form-group full shoot-location-group">
                 <label data-i18n="shootCountryLabel">الدولة *</label>
                 <div class="shoot-country-options" id="shootCountryChoices" role="radiogroup" data-i18n-aria-label="shootCountryLabel" aria-label="اختر الدولة">
@@ -518,7 +519,6 @@
                 <input id="preferredAt" name="preferredAt" type="hidden" value="">
                 <small class="booking-field-hint" id="bookingDateHint" data-i18n="preferredAtHint">اختر يومًا من هذا الأسبوع. الموعد يتأكد بعد التنسيق عبر واتساب.</small>
                 </div>
-                <div class="form-group full"><label for="notes" data-i18n="notesLabel">ملاحظات إضافية (اختياري)</label><textarea class="form-control" id="notes" data-i18n-placeholder="notesPlaceholder" placeholder="زوايا معينة، فكرة خاصة، وقت مناسب، أو أي طلب آخر..."></textarea></div>
               </div>
               <div class="booking-wizard-actions">
                 <button class="btn btn-secondary booking-step-back" type="button" data-booking-back="2" data-i18n="wizardBackDetails">رجوع للبيانات</button>
@@ -551,7 +551,7 @@
             <details class="checkout-coupon booking-coupon">
               <summary data-i18n="bookingCouponLabel">لديك كود خصم؟ (اختياري)</summary>
               <label for="bookingCouponCode" data-i18n="bookingCouponFieldLabel">أدخل كود الخصم</label>
-              <div class="checkout-coupon-controls"><input id="bookingCouponCode" name="couponCode" type="text" maxlength="40" autocomplete="off" placeholder="مثال: ayancybers" data-i18n-placeholder="bookingCouponPlaceholder"><span class="booking-coupon-hint" data-i18n="bookingCouponHint">سيتم التحقق من الكود عند الدفع</span></div>
+              <div class="checkout-coupon-controls"><input id="bookingCouponCode" name="couponCode" type="text" maxlength="40" autocomplete="off" placeholder="إذا كان لديك كود خصم، اكتبه هنا" data-i18n-placeholder="bookingCouponPlaceholder"><span class="booking-coupon-hint" data-i18n="bookingCouponHint">سيتم التحقق من الكود عند الدفع</span></div>
             </details>
 
             <div class="terms-consent booking-details-consent booking-payment-consent">
@@ -659,7 +659,7 @@
 
   </div>
   <script src="scripts/ui.js?v=76"></script>
-  <script src="scripts/app.js?v=125"></script>
+  <script src="scripts/app.js?v=127"></script>
   <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
   <script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
 </body>
