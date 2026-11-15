@@ -90,7 +90,7 @@ const translations = {
   }
 };
 
-translations.ar.preferredAtLabel = 'أسبوع التصوير *';
+translations.ar.preferredAtLabel = 'المواعيد المتاحة هذا الأسبوع *';
 translations.ar.preferredAtHint = 'اختر يومًا مقترحًا؛ الموعد النهائي يتأكد بعد التنسيق عبر واتساب.';
 translations.ar.preferredAtNote = 'اليوم المقترح للتصوير: {date}';
 translations.ar.validationDate = 'اختر يوم التصوير من الخيارات المتاحة.';
@@ -105,7 +105,7 @@ translations.ar.bookingCouponPlaceholder = 'مثال: ayancybers';
 translations.ar.bookingCouponHint = 'سيتم التحقق من الكود عند الدفع';
 translations.ar.validationPhone = 'تحقق من رمز الدولة ورقم الجوال.';
 translations.ar.phonePlaceholder = 'أدخل رقم الجوال';
-translations.en.preferredAtLabel = 'Shoot week *';
+translations.en.preferredAtLabel = 'Available dates this week *';
 translations.en.preferredAtHint = 'Choose a proposed day. We will confirm the appointment with you on WhatsApp.';
 translations.en.preferredAtNote = 'Preferred shoot date: {date}';
 translations.en.validationDate = 'Choose a shoot date from the available options.';
@@ -132,6 +132,29 @@ translations.ar.wizardBackPackage = 'رجوع للباقات';
 translations.ar.wizardNextReview = 'مراجعة الطلب';
 translations.ar.wizardReviewTitle = 'راجع طلبك';
 translations.ar.wizardReviewText = 'تأكد من الباقة والسعر، ثم انتقل لاختيار طريقة الدفع.';
+translations.ar.bookingStep3 = 'الموعد';
+translations.ar.bookingStep4 = 'الدفع';
+translations.ar.bookingHeroTitle = 'احجز جلسة سيارتك على أربع خطوات.';
+translations.ar.bookingHeroText = 'اختر الباقة، أدخل بياناتك ومعلومات السيارة، حدد الموعد، ثم وافق واختر طريقة الدفع.';
+translations.ar.flowStep3 = 'اختر يوم التصوير من الأسبوع الحالي';
+translations.ar.flowStep4 = 'راجع ووافق ثم اختر الدفع';
+translations.ar.flowReady = 'جاهز للمتابعة الآمنة';
+translations.ar.shootCountryLabel = 'الدولة *';
+translations.ar.countrySaudi = 'السعودية';
+translations.ar.countryBahrain = 'البحرين';
+translations.ar.countryKuwait = 'الكويت';
+translations.ar.regionChooseCountry = 'اختر الدولة أولًا';
+translations.ar.regionChooseCity = 'اختر المدينة المناسبة';
+translations.ar.bookingRegionOptionsLabel = 'المناطق المتاحة';
+translations.ar.validationCountry = 'اختر الدولة أولًا.';
+translations.ar.wizardNextSchedule = 'متابعة إلى الموعد';
+translations.ar.wizardScheduleTitle = 'اختر موعد التصوير';
+translations.ar.wizardScheduleText = 'الأسبوع الحالي محدد تلقائيًا؛ اختر يومًا متاحًا من اليوم حتى السبت.';
+translations.ar.wizardBackDetails = 'رجوع للبيانات';
+translations.ar.wizardNextPayment = 'متابعة إلى الدفع';
+translations.ar.wizardBackSchedule = 'رجوع للمواعيد';
+translations.ar.wizardPaymentTitle = 'راجع ووافق ثم اختر طريقة الدفع';
+translations.ar.wizardPaymentText = 'راجع السعر ووافق على الشروط قبل متابعة الدفع الآمن.';
 translations.en.wizardPackageTitle = 'Choose your package';
 translations.en.wizardPackageText = 'Pick the photography style for your car and review the price before payment.';
 translations.en.wizardPackageHint = 'You can change your selection before paying.';
@@ -142,6 +165,29 @@ translations.en.wizardBackPackage = 'Back to packages';
 translations.en.wizardNextReview = 'Review booking';
 translations.en.wizardReviewTitle = 'Review your booking';
 translations.en.wizardReviewText = 'Check the selected package and total, then choose a payment method.';
+translations.en.bookingStep3 = 'Schedule';
+translations.en.bookingStep4 = 'Payment';
+translations.en.bookingHeroTitle = 'Book your car session in four steps.';
+translations.en.bookingHeroText = 'Choose a package, enter your details and car information, select a date, then accept the terms and choose payment.';
+translations.en.flowStep3 = 'Choose a date from this week';
+translations.en.flowStep4 = 'Review, accept, and choose payment';
+translations.en.flowReady = 'Ready for secure checkout';
+translations.en.shootCountryLabel = 'Country *';
+translations.en.countrySaudi = 'Saudi Arabia';
+translations.en.countryBahrain = 'Bahrain';
+translations.en.countryKuwait = 'Kuwait';
+translations.en.regionChooseCountry = 'Choose a country first';
+translations.en.regionChooseCity = 'Choose your preferred area';
+translations.en.bookingRegionOptionsLabel = 'Available areas';
+translations.en.validationCountry = 'Choose a country first.';
+translations.en.wizardNextSchedule = 'Continue to schedule';
+translations.en.wizardScheduleTitle = 'Choose your shoot date';
+translations.en.wizardScheduleText = 'The current week is selected automatically. Choose an available day from today through Saturday.';
+translations.en.wizardBackDetails = 'Back to details';
+translations.en.wizardNextPayment = 'Continue to payment';
+translations.en.wizardBackSchedule = 'Back to schedule';
+translations.en.wizardPaymentTitle = 'Review and accept, then choose payment';
+translations.en.wizardPaymentText = 'Review the total and accept the terms before secure checkout.';
 translations.en.supportKicker = 'SUPPORT';
 translations.en.supportTitle = 'Support & help';
 translations.en.supportIntro = 'Have a suggestion, complaint, question, or need a call back? Send us a message and we will reply within one business day.';
@@ -245,9 +291,17 @@ const carOptions = {
   en: [['Sedan','Sedan'],['SUV / Jeep','SUV / Jeep'],['Luxury','Luxury'],['Classic','Classic'],['Pickup','Pickup'],['Sport','Sport'],['Other','Other']]
 };
 
-const regionOptions = {
-  ar: [['الخبر','الخبر'],['الدمام','الدمام'],['سيهات','سيهات'],['القطيف','القطيف'],['الجبيل','الجبيل'],['حفر الباطن','حفر الباطن'],['البحرين','البحرين'],['الكويت','الكويت']],
-  en: [['Khobar','Khobar'],['Dammam','Dammam'],['Saihat','Saihat'],['Qatif','Qatif'],['Jubail','Jubail'],['Hafar Al Batin','Hafar Al Batin'],['Bahrain','Bahrain'],['Kuwait','Kuwait']]
+const shootLocations = {
+  ar: {
+    SA: [['Khobar', 'الخبر'], ['Dammam', 'الدمام'], ['Saihat', 'سيهات'], ['Qatif', 'القطيف'], ['Jubail', 'الجبيل'], ['Hafar Al Batin', 'حفر الباطن']],
+    BH: [['Bahrain', 'البحرين']],
+    KW: [['Kuwait', 'الكويت']]
+  },
+  en: {
+    SA: [['Khobar', 'Khobar'], ['Dammam', 'Dammam'], ['Saihat', 'Saihat'], ['Qatif', 'Qatif'], ['Jubail', 'Jubail'], ['Hafar Al Batin', 'Hafar Al Batin']],
+    BH: [['Bahrain', 'Bahrain']],
+    KW: [['Kuwait', 'Kuwait']]
+  }
 };
 
 const phoneCountries = [
@@ -341,12 +395,34 @@ function updateSelects(lang = getLang()) {
     if (currentIndex >= 0) carSelect.value = carOptions[lang][currentIndex % carOptions[lang].length][0];
   }
 
+  renderShootRegions(lang);
+}
+
+function renderShootRegions(lang = getLang()) {
   const regionSelect = document.querySelector('#shootRegion');
-  if (regionSelect) {
-    const current = regionSelect.value;
-    regionSelect.innerHTML = `<option value="">${escapeHtml(tr('regionPlaceholder'))}</option>` + regionOptions[lang].map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('');
-    if ([...regionSelect.options].some((o) => o.value === current)) regionSelect.value = current;
+  if (!regionSelect) return;
+  const country = document.querySelector('input[name="shootCountry"]:checked')?.value || '';
+  const current = regionSelect.value;
+  const options = shootLocations[lang]?.[country] || [];
+  const regionOptions = document.querySelector('#shootRegionOptions');
+  const keepCurrent = options.some(([value]) => value === current);
+  regionSelect.value = keepCurrent ? current : '';
+  regionSelect.disabled = options.length === 0;
+  const regionField = regionSelect.closest('.shoot-region-field');
+  regionField?.classList.toggle('is-disabled', options.length === 0);
+  if (regionOptions) {
+    regionOptions.innerHTML = options.map(([value, label]) => {
+      const selected = keepCurrent && value === current;
+      return `<button class="shoot-region-choice${selected ? ' is-selected' : ''}" type="button" data-shoot-region="${escapeHtml(value)}" aria-pressed="${selected}">${escapeHtml(label)}</button>`;
+    }).join('');
+    regionOptions.classList.toggle('is-empty', options.length === 0);
   }
+  const hint = document.querySelector('#shootRegionHint');
+  if (hint) hint.textContent = options.length ? tr('regionChooseCity') : tr('regionChooseCountry');
+  document.querySelectorAll('.shoot-country-choice').forEach((choice) => {
+    const input = choice.querySelector('input[name="shootCountry"]');
+    choice.classList.toggle('is-selected', input?.checked === true);
+  });
 }
 
 function dateOnlyFromLocal(date = new Date()) {
@@ -371,44 +447,27 @@ function formatBookingDate(iso, options = { dateStyle: 'full' }) {
 }
 
 function renderBookingDates() {
-  const weekSelect = document.querySelector('#bookingWeek');
   const optionsWrap = document.querySelector('#bookingDateOptions');
   const selectedDateInput = document.querySelector('#preferredAt');
-  if (!weekSelect || !optionsWrap || !selectedDateInput) return;
+  const weekDisplay = document.querySelector('#bookingWeekDisplay');
+  if (!optionsWrap || !selectedDateInput) return;
 
   const today = dateOnlyFromLocal();
   const daysBackToSunday = today.getUTCDay();
-  const firstSunday = new Date(today);
-  firstSunday.setUTCDate(today.getUTCDate() - daysBackToSunday);
-  const weeks = [];
-
-  for (let week = 0; week < 12; week += 1) {
-    const sunday = new Date(firstSunday);
-    sunday.setUTCDate(firstSunday.getUTCDate() + week * 7);
-    const days = Array.from({ length: 7 }, (_, offset) => {
-      const date = new Date(sunday);
-      date.setUTCDate(sunday.getUTCDate() + offset);
-      return { date, iso: bookingDateIso(date) };
-    }).filter((day) => day.date >= today);
-    if (days.length) weeks.push({ start: bookingDateIso(sunday), days });
-  }
-
-  if (!weeks.length) return;
   const existingDate = selectedDateInput.value;
-  const existingWeek = weeks.find((week) => week.days.some((day) => day.iso === existingDate));
-  const currentWeek = weekSelect.value;
-  const chosenWeek = existingWeek?.start || (weeks.some((week) => week.start === currentWeek) ? currentWeek : weeks[0].start);
-  weekSelect.innerHTML = weeks.map((week, index) => {
-    const range = week.days.length > 1
-      ? `${formatBookingDate(week.days[0].iso, { day: 'numeric', month: 'long' })} – ${formatBookingDate(week.days[week.days.length - 1].iso, { day: 'numeric', month: 'long' })}`
-      : formatBookingDate(week.days[0].iso, { day: 'numeric', month: 'long' });
-    const label = getLang() === 'ar' ? `الأسبوع ${index + 1} · ${range}` : `Week ${index + 1} · ${range}`;
-    return `<option value="${week.start}"${week.start === chosenWeek ? ' selected' : ''}>${escapeHtml(label)}</option>`;
-  }).join('');
-
-  const week = weeks.find((item) => item.start === chosenWeek) || weeks[0];
-  const dayToKeep = week.days.some((day) => day.iso === existingDate) ? existingDate : '';
-  optionsWrap.innerHTML = week.days.map((day) => {
+  const sunday = new Date(today);
+  sunday.setUTCDate(today.getUTCDate() - daysBackToSunday);
+  const saturday = new Date(sunday);
+  saturday.setUTCDate(sunday.getUTCDate() + 6);
+  const days = Array.from({ length: 7 - daysBackToSunday }, (_, index) => {
+    const date = new Date(today);
+    date.setUTCDate(today.getUTCDate() + index);
+    return { date, iso: bookingDateIso(date) };
+  });
+  const range = `${formatBookingDate(bookingDateIso(sunday), { day: 'numeric', month: 'long' })} – ${formatBookingDate(bookingDateIso(saturday), { day: 'numeric', month: 'long' })}`;
+  if (weekDisplay) weekDisplay.textContent = getLang() === 'ar' ? `الأسبوع الحالي · ${range}` : `Current week · ${range}`;
+  const dayToKeep = days.some((day) => day.iso === existingDate) ? existingDate : '';
+  optionsWrap.innerHTML = days.map((day) => {
     const selected = day.iso === dayToKeep;
     const dayLabel = formatBookingDate(day.iso, { weekday: 'long' });
     const dateLabel = formatBookingDate(day.iso, { day: 'numeric', month: 'short' });
@@ -416,6 +475,19 @@ function renderBookingDates() {
     return `<button class="booking-date-option${selected ? ' is-selected' : ''}" type="button" data-booking-date="${day.iso}" aria-pressed="${selected}"><span class="booking-date-state">${escapeHtml(status)}</span><strong>${escapeHtml(dayLabel)}</strong><span class="booking-date-number">${escapeHtml(dateLabel)}</span></button>`;
   }).join('');
   selectedDateInput.value = dayToKeep;
+}
+
+function scheduleBookingDateRefresh() {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Riyadh', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+  }).formatToParts(new Date());
+  const clock = Object.fromEntries(parts.filter((part) => part.type !== 'literal').map((part) => [part.type, Number(part.value)]));
+  const secondsToday = clock.hour * 3600 + clock.minute * 60 + clock.second;
+  window.setTimeout(() => {
+    renderBookingDates();
+    updateBookingFlowSummary();
+    scheduleBookingDateRefresh();
+  }, Math.max(1000, (86400 - secondsToday) * 1000 + 250));
 }
 
 function escapeHtml(value) {
@@ -970,7 +1042,7 @@ function clearBookingValidation() {
 
 function markBookingFieldInvalid(target, message, stepName) {
   clearBookingValidation();
-  const wizardStep = stepName === 'package' ? 1 : stepName === 'details' ? 2 : stepName === 'payment' ? 3 : 0;
+  const wizardStep = stepName === 'package' ? 1 : stepName === 'details' ? 2 : stepName === 'schedule' ? 3 : stepName === 'payment' ? 4 : 0;
   if (wizardStep && document.querySelector('[data-booking-panel]')) setBookingWizardStep(wizardStep, false);
   const node = typeof target === 'string' ? document.querySelector(target) : target;
   if (!node) return;
@@ -998,7 +1070,11 @@ function updateBookingFlowSummary() {
   const phone = normalizedBookingPhone();
   const car = document.querySelector('#carType')?.value || '';
   const carDetails = document.querySelector('#carDetails')?.value.trim() || '';
-  const region = document.querySelector('#shootRegion')?.value || '';
+  const regionSelect = document.querySelector('#shootRegion');
+  const regionName = document.querySelector('#shootRegionOptions [data-shoot-region].is-selected')?.textContent.trim() || '';
+  const countryInput = document.querySelector('input[name="shootCountry"]:checked');
+  const countryName = countryInput?.closest('label')?.querySelector('[data-i18n]')?.textContent.trim() || '';
+  const region = [regionName, countryName].filter(Boolean).join(' · ');
   const notes = document.querySelector('#notes')?.value.trim() || '';
   const preferredAt = document.querySelector('#preferredAt')?.value || '';
   const preferredText = preferredAt
@@ -1010,6 +1086,7 @@ function updateBookingFlowSummary() {
   const packageNode = document.querySelector('[data-flow-value="package"]');
   const detailsNode = document.querySelector('[data-flow-value="details"]');
   const paymentNode = document.querySelector('[data-flow-value="payment"]');
+  const scheduleNode = document.querySelector('[data-flow-value="schedule"]');
   const detailsName = document.querySelector('[data-flow-name]');
   const detailsPhone = document.querySelector('[data-flow-phone]');
   const detailsCar = document.querySelector('[data-flow-car]');
@@ -1031,15 +1108,18 @@ function updateBookingFlowSummary() {
     node.textContent = value;
     node.classList.toggle('is-empty', !value);
   });
-  const detailsComplete = !!name && isValidBookingPhone() && !!car && !!region;
-  if (paymentNode) paymentNode.textContent = terms && detailsComplete ? tr('flowReady') : tr('flowStep3');
+  const detailsComplete = !!name && isValidBookingPhone() && !!car && !!regionSelect?.value && !!countryInput;
+  if (scheduleNode) scheduleNode.textContent = preferredAt ? tr('preferredAtNote').replace('{date}', formatBookingDate(preferredAt)) : tr('flowStep3');
+  if (paymentNode) paymentNode.textContent = terms && detailsComplete && preferredAt ? tr('flowReady') : tr('flowStep4');
 
   const packageStep = document.querySelector('[data-flow-step="package"]');
   const detailsStep = document.querySelector('[data-flow-step="details"]');
+  const scheduleStep = document.querySelector('[data-flow-step="schedule"]');
   const paymentStep = document.querySelector('[data-flow-step="payment"]');
   if (packageStep && packageKey) { packageStep.classList.add('is-active', 'is-done'); }
   if (detailsStep && detailsComplete) { detailsStep.classList.add('is-active', 'is-done'); }
-  if (paymentStep && terms && detailsComplete && packageKey) { paymentStep.classList.add('is-active'); }
+  if (scheduleStep && preferredAt) { scheduleStep.classList.add('is-active', 'is-done'); }
+  if (paymentStep && terms && detailsComplete && packageKey && preferredAt) { paymentStep.classList.add('is-active'); }
 }
 
 let activeBookingStep = 1;
@@ -1047,7 +1127,7 @@ let activeBookingStep = 1;
 function setBookingWizardStep(step, shouldScroll = true) {
   const panels = [...document.querySelectorAll('[data-booking-panel]')];
   if (!panels.length) return;
-  activeBookingStep = Math.min(3, Math.max(1, Number(step) || 1));
+  activeBookingStep = Math.min(4, Math.max(1, Number(step) || 1));
   panels.forEach((panel) => {
     const isActive = Number(panel.dataset.bookingPanel) === activeBookingStep;
     panel.hidden = !isActive;
@@ -1114,13 +1194,20 @@ function validateBookingWizardStep(step) {
     const phone = normalizedBookingPhone();
     const car = document.querySelector('#carType')?.value || '';
     const region = document.querySelector('#shootRegion')?.value || '';
-    const preferredAt = document.querySelector('#preferredAt')?.value || '';
+    const country = document.querySelector('input[name="shootCountry"]:checked')?.value || '';
     if (!name) { markBookingFieldInvalid('#fullName', tr('validationName'), 'details'); return false; }
     if (!phone || !isValidBookingPhone()) { markBookingFieldInvalid('#phone', tr('validationPhone'), 'details'); return false; }
     if (!car) { markBookingFieldInvalid('#carType', tr('validationCar'), 'details'); return false; }
-    if (!region) { markBookingFieldInvalid('#shootRegion', tr('validationRegion'), 'details'); return false; }
-    if (!preferredAt) { markBookingFieldInvalid('#bookingDateOptions', tr('validationDate'), 'details'); return false; }
-    if (!document.querySelector('#termsAgreement')?.checked) { markBookingFieldInvalid('#termsAgreement', tr('validationTerms'), 'details'); return false; }
+    if (!country) { markBookingFieldInvalid('#shootCountryChoices', tr('validationCountry'), 'details'); return false; }
+    if (!region) { markBookingFieldInvalid('#shootRegionOptions', tr('validationRegion'), 'details'); return false; }
+    return true;
+  }
+  if (step === 3) {
+    if (!document.querySelector('#preferredAt')?.value) { markBookingFieldInvalid('#bookingDateOptions', tr('validationDate'), 'schedule'); return false; }
+    return true;
+  }
+  if (step === 4) {
+    if (!document.querySelector('#termsAgreement')?.checked) { markBookingFieldInvalid('#termsAgreement', tr('validationTerms'), 'payment'); return false; }
     return true;
   }
   return true;
@@ -1128,7 +1215,7 @@ function validateBookingWizardStep(step) {
 
 function advanceBookingWizard() {
   if (!validateBookingWizardStep(activeBookingStep)) return false;
-  if (activeBookingStep < 3) setBookingWizardStep(activeBookingStep + 1);
+  if (activeBookingStep < 4) setBookingWizardStep(activeBookingStep + 1);
   return true;
 }
 
@@ -1157,7 +1244,7 @@ function setupBookingWizard(form) {
       }
 
       if (!validateBookingWizardStep(visibleStep)) return;
-      setBookingWizardStep(Math.min(3, visibleStep + 1));
+      setBookingWizardStep(Math.min(4, visibleStep + 1));
       updateBookingFlowSummary();
     });
   });
@@ -1176,10 +1263,32 @@ function setupBookingForm() {
   if (!form) return;
   setupBookingWizard(form);
 
-  ['fullName','phone','phoneCountry','carType','carDetails','shootRegion','bookingWeek','preferredAt','notes','termsAgreement','bookingCouponCode'].forEach((id) => {
+  ['fullName','phone','phoneCountry','carType','carDetails','shootRegion','preferredAt','notes','termsAgreement','bookingCouponCode'].forEach((id) => {
     const node = document.getElementById(id);
     node?.addEventListener('input', () => { clearBookingValidation(); updateBookingFlowSummary(); });
     node?.addEventListener('change', () => { clearBookingValidation(); updateBookingFlowSummary(); });
+  });
+  document.querySelectorAll('input[name="shootCountry"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const regionSelect = document.querySelector('#shootRegion');
+      if (regionSelect) regionSelect.value = '';
+      renderShootRegions();
+      clearBookingValidation();
+      updateBookingFlowSummary();
+    });
+  });
+  document.querySelector('#shootRegionOptions')?.addEventListener('click', (event) => {
+    const choice = event.target.closest('[data-shoot-region]');
+    if (!choice) return;
+    const regionSelect = document.querySelector('#shootRegion');
+    if (regionSelect) regionSelect.value = choice.dataset.shootRegion || '';
+    document.querySelectorAll('#shootRegionOptions [data-shoot-region]').forEach((button) => {
+      const selected = button === choice;
+      button.classList.toggle('is-selected', selected);
+      button.setAttribute('aria-pressed', String(selected));
+    });
+    clearBookingValidation();
+    updateBookingFlowSummary();
   });
   const countrySelect = document.querySelector('#phoneCountry');
   const phoneInput = document.querySelector('#phone');
@@ -1194,13 +1303,7 @@ function setupBookingForm() {
   });
   updatePhoneLength();
   renderBookingDates();
-  document.querySelector('#bookingWeek')?.addEventListener('change', () => {
-    const selected = document.querySelector('#preferredAt');
-    if (selected) selected.value = '';
-    renderBookingDates();
-    clearBookingValidation();
-    updateBookingFlowSummary();
-  });
+  scheduleBookingDateRefresh();
   document.querySelector('#bookingDateOptions')?.addEventListener('click', (event) => {
     const choice = event.target.closest('[data-booking-date]');
     if (!choice) return;
@@ -1218,7 +1321,8 @@ function setupBookingForm() {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (activeBookingStep < 3) { advanceBookingWizard(); return; }
+    if (activeBookingStep < 4) { advanceBookingWizard(); return; }
+    if (!validateBookingWizardStep(4)) return;
     clearBookingValidation();
 
     const selectedChoice = document.querySelector('[data-booking-package].selected');
@@ -1239,6 +1343,7 @@ function setupBookingForm() {
       packageType: document.querySelector('#packageType')?.value,
       carType: document.querySelector('#carType')?.value,
       shootRegion: document.querySelector('#shootRegion')?.value,
+      shootCountry: document.querySelector('input[name="shootCountry"]:checked')?.value || '',
       preferredAt,
       phone: `+${normalizedBookingPhone()}`,
       phoneCountry: document.querySelector('#phoneCountry')?.value || '',
@@ -1261,8 +1366,8 @@ function setupBookingForm() {
       return;
     }
     if (!data.carType) { markBookingFieldInvalid('#carType', tr('validationCar'), 'details'); return; }
-    if (!data.shootRegion) { markBookingFieldInvalid('#shootRegion', tr('validationRegion'), 'details'); return; }
-    if (!preferredAt) { markBookingFieldInvalid('#bookingDateOptions', tr('validationDate'), 'details'); return; }
+    if (!data.shootRegion) { markBookingFieldInvalid('#shootRegionOptions', tr('validationRegion'), 'details'); return; }
+    if (!preferredAt) { markBookingFieldInvalid('#bookingDateOptions', tr('validationDate'), 'schedule'); return; }
     if (!data.termsAgreement) { markBookingFieldInvalid('#termsAgreement', tr('validationTerms'), 'payment'); return; }
 
     const lastSubmit = Number(sessionStorage.getItem('ayan_last_submit') || 0);
@@ -1639,9 +1744,9 @@ function setupSocialFloat() {
     widget.className = 'social-float';
     widget.dataset.socialFloat = '';
     widget.innerHTML = `<div class="social-float-menu" id="social-float-menu" data-social-menu>
-      <a class="social-float-link whatsapp" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener noreferrer" data-social="whatsapp"><span class="social-float-icon" aria-hidden="true">◉</span><span data-i18n="socialWhatsApp">${labels.whatsapp}</span><span class="social-arrow">↗</span></a>
-      <a class="social-float-link instagram" href="https://instagram.com/13345" target="_blank" rel="noopener noreferrer" data-social="instagram"><span class="social-float-icon" aria-hidden="true">◎</span><span data-i18n="socialInstagram">${labels.instagram}</span><span class="social-arrow">↗</span></a>
-      <a class="social-float-link snapchat" href="https://snapchat.com/t/vsu8gtHC" target="_blank" rel="noopener noreferrer" data-social="snapchat"><span class="social-float-icon" aria-hidden="true">S</span><span data-i18n="socialSnapchat">${labels.snapchat}</span><span class="social-arrow">↗</span></a>
+      <a class="social-float-link whatsapp" href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener noreferrer" data-social="whatsapp"><span class="social-float-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg></span><span data-i18n="socialWhatsApp">${labels.whatsapp}</span><span class="social-arrow">↗</span></a>
+      <a class="social-float-link instagram" href="https://instagram.com/13345" target="_blank" rel="noopener noreferrer" data-social="instagram"><span class="social-float-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><rect x="4.2" y="4.2" width="15.6" height="15.6" rx="4.2"/><circle cx="12" cy="12" r="3.7"/><circle cx="17.3" cy="6.9" r="1.05"/></svg></span><span data-i18n="socialInstagram">${labels.instagram}</span><span class="social-arrow">↗</span></a>
+      <a class="social-float-link snapchat" href="https://snapchat.com/t/vsu8gtHC" target="_blank" rel="noopener noreferrer" data-social="snapchat"><span class="social-float-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><path d="M12 4.35c-2.64 0-4.35 1.94-4.35 4.63v2.2c0 .46-.28.8-.84 1.02-.41.17-.72.41-.72.71 0 .44.6.58 1.22.76.5.15.75.36.82.77.09.51.42.79.96.84.4.04.71.13.96.28.45.27.85.67 1.95.67 1.1 0 1.5-.4 1.95-.67.25-.15.56-.24.96-.28.54-.05.87-.33.96-.84.07-.41.32-.62.82-.77.62-.18 1.22-.32 1.22-.76 0-.3-.31-.54-.72-.71-.56-.22-.84-.56-.84-1.02v-2.2c0-2.69-1.71-4.63-4.35-4.63Z"/></svg></span><span data-i18n="socialSnapchat">${labels.snapchat}</span><span class="social-arrow">↗</span></a>
       </div><button class="social-float-toggle" type="button" data-social-toggle data-i18n-aria-label="socialMenuLabel" aria-expanded="false" aria-controls="social-float-menu" aria-label="${labels.aria}"><span class="social-float-toggle-icon" aria-hidden="true"><svg class="social-icon-network" viewBox="0 0 24 24" role="img"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.5M8.2 13.2l7.5 4.5"/></svg><svg class="social-icon-close" viewBox="0 0 24 24" role="img"><path d="m4 4 16 16M20 4 4 20" stroke-width="2.2"/></svg></span><span class="social-float-ping" aria-hidden="true"></span></button>`;
     document.body.append(widget);
   }
@@ -1689,6 +1794,12 @@ function setupSocialFloat() {
 }
 
 function setupVerificationDialog() {
+  const floatingSocial = document.querySelector('[data-social-float]');
+  if (floatingSocial) {
+    const trustRow = floatingSocial.closest('.footer-trust-controls');
+    document.body.append(floatingSocial);
+    if (trustRow && !trustRow.children.length) trustRow.remove();
+  }
   const card = document.querySelector('.ecommerce-verification');
   const trigger = card?.querySelector('.verification-link');
   if (!card || !trigger) return;

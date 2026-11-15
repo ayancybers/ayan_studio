@@ -233,7 +233,8 @@
   function refreshAvailableMethods(serverConfig) {
     availableMethods.clear();
     const available = new Set(Array.isArray(serverConfig.availablePaymentMethods) ? serverConfig.availablePaymentMethods : []);
-    const saudiInstallmentsAllowed = /^\+?9665\d{8}$/.test(String(order?.phone || '').replace(/\s/g, ''));
+    const saudiSessionAllowed = !['Bahrain', 'Kuwait', 'البحرين', 'الكويت'].includes(String(order?.shootRegion || '').trim());
+    const saudiInstallmentsAllowed = saudiSessionAllowed && /^\+?9665\d{8}$/.test(String(order?.phone || '').replace(/\s/g, ''));
     if (saudiInstallmentsAllowed && available.has('tabby') && serverConfig.tabbyConfigured) availableMethods.add('tabby');
     if (saudiInstallmentsAllowed && available.has('tamara') && serverConfig.tamaraConfigured) availableMethods.add('tamara');
     const supported = new Set(Array.isArray(serverConfig.tuwaiqPayMethods) ? serverConfig.tuwaiqPayMethods : []);
