@@ -3235,7 +3235,6 @@ html body iframe.sbc-seal-frame {
   background: transparent !important;
   box-shadow: none !important;
   outline: 0 !important;
-  clip-path: inset(0 round 999px) !important;
 }
 @media (max-width: 700px) {
   html body .social-float { bottom: calc(66px + env(safe-area-inset-bottom)) !important; }

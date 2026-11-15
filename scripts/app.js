@@ -1815,9 +1815,37 @@ function setupOfficialSealLanguage() {
   setSealLanguage();
 }
 
+function setupOfficialSealFrameEdges() {
+  if (!document.body || !window.MutationObserver) return;
+  const shapeFrame = (frame, width = frame.offsetWidth, height = frame.offsetHeight) => {
+    const compact = Number(width) <= 180 && Number(height) <= 56;
+    const leftCrop = Math.max(0, Number(width) - 126);
+    const shape = compact ? `inset(2px 1px 2px ${leftCrop}px round 999px)` : 'none';
+    if (frame.style.clipPath !== shape) frame.style.clipPath = shape;
+  };
+  const watchedFrames = new WeakSet();
+  const watchFrames = () => document.querySelectorAll('iframe.sbc-seal-frame').forEach((frame) => {
+    shapeFrame(frame);
+    if (watchedFrames.has(frame)) return;
+    watchedFrames.add(frame);
+    new MutationObserver(() => shapeFrame(frame)).observe(frame, { attributes: true, attributeFilter: ['style'] });
+  });
+  new MutationObserver(watchFrames).observe(document.body, { childList: true, subtree: true });
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://eauthenticate.saudibusiness.gov.sa' || event.data?.sbcSeal !== true) return;
+    const frame = [...document.querySelectorAll('iframe.sbc-seal-frame')].find((item) => item.contentWindow === event.source);
+    if (!frame) return;
+    const width = Number(event.data.width || frame.offsetWidth);
+    const height = Number(event.data.height || frame.offsetHeight);
+    shapeFrame(frame, width, height);
+  });
+  watchFrames();
+}
+
 async function init() {
   applyPreferences();
   setupOfficialSealLanguage();
+  setupOfficialSealFrameEdges();
   void loadPaymentConfig();
   setupActiveNav();
   setupPackageButtons();
