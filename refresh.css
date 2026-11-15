@@ -3229,57 +3229,13 @@ html body .social-float-menu {
   max-width: min(270px,calc(100vw - 32px)) !important;
   transform-origin: bottom left !important;
 }
-html body iframe.sbc-seal-frame { display: none !important; }
-html body .sbc-verify-shortcut {
-  position: fixed !important;
-  inset: auto auto calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)) !important;
-  display: inline-flex !important;
-  min-height: 48px;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 10px;
-  padding: 5px 8px 5px 14px;
-  border: 1px solid rgba(99,139,219,.72);
-  border-radius: 999px;
-  background: linear-gradient(145deg,#102967,#071a50);
-  color: #f4f7ff !important;
-  box-shadow: 0 8px 22px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.04);
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none !important;
-  z-index: 1400 !important;
-  -webkit-tap-highlight-color: transparent;
-}
-html body .sbc-verify-shortcut:hover { border-color: #98baff; background: linear-gradient(145deg,#1b3762,#0d1d39); }
-html body .sbc-verify-shortcut:focus-visible { outline: 2px solid #9abaff; outline-offset: 3px; }
-html body .sbc-verify-seal-mark {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
-  place-items: center;
-  border-radius: 8px;
-  background: #fff;
-  color: #102967;
-}
-html body .sbc-verify-seal-mark svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
-html body .sbc-verify-control {
-  position: fixed !important;
-  inset: auto auto calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)) !important;
+html body iframe.sbc-seal-frame {
   display: block !important;
-  width: max-content;
-  height: max-content;
-  padding: 0 !important;
   border: 0 !important;
-  border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-  z-index: 1400 !important;
-}
-html body .sbc-verify-control .sbc-verify-shortcut {
-  position: relative !important;
-  inset: auto !important;
+  outline: 0 !important;
+  clip-path: inset(0 round 999px) !important;
 }
 @media (max-width: 700px) {
   html body .social-float { bottom: calc(66px + env(safe-area-inset-bottom)) !important; }

@@ -1799,36 +1799,25 @@ function setupSocialFloat() {
   });
 }
 
-function getOfficialVerificationUrl(token, lang = getLang()) {
-  const url = new URL('https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal');
-  url.searchParams.set('token', token);
-  url.searchParams.set('lang', lang === 'en' ? 'en' : 'ar');
-  url.searchParams.set('pos', 'bottom');
-  return url.toString();
-}
-
-function setupVerificationSealShortcut() {
-  const seal = document.querySelector('.sbc-verify-seal[data-token]');
-  if (!seal) return;
-  const token = seal.dataset.token;
-  const certificateUrl = getOfficialVerificationUrl(token);
-  const control = document.createElement('div');
-  control.className = 'sbc-verify-control';
-  const shortcut = document.createElement('a');
-  shortcut.className = 'sbc-verify-shortcut';
-  shortcut.href = certificateUrl;
-  shortcut.target = '_blank';
-  shortcut.rel = 'noopener noreferrer';
-  shortcut.dataset.token = token;
-  shortcut.dataset.i18nAriaLabel = 'verificationShortcutLabel';
-  shortcut.innerHTML = `<span class="sbc-verify-seal-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 18V8m0 10c-2-5-6-8-11-9 1 5 4 8 11 9Zm0 0c2-5 6-8 11-9-1 5-4 8-11 9Zm0-3c-1-5-4-8-8-10 0 4 2 8 8 10Zm0 0c1-5 4-8 8-10 0 4-2 8-8 10ZM12 25l16 8M28 25l-16 8m8-15v12"/></svg></span><span data-i18n="verificationLink">${getLang() === 'ar' ? 'متجر موثّق' : 'Verified store'}</span>`;
-  shortcut.setAttribute('aria-label', getLang() === 'ar' ? 'متجر موثّق — فتح التحقق الرسمي' : 'Verified store — open official verification');
-  control.append(shortcut);
-  document.body.append(control);
+function setupOfficialSealLanguage() {
+  if (!document.body || !window.MutationObserver) return;
+  const setSealLanguage = () => {
+    document.querySelectorAll('iframe.sbc-seal-frame').forEach((frame) => {
+      try {
+        const url = new URL(frame.src);
+        if (url.origin !== 'https://eauthenticate.saudibusiness.gov.sa' || url.searchParams.get('lang') === 'en') return;
+        url.searchParams.set('lang', 'en');
+        frame.src = url.toString();
+      } catch {}
+    });
+  };
+  new MutationObserver(setSealLanguage).observe(document.body, { childList: true, subtree: true });
+  setSealLanguage();
 }
 
 async function init() {
   applyPreferences();
+  setupOfficialSealLanguage();
   void loadPaymentConfig();
   setupActiveNav();
   setupPackageButtons();
@@ -1839,7 +1828,6 @@ async function init() {
   setupCardGlow();
   setupPointerGlow();
   setupSocialFloat();
-  setupVerificationSealShortcut();
   setupAmbientParallax();
   setupHeroBackgroundVideo();
   setupHomeShowcaseVideos();
