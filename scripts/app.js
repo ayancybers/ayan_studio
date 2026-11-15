@@ -1879,22 +1879,28 @@ function setupVerificationDialog() {
   const closeButton = dialog.querySelector('.verification-dialog-close');
   const qrFrame = dialog.querySelector('.verification-qr-frame');
   const qrImage = qrFrame?.querySelector('img');
+  const shortcut = document.querySelector('.sbc-verify-shortcut');
+  const triggers = [trigger, shortcut].filter(Boolean);
+  let activeTrigger = trigger;
   const close = () => {
     dialog.classList.remove('open');
     dialog.setAttribute('aria-hidden', 'true');
-    trigger.setAttribute('aria-expanded', 'false');
-    trigger.focus();
+    triggers.forEach((item) => item.setAttribute('aria-expanded', 'false'));
+    activeTrigger?.focus();
   };
   const open = (event) => {
     event.preventDefault();
+    activeTrigger = event.currentTarget;
     dialog.classList.add('open');
     dialog.setAttribute('aria-hidden', 'false');
-    trigger.setAttribute('aria-expanded', 'true');
+    triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
     closeButton?.focus();
   };
-  trigger.setAttribute('aria-haspopup', 'dialog');
-  trigger.setAttribute('aria-expanded', 'false');
-  trigger.addEventListener('click', open);
+  triggers.forEach((item) => {
+    item.setAttribute('aria-haspopup', 'dialog');
+    item.setAttribute('aria-expanded', 'false');
+    item.addEventListener('click', open);
+  });
   dialog.querySelectorAll('[data-verification-close]').forEach((button) => button.addEventListener('click', close));
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && dialog.classList.contains('open')) close();
