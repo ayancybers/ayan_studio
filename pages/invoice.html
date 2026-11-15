@@ -26,7 +26,7 @@
     @media print{body{padding:0;background:#fff}.toolbar{display:none}.invoice{border:0;box-shadow:none;border-radius:0}.invoice-top{-webkit-print-color-adjust:exact;print-color-adjust:exact}.notice,.line.total{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
     body.embedded{padding:0;background:#fff}.embedded .toolbar{display:none}.embedded .invoice{border:0;box-shadow:none;border-radius:0}
   </style>
-<link rel="stylesheet" href="../refresh.css?v=120">
+<link rel="stylesheet" href="../refresh.css?v=123">
 </head>
 <body class="invoice-page">
 <div class="wrap">
@@ -106,12 +106,7 @@ async function load(){
   try{const endpoint=provider==='tabby'?'/api/tabby-payment?payment_id=':provider==='tamara'?'/api/tamara-payment?order_id=':'/api/payment?tap_id=';const r=await fetch(endpoint+encodeURIComponent(validRef),{cache:'no-store'});const d=await r.json();const ok=provider==='tabby'?(r.ok&&d.success&&d.status==='CLOSED'):provider==='tamara'?(r.ok&&d.success&&['authorised','authorized','fully_captured'].includes(String(d.status||'').toLowerCase())):(r.ok&&d.success&&d.status==='CAPTURED');if(!ok){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false);return}renderInvoice(d);__invoiceReadyResolve?.(true)}catch(e){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false)}
 }load();
 </script>
-  <div class="ecommerce-verification" aria-label="متجر موثّق">
-    <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
-      <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span class="verification-copy"><strong data-i18n="verificationLink">متجر موثّق</strong><small data-i18n="verificationNumber">رقم الشهادة: 0000333236</small></span>
-      <span class="verification-arrow" aria-hidden="true">↗</span>
-    </a>
-  </div>
+  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
+  <script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
 </body>
 </html>

@@ -35,8 +35,8 @@ export default async function handler(req, res) {
 
     data = mergeBookingDetails(data, details);
 
-    const to = normalizeSaudiPhone(data.phone);
-    if (!/^9665\d{8}$/.test(to)) {
+    const to = normalizeGccPhone(data.phone);
+    if (!/^(9665\d{8}|973\d{8}|965\d{8}|974\d{8}|971\d{9}|968\d{8})$/.test(to)) {
       return res.status(422).json({ error: 'Customer WhatsApp number is missing or invalid' });
     }
 
@@ -162,8 +162,9 @@ function firstName(value) {
   return String(value || 'عميل').trim().split(/\s+/)[0] || 'عميل';
 }
 
-function normalizeSaudiPhone(value) {
-  const raw = String(value || '').replace(/\D/g, '');
+function normalizeGccPhone(value) {
+  let raw = String(value || '').replace(/\D/g, '');
+  if (raw.startsWith('00')) raw = raw.slice(2);
   if (/^05\d{8}$/.test(raw)) return `966${raw.slice(1)}`;
   if (/^9665\d{8}$/.test(raw)) return raw;
   if (/^5\d{8}$/.test(raw)) return `966${raw}`;

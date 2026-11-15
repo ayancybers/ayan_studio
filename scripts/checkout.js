@@ -54,7 +54,7 @@
     preparing: 'جاري تجهيز عملية الدفع…', backBooking: '← العودة وتعديل البيانات',
     secureNote: 'سيتم تحويلك إلى صفحة الدفع المستضافة من مزود الدفع. لا يتم تخزين بيانات البطاقة في موقع Ayan Photography.',
     package: 'الباقة', beforeDiscount: 'السعر قبل الخصم', afterDiscount: 'السعر بعد الخصم',
-    discount: 'خصم الباقة', couponLabel: 'كود خصم إضافي', couponApply: 'تطبيق', couponSuccess: 'تم تطبيق خصم 10 ريالات', couponInvalid: 'كود الخصم غير صحيح', couponDiscount: 'خصم ayancybers', netPackage: 'السعر بعد كود الخصم', fee: 'رسوم الدفع', total: 'الإجمالي', name: 'الاسم', phone: 'الجوال',
+    discount: 'خصم الباقة', couponLabel: 'لديك كود خصم إضافي؟ (اختياري)', couponFieldLabel: 'أدخل كود الخصم', couponPlaceholder: 'مثال: ayancybers', couponApply: 'تطبيق', couponSuccess: 'تم تطبيق خصم 10 ريالات', couponInvalid: 'كود الخصم غير صحيح', couponDiscount: 'خصم ayancybers', netPackage: 'السعر بعد كود الخصم', fee: 'رسوم الدفع', total: 'الإجمالي', name: 'الاسم', phone: 'الجوال', installmentCountryNote: 'إتاحة تابي وتمارا تعتمد على بلد العميل وأهليته لدى مزود الخدمة.',
     car: 'السيارة', area: 'منطقة التصوير', shootDate: 'يوم التصوير المقترح', noOrder: 'لم يتم العثور على الطلب. ارجع إلى صفحة الحجز وأعد المحاولة.',
     chooseMethod: 'طريقة الدفع غير متاحة حاليًا. اختر إحدى الطرق المتاحة.',
     emailInvalid: 'اكتب بريدًا إلكترونيًا صحيحًا لإرسال الفاتورة.', paymentFailed: 'تعذر تجهيز عملية الدفع.',
@@ -81,7 +81,7 @@
     preparing: 'Preparing your payment…', backBooking: '← Back to edit your details',
     secureNote: 'You will continue to the payment provider’s secure checkout. Ayan Photography does not store card details.',
     package: 'Package', beforeDiscount: 'Original price', afterDiscount: 'Discounted price',
-    discount: 'Package discount', couponLabel: 'Extra discount code', couponApply: 'Apply', couponSuccess: 'SAR 10 discount applied', couponInvalid: 'Invalid discount code', couponDiscount: 'ayancybers discount', netPackage: 'Price after coupon', fee: 'Payment fee', total: 'Total', name: 'Name', phone: 'Mobile',
+    discount: 'Package discount', couponLabel: 'Have an extra discount code? (Optional)', couponFieldLabel: 'Enter your discount code', couponPlaceholder: 'Example: ayancybers', couponApply: 'Apply', couponSuccess: 'SAR 10 discount applied', couponInvalid: 'Invalid discount code', couponDiscount: 'ayancybers discount', netPackage: 'Price after coupon', fee: 'Payment fee', total: 'Total', name: 'Name', phone: 'Mobile', installmentCountryNote: 'Tabby and Tamara depend on the customer’s country and provider eligibility.',
     car: 'Car', area: 'Shoot area', shootDate: 'Preferred shoot date', noOrder: 'No booking was found. Return to the booking page and try again.',
     chooseMethod: 'This payment method is unavailable. Choose an available option.',
     emailInvalid: 'Enter a valid email address for your invoice.', paymentFailed: 'Unable to prepare payment.',
@@ -163,6 +163,10 @@
     const value = copy[node.dataset.checkoutKey];
     if (value) node.textContent = value;
   });
+  if (couponInput) {
+    couponInput.placeholder = copy.couponPlaceholder;
+    couponInput.setAttribute('aria-label', copy.couponFieldLabel);
+  }
   document.querySelector('.payment-selector')?.setAttribute('aria-label', copy.paymentSelector);
   document.querySelector('.payment-selector')?.setAttribute('aria-label', copy.paymentSelector);
 
@@ -229,8 +233,9 @@
   function refreshAvailableMethods(serverConfig) {
     availableMethods.clear();
     const available = new Set(Array.isArray(serverConfig.availablePaymentMethods) ? serverConfig.availablePaymentMethods : []);
-    if (available.has('tabby') && serverConfig.tabbyConfigured) availableMethods.add('tabby');
-    if (available.has('tamara') && serverConfig.tamaraConfigured) availableMethods.add('tamara');
+    const saudiInstallmentsAllowed = /^\+?9665\d{8}$/.test(String(order?.phone || '').replace(/\s/g, ''));
+    if (saudiInstallmentsAllowed && available.has('tabby') && serverConfig.tabbyConfigured) availableMethods.add('tabby');
+    if (saudiInstallmentsAllowed && available.has('tamara') && serverConfig.tamaraConfigured) availableMethods.add('tamara');
     const supported = new Set(Array.isArray(serverConfig.tuwaiqPayMethods) ? serverConfig.tuwaiqPayMethods : []);
     if (serverConfig.tuwaiqPayConfigured) {
       for (const [method, codes] of Object.entries(providerCodes)) {
@@ -280,7 +285,7 @@
       payButton.disabled = true;
     } else {
       payButton.disabled = false;
-      document.getElementById('paymentNote').textContent = copy.paymentNote;
+      document.getElementById('paymentNote').textContent = saudiInstallmentsAllowed ? copy.paymentNote : copy.installmentCountryNote;
     }
     document.querySelectorAll('[data-payment-method]').forEach((node) => {
       const active = node.dataset.paymentMethod === selectedMethod;
@@ -315,6 +320,15 @@
     couponStatus.dataset.state = couponApplied ? 'success' : 'error';
     renderSummary();
   });
+
+  const savedCouponCode = String(order.couponCode || '').trim().toLowerCase();
+  if (savedCouponCode && couponInput && couponStatus) {
+    couponInput.value = savedCouponCode;
+    couponApplied = savedCouponCode === 'ayancybers';
+    couponCode = couponApplied ? savedCouponCode : '';
+    couponStatus.textContent = couponApplied ? copy.couponSuccess : copy.couponInvalid;
+    couponStatus.dataset.state = couponApplied ? 'success' : 'error';
+  }
 
   fetch('/api/tuwaiqpay-payment?config=1', { cache: 'no-store' }).then((response) => {
     if (!response.ok) throw new Error('Payment configuration unavailable');

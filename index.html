@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="assets/ayan-logo-icon.png?v=1">
   <title>Ayan Photography</title>
 <link rel="stylesheet" href="styles.css?v=72">
-<link rel="stylesheet" href="refresh.css?v=120">
+<link rel="stylesheet" href="refresh.css?v=134">
   <style>
     .home-intro-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,rgba(17,55,67,.58),transparent 42%),linear-gradient(145deg,#05090d 0%,#0a1219 52%,#070c11 100%);color:#f2f7f8;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .65s ease,visibility .65s ease}
     .home-intro-loader::before,.home-intro-loader::after{position:absolute;content:"";width:min(78vw,760px);aspect-ratio:1;border:1px solid rgba(132,218,224,.075);border-radius:50%;pointer-events:none}
@@ -429,7 +429,7 @@
   </div>
   <button class="social-float-toggle" type="button" data-social-toggle data-i18n-aria-label="socialMenuLabel" aria-expanded="false" aria-controls="social-float-menu" aria-label="روابط التواصل">
     <span class="social-float-toggle-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="11.2" r="8.2"/><path d="m6.2 17.2-1 3.2 3.4-1M9 7.5c.35-.55.67-.57 1-.56h.5c.22 0 .43.12.53.35l.76 1.78c.1.23.07.42-.09.61l-.43.5c-.15.18-.16.34-.05.53.42.74 1 1.35 1.69 1.83.2.14.37.13.54-.04l.52-.58c.16-.18.36-.22.58-.12l1.73.78c.22.1.34.24.31.47-.06.55-.31 1.04-.76 1.39-.42.33-.94.4-1.48.27-1.13-.28-2.34-1.04-3.24-1.93-1.06-1-1.9-2.2-2.34-3.19-.27-.61-.31-1.24-.07-1.84L9 7.5Z"/></svg>
+      <svg class="social-icon-network" viewBox="0 0 24 24" role="img"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.5M8.2 13.2l7.5 4.5"/></svg><svg class="social-icon-close" viewBox="0 0 24 24" role="img"><path d="m4 4 16 16M20 4 4 20" stroke-width="2.2"/></svg>
     </span>
     <span class="social-float-ping" aria-hidden="true"></span>
   </button>
@@ -446,14 +446,7 @@
 
   </div>
   <script src="scripts/ui.js?v=76"></script>
-  <div class="ecommerce-verification" aria-label="متجر موثّق">
-    <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
-      <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span class="verification-copy"><strong data-i18n="verificationLink">متجر موثّق</strong><small data-i18n="verificationNumber">رقم الشهادة: 0000333236</small></span>
-      <span class="verification-arrow" aria-hidden="true">↗</span>
-    </a>
-  </div>
-  <script src="scripts/app.js?v=113"></script>
+<script src="scripts/app.js?v=122"></script>
   <script>
     (()=>{
       const root=document.documentElement;
@@ -543,5 +536,8 @@
       window.addEventListener('resize',updateControls,{passive:true});
       updateControls();
     })();
-  </script></body>
+  </script>
+  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
+  <script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+</body>
 </html>

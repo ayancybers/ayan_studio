@@ -3,8 +3,8 @@ import { PACKAGES, calculatePricing, isPackageAvailable } from '../lib/pricing.j
 import { isValidShootDate } from '../lib/booking.js';
 import { authoriseTamaraOrder, boolEnv, getTamaraBaseUrl, getTamaraOrder, mapTamaraOrder, normalizeSaudiPhone, normalizeTamaraStatus } from '../lib/server/tamara.js';
 
-const ALLOWED_CARS = new Set(['جيب','سيدان','كوبيه','سيارة فاخرة','Jeep','Sedan','Coupe','Luxury Car','SUV','فاخر / رياضي','Luxury / Sport','Luxury / Sports']);
-const ALLOWED_REGIONS = new Set(['القطيف','سيهات','الدمام','الخبر','حفر الباطن','Qatif','Saihat','Dammam','Khobar','Hafar Al Batin']);
+const ALLOWED_CARS = new Set(['جيب','سيدان','كوبيه','سيارة فاخرة','Jeep','Sedan','Coupe','Luxury Car','SUV','فاخر / رياضي','Luxury / Sport','Luxury / Sports','SUV / Jeep','فاخر','كلاسيك','باكب','رياضي','أخرى','Luxury','Classic','Pickup','Sport','Other']);
+const ALLOWED_REGIONS = new Set(['القطيف','سيهات','الدمام','الخبر','حفر الباطن','Qatif','Saihat','Dammam','Khobar','Hafar Al Batin','الجبيل','Jubail']);
 const recentRequests = globalThis.__ayanTamaraRateLimit || new Map();
 globalThis.__ayanTamaraRateLimit = recentRequests;
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
   const couponCode = limit(String(body.couponCode || '').trim().toLowerCase(), 40);
 
   if (!name || !email || !packageKey || !carType || !shootRegion || !preferredAt || !phone) return res.status(400).json({ error: 'Missing required fields', requestId });
-  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future Thursday, Friday, or Saturday for the shoot.', requestId });
+  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future shoot date.', requestId });
   if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) return res.status(400).json({ error: 'Invalid booking option', requestId });
   if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
@@ -141,7 +141,7 @@ async function verify(req, res) {
 }
 
 function mapRegionToEnglish(value) {
-  const map = {'القطيف':'Qatif','سيهات':'Saihat','الدمام':'Dammam','الخبر':'Khobar','حفر الباطن':'Hafar Al Batin',Qatif:'Qatif',Saihat:'Saihat',Dammam:'Dammam',Khobar:'Khobar','Hafar Al Batin':'Hafar Al Batin'};
+  const map = {'القطيف':'Qatif','سيهات':'Saihat','الدمام':'Dammam','الخبر':'Khobar','حفر الباطن':'Hafar Al Batin','الجبيل':'Jubail',Qatif:'Qatif',Saihat:'Saihat',Dammam:'Dammam',Khobar:'Khobar','Hafar Al Batin':'Hafar Al Batin',Jubail:'Jubail'};
   return map[value] || 'Eastern Province';
 }
 function getClientIp(req) { const raw = req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown'; return String(raw).split(',')[0].trim(); }

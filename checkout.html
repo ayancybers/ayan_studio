@@ -40,7 +40,7 @@
     @media(max-width:620px){.payment-choice-grid{grid-template-columns:1fr}.payment-choice{grid-template-columns:auto 1fr auto}.payment-card-choice{grid-template-columns:auto 1fr auto}.payment-card-origin{grid-column:1/-1;grid-row:2}.payment-card-choice .payment-choice-price{grid-column:3;grid-row:1}.payment-category-tab{padding:10px}.payment-category-tab strong{font-size:10px}.payment-category-tab small{font-size:8px}}
 
 </style>
-  <link rel="stylesheet" href="refresh.css?v=120">
+  <link rel="stylesheet" href="refresh.css?v=134">
 </head>
 <body class="booking-page checkout-page" data-theme="relax">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -57,11 +57,14 @@
         <p class="checkout-sub" data-checkout-key="subtitle">راجع بياناتك والمبلغ النهائي قبل الانتقال إلى صفحة الدفع الآمنة.</p>
         <div id="demoNotice" class="checkout-demo" data-checkout-key="demoNotice">وضع الدفع التجريبي مفعّل حاليًا. لن يتم تحصيل سعر الباقة الحقيقي أثناء الاختبار؛ سيتم استخدام مفاتيح الدفع التجريبية المخصصة للموقع.</div>
         <div id="summary" class="checkout-summary" aria-busy="true"><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span></div>
-        <form id="couponForm" class="checkout-coupon" novalidate>
-          <label for="couponCode" data-checkout-key="couponLabel">كود خصم إضافي</label>
-          <div class="checkout-coupon-controls"><input id="couponCode" type="text" autocomplete="off" placeholder="ayancybers" aria-label="كود الخصم"><button type="submit" data-checkout-key="couponApply">تطبيق</button></div>
-          <small id="couponStatus" role="status" aria-live="polite"></small>
-        </form>
+        <details class="checkout-coupon checkout-coupon-disclosure">
+          <summary data-checkout-key="couponLabel">لديك كود خصم إضافي؟ (اختياري)</summary>
+          <form id="couponForm" class="checkout-coupon-form" novalidate>
+            <label for="couponCode" data-checkout-key="couponFieldLabel">أدخل كود الخصم</label>
+            <div class="checkout-coupon-controls"><input id="couponCode" type="text" autocomplete="off" placeholder="ayancybers" aria-label="كود الخصم"><button type="submit" data-checkout-key="couponApply">تطبيق</button></div>
+            <small id="couponStatus" role="status" aria-live="polite"></small>
+          </form>
+        </details>
         <div id="customer" class="checkout-customer" aria-busy="true"><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span><span class="checkout-skeleton-row" aria-hidden="true"></span></div>
 
         <div class="payment-selector" aria-label="اختيار طريقة الدفع">
@@ -143,13 +146,9 @@
     </main>
   </div>
   <script src="scripts/ui.js?v=76"></script>
-  <div class="ecommerce-verification" aria-label="متجر موثّق">
-    <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
-      <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span class="verification-copy"><strong data-i18n="verificationLink">متجر موثّق</strong><small data-i18n="verificationNumber">رقم الشهادة: 0000333236</small></span>
-      <span class="verification-arrow" aria-hidden="true">↗</span>
-    </a>
-  </div>
-  <script src="scripts/app.js?v=113"></script>
-<script src="scripts/checkout.js?v=9"></script></body>
+  <script src="scripts/app.js?v=122"></script>
+<script src="scripts/checkout.js?v=11"></script>
+  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
+  <script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+</body>
 </html>

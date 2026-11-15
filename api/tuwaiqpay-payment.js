@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { PACKAGES, calculatePricing, getPricingConfig, isPackageAvailable } from '../lib/pricing.js';
-import { isValidShootDate } from '../lib/booking.js';
+import { isValidShootDate, isValidGccPhone, normalizeGccPhone } from '../lib/booking.js';
 import {
   createTuwaiqPayBill,
   getTuwaiqPaySupportedMethods,
@@ -8,8 +8,8 @@ import {
   openTuwaiqPayReceipt
 } from '../lib/server/tuwaiqpay.js';
 
-const ALLOWED_CARS = new Set(['جيب', 'سيدان', 'كوبيه', 'سيارة فاخرة', 'Jeep', 'Sedan', 'Coupe', 'Luxury Car', 'SUV', 'فاخر / رياضي', 'Luxury / Sport', 'Luxury / Sports']);
-const ALLOWED_REGIONS = new Set(['القطيف', 'سيهات', 'الدمام', 'الخبر', 'حفر الباطن', 'Qatif', 'Saihat', 'Dammam', 'Khobar', 'Hafar Al Batin']);
+const ALLOWED_CARS = new Set(['جيب', 'سيدان', 'كوبيه', 'سيارة فاخرة', 'Jeep', 'Sedan', 'Coupe', 'Luxury Car', 'SUV', 'فاخر / رياضي', 'Luxury / Sport', 'Luxury / Sports', 'SUV / Jeep', 'فاخر', 'كلاسيك', 'باكب', 'رياضي', 'أخرى', 'Luxury', 'Classic', 'Pickup', 'Sport', 'Other']);
+const ALLOWED_REGIONS = new Set(['القطيف', 'سيهات', 'الدمام', 'الخبر', 'حفر الباطن', 'Qatif', 'Saihat', 'Dammam', 'Khobar', 'Hafar Al Batin', 'الجبيل', 'البحرين', 'الكويت', 'Jubail', 'Bahrain', 'Kuwait']);
 const RATE_LIMIT = globalThis.__ayanTuwaiqRateLimit || new Map();
 globalThis.__ayanTuwaiqRateLimit = RATE_LIMIT;
 
@@ -49,17 +49,17 @@ export default async function handler(req, res) {
   const preferredAt = limit(String(body.preferredAt || '').trim(), 10);
   const lang = body.lang === 'en' ? 'en' : 'ar';
   const couponCode = limit(String(body.couponCode || '').trim().toLowerCase(), 40);
-  const phone = normalizeSaudiPhone(body.phone);
+  const phone = normalizeGccPhone(body.phone);
   const method = PAYMENT_METHODS[paymentMethod];
 
   if (!name || !email || !packageKey || !paymentMethod || !carType || !shootRegion || !preferredAt || !phone) {
     return res.status(400).json({ error: 'Missing required booking details', requestId });
   }
-  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future Thursday, Friday, or Saturday for the shoot.', requestId });
+  if (!isValidShootDate(preferredAt)) return res.status(400).json({ error: 'Choose a future shoot date.', requestId });
   if (!isPackageAvailable(packageKey) || !ALLOWED_CARS.has(carType) || !ALLOWED_REGIONS.has(shootRegion)) {
     return res.status(400).json({ error: 'Invalid booking option', requestId });
   }
-  if (!/^9665\d{8}$/.test(phone)) return res.status(400).json({ error: 'Invalid Saudi mobile number', requestId });
+  if (!isValidGccPhone(phone)) return res.status(400).json({ error: 'Invalid Gulf mobile number', requestId });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Enter a valid email address', requestId });
   if (body.termsAgreement !== true) return res.status(400).json({ error: 'Terms and conditions must be accepted before payment.', requestId });
   if (!method) return res.status(400).json({ error: 'Choose a supported TuwaiqPay payment method.', requestId });
@@ -172,14 +172,6 @@ function parseBody(req) {
     try { return JSON.parse(req.body); } catch (_) {}
   }
   return {};
-}
-
-function normalizeSaudiPhone(value) {
-  const digits = String(value || '').replace(/\D/g, '');
-  if (/^05\d{8}$/.test(digits)) return `966${digits.slice(1)}`;
-  if (/^9665\d{8}$/.test(digits)) return digits;
-  if (/^5\d{8}$/.test(digits)) return `966${digits}`;
-  return digits;
 }
 
 function limit(value, max) { return String(value ?? '').trim().slice(0, max); }

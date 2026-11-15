@@ -319,7 +319,7 @@
 .booking-package-price del{display:block !important;}
 .booking-package-price em{display:block !important;}
 </style>
-<link rel="stylesheet" href="refresh.css?v=120">
+<link rel="stylesheet" href="refresh.css?v=134">
 </head>
 <body class="booking-page" data-theme="relax" data-page-title="booking">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -475,17 +475,25 @@
             <div class="booking-divider"><span data-i18n="detailsDivider">بيانات الجلسة</span></div>
             <div class="form-grid">
               <div class="form-group"><label for="fullName" data-i18n="nameLabel">اسمك الكامل *</label><input class="form-control" id="fullName" name="name" required autocomplete="name" placeholder="اسمك بالكامل" data-i18n-placeholder="namePlaceholder" /></div>
-              <div class="form-group"><label for="phone" data-i18n="phoneLabel">رقم الواتساب *</label><input class="form-control" id="phone" name="phone" type="tel" inputmode="numeric" minlength="10" maxlength="10" pattern="05[0-9]{8}" required autocomplete="tel" placeholder="05xxxxxxxx" data-i18n-placeholder="phonePlaceholder" onkeydown="return event.ctrlKey || event.metaKey || event.key === 'Backspace' || event.key === 'Delete' || event.key === 'Tab' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || /^[0-9]$/.test(event.key)" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" /></div>
+              <div class="form-group"><label for="phone" data-i18n="phoneLabel">رقم التواصل *</label><div class="phone-composite"><select class="form-control" id="phoneCountry" name="phoneCountry" aria-label="رمز الدولة" required></select><input class="form-control" id="phone" name="phone" type="tel" inputmode="numeric" maxlength="10" required autocomplete="tel-national" placeholder="5xxxxxxxx" data-i18n-placeholder="phonePlaceholder" /></div></div>
               <div class="form-group"><label for="carType" data-i18n="carLabel">نوع السيارة *</label><select class="form-control" id="carType" required><option value="" data-i18n="carPlaceholder">اختر نوع السيارة</option></select></div>
+              <div class="form-group"><label for="carDetails" data-i18n="carDetailsLabel">نوع السيارة وموديلها (اختياري)</label><input class="form-control" id="carDetails" name="carDetails" type="text" maxlength="100" data-i18n-placeholder="carDetailsPlaceholder" placeholder="مثال: Toyota Camry 2024" /></div>
               <div class="form-group"><label for="shootRegion" data-i18n="regionLabel">منطقة التصوير *</label><select class="form-control" id="shootRegion" required><option value="" data-i18n="regionPlaceholder">اختر المنطقة</option></select></div>
               <div class="form-group full booking-preferred-time booking-date-picker">
                 <label for="bookingWeek" data-i18n="preferredAtLabel">أسبوع التصوير *</label>
                 <select class="form-control" id="bookingWeek" name="bookingWeek" required aria-describedby="bookingDateHint"></select>
                 <div class="booking-date-options" id="bookingDateOptions" role="group" data-i18n-aria-label="bookingDateOptionsLabel" aria-label="اختر يوم التصوير"></div>
                 <input id="preferredAt" name="preferredAt" type="hidden" value="">
-                <small class="booking-field-hint" id="bookingDateHint" data-i18n="preferredAtHint">اختر الخميس أو الجمعة أو السبت. الموعد يتأكد بعد التنسيق عبر واتساب.</small>
+                <small class="booking-field-hint" id="bookingDateHint" data-i18n="preferredAtHint">اختر يومًا من هذا الأسبوع. الموعد يتأكد بعد التنسيق عبر واتساب.</small>
               </div>
               <div class="form-group full"><label for="notes" data-i18n="notesLabel">ملاحظات إضافية</label><textarea class="form-control" id="notes" data-i18n-placeholder="notesPlaceholder" placeholder="زوايا معينة، فكرة خاصة، وقت مناسب، أو أي طلب آخر..."></textarea></div>
+            </div>
+            <div class="terms-consent booking-details-consent">
+              <label class="terms-consent-label" for="termsAgreement">
+                <input id="termsAgreement" name="termsAgreement" type="checkbox" required>
+                <span class="terms-consent-box" aria-hidden="true"></span>
+                <span><span data-i18n="termsAgreement">أوافق على الشروط وسياسة الاسترجاع، بما فيها آلية الإبلاغ عن الخلل أو اختلاف الخدمة، مع حفظ الحقوق النظامية للمستهلك.</span> <a href="terms.html" target="_blank" rel="noopener noreferrer" data-i18n="termsLink">عرض الشروط والقواعد</a></span>
+              </label>
             </div>
               <div class="booking-wizard-actions">
                 <button class="btn btn-secondary booking-step-back" type="button" data-booking-back="1" data-i18n="wizardBackPackage">رجوع للباقات</button>
@@ -515,6 +523,12 @@
               <p data-i18n="taxNotice">رسوم الدفع تُحسب حسب طريقة الدفع المختارة.</p>
             </div>
 
+            <details class="checkout-coupon booking-coupon">
+              <summary data-i18n="bookingCouponLabel">لديك كود خصم؟ (اختياري)</summary>
+              <label for="bookingCouponCode" data-i18n="bookingCouponFieldLabel">أدخل كود الخصم</label>
+              <div class="checkout-coupon-controls"><input id="bookingCouponCode" name="couponCode" type="text" maxlength="40" autocomplete="off" placeholder="مثال: ayancybers" data-i18n-placeholder="bookingCouponPlaceholder"><span class="booking-coupon-hint" data-i18n="bookingCouponHint">سيتم التحقق من الكود عند الدفع</span></div>
+            </details>
+
             <div class="payment-methods" aria-label="طرق الدفع">
               <div class="payment-methods-title" data-i18n="paymentMethodsTitle">طرق الدفع</div>
               <div class="payment-methods-list">
@@ -528,14 +542,6 @@
                 <span class="payment-method active" aria-label="STC Pay"><img src="assets/payments/stc-pay.svg?v=1" alt="STC Pay" loading="lazy"></span>
               </div>
               <div class="payment-methods-note" data-i18n="paymentMethodsNote">اختر وسيلة الدفع المناسبة في صفحة مراجعة الطلب.</div>
-            </div>
-
-            <div class="terms-consent">
-              <label class="terms-consent-label" for="termsAgreement">
-                <input id="termsAgreement" name="termsAgreement" type="checkbox" required>
-                <span class="terms-consent-box" aria-hidden="true"></span>
-                <span><span data-i18n="termsAgreement">أوافق على الشروط وسياسة الاسترجاع، بما فيها آلية الإبلاغ عن الخلل أو اختلاف الخدمة، مع حفظ الحقوق النظامية للمستهلك.</span> <a href="terms.html" target="_blank" rel="noopener noreferrer" data-i18n="termsLink">عرض الشروط والقواعد</a></span>
-              </label>
             </div>
 
             <div class="booking-submit-row">
@@ -572,7 +578,7 @@
   </div>
   <button class="social-float-toggle" type="button" data-social-toggle aria-expanded="false" aria-controls="social-float-menu" data-i18n-aria-label="socialMenuLabel" aria-label="روابط التواصل">
     <span class="social-float-toggle-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" role="img"><circle cx="12" cy="12" r="9.3"/><path d="M8.9 7.8c.25-.55.55-.59.97-.59h.58c.18 0 .4.07.51.3l.92 2.15c.11.24.08.43-.08.62l-.48.58c-.14.17-.17.31-.05.53.45.84 1.02 1.52 1.78 2.05.22.15.38.13.54-.04l.61-.68c.16-.18.35-.21.58-.11l2.05.91c.24.11.35.24.33.45-.07.66-.34 1.26-.88 1.69-.47.38-1.09.47-1.73.32-1.27-.3-2.64-1.19-3.65-2.14-1.2-1.12-2.15-2.48-2.65-3.58-.31-.69-.38-1.4-.1-2.08l.25-.36Z"/></svg>
+      <svg class="social-icon-network" viewBox="0 0 24 24" role="img"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.5M8.2 13.2l7.5 4.5"/></svg><svg class="social-icon-close" viewBox="0 0 24 24" role="img"><path d="m4 4 16 16M20 4 4 20" stroke-width="2.2"/></svg>
     </span>
     <span class="social-float-ping" aria-hidden="true"></span>
   </button>
@@ -616,12 +622,8 @@
 
   </div>
   <script src="scripts/ui.js?v=76"></script>
-  <div class="ecommerce-verification" aria-label="متجر موثّق">
-    <a class="verification-link" href="https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="verificationLink" aria-label="متجر موثّق" aria-haspopup="dialog" aria-expanded="false">
-      <span class="verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8 19 5.5v5.8c0 4.5-2.8 7.9-7 9.9-4.2-2-7-5.4-7-9.9V5.5L12 2.8Z" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12 2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span class="verification-copy"><strong data-i18n="verificationLink">متجر موثّق</strong><small data-i18n="verificationNumber">رقم الشهادة: 0000333236</small></span>
-      <span class="verification-arrow" aria-hidden="true">↗</span>
-    </a>
-  </div>
-  <script src="scripts/app.js?v=113"></script></body>
+  <script src="scripts/app.js?v=122"></script>
+  <div class="sbc-verify-seal" data-token="bTdpTTUra1FkcnZuSityYzBndXFDUT09" data-position="bottom-left"></div>
+  <script src="https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal.js" async></script>
+</body>
 </html>
