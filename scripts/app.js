@@ -1821,7 +1821,7 @@ function setupVerificationSealShortcut() {
   shortcut.rel = 'noopener noreferrer';
   shortcut.dataset.token = token;
   shortcut.dataset.i18nAriaLabel = 'verificationShortcutLabel';
-  shortcut.innerHTML = `<span class="sbc-verify-shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.1 19 6v5.1c0 4.6-2.8 7.8-7 9.8-4.2-2-7-5.2-7-9.8V6l7-2.9Z"/><path d="m8.7 12.1 2.2 2.2 4.5-4.8"/></svg></span><span data-i18n="verificationLink">${getLang() === 'ar' ? 'متجر موثّق' : 'Verified store'}</span><span class="sbc-verify-shortcut-arrow" aria-hidden="true">↗</span>`;
+  shortcut.innerHTML = `<span class="sbc-verify-seal-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 18V8m0 10c-2-5-6-8-11-9 1 5 4 8 11 9Zm0 0c2-5 6-8 11-9-1 5-4 8-11 9Zm0-3c-1-5-4-8-8-10 0 4 2 8 8 10Zm0 0c1-5 4-8 8-10 0 4-2 8-8 10ZM12 25l16 8M28 25l-16 8m8-15v12"/></svg></span><span data-i18n="verificationLink">${getLang() === 'ar' ? 'متجر موثّق' : 'Verified store'}</span>`;
   shortcut.setAttribute('aria-label', getLang() === 'ar' ? 'متجر موثّق — فتح التحقق الرسمي' : 'Verified store — open official verification');
   control.append(shortcut);
   document.body.append(control);

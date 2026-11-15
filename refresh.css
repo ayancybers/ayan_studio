@@ -3234,16 +3234,17 @@ html body .sbc-verify-shortcut {
   position: fixed !important;
   inset: auto auto calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)) !important;
   display: inline-flex !important;
-  min-height: 44px;
+  min-height: 48px;
+  flex-direction: row-reverse;
   align-items: center;
-  gap: 9px;
-  padding: 6px 12px 6px 8px;
-  border: 1px solid rgba(126,166,236,.55);
+  gap: 10px;
+  padding: 5px 8px 5px 14px;
+  border: 1px solid rgba(99,139,219,.72);
   border-radius: 999px;
-  background: linear-gradient(145deg,#14284a,#0b1830);
+  background: linear-gradient(145deg,#102967,#071a50);
   color: #f4f7ff !important;
-  box-shadow: 0 8px 22px rgba(0,0,0,.34),inset 0 0 0 1px rgba(255,255,255,.04);
-  font-size: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.04);
+  font-size: 14px;
   font-weight: 800;
   line-height: 1;
   text-decoration: none !important;
@@ -3252,24 +3253,28 @@ html body .sbc-verify-shortcut {
 }
 html body .sbc-verify-shortcut:hover { border-color: #98baff; background: linear-gradient(145deg,#1b3762,#0d1d39); }
 html body .sbc-verify-shortcut:focus-visible { outline: 2px solid #9abaff; outline-offset: 3px; }
-html body .sbc-verify-shortcut-icon {
+html body .sbc-verify-seal-mark {
   display: grid;
-  width: 30px;
-  height: 30px;
-  flex: 0 0 30px;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
   place-items: center;
-  border-radius: 50%;
-  background: rgba(43,198,157,.12);
-  color: #4ad4aa;
+  border-radius: 8px;
+  background: #fff;
+  color: #102967;
 }
-html body .sbc-verify-shortcut-icon svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-html body .sbc-verify-shortcut-arrow { color: #a9c4ff; font-size: 14px; }
+html body .sbc-verify-seal-mark svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
 html body .sbc-verify-control {
   position: fixed !important;
   inset: auto auto calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)) !important;
-  display: flex !important;
-  align-items: center;
-  gap: 7px;
+  display: block !important;
+  width: max-content;
+  height: max-content;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
   z-index: 1400 !important;
 }
 html body .sbc-verify-control .sbc-verify-shortcut {
