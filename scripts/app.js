@@ -1799,11 +1799,19 @@ function setupSocialFloat() {
   });
 }
 
+function getOfficialVerificationUrl(token, lang = getLang()) {
+  const url = new URL('https://eauthenticate.saudibusiness.gov.sa/EAuthSealApi/seal');
+  url.searchParams.set('token', token);
+  url.searchParams.set('lang', lang === 'en' ? 'en' : 'ar');
+  url.searchParams.set('pos', 'bottom');
+  return url.toString();
+}
+
 function setupVerificationSealShortcut() {
   const seal = document.querySelector('.sbc-verify-seal[data-token]');
   if (!seal) return;
   const token = seal.dataset.token;
-  const certificateUrl = 'https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236';
+  const certificateUrl = getOfficialVerificationUrl(token);
   const control = document.createElement('div');
   control.className = 'sbc-verify-control';
   const shortcut = document.createElement('a');
@@ -1836,7 +1844,9 @@ function setupVerificationDialog() {
   const trigger = document.querySelector('[data-verification-qr]');
   if (!trigger) return;
 
-  const certificateUrl = 'https://eauthenticate.saudibusiness.gov.sa/inquiry?certificateRefID=0000333236';
+  const seal = document.querySelector('.sbc-verify-seal[data-token]');
+  if (!seal) return;
+  const certificateUrl = getOfficialVerificationUrl(seal.dataset.token);
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&format=svg&margin=8&data=${encodeURIComponent(certificateUrl)}`;
   const dialog = document.createElement('div');
   dialog.className = 'verification-dialog';
