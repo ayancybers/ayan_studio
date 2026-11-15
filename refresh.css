@@ -3276,23 +3276,6 @@ html body .sbc-verify-control .sbc-verify-shortcut {
   position: relative !important;
   inset: auto !important;
 }
-html body .sbc-verify-qr-trigger {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
-  place-items: center;
-  border: 1px solid rgba(126,166,236,.55);
-  border-radius: 50%;
-  background: linear-gradient(145deg,#14284a,#0b1830);
-  color: #a9c4ff;
-  box-shadow: 0 8px 22px rgba(0,0,0,.34),inset 0 0 0 1px rgba(255,255,255,.04);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-html body .sbc-verify-qr-trigger:hover { border-color: #98baff; color: #dbe7ff; }
-html body .sbc-verify-qr-trigger:focus-visible { outline: 2px solid #9abaff; outline-offset: 3px; }
-html body .sbc-verify-qr-trigger svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-width: 700px) {
   html body .social-float { bottom: calc(66px + env(safe-area-inset-bottom)) !important; }
   html body .social-float-menu { max-width: min(270px,calc(100vw - 32px)) !important; }

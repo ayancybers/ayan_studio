@@ -1823,89 +1823,8 @@ function setupVerificationSealShortcut() {
   shortcut.dataset.i18nAriaLabel = 'verificationShortcutLabel';
   shortcut.innerHTML = `<span class="sbc-verify-shortcut-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.1 19 6v5.1c0 4.6-2.8 7.8-7 9.8-4.2-2-7-5.2-7-9.8V6l7-2.9Z"/><path d="m8.7 12.1 2.2 2.2 4.5-4.8"/></svg></span><span data-i18n="verificationLink">${getLang() === 'ar' ? 'متجر موثّق' : 'Verified store'}</span><span class="sbc-verify-shortcut-arrow" aria-hidden="true">↗</span>`;
   shortcut.setAttribute('aria-label', getLang() === 'ar' ? 'متجر موثّق — فتح التحقق الرسمي' : 'Verified store — open official verification');
-  const qrTrigger = document.createElement('button');
-  qrTrigger.className = 'sbc-verify-qr-trigger';
-  qrTrigger.type = 'button';
-  qrTrigger.dataset.verificationQr = '';
-  qrTrigger.dataset.i18nAriaLabel = 'verificationQrButton';
-  qrTrigger.setAttribute('aria-label', getLang() === 'ar' ? 'عرض رمز التحقق QR' : 'Show verification QR code');
-  qrTrigger.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM19 14h2v2h-2zM19 19h2v2h-5v-2"/></svg>';
-  control.append(shortcut, qrTrigger);
+  control.append(shortcut);
   document.body.append(control);
-}
-
-function setupVerificationDialog() {
-  const floatingSocial = document.querySelector('[data-social-float]');
-  if (floatingSocial) {
-    const trustRow = floatingSocial.closest('.footer-trust-controls');
-    document.body.append(floatingSocial);
-    if (trustRow && !trustRow.children.length) trustRow.remove();
-  }
-  const trigger = document.querySelector('[data-verification-qr]');
-  if (!trigger) return;
-
-  const seal = document.querySelector('.sbc-verify-seal[data-token]');
-  if (!seal) return;
-  const certificateUrl = getOfficialVerificationUrl(seal.dataset.token);
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&format=svg&margin=8&data=${encodeURIComponent(certificateUrl)}`;
-  const dialog = document.createElement('div');
-  dialog.className = 'verification-dialog';
-  dialog.setAttribute('aria-hidden', 'true');
-  dialog.innerHTML = `
-    <div class="verification-dialog-backdrop" data-verification-close></div>
-    <section class="verification-dialog-card" role="dialog" aria-modal="true" aria-labelledby="verificationDialogTitle">
-      <button class="verification-dialog-close" type="button" data-verification-close data-i18n-aria-label="verificationClose" aria-label="إغلاق">×</button>
-      <div class="verification-dialog-heading">
-        <span class="verification-dialog-mark" aria-hidden="true">✓</span>
-        <div><p class="verification-dialog-kicker">Saudi Business Platform</p><h2 id="verificationDialogTitle" data-i18n="verificationDialogTitle">متجر موثّق</h2><strong data-i18n="verificationStoreName">Ayan Photography</strong></div>
-      </div>
-      <div class="verification-dialog-content">
-        <a class="verification-qr-frame" href="${certificateUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open certificate verification">
-          <img src="${qrUrl}" alt="Certificate verification QR code" loading="lazy">
-        </a>
-        <div class="verification-dialog-details">
-          <div><span data-i18n="verificationNumber">رقم الشهادة: 0000333236</span><strong>0000333236</strong></div>
-          <div><span data-i18n="verificationStateLabel">حالة الشهادة</span><strong class="verification-status-active"><i></i><span data-i18n="verificationStateValue">ساري</span></strong></div>
-          <div><span data-i18n="verificationExpiryLabel">تاريخ انتهاء الصلاحية</span><strong data-i18n="verificationExpiryValue">01/10/2027</strong></div>
-          <p data-i18n="verificationQrHint">امسح الرمز لفتح صفحة التحقق</p>
-          <a class="verification-dialog-url" href="${certificateUrl}" target="_blank" rel="noopener noreferrer">${certificateUrl}</a>
-        </div>
-      </div>
-      <a class="verification-dialog-open" href="${certificateUrl}" target="_blank" rel="noopener noreferrer"><span data-i18n="verificationOpen">عرض التحقق</span><span aria-hidden="true">↗</span></a>
-    </section>`;
-  document.body.append(dialog);
-  applyPreferences();
-
-  const closeButton = dialog.querySelector('.verification-dialog-close');
-  const qrFrame = dialog.querySelector('.verification-qr-frame');
-  const qrImage = qrFrame?.querySelector('img');
-  const shortcut = document.querySelector('.sbc-verify-shortcut');
-  const triggers = [trigger, shortcut].filter(Boolean);
-  let activeTrigger = trigger;
-  const close = () => {
-    dialog.classList.remove('open');
-    dialog.setAttribute('aria-hidden', 'true');
-    triggers.forEach((item) => item.setAttribute('aria-expanded', 'false'));
-    activeTrigger?.focus();
-  };
-  const open = (event) => {
-    event.preventDefault();
-    activeTrigger = event.currentTarget;
-    dialog.classList.add('open');
-    dialog.setAttribute('aria-hidden', 'false');
-    triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
-    closeButton?.focus();
-  };
-  triggers.forEach((item) => {
-    item.setAttribute('aria-haspopup', 'dialog');
-    item.setAttribute('aria-expanded', 'false');
-    item.addEventListener('click', open);
-  });
-  dialog.querySelectorAll('[data-verification-close]').forEach((button) => button.addEventListener('click', close));
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && dialog.classList.contains('open')) close();
-  });
-  qrImage?.addEventListener('error', () => qrFrame?.classList.add('is-unavailable'), { once: true });
 }
 
 async function init() {
@@ -1921,7 +1840,6 @@ async function init() {
   setupPointerGlow();
   setupSocialFloat();
   setupVerificationSealShortcut();
-  setupVerificationDialog();
   setupAmbientParallax();
   setupHeroBackgroundVideo();
   setupHomeShowcaseVideos();
