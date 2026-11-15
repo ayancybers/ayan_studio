@@ -10,7 +10,13 @@
   const badge = document.createElement('div');
   badge.className = 'sbc-local-verification';
   badge.innerHTML = `<a class="sbc-local-verification-trigger" href="${certificateUrl}" target="_blank" rel="noopener noreferrer"><span class="sbc-local-verification-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 7 3v5c0 4.7-2.8 8.1-7 10-4.2-1.9-7-5.3-7-10V6l7-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><span data-verification-label>${getLabel()}</span><span aria-hidden="true">↗</span></a>`;
-  document.body.append(badge);
+  const developerCredit = document.querySelector('.footer-developer-credit');
+  const footerBottom = developerCredit?.closest('.footer-bottom');
+  if (footerBottom) {
+    footerBottom.classList.add('has-verification');
+    developerCredit.insertAdjacentElement('afterend', badge);
+  }
+  else document.body.append(badge);
   const syncLabel = () => {
     const label = getLabel();
     const text = badge.querySelector('[data-verification-label]');

@@ -26,7 +26,7 @@
     @media print{body{padding:0;background:#fff}.toolbar{display:none}.invoice{border:0;box-shadow:none;border-radius:0}.invoice-top{-webkit-print-color-adjust:exact;print-color-adjust:exact}.notice,.line.total{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
     body.embedded{padding:0;background:#fff}.embedded .toolbar{display:none}.embedded .invoice{border:0;box-shadow:none;border-radius:0}
   </style>
-<link rel="stylesheet" href="../refresh.css?v=147">
+<link rel="stylesheet" href="../refresh.css?v=148">
 </head>
 <body class="invoice-page">
 <div class="wrap">
@@ -106,6 +106,6 @@ async function load(){
   try{const endpoint=provider==='tabby'?'/api/tabby-payment?payment_id=':provider==='tamara'?'/api/tamara-payment?order_id=':'/api/payment?tap_id=';const r=await fetch(endpoint+encodeURIComponent(validRef),{cache:'no-store'});const d=await r.json();const ok=provider==='tabby'?(r.ok&&d.success&&d.status==='CLOSED'):provider==='tamara'?(r.ok&&d.success&&['authorised','authorized','fully_captured'].includes(String(d.status||'').toLowerCase())):(r.ok&&d.success&&d.status==='CAPTURED');if(!ok){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false);return}renderInvoice(d);__invoiceReadyResolve?.(true)}catch(e){root.innerHTML='<div class="state">'+escapeHtml(t.unknown)+'</div>';__invoiceReadyResolve?.(false)}
 }load();
 </script>
-<script src="../scripts/verification.js?v=1"></script>
+<script src="../scripts/verification.js?v=2"></script>
 </body>
 </html>

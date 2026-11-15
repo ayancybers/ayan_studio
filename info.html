@@ -11,7 +11,7 @@
   <link rel="preload" as="image" href="assets/ayan-loader-logo.webp?v=2" fetchpriority="high">
   <link rel="stylesheet" href="styles.css?v=72">
   <title>Ayan Developer | مطور الموقع</title>
-<link rel="stylesheet" href="refresh.css?v=147">
+<link rel="stylesheet" href="refresh.css?v=148">
 </head>
 <body data-theme="relax" data-page-title="info" class="info-page">
   <div class="ambient" aria-hidden="true"><span></span><span></span></div>
@@ -90,7 +90,14 @@
         </div>
       </section>
 
-      <section class="section info-about">
+      <nav class="info-quick-menu container reveal" aria-label="روابط صفحة المطور" data-i18n-aria-label="devQuickMenuAria">
+        <a href="#about-menu"><span>01</span><strong data-i18n="devAboutKicker">عن المطوّر</strong><i aria-hidden="true">↘</i></a>
+        <a href="#projects"><span>02</span><strong data-i18n="devWorkKicker">أعمال مختارة</strong><i aria-hidden="true">↘</i></a>
+        <a href="#technology-menu"><span>03</span><strong data-i18n="devStackKicker">التقنيات</strong><i aria-hidden="true">↘</i></a>
+        <a href="#contact-menu"><span>04</span><strong data-i18n="devCtaKicker">لنبدأ مشروعك</strong><i aria-hidden="true">↘</i></a>
+      </nav>
+
+      <section id="about-menu" class="section info-about">
         <div class="container">
           <div class="section-head reveal">
             <div><div class="kicker" data-i18n="devAboutKicker">عن المطوّر</div><h2 data-i18n="devAboutTitle">أبني المنتج من الفكرة إلى التفاصيل.</h2></div>
@@ -129,7 +136,7 @@
         </div>
       </section>
 
-      <section class="section info-stack">
+      <section id="technology-menu" class="section info-stack">
         <div class="container">
           <div class="info-stack-panel reveal">
             <div class="info-stack-copy"><div class="kicker" data-i18n="devStackKicker">التقنيات</div><h2 data-i18n="devStackTitle">الأدوات تتغير حسب احتياج المشروع.</h2><p data-i18n="devStackText">أختار التقنية التي تخدم التجربة، مع تركيز دائم على الأداء والوضوح وسهولة التطوير.</p></div>
@@ -140,7 +147,7 @@
         </div>
       </section>
 
-      <section class="section info-cta">
+      <section id="contact-menu" class="section info-cta">
         <div class="container">
           <div class="cta-banner info-cta-banner reveal">
             <div><div class="kicker" data-i18n="devCtaKicker">لنبدأ مشروعك</div><h2 data-i18n="devCtaTitle">عندك فكرة؟ خلّنا نبنيها.</h2><p data-i18n="devCtaText">أرسل فكرتك ونرتب الخطوات المناسبة لتحويلها إلى موقع أو تجربة رقمية جاهزة.</p></div>
@@ -162,7 +169,7 @@
     </footer>
   </div>
   <script src="scripts/ui.js?v=76"></script>
-<script src="scripts/app.js?v=140"></script>
+<script src="scripts/app.js?v=141"></script>
   <script>
     (() => {
       const reveal = () => document.querySelectorAll('.info-page .reveal').forEach(el => el.classList.add('is-visible'));
@@ -184,6 +191,6 @@
       }, {passive:true});
     })();
   </script>
-<script src="scripts/verification.js?v=1"></script>
+<script src="scripts/verification.js?v=2"></script>
 </body>
 </html>
